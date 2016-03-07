@@ -6,6 +6,7 @@ function [ pcolorHandle,mainAxesHandle ] = EnhancedPColor( input_args,...
     % The user can easily draw a line on a pcolor plot and then the cross
     % sectional 1D plot will be displayed in a new figure. Awesome -:)
     if nargin < 1
+        figure;
         mainAxesHandle = axes;
         input_args = {mainAxesHandle,peaks};
     end
@@ -219,14 +220,17 @@ function updateCrossSectionPlot(pcolorHandle,arrowHandle,sectionPlotAxesHandle,.
     axis tight
 end
 
-function crossSectionFigureCloseRequest_Callback(~,~)
+function crossSectionFigureCloseRequest_Callback(hObject,~)
     % Do nothing Disabling closing the cross section figure alone
     beep on
     beep
     beep off
+    delete(hObject);
 end
 function mainFigureCloseRequest_Callback(hObject,~,crossSectionFigure)
     % Close both the main and cross section figure
+    if isvalid(crossSectionFigure)
     delete(crossSectionFigure);
+    end
     delete(hObject);
 end
