@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ABCD</title>
+  <meta name="keywords" content="ABCD">
+  <meta name="description" content="______________________________________________________________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- menu.html Existing_Propagators -->
+<h1>ABCD
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>______________________________________________________________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function M = ABCD(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">______________________________________________________________________________________________________________________
+
+ Copyright by Carl Zeiss AG    
+ Confidence: OD internal          
+
+ Aufruf:
+ M = ABCD(typ,parameterlist);
+ M = ABCD(typ1,param1,typ2,param2,...);
+ Mges = ABCD(M1,M2,M3);
+ M = ABCD('dis',L); 
+ M = ABCD('lens',f); 
+ M = ABCD('lens',n1,n2,R1,R2,d); 
+ M = ABCD('dis',50,'lens',50,'dis',75);
+ m = ABCD('surf',1,1.5,50,'dist',10,'surf',1.5,1,-50) 
+           % dicke Linse radien 50, Dicke 10, Brechzahl 1.5 
+ m = ABCD('lens',1,1.5,50,-50,10) % dicke Linse wie vor
+
+ Schlagworte:
+ ABCD, matrix, matrix, paraxial element, paraxial system, propagation, raytrace   
+
+ Kurzbeschreibung:
+ Rückgabe der ABCD-Strahlmatrizen für das gewünschte Element oder die Elemet-Folge    
+
+ Beschreibung:
+ Rückgabe der ABCD-Strahlmatrizen für das gewünschte Element. Es gilt   
+   (x'  )    (      ) ( x  )
+   (alf') =  (   M  ) ( alf)
+ Bei mehreren Elementen beginnt die Eingabe mit dem Element, auf das der
+ Strahl zuerst trifft. Bei Vorliegen von Strahlmatrizen am Input wird die
+ Gesamtmatrix zurückgegeben. 
+
+ Version:
+ 27.04.2008    Beate Böhme Matlab 7.3.0 
+ 15.06.2008    Erweiterungen 
+ 29.09.2008    Erweiterung Schlüsselwort dist = dis 
+ Owner:      Beate Böhme 
+
+ Input:   
+               typ         P  
+ Frei-Raum     'dis'      L               mit konstanter Brechzahl
+ Grenzfläche   'surf'      n1,n2,(R)       von n1 nach n2 mit Radius R 
+                                           R&gt;0 Mittelpunkt bei größeren z 
+                                           für R=Inf Angabe nicht notwendig   
+ Planplatte    'plate'     n1,n2, L        n1 umgebendes Medius  
+ dünne Linse   'lens'      f               Brennweite 
+ dicke Linse   'lens'      n1,n2,R1,R2,d   umgebendes Medium n1, Dicke d 
+                                           bikonvex: R1&gt;0, R2&lt;0
+                                           beachte Druckfehler in Gross, Bd1, S47    
+ Spiegel       'mirror'    R               Radius 
+ Teleskop      'telescope' f1,f2           Teleskop mit d = f1+f2
+ Gradienten-Medium 'gardient'  L, Gam      L = Dicke des Mediums, Gam 
+                                           n(r)=n0(1 - Gam^2*r^2/2); 
+                                           vgl. Gross, Bd 1, S 46
+ 
+
+ Output:   
+           M(2,2)          : Strahlmatrix
+
+ Abhängigkeiten in 1. Ordnung: --
+ Referenzen: --
+ Beispiel: --
+ Testfile: --
+ ToDo: Vorzeichen kontrollieren, 4-dim.  
+____________________________________________________________________________________________________________________</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fresnel_Paraxial/prop_field_abcd_2d_test.html" class="code" title="">prop_field_abcd_2d_test</a>	Test Fresnel-Propagator nach Collins in zwei Dimensionen</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 
+0002 <a name="_sub0" href="#_subfunctions" class="code">function M = ABCD(varargin)</a>
+0003 
+0004 <span class="comment">%______________________________________________________________________________________________________________________</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% Copyright by Carl Zeiss AG</span>
+0007 <span class="comment">% Confidence: OD internal</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% Aufruf:</span>
+0010 <span class="comment">% M = ABCD(typ,parameterlist);</span>
+0011 <span class="comment">% M = ABCD(typ1,param1,typ2,param2,...);</span>
+0012 <span class="comment">% Mges = ABCD(M1,M2,M3);</span>
+0013 <span class="comment">% M = ABCD('dis',L);</span>
+0014 <span class="comment">% M = ABCD('lens',f);</span>
+0015 <span class="comment">% M = ABCD('lens',n1,n2,R1,R2,d);</span>
+0016 <span class="comment">% M = ABCD('dis',50,'lens',50,'dis',75);</span>
+0017 <span class="comment">% m = ABCD('surf',1,1.5,50,'dist',10,'surf',1.5,1,-50)</span>
+0018 <span class="comment">%           % dicke Linse radien 50, Dicke 10, Brechzahl 1.5</span>
+0019 <span class="comment">% m = ABCD('lens',1,1.5,50,-50,10) % dicke Linse wie vor</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% Schlagworte:</span>
+0022 <span class="comment">% ABCD, matrix, matrix, paraxial element, paraxial system, propagation, raytrace</span>
+0023 <span class="comment">%</span>
+0024 <span class="comment">% Kurzbeschreibung:</span>
+0025 <span class="comment">% Rückgabe der ABCD-Strahlmatrizen für das gewünschte Element oder die Elemet-Folge</span>
+0026 <span class="comment">%</span>
+0027 <span class="comment">% Beschreibung:</span>
+0028 <span class="comment">% Rückgabe der ABCD-Strahlmatrizen für das gewünschte Element. Es gilt</span>
+0029 <span class="comment">%   (x'  )    (      ) ( x  )</span>
+0030 <span class="comment">%   (alf') =  (   M  ) ( alf)</span>
+0031 <span class="comment">% Bei mehreren Elementen beginnt die Eingabe mit dem Element, auf das der</span>
+0032 <span class="comment">% Strahl zuerst trifft. Bei Vorliegen von Strahlmatrizen am Input wird die</span>
+0033 <span class="comment">% Gesamtmatrix zurückgegeben.</span>
+0034 <span class="comment">%</span>
+0035 <span class="comment">% Version:</span>
+0036 <span class="comment">% 27.04.2008    Beate Böhme Matlab 7.3.0</span>
+0037 <span class="comment">% 15.06.2008    Erweiterungen</span>
+0038 <span class="comment">% 29.09.2008    Erweiterung Schlüsselwort dist = dis</span>
+0039 <span class="comment">% Owner:      Beate Böhme</span>
+0040 <span class="comment">%</span>
+0041 <span class="comment">% Input:</span>
+0042 <span class="comment">%               typ         P</span>
+0043 <span class="comment">% Frei-Raum     'dis'      L               mit konstanter Brechzahl</span>
+0044 <span class="comment">% Grenzfläche   'surf'      n1,n2,(R)       von n1 nach n2 mit Radius R</span>
+0045 <span class="comment">%                                           R&gt;0 Mittelpunkt bei größeren z</span>
+0046 <span class="comment">%                                           für R=Inf Angabe nicht notwendig</span>
+0047 <span class="comment">% Planplatte    'plate'     n1,n2, L        n1 umgebendes Medius</span>
+0048 <span class="comment">% dünne Linse   'lens'      f               Brennweite</span>
+0049 <span class="comment">% dicke Linse   'lens'      n1,n2,R1,R2,d   umgebendes Medium n1, Dicke d</span>
+0050 <span class="comment">%                                           bikonvex: R1&gt;0, R2&lt;0</span>
+0051 <span class="comment">%                                           beachte Druckfehler in Gross, Bd1, S47</span>
+0052 <span class="comment">% Spiegel       'mirror'    R               Radius</span>
+0053 <span class="comment">% Teleskop      'telescope' f1,f2           Teleskop mit d = f1+f2</span>
+0054 <span class="comment">% Gradienten-Medium 'gardient'  L, Gam      L = Dicke des Mediums, Gam</span>
+0055 <span class="comment">%                                           n(r)=n0(1 - Gam^2*r^2/2);</span>
+0056 <span class="comment">%                                           vgl. Gross, Bd 1, S 46</span>
+0057 <span class="comment">%</span>
+0058 <span class="comment">%</span>
+0059 <span class="comment">% Output:</span>
+0060 <span class="comment">%           M(2,2)          : Strahlmatrix</span>
+0061 <span class="comment">%</span>
+0062 <span class="comment">% Abhängigkeiten in 1. Ordnung: --</span>
+0063 <span class="comment">% Referenzen: --</span>
+0064 <span class="comment">% Beispiel: --</span>
+0065 <span class="comment">% Testfile: --</span>
+0066 <span class="comment">% ToDo: Vorzeichen kontrollieren, 4-dim.</span>
+0067 <span class="comment">%____________________________________________________________________________________________________________________</span>
+0068 
+0069 fl = 0; <span class="comment">% Kontroll-Flag</span>
+0070 M0 = [1 0 ; 0 1]; 
+0071 
+0072 <span class="comment">% Liegen am Input nur Matrizen vor ??</span>
+0073 m=0; <span class="keyword">for</span> k=1:nargin; <span class="keyword">if</span> ~isstr(varargin{k}); m=m+1; <span class="keyword">end</span>; <span class="keyword">end</span>; 
+0074 <span class="keyword">if</span> nargin == m; <span class="comment">% ja !! falls nur matrizen am Input, diese multiplizieren !</span>
+0075     <span class="keyword">for</span> k=1:nargin
+0076         M = varargin{k}; 
+0077         <span class="keyword">if</span> size(M,1) ~= 2 | size(M,2) ~= 2; error(<span class="string">'keine 2x2-Matrix am Input'</span>); <span class="keyword">end</span>; 
+0078         M0 = M*M0;
+0079     <span class="keyword">end</span>; 
+0080 <span class="keyword">else</span> 
+0081     <span class="keyword">for</span> k = 1:nargin
+0082         <span class="keyword">if</span> strcmp(varargin{k},<span class="string">'dist'</span>) | strcmp(varargin{k},<span class="string">'dis'</span>)
+0083             L = varargin{k+1}; 
+0084             M = [ 1 L; 0 1]; fl = 1; 
+0085         <span class="keyword">elseif</span> strcmp(varargin{k},<span class="string">'surf'</span>)
+0086             n1 = varargin{k+1}; 
+0087             n2 = varargin{k+2};
+0088             <span class="keyword">try</span>; R  = varargin{k+3}; <span class="keyword">catch</span>; R=Inf; <span class="keyword">end</span>;  
+0089             C = (n1-n2)/n2/R; 
+0090             D = n1/n2;
+0091             M = [1 0 ; C D]; fl = 1; 
+0092         <span class="keyword">elseif</span> strcmp(varargin{k},<span class="string">'plate'</span>)
+0093             n1 = varargin{k+1}; 
+0094             n2 = varargin{k+2};
+0095             L  = varargin{k+3}; 
+0096             B  = L*n1/n2; 
+0097             M = [1 B; 0 1]; fl = 1; 
+0098         <span class="keyword">elseif</span> strcmp(varargin{k},<span class="string">'mirror'</span>)
+0099             R = varargin{k+1}; 
+0100             M = [1 0; 2/R 1]; fl = 1; 
+0101         <span class="keyword">elseif</span> strcmp(varargin{k},<span class="string">'lens'</span>)
+0102             <span class="comment">% if isstr(varargin{k+2})      % dünne Linse: noch 1 parameter, dann strig</span>
+0103             <span class="keyword">if</span> nargin-k == 1 | (nargin-k&gt;1 &amp; isstr(varargin{k+2}));        
+0104                 f = varargin{k+1}; 
+0105                 M = [1 0; -1/f 1]; fl = 1; 
+0106             <span class="comment">% elseif isstr(varargin{k+6})  % dicke Linse: noch 5 paramter, dann string</span>
+0107             <span class="keyword">elseif</span> nargin-k == 5 | (nargin-k&gt;5 &amp; isstr(varargin{k+6}));    
+0108                 n1 = varargin{k+1}; 
+0109                 n2 = varargin{k+2};
+0110                 R1 = varargin{k+3};          
+0111                 R2 = varargin{k+4};
+0112                 d  = varargin{k+5}; 
+0113                 A = 1 - (n2-n1)*d/n2/R1; 
+0114                 B = n1*d/n2; 
+0115                  fm1 = (n2-n1)*(1/R2 - 1/R1)/n1;
+0116                  fm2 = (n2-n1)^2*d/n1/n2/R1/R2; 
+0117                 C = fm1 - fm2; 
+0118                 D = 1 + (n2-n1)*d/n2/R2;
+0119                 M = [A B ; C D ]; fl = 1; 
+0120             <span class="keyword">end</span>; 
+0121         <span class="keyword">elseif</span> strcmp(varargin{k},<span class="string">'telescope'</span>)
+0122             f1 = varargin{k+1}; 
+0123             f2 = varargin{k+2};
+0124             M = [-f2/f1   f1+f2; 0 -f1/f2];  fl = 1; 
+0125         <span class="keyword">elseif</span> strcmp(varargin{k},<span class="string">'gradient'</span>)
+0126             par1 = varargin{k+1}; par2=varargin{k+2}; 
+0127             m1 = cos(par1*par2) ;
+0128             m2 = sin(par1*par2)/par2 ;
+0129             m3 = - m2;
+0130             m4 = m1;
+0131             M  = [m1 m2; m3 m4]; fl = 0; 
+0132         <span class="keyword">end</span>;   
+0133         <span class="keyword">if</span> fl == 1; 
+0134             M0 = M*M0; fl = 0;
+0135         <span class="keyword">end</span>; 
+0136     <span class="keyword">end</span>; 
+0137 <span class="keyword">end</span>; 
+0138 
+0139 M = M0; <span class="comment">% Rückgabe</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

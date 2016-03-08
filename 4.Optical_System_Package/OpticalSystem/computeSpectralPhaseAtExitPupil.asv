@@ -1,0 +1,10 @@
+function [ complexAmplitudeAtExitPupilMulti,XMulti,YMulti ] = computeSpectralComplexAmplitudeAtExitPupil(opticalSystem, inputPulsedBeam)
+%computeSpectralComplexAmplitudeAtExitPupil Computes the spectral amplitude and 
+% phase of the pulse at exit pupil and returns as single complex amplitude
+% term.
+
+
+
+
+end
+

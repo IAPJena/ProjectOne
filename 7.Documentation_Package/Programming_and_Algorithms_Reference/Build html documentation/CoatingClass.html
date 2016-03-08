@@ -1,0 +1,123 @@
+﻿<html>
+	
+<head>
+	<title>Coating: Class</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("CoatingClass");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Coating: Class</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ClassDefinitionModule.html">Class Definition Module</a> &rsaquo;&rsaquo; <a href="NonGUIRelatedClass.html">Non GUI Related Class</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NonGUIRelatedClass.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="GlassClass.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="RayClass.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts22">Coating Class</span></span></h1>
+<p class="rvps10"><span class="rvts27">This class is used to define the coating object, which contains all informations related with the coating defined.</span></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts27">Number of Properties: 3</span></p>
+<p class="rvps10"><span class="rvts27">Number of Methods: 12</span></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts27">Most of the properties defined in the coating class are used for optical system analysis in the toolbox. </span></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts40">Important Methods</span></p>
+<p class="rvps10"><span class="rvts40">1. Transmission and Reflection Coefficient Calculations</span></p>
+<p class="rvps10"><span class="rvts28">Syntax:</span></p>
+<p class="rvps12"><span class="rvts48">[ampRs,ampRp,powRs,powRp,JonesMatrix] = Coating.getReflectionCoefficients...</span></p>
+<p class="rvps12"><span class="rvts48"> &nbsp; &nbsp;(wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm)</span></p>
+<p class="rvps12"><span class="rvts48"><br/></span></p>
+<p class="rvps12"><span class="rvts48">[ampTs,ampTp,powTs,powTp,JonesMatrix] = Coating.getTransmissionCoefficients...</span></p>
+<p class="rvps12"><span class="rvts48"> &nbsp; &nbsp;(wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm)</span></p>
+<p class="rvps12"><span class="rvts48"><br/></span></p>
+<p class="rvps12"><span class="rvts50">These functions compute the amplitude and power coefficients of transmission and reflection using general Fresnel's equations. Both functions are vectorized so they can work on multiple sets of inputs once at the same time. i.e incAngle or wavLen becomes array. For N number of rays the dimensions of amp(pow)Ts(p) would be &nbsp; 1xN and that of Jones Matrix would be 2x2xN.</span></p>
+<p class="rvps12"><span class="rvts50"><br/></span></p>
+<p class="rvps12"><span class="rvts50"> The amplitude and power coefficients for both polarizations are separately returned and the Jones matrix which is the collection of amplitude coefficients is also computed. The Jones matrix is the same as [Ts , 0 ; 0 , Tp] or [Rs , 0 ; 0 , Rp] &nbsp;for all coating types except ideal jones matrix which can also have non-zero values in the non diagonal terms.</span></p>
+<p class="rvps12"><span class="rvts50">The functions use the Fresnel's coefficient computation routine for general multi-layered system. See the description for Fresnel's coefficient computation in Polarization Ray tracing module of the toolbox.</span></p>
+<p class="rvps12"><span class="rvts50">. </span></p>
+<p class="rvps10"><span class="rvts40">2. Computation of the Refractive Index &amp; Thickness of the Coating</span></p>
+<p class="rvps10"><span class="rvts28">Syntax:</span></p>
+<p class="rvps2"><span class="rvts48">[ refIndexAll,thicknessAll ] = coating.getRefractiveIndexThicknessTable(wavLenInUm, primaryWaveLenInUm )</span></p>
+<p class="rvps12"><span class="rvts58"><br/></span></p>
+<p class="rvps12"><span class="rvts50">The function is used to compute the refractive index and thickness of a given multilayer coating by considering the following points:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li class="rvps12"><span class="rvts50">Change thickness in relative value to the absolute thickness using the primary wavelength. The actual thickness of the coating is determined by: &nbsp; d = (wavLen0/n0)*T</span></li>
+</ul></ul>
+<p class="rvps2"><span class="rvts50"> &nbsp; &nbsp; &nbsp; </span><span class="rvts50"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts50"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts50">where wavLen0 is the primary wavelength in micrometers , n0 is the real part of the index of refraction of the coating at the primary &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; wavelength, and T is the "optical thickness" &nbsp;(relative thickness) of the coating layer.</span></p>
+<p class="rvps2"><span class="rvts50"><br/></span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li class="rvps12"><span class="rvts50">The multilayer are repeated NumberOfRepetetion times.</span></li>
+<li class="rvps12"><span class="rvts50">The array will be flipped upside down if the coating is to be used in reverse.</span></li>
+</ul></ul>
+<p class="rvps12"><span class="rvts50"><br/></span></p>
+<p class="rvps10"><span class="rvts40">3. Computation of Coating properties versus incidence angle and wavelength</span></p>
+<p class="rvps10"><span class="rvts28">Syntax:</span></p>
+<p class="rvps2"><span class="rvts48">coating.plotCoatingReflectionVsAngle(wavLenInUm,minAngle,maxAngle,</span><span class="rvts49">...</span></p>
+<p class="rvps2"><span class="rvts48"> &nbsp; &nbsp;angleStep,primWavLenInUm,indexBefore,indexAfter,</span><span class="rvts49">...</span></p>
+<p class="rvps2"><span class="rvts48"> &nbsp; &nbsp; &nbsp; &nbsp;axesHandle,tableHandle,textHandle)</span></p>
+<p class="rvps2"><span class="rvts48"><br/></span></p>
+<p class="rvps2"><span class="rvts48">coating.plotCoatingReflectionVsWavelength(incAngle,</span><span class="rvts49">...</span></p>
+<p class="rvps2"><span class="rvts48"> &nbsp; &nbsp;minWavelengthInUm, maxWavelengthInUm, wavelengthStepInUm,primWavLenInUm,</span><span class="rvts49">...</span></p>
+<p class="rvps2"><span class="rvts48"> &nbsp; &nbsp; &nbsp; &nbsp;indexBefore,indexAfter,axesHandle,tableHandle,textHandle)</span></p>
+<p class="rvps2"><span class="rvts50"><br/></span></p>
+<p class="rvps2"><span class="rvts50">These functions plot properties of a coating in a given axes. </span></p>
+<p class="rvps2"><span class="rvts50"><br/></span></p>
+<p class="rvps2"><span class="rvts48"><br/></span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/help-authoring-tool">Easy to use tool to create HTML Help files and Help web sites</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

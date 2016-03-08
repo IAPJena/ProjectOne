@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of draw2DMirror</title>
+  <meta name="keywords" content="draw2DMirror">
+  <meta name="description" content="draw2DMirror: Drwas a single Mirror in 2D layout diagram">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Analysis_Module --><!-- # System_Layout --><!-- menu.html system_2D_layout_v3.0 -->
+<h1>draw2DMirror
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>draw2DMirror: Drwas a single Mirror in 2D layout diagram</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function [ mirrorH,zyPoints,errCode] = draw2DMirror(surfCoordinateTM,rad,conic,semiDiam,axesHandle,radSpacing,mirrorColor, negThick,varagrin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> draw2DMirror: Drwas a single Mirror in 2D layout diagram
+ Inputs
+   surfCoordinateTM,rad,conic,semiDiam: coordinate transfer matrix, radius, conic constant and
+   semidiameter of the surface
+   axesHandle: axes to plot the surface. A negative number can be
+   passed as axes handle to supress the graphical output.
+   radSpacing: radius sampling Spacing 
+   varagrin: Not used yet. Can be used to indicate edge type and
+   thickness in future
+ Output
+   mirrorH:  height of the Mirror surface drawn
+   zyPoints:  Coordinates of points on the surface</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="draw2DLens.html" class="code" title="function [ lensH,zyPoints,errCode ] = draw2DLens(surf1CoordinateTM,rad1,conic1,semiDiam1,surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,lensColor)">draw2DLens</a>	draw2DLens: Plots the 2 dimensional lay out of alens in meridional plane</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="../../../../AODParentDir/Class_Definition/@OpticalSystem/plot2DLayout.html" class="code" title="function draw =  plot2DLayout(optSystem,rayPathMatrix,axesHandle)">plot2DLayout</a>	plot2DSurface: Drwas a 2D layout diagram</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ mirrorH,zyPoints,errCode] = draw2DMirror(surfCoordinateTM,rad,conic,</a><span class="keyword">...</span>
+0002     semiDiam,axesHandle,radSpacing,mirrorColor, negThick,varagrin) 
+0003     <span class="comment">% draw2DMirror: Drwas a single Mirror in 2D layout diagram</span>
+0004     <span class="comment">% Inputs</span>
+0005     <span class="comment">%   surfCoordinateTM,rad,conic,semiDiam: coordinate transfer matrix, radius, conic constant and</span>
+0006     <span class="comment">%   semidiameter of the surface</span>
+0007     <span class="comment">%   axesHandle: axes to plot the surface. A negative number can be</span>
+0008     <span class="comment">%   passed as axes handle to supress the graphical output.</span>
+0009     <span class="comment">%   radSpacing: radius sampling Spacing</span>
+0010     <span class="comment">%   varagrin: Not used yet. Can be used to indicate edge type and</span>
+0011     <span class="comment">%   thickness in future</span>
+0012     <span class="comment">% Output</span>
+0013     <span class="comment">%   mirrorH:  height of the Mirror surface drawn</span>
+0014     <span class="comment">%   zyPoints:  Coordinates of points on the surface</span>
+0015 
+0016     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0017     <span class="comment">%</span>
+0018 
+0019     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0020     <span class="comment">%</span>
+0021 
+0022     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0023     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0024     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0025     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0026     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0027     <span class="comment">%   Institute of Applied Physics</span>
+0028     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0029                              
+0030     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0031     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0032     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0033 
+0034     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0035     surf1CoordinateTM = surfCoordinateTM;
+0036     rad1 = rad;
+0037     conic1 = conic;
+0038     semiDiam1 = semiDiam;
+0039     
+0040     surf2CoordinateTM = surfCoordinateTM;
+0041     <span class="keyword">if</span> negThick
+0042         surf2CoordinateTM(3,4) = surf2CoordinateTM(3,4) + 0.2;
+0043     <span class="keyword">else</span>
+0044         surf2CoordinateTM(3,4) = surf2CoordinateTM(3,4) - 0.2;
+0045     <span class="keyword">end</span>
+0046     rad2 = rad;
+0047     conic2 = conic;
+0048     semiDiam2 = semiDiam;
+0049     mirrorColor = [0.9,0.9,0.9];
+0050     [ mirrorH,zyPoints,errCode ] = <a href="draw2DLens.html" class="code" title="function [ lensH,zyPoints,errCode ] = draw2DLens(surf1CoordinateTM,rad1,conic1,semiDiam1,surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,lensColor)">draw2DLens</a>(surf1CoordinateTM,rad1,conic1,semiDiam1, <span class="keyword">...</span>
+0051     surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,mirrorColor);    
+0052 <span class="keyword">end</span>
+0053</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

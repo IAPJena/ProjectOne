@@ -1,0 +1,8 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  RayTraceResult -> RayTraceResult;
+
+  RayTraceResult [URL="RayTraceResult.html"];
+  getIntensity [URL="getIntensity.html"];
+  getPolarizationEllipseParameters [URL="getPolarizationEllipseParameters.html"];
+}

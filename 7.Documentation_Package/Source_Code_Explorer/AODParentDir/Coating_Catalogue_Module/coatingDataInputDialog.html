@@ -1,0 +1,655 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of coatingDataInputDialog</title>
+  <meta name="keywords" content="coatingDataInputDialog">
+  <meta name="description" content="COATINGDATAINPUTDIALOG Defines a dilog box which is used to input coating">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Coating_Catalogue_Module -->
+<h1>coatingDataInputDialog
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>COATINGDATAINPUTDIALOG Defines a dilog box which is used to input coating</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ figureHandle ] = coatingDataInputDialog(coatingCatalogueListFullNames,fontName,fontSize) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">COATINGDATAINPUTDIALOG Defines a dilog box which is used to input coating
+ data based on its type. And returns a coating object constructed from the
+ input data.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Catalogue_Module/addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>	addObjectToAODObjectCatalogue: Adds the given AOD object to the given</li><li><a href="../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a>	EXTRACTCOATINGFROMCOATINGCATALOGUE extracts a AOD object from the catalogue</li><li><a href="../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>	FINDALLCOATINGCATALOGUES Searches for all aodObject catalogue files in the</li><li><a href="../../AODParentDir/Catalogue_Module/removeObjectFromAODObjectCatalogue.html" class="code" title="function [ removed ] = removeObjectFromAODObjectCatalogue(objectType, objectName,objectCatalogueFullName )">removeObjectFromAODObjectCatalogue</a>	REMOVECOATINGTOCOATINGCATALOGUE removes a object to the given</li><li><a href="../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Catalogue_Module/objectDataInputDialog.html" class="code" title="function inputDialog = objectDataInputDialog(objectType)">objectDataInputDialog</a>	objectDataInputDialog: Defines a dilog box which is used to input object</li><li><a href="../../AODParentDir/Class_Definition/@AODParentWindow/InitializeMenuAndToolbarItems.html" class="code" title="function InitializeMenuAndToolbarItems(parentWindow)">InitializeMenuAndToolbarItems</a>	Defines all menu items and toolbar commands and all callbacks related</li><li><a href="../../AODParentDir/Class_Definition/@AODParentWindow/InitializeSurfaceEditorPanel.html" class="code" title="function InitializeSurfaceEditorPanel(parentWindow)">InitializeSurfaceEditorPanel</a>	InitializeSurfaceEditorPanel: Define and initialized the uicontrols of the</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function build_gui()</a></li><li><a href="#_sub2" class="code">function popCoatingCatalogueName_Callback(~,~,handles )</a></li><li><a href="#_sub3" class="code">function refreshCoatingDataInputDialog(handles)</a></li><li><a href="#_sub4" class="code">function popCoatingType_Callback(hObject,~,handles)</a></li><li><a href="#_sub5" class="code">function tblCoatingList_CellSelectionCallback(hObject,eventdata,handles)</a></li><li><a href="#_sub6" class="code">function displayCoatingData(selectedCatalogueFullName,selectedCoatingIndex,handles)</a></li><li><a href="#_sub7" class="code">function cmdDeleteCoating_Callback(hObject,evendata,handles)</a></li><li><a href="#_sub8" class="code">function cmdClearAll_Callback(hObject,evendata,handles)</a></li><li><a href="#_sub9" class="code">function cmdAddRow_Callback(hObject,evendata,handles)</a></li><li><a href="#_sub10" class="code">function cmdRemoveRow_Callback(hObject,evendata,handles)</a></li><li><a href="#_sub11" class="code">function cmdSaveCoating_Callback(~,~,handles)</a></li><li><a href="#_sub12" class="code">function cmdOk_Callback(hObject,evendata,handles)</a></li><li><a href="#_sub13" class="code">function currentCoating = getCurrentCoating(handles)</a></li><li><a href="#_sub14" class="code">function cmdCancel_Callback(hObject,evendata,handles)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ figureHandle ] = coatingDataInputDialog(coatingCatalogueListFullNames,fontName,fontSize)</a>
+0002 <span class="comment">%COATINGDATAINPUTDIALOG Defines a dilog box which is used to input coating</span>
+0003 <span class="comment">% data based on its type. And returns a coating object constructed from the</span>
+0004 <span class="comment">% input data.</span>
+0005 
+0006 <span class="comment">% Default Input</span>
+0007 <span class="keyword">if</span> nargin &lt; 1
+0008     <span class="comment">% Get all catalogues from current folder</span>
+0009     coatingCatalogueListFullNames = <a href="../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>(<span class="string">'coating'</span>);
+0010     fontSize = 9.5;
+0011     fontName = <span class="string">'FixedWidth'</span>;
+0012 <span class="keyword">elseif</span> nargin == 1
+0013     fontSize = 9.5;
+0014     fontName = <span class="string">'FixedWidth'</span>;    
+0015 <span class="keyword">elseif</span> nargin == 2
+0016     fontName = <span class="string">'FixedWidth'</span>;    
+0017 <span class="keyword">end</span>
+0018 
+0019 <span class="keyword">if</span> isempty(coatingCatalogueListFullNames)
+0020     figureHandle = NaN;
+0021     disp(<span class="string">'Error: No coating catalogue is found in the current folder.'</span>);
+0022     <span class="keyword">return</span>;
+0023 <span class="keyword">else</span>
+0024     [~,catalogueListFileNames,~] = cellfun(@(x) fileparts(x),<span class="keyword">...</span>
+0025        coatingCatalogueListFullNames,<span class="string">'UniformOutput'</span>,false);
+0026    <span class="comment">% extract the first catalogue and first coating from the catalogue</span>
+0027     firstCatalogueCoatingArray = <a href="../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0028     (<span class="string">'coating'</span>,<span class="string">'all'</span>,coatingCatalogueListFullNames{1});
+0029     firstCatalogueCoatingNames =  {firstCatalogueCoatingArray.Name};
+0030 <span class="keyword">end</span>
+0031 <span class="comment">% Initialize handles structure</span>
+0032 handles = struct();
+0033 handles.FirstCatalogueFullName =  coatingCatalogueListFullNames{1};
+0034 
+0035 coatingObj = <a href="../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>;
+0036 <span class="comment">% Create all UI controls</span>
+0037 <a href="#_sub1" class="code" title="subfunction build_gui()">build_gui</a>();
+0038 
+0039 <span class="comment">% Assign function output</span>
+0040 figureHandle = handles.FigureHandle;
+0041     <a name="_sub1" href="#_subfunctions" class="code">function build_gui()</a>
+0042         <span class="comment">% Creation of all uicontrols</span>
+0043         <span class="comment">% --- FIGURE -------------------------------------</span>
+0044         handles.FigureHandle = figure( <span class="keyword">...</span>
+0045             <span class="string">'Tag'</span>, <span class="string">'FigureHandle'</span>, <span class="keyword">...</span>
+0046             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0047             <span class="string">'Position'</span>, [0.3,0.3,0.5,0.5], <span class="keyword">...</span>
+0048             <span class="string">'Name'</span>, <span class="string">'Coating Data Entry'</span>, <span class="keyword">...</span><span class="comment"> %'WindowStyle','Modal',...</span>
+0049             <span class="string">'MenuBar'</span>, <span class="string">'none'</span>, <span class="keyword">...</span>
+0050             <span class="string">'NumberTitle'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0051             <span class="string">'Color'</span>, get(0,<span class="string">'DefaultUicontrolBackgroundColor'</span>));
+0052         
+0053         <span class="comment">% --- PANELS -------------------------------------</span>
+0054         handles.panelMultilayerData = uipanel( <span class="keyword">...</span>
+0055             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0056             <span class="string">'Tag'</span>, <span class="string">'panelMultilayerData'</span>, <span class="keyword">...</span>
+0057             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0058             <span class="string">'Position'</span>, [0.45,0.12,0.53,0.85], <span class="keyword">...</span>
+0059             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0060             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0061             <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0062             <span class="string">'Title'</span>, <span class="string">'Multilayer Refractive Index Profile'</span>);
+0063         handles.panelJonesMatrixData = uipanel( <span class="keyword">...</span>
+0064             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0065             <span class="string">'Tag'</span>, <span class="string">'panelJonesMatrixData'</span>, <span class="keyword">...</span>
+0066             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0067             <span class="string">'Position'</span>, [0.45,0.12,0.53,0.85], <span class="keyword">...</span>
+0068              <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0069              <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0070             <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0071             <span class="string">'Title'</span>, <span class="string">'Ideal Jones Matrix Coating'</span>);        
+0072         handles.panelCoatingListing = uipanel( <span class="keyword">...</span>
+0073             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0074             <span class="string">'Tag'</span>, <span class="string">'panelCoatingListing'</span>, <span class="keyword">...</span>
+0075             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0076             <span class="string">'Position'</span>, [0.02,0.02,0.43,0.94], <span class="keyword">...</span>
+0077              <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0078              <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0079             <span class="string">'Visible'</span>,<span class="string">'On'</span>);
+0080         
+0081         <span class="comment">% -----------------------------------------------------------------</span>
+0082         handles.lblCoatingCatalogueName = uicontrol( <span class="keyword">...</span>
+0083             <span class="string">'Parent'</span>, handles.panelCoatingListing, <span class="keyword">...</span>
+0084             <span class="string">'Tag'</span>, <span class="string">'lblCoatingCatalogueName'</span>, <span class="keyword">...</span>
+0085             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0086             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0087             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0088             <span class="string">'Position'</span>, [0.02,0.9,0.48,0.05], <span class="keyword">...</span>
+0089             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0090             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0091             <span class="string">'String'</span>, <span class="string">'Catalogue Name'</span>);   
+0092         
+0093         handles.popCoatingCatalogueName = uicontrol( <span class="keyword">...</span>
+0094             <span class="string">'Parent'</span>, handles.panelCoatingListing, <span class="keyword">...</span>
+0095             <span class="string">'Tag'</span>, <span class="string">'popCoatingCatalogueName'</span>, <span class="keyword">...</span>
+0096             <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0097             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0098             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0099             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0100             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0101             <span class="string">'Position'</span>, [0.50,0.9,0.48,0.055], <span class="keyword">...</span>
+0102             <span class="string">'BackgroundColor'</span>, [1 1 1],<span class="keyword">...</span>
+0103             <span class="string">'String'</span>,catalogueListFileNames);
+0104                 
+0105         <span class="comment">%-----------------------------------------------------------------</span>
+0106         
+0107         handles.lblCoatingName = uicontrol( <span class="keyword">...</span>
+0108             <span class="string">'Parent'</span>, handles.panelCoatingListing, <span class="keyword">...</span>
+0109             <span class="string">'Tag'</span>, <span class="string">'lblCoatingName'</span>, <span class="keyword">...</span>
+0110             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0111             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0112             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0113             <span class="string">'Position'</span>, [0.02,0.8,0.48,0.05], <span class="keyword">...</span>
+0114             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0115             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0116             <span class="string">'String'</span>, <span class="string">'Coating Name'</span>);
+0117        
+0118          
+0119         handles.txtCoatingName = uicontrol( <span class="keyword">...</span>
+0120             <span class="string">'Parent'</span>, handles.panelCoatingListing, <span class="keyword">...</span>
+0121             <span class="string">'Tag'</span>, <span class="string">'txtCoatingName'</span>, <span class="keyword">...</span>
+0122             <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0123             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0124             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0125             <span class="string">'Position'</span>, [0.50,0.79,0.48,0.065], <span class="keyword">...</span>
+0126             <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0127             <span class="string">'String'</span>, <span class="string">'CoatingName'</span>, <span class="keyword">...</span>
+0128             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName);             
+0129         <span class="comment">% -----------------------------------------------------------------</span>
+0130         handles.lblCoatingType = uicontrol( <span class="keyword">...</span>
+0131             <span class="string">'Parent'</span>, handles.panelCoatingListing, <span class="keyword">...</span>
+0132             <span class="string">'Tag'</span>, <span class="string">'lblCoatingType'</span>, <span class="keyword">...</span>
+0133             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0134             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0135             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0136             <span class="string">'Position'</span>, [0.02,0.7,0.48,0.05], <span class="keyword">...</span>
+0137             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0138             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0139             <span class="string">'String'</span>, <span class="string">'Coating Type'</span>);   
+0140         
+0141         handles.popCoatingType = uicontrol( <span class="keyword">...</span>
+0142             <span class="string">'Parent'</span>, handles.panelCoatingListing, <span class="keyword">...</span>
+0143             <span class="string">'Tag'</span>, <span class="string">'popCoatingType'</span>, <span class="keyword">...</span>
+0144             <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0145             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0146             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0147             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0148             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0149             <span class="string">'Position'</span>, [0.50,0.7,0.48,0.055], <span class="keyword">...</span><span class="comment"> </span>
+0150             <span class="string">'BackgroundColor'</span>, [1 1 1],<span class="keyword">...</span>
+0151             <span class="string">'String'</span>,{<span class="string">'None'</span>,<span class="string">'BareGlass'</span>,<span class="string">'Multilayer'</span>,<span class="string">'JonesMatrix'</span>},<span class="keyword">...</span>
+0152             <span class="string">'Value'</span>,1);      
+0153         <span class="comment">%------------------------------------------------------------------</span>
+0154         
+0155         handles.lblRepetetion = uicontrol( <span class="keyword">...</span>
+0156             <span class="string">'Parent'</span>, handles.panelMultilayerData, <span class="keyword">...</span>
+0157             <span class="string">'Tag'</span>, <span class="string">'lblRepetetion'</span>, <span class="keyword">...</span>
+0158             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0159             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0160             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0161             <span class="string">'Position'</span>, [0.02,0.78,0.4,0.1], <span class="keyword">...</span>
+0162             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0163             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0164             <span class="string">'String'</span>, <span class="string">'Number of Repetetion'</span>);
+0165         
+0166         handles.txtRepetetion = uicontrol( <span class="keyword">...</span>
+0167             <span class="string">'Parent'</span>, handles.panelMultilayerData, <span class="keyword">...</span>
+0168             <span class="string">'Tag'</span>, <span class="string">'txtRepetetion'</span>, <span class="keyword">...</span>
+0169             <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0170             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0171             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0172             <span class="string">'Position'</span>, [0.45,0.8,0.2,0.07], <span class="keyword">...</span>
+0173             <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0174             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0175             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0176             <span class="string">'String'</span>, num2str(1));        
+0177        
+0178         <span class="comment">% --- CHECKBOXES -------------------------------------</span>
+0179         handles.chkReverse = uicontrol( <span class="keyword">...</span>
+0180             <span class="string">'Parent'</span>, handles.panelMultilayerData, <span class="keyword">...</span>
+0181             <span class="string">'Tag'</span>, <span class="string">'chkReverse'</span>, <span class="keyword">...</span>
+0182             <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0183             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0184             <span class="string">'Position'</span>, [0.67,0.78,0.3,0.1], <span class="keyword">...</span>
+0185             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0186             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0187             <span class="string">'String'</span>, <span class="string">'Revese Order'</span>,<span class="keyword">...</span>
+0188             <span class="string">'Value'</span>,logical(0));
+0189         
+0190         <span class="comment">%-----------------------------------------------------------------</span>
+0191         handles.tblRefractiveIndexProfile = uitable( <span class="keyword">...</span>
+0192             <span class="string">'Parent'</span>, handles.panelMultilayerData, <span class="keyword">...</span>
+0193             <span class="string">'Tag'</span>, <span class="string">'tblRefractiveIndexProfile'</span>, <span class="keyword">...</span>
+0194             <span class="string">'UserData'</span>, zeros(1,0), <span class="keyword">...</span>
+0195             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0196             <span class="string">'Position'</span>, [0.02,0.05,0.96,0.7], <span class="keyword">...</span>
+0197             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0198             <span class="string">'BackgroundColor'</span>, [1 1 1;0.961 0.961 0.961], <span class="keyword">...</span>
+0199             <span class="string">'ColumnEditable'</span>, [true,true,true], <span class="keyword">...</span>
+0200             <span class="string">'ColumnFormat'</span>, {<span class="string">'numeric'</span>,<span class="string">'numeric'</span>,<span class="string">'logical'</span>}, <span class="keyword">...</span>
+0201             <span class="string">'ColumnName'</span>, {<span class="string">'Refractive Index'</span>,<span class="string">'Thickness (in um)'</span>,<span class="string">'Relative'</span>}, <span class="keyword">...</span>
+0202             <span class="string">'ColumnWidth'</span>, {150,100,70}, <span class="keyword">...</span>
+0203             <span class="string">'RowName'</span>, <span class="string">'numbered'</span>,<span class="keyword">...</span>
+0204             <span class="string">'Data'</span>,{[1],[0],logical(0)});
+0205         <span class="comment">%-----------------------------------------------------------------</span>
+0206         handles.tblTransmissionMatrix = uitable( <span class="keyword">...</span>
+0207             <span class="string">'Parent'</span>, handles.panelJonesMatrixData, <span class="keyword">...</span>
+0208             <span class="string">'Tag'</span>, <span class="string">'tblTransmissionMatrix'</span>, <span class="keyword">...</span>
+0209             <span class="string">'UserData'</span>, zeros(1,0), <span class="keyword">...</span>
+0210             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0211             <span class="string">'Position'</span>, [0.02,0.45,0.96,0.3], <span class="keyword">...</span>
+0212             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0213             <span class="string">'BackgroundColor'</span>, [1 1 1;0.961 0.961 0.961], <span class="keyword">...</span>
+0214             <span class="string">'ColumnEditable'</span>, [true,true], <span class="keyword">...</span>
+0215             <span class="string">'ColumnFormat'</span>, {<span class="string">'numeric'</span>,<span class="string">'numeric'</span>}, <span class="keyword">...</span>
+0216             <span class="string">'ColumnName'</span>, {<span class="string">'Ts'</span>,<span class="string">'Tp'</span>}, <span class="keyword">...</span>
+0217             <span class="string">'ColumnWidth'</span>, {150,150}, <span class="keyword">...</span>
+0218             <span class="string">'RowName'</span>,{<span class="string">'Ts'</span>,<span class="string">'Tp'</span>},<span class="keyword">...</span>
+0219             <span class="string">'Data'</span>,{<span class="string">'1'</span>,<span class="string">'0'</span>;<span class="string">'0'</span>,<span class="string">'1'</span>});   
+0220         
+0221         <span class="comment">%-----------------------------------------------------------------</span>
+0222         handles.tblReflectionMatrix = uitable( <span class="keyword">...</span>
+0223             <span class="string">'Parent'</span>, handles.panelJonesMatrixData, <span class="keyword">...</span>
+0224             <span class="string">'Tag'</span>, <span class="string">'tblReflectionMatrix'</span>, <span class="keyword">...</span>
+0225             <span class="string">'UserData'</span>, zeros(1,0), <span class="keyword">...</span>
+0226             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0227             <span class="string">'Position'</span>, [0.02,0.05,0.96,0.3], <span class="keyword">...</span>
+0228             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0229             <span class="string">'BackgroundColor'</span>, [1 1 1;0.961 0.961 0.961], <span class="keyword">...</span>
+0230             <span class="string">'ColumnEditable'</span>, [true,true], <span class="keyword">...</span>
+0231             <span class="string">'ColumnFormat'</span>, {<span class="string">'numeric'</span>,<span class="string">'numeric'</span>}, <span class="keyword">...</span>
+0232             <span class="string">'ColumnName'</span>, {<span class="string">'Rs'</span>,<span class="string">'Rp'</span>}, <span class="keyword">...</span>
+0233             <span class="string">'ColumnWidth'</span>, {150,150}, <span class="keyword">...</span>
+0234             <span class="string">'RowName'</span>,{<span class="string">'Rs'</span>,<span class="string">'Rp'</span>},<span class="keyword">...</span>
+0235             <span class="string">'Data'</span>,{<span class="string">'1'</span>,<span class="string">'0'</span>;<span class="string">'0'</span>,<span class="string">'1'</span>});           
+0236         <span class="comment">%-----------------------------------------------------------------</span>
+0237         handles.tblCoatingList = uitable( <span class="keyword">...</span>
+0238             <span class="string">'Parent'</span>, handles.panelCoatingListing, <span class="keyword">...</span>
+0239             <span class="string">'Tag'</span>, <span class="string">'tblCoatingList'</span>, <span class="keyword">...</span>
+0240             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0241             <span class="string">'Position'</span>, [0.02,0.02,0.96,0.65], <span class="keyword">...</span>
+0242             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0243             <span class="string">'BackgroundColor'</span>, [1 1 1;0.961 0.961 0.961], <span class="keyword">...</span>
+0244             <span class="string">'ColumnEditable'</span>, [false], <span class="keyword">...</span>
+0245             <span class="string">'ColumnFormat'</span>, {<span class="string">'char'</span>}, <span class="keyword">...</span>
+0246             <span class="string">'ColumnName'</span>, {<span class="string">'Coating Names'</span>}, <span class="keyword">...</span>
+0247             <span class="string">'ColumnWidth'</span>, {220}, <span class="keyword">...</span>
+0248             <span class="string">'RowName'</span>, <span class="string">'numbered'</span>,<span class="keyword">...</span>
+0249             <span class="string">'Data'</span>,firstCatalogueCoatingNames');        
+0250       <span class="comment">%-------------------------------------------------------------------</span>
+0251       <span class="comment">% Callbacks</span>
+0252        set(handles.popCoatingCatalogueName,<span class="keyword">...</span>
+0253            <span class="string">'Callback'</span>,{@<a href="#_sub2" class="code" title="subfunction popCoatingCatalogueName_Callback(~,~,handles )">popCoatingCatalogueName_Callback</a>,handles});
+0254        set(handles.popCoatingType,<span class="keyword">...</span>
+0255            <span class="string">'Callback'</span>,{@<a href="#_sub4" class="code" title="subfunction popCoatingType_Callback(hObject,~,handles)">popCoatingType_Callback</a>,handles});       
+0256        set(handles.tblCoatingList,<span class="keyword">...</span>
+0257            <span class="string">'CellSelectionCallback'</span>,{@<a href="#_sub5" class="code" title="subfunction tblCoatingList_CellSelectionCallback(hObject,eventdata,handles)">tblCoatingList_CellSelectionCallback</a>,handles});
+0258  
+0259         <span class="comment">%-----------------------------------------------------------------</span>
+0260        handles.cmdClearAll = uicontrol( <span class="keyword">...</span>
+0261             <span class="string">'Parent'</span>, handles.panelMultilayerData, <span class="keyword">...</span>
+0262             <span class="string">'Tag'</span>, <span class="string">'cmdClearAll'</span>, <span class="keyword">...</span>
+0263             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0264             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0265             <span class="string">'Position'</span>, [0.02,0.9,0.3,0.07], <span class="keyword">...</span>
+0266             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0267             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0268             <span class="string">'String'</span>, <span class="string">'Clear All'</span>, <span class="keyword">...</span>
+0269             <span class="string">'Callback'</span>, {@<a href="#_sub8" class="code" title="subfunction cmdClearAll_Callback(hObject,evendata,handles) ">cmdClearAll_Callback</a>,handles});
+0270        handles.cmdAddRow = uicontrol( <span class="keyword">...</span>
+0271             <span class="string">'Parent'</span>, handles.panelMultilayerData, <span class="keyword">...</span>
+0272             <span class="string">'Tag'</span>, <span class="string">'cmdAddRow'</span>, <span class="keyword">...</span>
+0273             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0274             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0275             <span class="string">'Position'</span>, [0.35,0.9,0.3,0.07], <span class="keyword">...</span>
+0276             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0277             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0278             <span class="string">'String'</span>, <span class="string">'Add (+)'</span>, <span class="keyword">...</span>
+0279             <span class="string">'Callback'</span>, {@<a href="#_sub9" class="code" title="subfunction cmdAddRow_Callback(hObject,evendata,handles) ">cmdAddRow_Callback</a>,handles});        
+0280        handles.cmdRemoveRow = uicontrol( <span class="keyword">...</span>
+0281             <span class="string">'Parent'</span>, handles.panelMultilayerData, <span class="keyword">...</span>
+0282             <span class="string">'Tag'</span>, <span class="string">'cmdRemoveRow'</span>, <span class="keyword">...</span>
+0283             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0284             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0285             <span class="string">'Position'</span>, [0.67,0.9,0.3,0.07], <span class="keyword">...</span>
+0286             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0287             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0288             <span class="string">'String'</span>, <span class="string">'Remove (-)'</span>, <span class="keyword">...</span>
+0289             <span class="string">'Callback'</span>, {@<a href="#_sub10" class="code" title="subfunction cmdRemoveRow_Callback(hObject,evendata,handles) ">cmdRemoveRow_Callback</a>,handles}); 
+0290       <span class="comment">%------------------------------------------------------------------</span>
+0291       
+0292       handles.cmdDeleteCoating = uicontrol( <span class="keyword">...</span>
+0293             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0294             <span class="string">'Tag'</span>, <span class="string">'cmdDeleteCoating'</span>, <span class="keyword">...</span>
+0295             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0296             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0297             <span class="string">'Position'</span>, [0.45,0.02,0.12,0.065], <span class="keyword">...</span>
+0298             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0299             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0300             <span class="string">'String'</span>, <span class="string">'Delete'</span>, <span class="keyword">...</span>
+0301             <span class="string">'Callback'</span>, {@<a href="#_sub7" class="code" title="subfunction cmdDeleteCoating_Callback(hObject,evendata,handles) ">cmdDeleteCoating_Callback</a>,handles});
+0302        handles.cmdSaveCoating = uicontrol( <span class="keyword">...</span>
+0303             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0304             <span class="string">'Tag'</span>, <span class="string">'cmdSaveCoating'</span>, <span class="keyword">...</span>
+0305             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0306             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0307             <span class="string">'Position'</span>, [0.59,0.02,0.12,0.065], <span class="keyword">...</span>
+0308             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0309             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0310             <span class="string">'String'</span>, <span class="string">'Save'</span>, <span class="keyword">...</span>
+0311             <span class="string">'Callback'</span>, {@<a href="#_sub11" class="code" title="subfunction cmdSaveCoating_Callback(~,~,handles) ">cmdSaveCoating_Callback</a>,handles});        
+0312        handles.cmdOk = uicontrol( <span class="keyword">...</span>
+0313             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0314             <span class="string">'Tag'</span>, <span class="string">'cmdOk'</span>, <span class="keyword">...</span>
+0315             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0316             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0317             <span class="string">'Position'</span>, [0.73,0.02,0.12,0.065], <span class="keyword">...</span>
+0318             <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0319             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0320             <span class="string">'String'</span>, <span class="string">'Ok'</span>, <span class="keyword">...</span>
+0321             <span class="string">'Callback'</span>, {@<a href="#_sub12" class="code" title="subfunction cmdOk_Callback(hObject,evendata,handles) ">cmdOk_Callback</a>,handles});         
+0322        handles.cmdCancel = uicontrol( <span class="keyword">...</span>
+0323             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0324             <span class="string">'Tag'</span>, <span class="string">'cmdCancel'</span>, <span class="keyword">...</span>
+0325             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0326             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0327             <span class="string">'Position'</span>, [0.87,0.02,0.12,0.065], <span class="keyword">...</span>
+0328             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0329             <span class="string">'String'</span>, <span class="string">'Cancel'</span>, <span class="keyword">...</span>
+0330             <span class="string">'Callback'</span>, {@<a href="#_sub14" class="code" title="subfunction cmdCancel_Callback(hObject,evendata,handles) ">cmdCancel_Callback</a>,handles}); 
+0331                 
+0332     <span class="comment">% Display the first coating data</span>
+0333     selectedCatalogueFullName = handles.FirstCatalogueFullName;
+0334     selectedCoatingIndex = 1;
+0335     <a href="#_sub6" class="code" title="subfunction displayCoatingData(selectedCatalogueFullName,selectedCoatingIndex,handles)">displayCoatingData</a>(selectedCatalogueFullName,selectedCoatingIndex,handles);
+0336     <span class="keyword">end</span>
+0337 
+0338 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0339     <a name="_sub2" href="#_subfunctions" class="code">function popCoatingCatalogueName_Callback(~,~,handles )</a>
+0340         <a href="#_sub3" class="code" title="subfunction refreshCoatingDataInputDialog(handles)">refreshCoatingDataInputDialog</a>(handles);
+0341     <span class="keyword">end</span>
+0342 
+0343     <a name="_sub3" href="#_subfunctions" class="code">function refreshCoatingDataInputDialog(handles)</a>
+0344         selectedCatalogueFullName = coatingCatalogueListFullNames{get(handles.popCoatingCatalogueName,<span class="string">'Value'</span>)};
+0345         <span class="comment">% extract the selected catalogue and coating from the catalogue</span>
+0346         selectedCatalogueCoatingArray = <a href="../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0347             (<span class="string">'coating'</span>,<span class="string">'all'</span>,selectedCatalogueFullName);
+0348         selectedCatalogueCoatingNames =  {selectedCatalogueCoatingArray.Name};
+0349         set(handles.tblCoatingList,<span class="string">'Data'</span>,selectedCatalogueCoatingNames');
+0350         selectedCoatingIndex = 1;
+0351         <a href="#_sub6" class="code" title="subfunction displayCoatingData(selectedCatalogueFullName,selectedCoatingIndex,handles)">displayCoatingData</a>(selectedCatalogueFullName,selectedCoatingIndex,handles);
+0352     <span class="keyword">end</span>
+0353 
+0354 
+0355 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0356 <a name="_sub4" href="#_subfunctions" class="code">function popCoatingType_Callback(hObject,~,handles)</a>
+0357     coatingTypeList =  get(handles.popCoatingType,<span class="string">'String'</span>);
+0358     selectedCoatingType = coatingTypeList{get(hObject,<span class="string">'Value'</span>)};
+0359     <span class="keyword">switch</span> lower(selectedCoatingType)
+0360         <span class="keyword">case</span> lower(<span class="string">'None'</span>)
+0361             multilayerDataPanelVisible = <span class="string">'off'</span>;
+0362             jonesMatrixPanelVisible = <span class="string">'off'</span>;        
+0363         <span class="keyword">case</span> lower(<span class="string">'BareGlass'</span>)
+0364             multilayerDataPanelVisible = <span class="string">'off'</span>;
+0365             jonesMatrixPanelVisible = <span class="string">'off'</span>;
+0366         <span class="keyword">case</span> lower(<span class="string">'Multilayer'</span>)
+0367             multilayerDataPanelVisible = <span class="string">'on'</span>;
+0368             jonesMatrixPanelVisible = <span class="string">'off'</span>;
+0369         <span class="keyword">case</span> lower(<span class="string">'JonesMatrix'</span>)
+0370             multilayerDataPanelVisible = <span class="string">'off'</span>;
+0371             jonesMatrixPanelVisible = <span class="string">'on'</span>;
+0372     <span class="keyword">end</span>
+0373 
+0374     set(handles.panelMultilayerData,<span class="keyword">...</span>
+0375         <span class="string">'Visible'</span>,multilayerDataPanelVisible);
+0376     set(handles.panelJonesMatrixData,<span class="keyword">...</span>
+0377         <span class="string">'Visible'</span>,jonesMatrixPanelVisible);
+0378 <span class="keyword">end</span>
+0379 
+0380 <a name="_sub5" href="#_subfunctions" class="code">function tblCoatingList_CellSelectionCallback(hObject,eventdata,handles)</a>
+0381     selCell = eventdata.Indices;
+0382     <span class="keyword">if</span> ~isempty(selCell)
+0383         selRow = selCell(1,1);
+0384         selCol = selCell(1,2);
+0385         selectedCoatingIndex = selRow;
+0386         selectedCatalogueFullName = coatingCatalogueListFullNames<span class="keyword">...</span>
+0387             {get(handles.popCoatingCatalogueName,<span class="string">'Value'</span>)};
+0388         <a href="#_sub6" class="code" title="subfunction displayCoatingData(selectedCatalogueFullName,selectedCoatingIndex,handles)">displayCoatingData</a>(selectedCatalogueFullName,selectedCoatingIndex,handles)
+0389     <span class="keyword">end</span>
+0390 <span class="keyword">end</span>
+0391 
+0392 <a name="_sub6" href="#_subfunctions" class="code">function displayCoatingData(selectedCatalogueFullName,selectedCoatingIndex,handles)</a>
+0393     <span class="comment">% extract the selected coating from the catalogue</span>
+0394     catalogueCoatingArray = <a href="../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0395         (<span class="string">'coating'</span>,<span class="string">'all'</span>,selectedCatalogueFullName);
+0396     <span class="keyword">if</span> isempty(catalogueCoatingArray)
+0397         catalogueCoatingArray = <a href="../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>;
+0398     <span class="keyword">end</span>
+0399     catalogueCoatingNames =  {catalogueCoatingArray.Name};
+0400     <span class="keyword">if</span> ~isempty(catalogueCoatingNames)
+0401         selectedCoatingObject = catalogueCoatingArray(selectedCoatingIndex);
+0402 
+0403         selectedCoatingType = selectedCoatingObject.Type;
+0404         <span class="keyword">switch</span> lower(selectedCoatingType)
+0405             <span class="keyword">case</span> lower(<span class="string">'None'</span>)
+0406                 selectedCoatingTypeIndex = 1;
+0407                 multilayerDataPanelVisible = <span class="string">'off'</span>;
+0408                 jonesMatrixPanelVisible = <span class="string">'off'</span>;            
+0409             <span class="keyword">case</span> lower(<span class="string">'BareGlass'</span>)
+0410                 selectedCoatingTypeIndex = 2;
+0411                 multilayerDataPanelVisible = <span class="string">'off'</span>;
+0412                 jonesMatrixPanelVisible = <span class="string">'off'</span>;
+0413             <span class="keyword">case</span> lower(<span class="string">'Multilayer'</span>)
+0414                 selectedCoatingTypeIndex = 3;
+0415                 multilayerDataPanelVisible = <span class="string">'on'</span>;
+0416                 jonesMatrixPanelVisible = <span class="string">'off'</span>;
+0417             <span class="keyword">case</span> lower(<span class="string">'JonesMatrix'</span>)
+0418                 selectedCoatingTypeIndex = 4;
+0419                 multilayerDataPanelVisible = <span class="string">'off'</span>;
+0420                 jonesMatrixPanelVisible = <span class="string">'on'</span>;
+0421             <span class="keyword">otherwise</span>
+0422                 selectedCoatingTypeIndex = 3;
+0423                 multilayerDataPanelVisible = <span class="string">'on'</span>;
+0424                 jonesMatrixPanelVisible = <span class="string">'off'</span>;                
+0425         <span class="keyword">end</span>
+0426         selectedCoatingName = selectedCoatingObject.Name;
+0427         selectedCoatingParameters = selectedCoatingObject.CoatingParameters;
+0428         
+0429         <span class="comment">% Update all data</span>
+0430         set(handles.panelMultilayerData,<span class="keyword">...</span>
+0431             <span class="string">'Visible'</span>,multilayerDataPanelVisible);
+0432         set(handles.panelJonesMatrixData,<span class="keyword">...</span>
+0433             <span class="string">'Visible'</span>,jonesMatrixPanelVisible);
+0434         
+0435         set(handles.popCoatingType,<span class="string">'Value'</span>,selectedCoatingTypeIndex);
+0436         set(handles.txtCoatingName,<span class="string">'String'</span>,selectedCoatingName);
+0437         <span class="keyword">switch</span> lower(selectedCoatingType)
+0438             <span class="keyword">case</span> lower({<span class="string">'None'</span>,<span class="string">'BareGlass'</span>})
+0439                 <span class="comment">% Nothing more displayed</span>
+0440             <span class="keyword">case</span> lower({<span class="string">'Multilayer'</span>})
+0441                 selectedCoatingRefractiveIndexProfile = <span class="keyword">...</span>
+0442                     selectedCoatingParameters.RefractiveIndexProfile;
+0443                 selectedCoatingRepetetionNumber = <span class="keyword">...</span>
+0444                     selectedCoatingParameters.RepetetionNumber;
+0445                 selectedCoatingUseInReverse = <span class="keyword">...</span>
+0446                     selectedCoatingParameters.UseInReverse;
+0447                 
+0448                 set(handles.txtRepetetion,<span class="string">'String'</span>,selectedCoatingRepetetionNumber);
+0449                 set(handles.chkReverse,<span class="string">'Value'</span>,selectedCoatingUseInReverse);
+0450                 
+0451                 colNum = size(selectedCoatingRefractiveIndexProfile,2);
+0452                 rowNum = size(selectedCoatingRefractiveIndexProfile,1);
+0453                 <span class="keyword">if</span> colNum == 2
+0454                     <span class="comment">% For coating with no third column for indicating relative thickness</span>
+0455                     selectedCoatingRefractiveIndexProfile = <span class="keyword">...</span>
+0456                         [selectedCoatingRefractiveIndexProfile zeros(rowNum,1)];
+0457                     colNum = 3;
+0458                 <span class="keyword">end</span>
+0459                 selectedCoatingRefractiveIndexProfile = mat2cell<span class="keyword">...</span>
+0460                     (selectedCoatingRefractiveIndexProfile,<span class="keyword">...</span>
+0461                     [ones(1,rowNum)],[ones(1,colNum)]);
+0462                 <span class="keyword">for</span> p = 1:size(selectedCoatingRefractiveIndexProfile,1)
+0463                     selectedCoatingRefractiveIndexProfile{p,3} = <span class="keyword">...</span>
+0464                         logical(selectedCoatingRefractiveIndexProfile{p,3});
+0465                 <span class="keyword">end</span>
+0466                 set(handles.tblRefractiveIndexProfile,<span class="string">'Data'</span>,<span class="keyword">...</span>
+0467                     selectedCoatingRefractiveIndexProfile);
+0468             <span class="keyword">case</span> lower(<span class="string">'JonesMatrix'</span>)
+0469                 selectedCoatingTransmissionMatrix = <span class="keyword">...</span>
+0470                     selectedCoatingParameters.TransmissionMatrix;
+0471                 selectedCoatingReflectionMatrix = <span class="keyword">...</span>
+0472                     selectedCoatingParameters.ReflectionMatrix;
+0473                 
+0474                 set(handles.tblTransmissionMatrix,<span class="string">'Data'</span>,selectedCoatingTransmissionMatrix);
+0475                 set(handles.tblReflectionMatrix,<span class="string">'Data'</span>,selectedCoatingReflectionMatrix);
+0476             <span class="keyword">otherwise</span>
+0477                 disp(<span class="string">'Error: Invalid coating type.'</span>);
+0478                 <span class="keyword">return</span>;
+0479         <span class="keyword">end</span>
+0480     <span class="keyword">end</span>
+0481 <span class="keyword">end</span>
+0482 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0483     <a name="_sub7" href="#_subfunctions" class="code">function cmdDeleteCoating_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0484         coatingCatalogueIndex = get(handles.popCoatingCatalogueName,<span class="string">'Value'</span>);
+0485         selectedCoatingCatalogueFullName = coatingCatalogueListFullNames{coatingCatalogueIndex};
+0486         objectType = <span class="string">'coating'</span>;
+0487         objectName = get(handles.txtCoatingName,<span class="string">'String'</span>);
+0488         objectCatalogueFullName = selectedCoatingCatalogueFullName;       
+0489         <a href="../../AODParentDir/Catalogue_Module/removeObjectFromAODObjectCatalogue.html" class="code" title="function [ removed ] = removeObjectFromAODObjectCatalogue(objectType, objectName,objectCatalogueFullName )">removeObjectFromAODObjectCatalogue</a>(objectType, objectName,objectCatalogueFullName )
+0490         <a href="#_sub3" class="code" title="subfunction refreshCoatingDataInputDialog(handles)">refreshCoatingDataInputDialog</a>(handles);
+0491     <span class="keyword">end</span>
+0492 
+0493 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0494     <a name="_sub8" href="#_subfunctions" class="code">function cmdClearAll_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0495         set(handles.txtCoatingName,<span class="string">'String'</span>,<span class="string">'New'</span>);
+0496         set(handles.txtRepetetion,<span class="string">'String'</span>,<span class="string">'1'</span>);
+0497         set(handles.chkReverse,<span class="string">'Value'</span>,0);
+0498         set(handles.tblRefractiveIndexProfile,<span class="string">'Data'</span>,[]);
+0499         
+0500     <span class="keyword">end</span>
+0501 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0502     <a name="_sub9" href="#_subfunctions" class="code">function cmdAddRow_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0503         <span class="keyword">if</span> strcmpi(class(get(handles.tblRefractiveIndexProfile,<span class="string">'data'</span>)), <span class="string">'double'</span>)
+0504             tblData1 = (get(handles.tblRefractiveIndexProfile,<span class="string">'data'</span>));
+0505         <span class="keyword">elseif</span> strcmpi(class(get(handles.tblRefractiveIndexProfile,<span class="string">'data'</span>)), <span class="string">'cell'</span>)
+0506             tempTblData = (get(handles.tblRefractiveIndexProfile,<span class="string">'data'</span>));
+0507             tblData1 = [cell2mat(tempTblData(:,1:2)) cell2mat(tempTblData(:,3))];
+0508         <span class="keyword">else</span>
+0509             disp(<span class="string">'Error: Unknown data type in refractive index profile table.'</span>)
+0510             <span class="keyword">return</span>;
+0511         <span class="keyword">end</span>
+0512         newRow1 =  [1,0,0];
+0513         newTable1 = [tblData1; newRow1]; 
+0514         newTable1 = mat2cell(newTable1,[ones(1,size(newTable1,1))],[ones(1,size(newTable1,2))]);
+0515         <span class="keyword">for</span> p = 1:size(newTable1,1)
+0516             newTable1{p,3} = logical(newTable1{p,3});
+0517         <span class="keyword">end</span>
+0518         set(handles.tblRefractiveIndexProfile, <span class="string">'Data'</span>, newTable1);
+0519     <span class="keyword">end</span>
+0520 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0521     <a name="_sub10" href="#_subfunctions" class="code">function cmdRemoveRow_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0522         <span class="keyword">if</span> strcmpi(class(get(handles.tblRefractiveIndexProfile,<span class="string">'data'</span>)), <span class="string">'double'</span>)
+0523             tblData1 = num2cell(get(handles.tblRefractiveIndexProfile,<span class="string">'data'</span>));
+0524         <span class="keyword">elseif</span> strcmpi(class(get(handles.tblRefractiveIndexProfile,<span class="string">'data'</span>)), <span class="string">'cell'</span>)
+0525             tblData1 = (get(handles.tblRefractiveIndexProfile,<span class="string">'data'</span>));
+0526         <span class="keyword">else</span>
+0527             disp(<span class="string">'Error: Unknown data type in refractive index profile table.'</span>)
+0528             <span class="keyword">return</span>;
+0529         <span class="keyword">end</span>
+0530         newTable1 = tblData1(1:end-1,:);
+0531         
+0532         set(handles.tblRefractiveIndexProfile, <span class="string">'Data'</span>, newTable1);
+0533     <span class="keyword">end</span>
+0534 
+0535 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0536     <a name="_sub11" href="#_subfunctions" class="code">function cmdSaveCoating_Callback(~,~,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0537         objectType = <span class="string">'coating'</span>;
+0538         aodObject = <a href="#_sub13" class="code" title="subfunction currentCoating = getCurrentCoating(handles)">getCurrentCoating</a>(handles);
+0539         coatingCatalogueIndex = get(handles.popCoatingCatalogueName,<span class="string">'Value'</span>);
+0540         objectCatalogueFullName = coatingCatalogueListFullNames{coatingCatalogueIndex};
+0541         <a href="../../AODParentDir/Catalogue_Module/addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>(objectType, aodObject,objectCatalogueFullName,<span class="string">'ask'</span>);
+0542         <a href="#_sub3" class="code" title="subfunction refreshCoatingDataInputDialog(handles)">refreshCoatingDataInputDialog</a>(handles);       
+0543     <span class="keyword">end</span>
+0544 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0545     <a name="_sub12" href="#_subfunctions" class="code">function cmdOk_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0546         objectType = <span class="string">'coating'</span>;
+0547         aodObject = <a href="#_sub13" class="code" title="subfunction currentCoating = getCurrentCoating(handles)">getCurrentCoating</a>(handles);
+0548         coatingCatalogueIndex = get(handles.popCoatingCatalogueName,<span class="string">'Value'</span>);
+0549         objectCatalogueFullName = coatingCatalogueListFullNames{coatingCatalogueIndex};
+0550         <a href="../../AODParentDir/Catalogue_Module/addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>(objectType, aodObject,objectCatalogueFullName,<span class="string">'replace'</span>);
+0551         <a href="#_sub3" class="code" title="subfunction refreshCoatingDataInputDialog(handles)">refreshCoatingDataInputDialog</a>(handles);
+0552         coatingObj = aodObject;
+0553         save(<span class="string">'tempcoating.mat'</span>,<span class="string">'coatingObj'</span>);
+0554         close(handles.FigureHandle);
+0555         
+0556     <span class="keyword">end</span>
+0557 
+0558 <a name="_sub13" href="#_subfunctions" class="code">function currentCoating = getCurrentCoating(handles)</a>
+0559     coatingTypeList = get(handles.popCoatingType,<span class="string">'String'</span>);
+0560     coatingType = coatingTypeList{get(handles.popCoatingType,<span class="string">'Value'</span>)};
+0561     coatingName = get(handles.txtCoatingName,<span class="string">'String'</span>);
+0562     <span class="keyword">switch</span> lower(coatingType)
+0563         <span class="keyword">case</span> lower({<span class="string">'None'</span>,<span class="string">'BareGlass'</span>})
+0564             coatingParameters = struct();
+0565             coatingParameters.TransmissionMatrix = NaN*[1,0;0,1];
+0566             coatingParameters.ReflectionMatrix = NaN*[1,0;0,1];
+0567 
+0568             coatingParameters.RefractiveIndexProfile = [NaN NaN (0)];
+0569             coatingParameters.RepetetionNumber = NaN*0;
+0570             coatingParameters.UseInReverse = NaN*0;            
+0571         <span class="keyword">case</span> lower(<span class="string">'Multilayer'</span>)
+0572             coatingParameters = struct();
+0573             coatingParameters.TransmissionMatrix = NaN*[1,0;0,1];
+0574             coatingParameters.ReflectionMatrix = NaN*[1,0;0,1];
+0575             
+0576             coatingParameters.RepetetionNumber = <span class="keyword">...</span>
+0577                 str2double(get(handles.txtRepetetion,<span class="string">'String'</span>));
+0578             coatingParameters.UseInReverse = <span class="keyword">...</span>
+0579                 get(handles.chkReverse,<span class="string">'Value'</span>);
+0580             tblData1 = get(handles.tblRefractiveIndexProfile,<span class="string">'Data'</span>);
+0581             coatingParameters.RefractiveIndexProfile = <span class="keyword">...</span>
+0582                 [cell2mat(tblData1(:,1:2)) cell2mat(tblData1(:,3))];
+0583         <span class="keyword">case</span> lower(<span class="string">'JonesMatrix'</span>)
+0584             coatingParameters = struct();
+0585             tblData2 = get(handles.tblTransmissionMatrix,<span class="string">'Data'</span>);
+0586             tblData3 = get(handles.tblReflectionMatrix,<span class="string">'Data'</span>);
+0587             coatingParameters.TransmissionMatrix = [cell2mat(tblData2(:,:))];
+0588             coatingParameters.ReflectionMatrix = [cell2mat(tblData3(:,:))];
+0589 
+0590             coatingParameters.RefractiveIndexProfile = [NaN NaN (0)];
+0591             coatingParameters.RepetetionNumber = NaN*0;
+0592             coatingParameters.UseInReverse = NaN*0; 
+0593     <span class="keyword">end</span>
+0594     currentCoating = <a href="../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>(coatingType,coatingName,coatingParameters);
+0595 <span class="keyword">end</span>
+0596 
+0597 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0598     <a name="_sub14" href="#_subfunctions" class="code">function cmdCancel_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0599         currentCoating = <a href="../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>;
+0600         <a href="#_sub3" class="code" title="subfunction refreshCoatingDataInputDialog(handles)">refreshCoatingDataInputDialog</a>(handles);
+0601 <span class="comment">%         coatingObj = Coating;</span>
+0602 <span class="comment">%         save('tempcoating.mat','coatingObj');</span>
+0603         close(handles.FigureHandle);
+0604     <span class="keyword">end</span>
+0605 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

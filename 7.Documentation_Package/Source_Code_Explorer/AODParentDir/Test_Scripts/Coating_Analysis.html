@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Coating_Analysis</title>
+  <meta name="keywords" content="Coating_Analysis">
+  <meta name="description" content="Clear command window">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Test_Scripts -->
+<h1>Coating_Analysis
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>Clear command window</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Clear command window</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/OpticalSystem.html" class="code" title="">OpticalSystem</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% Clear command window</span>
+0002 clc;
+0003 
+0004 <span class="comment">%% Open saved optical system</span>
+0005 <span class="comment">% Get path of the single lens system used for testing</span>
+0006 singleLensFullFileName = which(<span class="string">'SingleLensTest.mat'</span>);
+0007 <span class="comment">% Construct the optical system object from the saved file</span>
+0008 OS = <a href="../../AODParentDir/Class_Definition/@OpticalSystem/OpticalSystem.html" class="code" title="">OpticalSystem</a>(singleLensFullFileName);
+0009 
+0010 <span class="comment">%% Coating Analysis</span>
+0011 surfIndex = 3;
+0012 testCoating = OS.SurfaceArray(surfIndex).Coating;
+0013 wavLen = OS.WavelengthMatrix(OS.PrimaryWavelengthIndex);
+0014 minAngle = 0;
+0015 maxAngle = 90;
+0016 indexBefore = OS.SurfaceArray(surfIndex-1).Glass.getRefractiveIndex(wavLen);
+0017 indexAfter = OS.SurfaceArray(surfIndex).Glass.getRefractiveIndex(wavLen);
+0018 
+0019 figure;
+0020 axesHandle = axes;
+0021 testCoating.plotCoatingRefractiveIndexProfile(axesHandle);
+0022 
+0023 figure;
+0024 axesHandle = axes;
+0025 testCoating.plotCoatingReflectionVsAngle(axesHandle,wavLen,<span class="keyword">...</span>
+0026             minAngle,maxAngle,indexBefore,indexAfter);
+0027 figure;
+0028 axesHandle = axes;
+0029 testCoating.plotCoatingTransmissionVsAngle(axesHandle,wavLen,<span class="keyword">...</span>
+0030             minAngle,maxAngle,indexBefore,indexAfter);
+0031 figure;
+0032 axesHandle = axes;
+0033 testCoating.plotCoatingDiattenuationVsAngle(axesHandle,wavLen,<span class="keyword">...</span>
+0034             minAngle,maxAngle,indexBefore,indexAfter);
+0035 figure;
+0036 axesHandle = axes;
+0037 testCoating.plotCoatingRetardanceVsAngle(axesHandle,wavLen,<span class="keyword">...</span>
+0038             minAngle,maxAngle,indexBefore,indexAfter);
+0039 
+0040</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

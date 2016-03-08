@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of directionSP</title>
+  <meta name="keywords" content="directionSP">
+  <meta name="description" content="directionSP returns direction cosines of local s and p vectors given k">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Mathematical_Functions -->
+<h1>directionSP
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>directionSP returns direction cosines of local s and p vectors given k</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ dirS,dirP] = directionSP( dirK ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> directionSP returns direction cosines of local s and p vectors given k
+ vector. The function is vectorized so it can work on multiple inputs 
+ once at the same time.
+ Inputs:
+   dirK: (3XN matrix) direction cosines of the ray
+ Outputs:
+   dirS,dirP: (3XN matrix) unit vectors in the direction of local 
+                           S and P coordinates</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>	compute3dCross: computes the cross product of two 1X3 vectors(Originaly).</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Polarization_Ray_Tracing_Module/convertJVToPolVector.html" class="code" title="function polarizationVector = convertJVToPolVector(JV,dirK)">convertJVToPolVector</a>	convertJonesVectToPolVect Converts a given jones vector to polarization</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ dirS,dirP] = directionSP( dirK )</a>
+0002     <span class="comment">% directionSP returns direction cosines of local s and p vectors given k</span>
+0003     <span class="comment">% vector. The function is vectorized so it can work on multiple inputs</span>
+0004     <span class="comment">% once at the same time.</span>
+0005     <span class="comment">% Inputs:</span>
+0006     <span class="comment">%   dirK: (3XN matrix) direction cosines of the ray</span>
+0007     <span class="comment">% Outputs:</span>
+0008     <span class="comment">%   dirS,dirP: (3XN matrix) unit vectors in the direction of local</span>
+0009     <span class="comment">%                           S and P coordinates</span>
+0010 
+0011     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0012     <span class="comment">%</span>
+0013 
+0014     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0015     <span class="comment">%</span>
+0016 
+0017     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0018     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0019     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0020     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0021     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0022     <span class="comment">%   Institute of Applied Physics</span>
+0023     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0024                              
+0025     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0026     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0027     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0028     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0029 
+0030     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0031     
+0032     nRay = size(dirK,2);
+0033     <span class="comment">% normalize dirK</span>
+0034     magDirK = sqrt(sum(dirK.^2,1)); <span class="comment">% (1XN vector) magDirK = [magK1,magK2,...]</span>
+0035     magDirK = repmat(magDirK,[3,1]); <span class="comment">% a 3xN matrix from 1XN vector</span>
+0036     dirK = dirK./magDirK;
+0037        
+0038     temp = <a href="compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>(dirK, repmat([1;0;0],[1,nRay]));
+0039     a = sum(temp,1);
+0040     dirP = repmat([0;1;0],[1,nRay]);
+0041     dirP(:,a~=0) = temp(:,a~=0);
+0042 
+0043     dirS = <a href="compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>(dirP,dirK);
+0044 
+0045     <span class="comment">% just to have similar results with Zemax, let's use its assumption</span>
+0046     dirS = -dirS;
+0047     dirP = -dirP;
+0048 <span class="keyword">end</span>
+0049</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

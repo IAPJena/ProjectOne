@@ -1,0 +1,7 @@
+function [ output_args ] = computeSpectralPhaseAtExitPupil(opticalSystem, inputPulsedBeam, methodUsed,  )
+%PROPAGATEGENERALPULSEDBEAM Summary of this function goes here
+%   Detailed explanation goes here
+
+
+end
+

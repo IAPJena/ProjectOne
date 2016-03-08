@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getAllFiles</title>
+  <meta name="keywords" content="getAllFiles">
+  <meta name="description" content="getAllFiles: Searches for all  files in the given directory. And">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Catalogue_Module -->
+<h1>getAllFiles
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>getAllFiles: Searches for all  files in the given directory. And</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ fileList ] = getAllFiles( dirName ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">getAllFiles: Searches for all  files in the given directory. And 
+ returns their full file names.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="getAllFiles.html" class="code" title="function [ fileList ] = getAllFiles( dirName )">getAllFiles</a>	getAllFiles: Searches for all  files in the given directory. And</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>	FINDALLCOATINGCATALOGUES Searches for all aodObject catalogue files in the</li><li><a href="getAllFiles.html" class="code" title="function [ fileList ] = getAllFiles( dirName )">getAllFiles</a>	getAllFiles: Searches for all  files in the given directory. And</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ fileList ] = getAllFiles( dirName )</a>
+0002     <span class="comment">%getAllFiles: Searches for all  files in the given directory. And</span>
+0003     <span class="comment">% returns their full file names.</span>
+0004 
+0005     <span class="comment">% Default directory is caurrent directory</span>
+0006     <span class="keyword">if</span> nargin &lt; 1
+0007         dirName = pwd;
+0008     <span class="keyword">end</span>
+0009 
+0010     dirData = dir(dirName);      <span class="comment">% Get the data for the current directory</span>
+0011     dirIndex = [dirData.isdir];  <span class="comment">% Find the index for directories</span>
+0012     fileList = {dirData(~dirIndex).name}';  <span class="comment">% Get a list of the files</span>
+0013     <span class="keyword">if</span> ~isempty(fileList)
+0014         fileList = cellfun(@(x) fullfile(dirName,x),<span class="keyword">...</span><span class="comment">  % Prepend path to files</span>
+0015             fileList,<span class="string">'UniformOutput'</span>,false);
+0016     <span class="keyword">end</span>
+0017     subDirs = {dirData(dirIndex).name};  <span class="comment">% Get a list of the subdirectories</span>
+0018     validIndex = ~ismember(subDirs,{<span class="string">'.'</span>,<span class="string">'..'</span>});  <span class="comment">% Find index of subdirectories</span>
+0019     <span class="comment">%   that are not '.' or '..'</span>
+0020     <span class="keyword">for</span> iDir = find(validIndex)                  <span class="comment">% Loop over valid subdirectories</span>
+0021         nextDir = fullfile(dirName,subDirs{iDir});    <span class="comment">% Get the subdirectory path</span>
+0022         fileList = [fileList; <a href="getAllFiles.html" class="code" title="function [ fileList ] = getAllFiles( dirName )">getAllFiles</a>(nextDir)];  <span class="comment">% Recursively call getAllFiles</span>
+0023     <span class="keyword">end</span>
+0024 <span class="keyword">end</span>
+0025</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

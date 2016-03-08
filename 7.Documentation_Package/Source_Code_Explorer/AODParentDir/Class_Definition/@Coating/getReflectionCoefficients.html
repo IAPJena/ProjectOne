@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getReflectionCoefficients</title>
+  <meta name="keywords" content="getReflectionCoefficients">
+  <meta name="description" content="Computes the amplitude and power coefficients of reflection using">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Coating -->
+<h1>getReflectionCoefficients
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Computes the amplitude and power coefficients of reflection using</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function  [ampRs,ampRp,powRs,powRp,JonesRefMatrix] = getReflectionCoefficients(Coating,wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Computes the amplitude and power coefficients of reflection using
+ general Fresnel's equations
+ The function is vectorized so it can work on multiple sets of
+ inputs once at the same time. i.e incAngle or wavLen becomes array)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeMultilayerFresnelsCoefficients.html" class="code" title="function [T,R,tau,rho] = computeMultilayerFresnelsCoefficients(refIndex,thickness,polarisation,lambda,incAngle,n_s,n_c,primaryWaveLenInUm)">computeMultilayerFresnelsCoefficients</a>	computeMultilayerFresnelsCoefficients: Computes the reflection and</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/tracePolarizedRay.html" class="code" title="function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture)">tracePolarizedRay</a>	tracePolarizedRay: main function of polarized ray tracer</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function  [ampRs,ampRp,powRs,powRp,JonesRefMatrix] = getReflectionCoefficients</a><span class="keyword">...</span>
+0002     (Coating,wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm)
+0003 <span class="comment">% Computes the amplitude and power coefficients of reflection using</span>
+0004 <span class="comment">% general Fresnel's equations</span>
+0005 <span class="comment">% The function is vectorized so it can work on multiple sets of</span>
+0006 <span class="comment">% inputs once at the same time. i.e incAngle or wavLen becomes array)</span>
+0007 
+0008 <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0009 <span class="comment">%   Written By: Worku, Norman Girma</span>
+0010 <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0011 <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0012 <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0013 <span class="comment">%   Institute of Applied Physics</span>
+0014 <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0015 
+0016 <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0017 <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0018 <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0019 <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0020 
+0021 <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;    nRayAngle = size(incAngle,2);</span>
+0022 nRayAngle = size(incAngle,2);
+0023 nRayWav = size(wavLenInUm,2);
+0024 <span class="keyword">if</span> nRayAngle == 1
+0025     nRay = nRayWav;
+0026     incAngle = repmat(incAngle,[1,nRay]);
+0027 <span class="keyword">elseif</span> nRayWav == 1
+0028     nRay = nRayAngle;
+0029     wavLenInUm = repmat(wavLenInUm,[1,nRay]);
+0030 <span class="keyword">elseif</span> nRayAngle == nRayWav <span class="comment">% Both wavLen and incAngle for all rays given</span>
+0031     nRay = nRayAngle;
+0032 <span class="keyword">else</span>
+0033     disp([<span class="string">'Error: The size of Incident Angle and Wavelength should '</span><span class="keyword">...</span>
+0034         <span class="string">'be equal or one of them should be 1.'</span>]);
+0035     <span class="keyword">return</span>;
+0036 <span class="keyword">end</span>
+0037 
+0038 <span class="keyword">switch</span>  Coating.Type
+0039     <span class="keyword">case</span> <span class="string">'None'</span>
+0040         ampRs = repmat(1,[1,nRay]);
+0041         ampRp = repmat(1,[1,nRay]);
+0042         powRs = repmat(1,[1,nRay]);
+0043         powRp = repmat(1,[1,nRay]);
+0044         JonesRefMatrix(1,1,:) = ampRs; JonesRefMatrix(1,2,:) = 0;
+0045         JonesRefMatrix(2,1,:) = 0; JonesRefMatrix(2,2,:) = ampRp;
+0046         
+0047     <span class="keyword">case</span> <span class="string">'BareGlass'</span>
+0048         <span class="comment">% No layer means empty permitivity profile</span>
+0049         refIndex = [];
+0050         thickness = [];
+0051         <span class="comment">% Compute general Fresnels Coefficients using Matrix</span>
+0052         <span class="comment">% Method for multilayer layer</span>
+0053         [Ts,Rs,tau_s,rho_s] = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeMultilayerFresnelsCoefficients.html" class="code" title="function [T,R,tau,rho] = computeMultilayerFresnelsCoefficients(refIndex,thickness,polarisation,lambda,incAngle,n_s,n_c,primaryWaveLenInUm)">computeMultilayerFresnelsCoefficients</a><span class="keyword">...</span>
+0054             (refIndex,thickness,<span class="string">'TE'</span>,wavLenInUm,incAngle,ns,nc,<span class="keyword">...</span>
+0055             primaryWaveLenInUm);
+0056         [Tp,Rp,tau_p,rho_p] = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeMultilayerFresnelsCoefficients.html" class="code" title="function [T,R,tau,rho] = computeMultilayerFresnelsCoefficients(refIndex,thickness,polarisation,lambda,incAngle,n_s,n_c,primaryWaveLenInUm)">computeMultilayerFresnelsCoefficients</a><span class="keyword">...</span>
+0057             (refIndex,thickness,<span class="string">'TM'</span>,wavLenInUm,incAngle,ns,nc,<span class="keyword">...</span>
+0058             primaryWaveLenInUm);
+0059         
+0060         <span class="comment">% return fresnel coeff.</span>
+0061         ampRs = Rs;
+0062         ampRp = Rp;
+0063         powRs = rho_s;
+0064         powRp = rho_p;
+0065         
+0066         JonesRefMatrix(1,1,:) = ampRs; JonesRefMatrix(1,2,:) = 0;
+0067         JonesRefMatrix(2,1,:) = 0; JonesRefMatrix(2,2,:) = ampRp;        
+0068     <span class="keyword">case</span> <span class="string">'JonesMatrix'</span>        
+0069         <span class="comment">% Amp reflection for each polarization given directly</span>
+0070         refMatrix = coating.CoatingParameters.TransmissionMatrix;        
+0071         Rs = refMatrix(1,1);
+0072         Rp = refMatrix(2,2);
+0073         
+0074         <span class="comment">% new code</span>
+0075         <span class="comment">% return fresnel coeff.</span>
+0076         ampRs = repmat(Rs,[1,nRay]);
+0077         ampRp = repmat(Rp,[1,nRay]);
+0078         
+0079         <span class="comment">% Compute power coefficnets</span>
+0080         powRs = (abs(ampRs)).^2;
+0081         powRp = (abs(ampRp)).^2;        
+0082         JonesRefMatrix = repmat(refMatrix,[1,1,nRay]);
+0083     <span class="keyword">case</span> <span class="string">'Multilayer'</span>
+0084         
+0085         [refIndexAll,thicknessAll] = Coating.getRefractiveIndexThicknessTable<span class="keyword">...</span>
+0086             (wavLenInUm,primaryWaveLenInUm);
+0087         
+0088         <span class="keyword">if</span> isempty(refIndexAll) || isempty(thicknessAll)
+0089             refIndexAll = [];
+0090             thicknessAll = [];
+0091         <span class="keyword">end</span>
+0092         
+0093         <span class="comment">% Compute general Fresnels Coefficients using Matrix</span>
+0094         <span class="comment">% Method for multilayer layer</span>
+0095         [Ts,Rs,tau_s,rho_s]=<a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeMultilayerFresnelsCoefficients.html" class="code" title="function [T,R,tau,rho] = computeMultilayerFresnelsCoefficients(refIndex,thickness,polarisation,lambda,incAngle,n_s,n_c,primaryWaveLenInUm)">computeMultilayerFresnelsCoefficients</a><span class="keyword">...</span>
+0096             (refIndexAll,thicknessAll,<span class="string">'TE'</span>,wavLenInUm,incAngle,ns,nc);
+0097         [Tp,Rp,tau_p,rho_p]=<a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeMultilayerFresnelsCoefficients.html" class="code" title="function [T,R,tau,rho] = computeMultilayerFresnelsCoefficients(refIndex,thickness,polarisation,lambda,incAngle,n_s,n_c,primaryWaveLenInUm)">computeMultilayerFresnelsCoefficients</a><span class="keyword">...</span>
+0098             (refIndexAll,thicknessAll,<span class="string">'TM'</span>,wavLenInUm,incAngle,ns,nc);
+0099         
+0100         <span class="comment">% return fresnel coeff.</span>
+0101         ampRs = Rs;
+0102         ampRp = Rp;
+0103         powRs = rho_s;
+0104         powRp = rho_p;
+0105         JonesRefMatrix(1,1,:) = ampRs; JonesRefMatrix(1,2,:) = 0;
+0106         JonesRefMatrix(2,1,:) = 0; JonesRefMatrix(2,2,:) = ampRp;        
+0107     <span class="keyword">otherwise</span>
+0108         disp(<span class="string">'Error: Invalid coating type. So it is ignored'</span>);
+0109         ampRs = repmat(1,[1,nRay]);
+0110         ampRp = repmat(1,[1,nRay]);
+0111         powRs = repmat(1,[1,nRay]);
+0112         powRp = repmat(1,[1,nRay]);
+0113         JonesRefMatrix(1,1,:) = ampRs; JonesRefMatrix(1,2,:) = 0;
+0114         JonesRefMatrix(2,1,:) = 0; JonesRefMatrix(2,2,:) = ampRp;
+0115         <span class="keyword">return</span>;
+0116 <span class="keyword">end</span>
+0117 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

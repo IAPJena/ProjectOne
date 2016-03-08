@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of traceMeridionalRay</title>
+  <meta name="keywords" content="traceMeridionalRay">
+  <meta name="description" content="UNTITLED Summary of this function goes here">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Meridional_Optics_Module -->
+<h1>traceMeridionalRay
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>UNTITLED Summary of this function goes here</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ Zpoints,Ypoints ] = traceMeridionalRay( y0,U0,refIndex,thick,curv) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">UNTITLED Summary of this function goes here
+   Detailed explanation goes here</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="QUTrace.html" class="code" title="function [Qf Uf] = QUTrace(Qi,Ui,initialSurf,finalSurf, refIndex,thick,curv)">QUTrace</a>	QUTrace: Performs QU trace for meridional rays of conventional optical system (spherical and rotationally symetric)</li><li><a href="convertPDToQUParameter.html" class="code" title="function [Q,U] = convertPDToQUParameter(P,D,surfVertexZ)">convertPDToQUParameter</a>	convert the Position and Direction parameter of ray to Q U parameter</li><li><a href="convertQUToPDParameter.html" class="code" title="function [P,D] = convertQUToPDParameter(Q,U,surfVertexZ,surfRadius)">convertQUToPDParameter</a>	convert the Q U parameter  to Position and Direction parameter of ray</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ Zpoints,Ypoints ] = traceMeridionalRay( y0,U0,refIndex,thick,curv)</a>
+0002 <span class="comment">%UNTITLED Summary of this function goes here</span>
+0003 <span class="comment">%   Detailed explanation goes here</span>
+0004 surfVertexZ = 0;
+0005 P0 = [0,y0,0];
+0006 D0 = [0,sin(U0),cos(U0)];
+0007 [Q,U] = <a href="convertPDToQUParameter.html" class="code" title="function [Q,U] = convertPDToQUParameter(P,D,surfVertexZ)">convertPDToQUParameter</a>(P0,D0,surfVertexZ);
+0008 Z = 0;
+0009 Y = y0;
+0010 <span class="keyword">for</span> kk=2:1:length(curv)
+0011     surfVertexZ = surfVertexZ+thick(kk-1);
+0012     surfRadius = 1/curv(kk);
+0013     [Q, U] = <a href="QUTrace.html" class="code" title="function [Qf Uf] = QUTrace(Qi,Ui,initialSurf,finalSurf, refIndex,thick,curv)">QUTrace</a>(Q,U,kk-1,kk, refIndex,thick,curv);
+0014     [P,D] = <a href="convertQUToPDParameter.html" class="code" title="function [P,D] = convertQUToPDParameter(Q,U,surfVertexZ,surfRadius)">convertQUToPDParameter</a>(Q,U,surfVertexZ,surfRadius);
+0015     Z = [Z P(3)];
+0016     Y = [Y P(2)];
+0017 <span class="keyword">end</span>
+0018 Zpoints = Z;
+0019 Ypoints = Y;
+0020 <span class="keyword">end</span>
+0021</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

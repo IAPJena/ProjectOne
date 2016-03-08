@@ -1,0 +1,7 @@
+function [ cheifRay ] = getCheifRay( input_args )
+%getCheifRay returns the cheif ray of the optical system starting from a
+%field point and passing through origin of the entrance pupil.
+
+
+end
+

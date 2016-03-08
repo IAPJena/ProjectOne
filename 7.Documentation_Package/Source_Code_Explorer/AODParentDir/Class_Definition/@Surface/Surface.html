@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Surface</title>
+  <meta name="keywords" content="Surface">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Surface -->
+<h1>Surface
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>	</li><li><a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>	</li><li><a href="Surface.html" class="code" title="">Surface</a>	</li><li><a href="TiltAndDecenter.html" class="code" title="function [surfaceCoordinateTM,nextReferenceCoordinateTM] = TiltAndDecenter(surf,refCoordinateTM,prevSurfCoordinateTM,prevThickness)">TiltAndDecenter</a>	TiltAndDecenter: Update the coordinate transformation matrix</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/OpticalSystem.html" class="code" title="">OpticalSystem</a>	</li><li><a href="Surface.html" class="code" title="">Surface</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function NewSurface = Surface()</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="Surface.html" class="code" title="">Surface</a> 
+0002     <span class="comment">% SURFACE Class</span>
+0003     <span class="comment">%   Defines each surface of the optical system</span>
+0004     <span class="comment">% Properties</span>
+0005     <span class="comment">%     %standard data</span>
+0006     <span class="comment">%     ObjectSurface % 1 object surface 0 else</span>
+0007     <span class="comment">%     ImageSurface % 1 image surface 0 else</span>
+0008     <span class="comment">%     Stop % 1 stop surface 0 else</span>
+0009     <span class="comment">%     Comment %name or notes on the surface</span>
+0010     <span class="comment">%     Type % Plane, Spherical, Even Aspherical,Odd Aspherical</span>
+0011     <span class="comment">%     Radius % radius of curviture</span>
+0012     <span class="comment">%     Thickness % thickness directly after the surface to the next surface</span>
+0013     <span class="comment">%     Glass % type of the glass that follows after the current surface to the next surface</span>
+0014     <span class="comment">%     DeviationMode % -1 reflective or 1 refractive surface</span>
+0015     <span class="comment">%     SemiDiameter % semidiameter of the surface</span>
+0016     <span class="comment">%     Position % Position of surfaces in Global coordinate</span>
+0017     <span class="comment">%</span>
+0018     <span class="comment">%     %aperture data</span>
+0019     <span class="comment">%     ApertureType % {'Floating' 'Circular' 'Rectangular' 'Elliptical'}</span>
+0020     <span class="comment">%     ApertureParameter %[param1:x half width, param2:y half width, param:x decenter, param4:y decenter]</span>
+0021     <span class="comment">%</span>
+0022     <span class="comment">%     %coating data</span>
+0023     <span class="comment">%     Coating % acoating object</span>
+0024     <span class="comment">%</span>
+0025     <span class="comment">%     CoatingType % {'None' 'Jones Matrix' 'Multilayer Coating'}</span>
+0026     <span class="comment">%     CoatingParameter % jones matrix of the coating</span>
+0027     <span class="comment">%</span>
+0028     <span class="comment">%     %aspheric data</span>
+0029     <span class="comment">%     ConicConstant % conic constant defining the surface</span>
+0030     <span class="comment">%     PloynomialCoefficients % array of A1 to A12</span>
+0031     <span class="comment">%</span>
+0032     <span class="comment">%     % tilt decenter data</span>
+0033     <span class="comment">%     TiltDecenterOrder % 12 character String showing the order in which</span>
+0034     <span class="comment">%                       % tilt and decenter operations are done.</span>
+0035     <span class="comment">%     TiltParameter % [Tilt X, Tilt Y, Tilt Z]</span>
+0036     <span class="comment">%     DecenterParameter % [Decenter X,Decenter Y]</span>
+0037     <span class="comment">%     TiltMode % coordinate system for subsequent surfaces</span>
+0038     <span class="comment">%              % DAR Decenter and return, NAX New axis.BEN Bend surface</span>
+0039     <span class="comment">%</span>
+0040     <span class="comment">%      % CoordinateTM = Coordinate transform matrix is a 4x4 matrix</span>
+0041     <span class="comment">%      % with both global vertex vector and coordinate rotation</span>
+0042     <span class="comment">%      % matrix which can be used to perform Global to Local coordinate</span>
+0043     <span class="comment">%      % transformation for the surface and the optical components after the</span>
+0044     <span class="comment">%      % surface</span>
+0045     <span class="comment">%     SurfaceCoordinateTM % surface loacal coordinate</span>
+0046     <span class="comment">%     ReferenceCoordinateTM % reference coordinate after the surface</span>
+0047     <span class="comment">%                           % (starts at surface vertex)</span>
+0048     <span class="comment">%</span>
+0049     <span class="comment">%     % Others not yet used</span>
+0050     <span class="comment">%     SurfaceColor %Color of the surface drawing [R G B](RGB values)</span>
+0051     <span class="comment">%     Hidden % 1 hidden surface 0 else</span>
+0052     <span class="comment">%     Ignored % 1 ignored surface 0 else</span>
+0053     <span class="comment">%</span>
+0054     <span class="comment">%     % Are already changed so check for all occurances in the codes</span>
+0055     <span class="comment">%     Size % radius of circular or sides of rectangular surface. But now repplaced by Aperture Parameter</span>
+0056     <span class="comment">%     SuccessiveRotationAngles % successive rotation angles to get the local coordinate of the surface. But now replaced with Tilt</span>
+0057     <span class="comment">%     % Coating %type of coating of the surface 0 single interface. But now replaced with coating type and coating parameter</span>
+0058     <span class="comment">%     RefractiveIndex % refractive index of the glass that follows after the current surface to the next surface</span>
+0059 
+0060     <span class="comment">% Properties</span>
+0061     <span class="comment">%   No methods yet defined.</span>
+0062     
+0063     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0064     <span class="comment">%</span>
+0065 
+0066     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0067     <span class="comment">%</span>
+0068 
+0069     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0070     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0071     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0072     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0073     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0074     <span class="comment">%   Institute of Applied Physics</span>
+0075     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0076                              
+0077     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0078     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0079     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0080 
+0081     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0082     
+0083     properties
+0084         <span class="comment">%standard data</span>
+0085         ObjectSurface <span class="comment">% 1 object surface 0 else</span>
+0086         ImageSurface <span class="comment">% 1 image surface 0 else</span>
+0087         Stop <span class="comment">% 1 stop surface 0 else</span>
+0088         Comment <span class="comment">%name or notes on the surface</span>
+0089         Type <span class="comment">% Plane, Spherical, Even Aspherical,Odd Aspherical</span>
+0090         Radius <span class="comment">% radius of curviture</span>
+0091         Thickness <span class="comment">% thickness directly after the surface to the next surface</span>
+0092         <a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a> <span class="comment">% type of the glass that follows after the current surface to the next surface</span>
+0093         DeviationMode <span class="comment">% -1 reflective or 1 refractive surface</span>
+0094         SemiDiameter <span class="comment">% semidiameter of the surface</span>
+0095         Position <span class="comment">% Position of surfaces in Global coordinate</span>
+0096         
+0097         <span class="comment">%aperture data</span>
+0098         ApertureType <span class="comment">% {'Floating' 'Circular' 'Rectangular' 'Elliptical'}</span>
+0099         ApertureParameter <span class="comment">%[param1:x half width, param2:y half width, param:x decenter, param4:y decenter]</span>
+0100         
+0101         <span class="comment">%coating data</span>
+0102         <a href="../../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a> <span class="comment">% acoating object</span>
+0103         
+0104         CoatingType <span class="comment">% {'None' 'Jones Matrix' 'Multilayer Coating'}</span>
+0105         CoatingParameter <span class="comment">% jones matrix of the coating</span>
+0106         
+0107         <span class="comment">%aspheric data</span>
+0108         ConicConstant <span class="comment">% conic constant defining the surface</span>
+0109         PloynomialCoefficients <span class="comment">% array of A1 to A12</span>
+0110         
+0111         <span class="comment">% tilt decenter data</span>
+0112         TiltDecenterOrder <span class="comment">% 12 character String showing the order in which</span>
+0113                           <span class="comment">% tilt and decenter operations are done.</span>
+0114         TiltParameter <span class="comment">% [Tilt X, Tilt Y, Tilt Z]</span>
+0115         DecenterParameter <span class="comment">% [Decenter X,Decenter Y]</span>
+0116         TiltMode <span class="comment">% coordinate system for subsequent surfaces</span>
+0117                  <span class="comment">% DAR Decenter and return, NAX New axis.BEN Bend surface</span>
+0118          
+0119          <span class="comment">% CoordinateTM = Coordinate transform matrix is a 4x4 matrix</span>
+0120          <span class="comment">% with both global vertex vector and coordinate rotation</span>
+0121          <span class="comment">% matrix which can be used to perform Global to Local coordinate</span>
+0122          <span class="comment">% transformation for the surface and the optical components after the</span>
+0123          <span class="comment">% surface</span>
+0124         SurfaceCoordinateTM <span class="comment">% surface loacal coordinate</span>
+0125         ReferenceCoordinateTM <span class="comment">% reference coordinate after the surface</span>
+0126                               <span class="comment">% (starts at surface vertex)</span>
+0127             
+0128         <span class="comment">% Others not yet used</span>
+0129         SurfaceColor <span class="comment">%Color of the surface drawing [R G B](RGB values)</span>
+0130         Hidden <span class="comment">% 1 hidden surface 0 else</span>
+0131         Ignored <span class="comment">% 1 ignored surface 0 else</span>
+0132         
+0133         <span class="comment">% Are already changed so check for all occurances in the codes</span>
+0134         Size <span class="comment">% radius of circular or sides of rectangular surface. But now repplaced by Aperture Parameter</span>
+0135         SuccessiveRotationAngles <span class="comment">% successive rotation angles to get the local coordinate of the surface. But now replaced with Tilt</span>
+0136         <span class="comment">% Coating %type of coating of the surface 0 single interface. But now replaced with coating type and coating parameter</span>
+0137         RefractiveIndex <span class="comment">% refractive index of the glass that follows after the current surface to the next surface</span>
+0138 
+0139     <span class="keyword">end</span>
+0140     
+0141     methods
+0142         <span class="comment">% Constructor</span>
+0143         <a name="_sub0" href="#_subfunctions" class="code">function NewSurface = Surface()</a>
+0144             NewSurface.ObjectSurface = 0;
+0145             NewSurface.ImageSurface = 0;
+0146             NewSurface.Stop = 0;
+0147             NewSurface.Comment = <span class="string">''</span>;
+0148             NewSurface.Type = <span class="string">''</span>;
+0149             NewSurface.Radius = 0;
+0150             NewSurface.Thickness = 0;
+0151             NewSurface.Glass = <a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>;
+0152             NewSurface.DeviationMode = <span class="string">'+1 Refractive'</span>;
+0153             NewSurface.SemiDiameter = 0;
+0154             NewSurface.Position = [0 0 0];
+0155             NewSurface.ApertureType = <span class="string">''</span>;
+0156             NewSurface.ApertureParameter = [0 0 0 0];
+0157             NewSurface.Coating = <a href="../../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>;
+0158             NewSurface.CoatingType = <span class="string">''</span>;
+0159             NewSurface.CoatingParameter = [0 0;0 0];    
+0160             NewSurface.ConicConstant = 0;
+0161             NewSurface.PloynomialCoefficients = <span class="keyword">...</span>
+0162                 [0 0 0 0 0 0 0 0 0 0 0 0];
+0163             NewSurface.TiltDecenterOrder = <span class="string">'DxDyDzTxTyTz'</span>;   
+0164             NewSurface.TiltParameter = [0 0 0];
+0165             NewSurface.DecenterParameter = [0 0];
+0166             NewSurface.TiltMode = <span class="string">'DAR'</span>; 
+0167             <span class="comment">% TM = transformation Matrix</span>
+0168             NewSurface.SurfaceCoordinateTM = <span class="keyword">...</span><span class="comment"> </span>
+0169                 [1 0 0 0;0 1 0 0;0 0 1 0;0 0 0 1];
+0170             NewSurface.ReferenceCoordinateTM = <span class="keyword">...</span>
+0171                 [1 0 0 0;0 1 0 0;0 0 1 0;0 0 0 1];            
+0172             NewSurface.SurfaceColor = <span class="string">''</span>;
+0173             NewSurface.Hidden = 0;
+0174             NewSurface.Ignored = 0;      
+0175             NewSurface.Size = 0; 
+0176             NewSurface.SuccessiveRotationAngles = [0 0 0];      
+0177             NewSurface.RefractiveIndex = 0;                         
+0178         <span class="keyword">end</span>
+0179         <span class="comment">% Signatures of functions in separate files</span>
+0180         [surfaceCoordinateTM,nextReferenceCoordinateTM] = <a href="TiltAndDecenter.html" class="code" title="function [surfaceCoordinateTM,nextReferenceCoordinateTM] = TiltAndDecenter(surf,refCoordinateTM,prevSurfCoordinateTM,prevThickness)">TiltAndDecenter</a><span class="keyword">...</span>
+0181                 (surf,refCoordinateTM,prevSurfCoordinateTM,prevThickness)
+0182     <span class="keyword">end</span>
+0183     
+0184 <span class="keyword">end</span>
+0185</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

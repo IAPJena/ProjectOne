@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of InitializeWelcomePanel</title>
+  <meta name="keywords" content="InitializeWelcomePanel">
+  <meta name="description" content="InitializeWelcomePanel: Define and initialized the uicontrols of the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>InitializeWelcomePanel
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>InitializeWelcomePanel: Define and initialized the uicontrols of the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function InitializeWelcomePanel(parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> InitializeWelcomePanel: Define and initialized the uicontrols of the 
+ welcome Panel
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function InitializeWelcomePanel(parentWindow)</a>
+0002 <span class="comment">% InitializeWelcomePanel: Define and initialized the uicontrols of the</span>
+0003 <span class="comment">% welcome Panel</span>
+0004 <span class="comment">% Member of AODParentWindow class</span>
+0005 
+0006     aodHandles = parentWindow.AODParentHandles;
+0007     fontSize = aodHandles.FontSize;
+0008     fontName = aodHandles.FontName;
+0009     
+0010     aodHandles.text41 = uicontrol( <span class="keyword">...</span>
+0011         <span class="string">'Parent'</span>, aodHandles.panelWelcome, <span class="keyword">...</span>
+0012         <span class="string">'Tag'</span>, <span class="string">'text41'</span>, <span class="keyword">...</span>
+0013         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0014         <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0015         <span class="string">'Position'</span>, [0.00633579725448785 0.829659318637274 0.983104540654699 0.110220440881763], <span class="keyword">...</span>
+0016         <span class="string">'FontName'</span>, fontName,<span class="string">'FontSize'</span>, 18, <span class="keyword">...</span>
+0017         <span class="string">'String'</span>, <span class="string">'Optical System Analyzer Main Window'</span>);
+0018 
+0019     aodHandles.text42 = uicontrol( <span class="keyword">...</span>
+0020         <span class="string">'Parent'</span>, aodHandles.panelWelcome, <span class="keyword">...</span>
+0021         <span class="string">'Tag'</span>, <span class="string">'text42'</span>, <span class="keyword">...</span>
+0022         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0023         <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0024         <span class="string">'Position'</span>, [0.00633579725448785 0.555110220440882 0.983104540654699 0.062124248496994], <span class="keyword">...</span>
+0025         <span class="string">'FontName'</span>, fontName,<span class="string">'FontSize'</span>, 14, <span class="keyword">...</span>
+0026         <span class="string">'String'</span>, <span class="string">'Optical System Design Research Group'</span>);
+0027 
+0028     aodHandles.text43 = uicontrol( <span class="keyword">...</span>
+0029         <span class="string">'Parent'</span>, aodHandles.panelWelcome, <span class="keyword">...</span>
+0030         <span class="string">'Tag'</span>, <span class="string">'text43'</span>, <span class="keyword">...</span>
+0031         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0032         <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0033         <span class="string">'Position'</span>, [0.00633579725448785 0.649298597194389 0.983104540654699 0.062124248496994], <span class="keyword">...</span>
+0034         <span class="string">'FontName'</span>, fontName,<span class="string">'FontSize'</span>, 15, <span class="keyword">...</span>
+0035         <span class="string">'String'</span>, <span class="string">'Institute of Applied Physics'</span>);
+0036 
+0037     aodHandles.text44 = uicontrol( <span class="keyword">...</span>
+0038         <span class="string">'Parent'</span>, aodHandles.panelWelcome, <span class="keyword">...</span>
+0039         <span class="string">'Tag'</span>, <span class="string">'text44'</span>, <span class="keyword">...</span>
+0040         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0041         <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0042         <span class="string">'Position'</span>, [0.00633579725448785 0.731462925851704 0.983104540654699 0.062124248496994], <span class="keyword">...</span>
+0043         <span class="string">'FontName'</span>, fontName,<span class="string">'FontSize'</span>, 17, <span class="keyword">...</span>
+0044         <span class="string">'String'</span>, <span class="string">'Friedrich Schiller University of Jena'</span>);
+0045     parentWindow.AODParentHandles = aodHandles;
+0046 <span class="keyword">end</span>
+0047</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

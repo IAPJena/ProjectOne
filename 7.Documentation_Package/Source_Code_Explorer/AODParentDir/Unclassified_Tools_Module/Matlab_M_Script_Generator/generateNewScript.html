@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of generateNewScript</title>
+  <meta name="keywords" content="generateNewScript">
+  <meta name="description" content="generateNewScript Generates script files which is compatable with newer">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Unclassified_Tools_Module --><!-- menu.html Matlab_M_Script_Generator -->
+<h1>generateNewScript
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>generateNewScript Generates script files which is compatable with newer</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function newScriptGenerated = generateNewScript( opticalSystem, initialRay ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">generateNewScript Generates script files which is compatable with newer
+version of the toolbox
+   Detailed explanation goes here</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function newScriptGenerated = generateNewScript( opticalSystem, initialRay )</a>
+0002 <span class="comment">%generateNewScript Generates script files which is compatable with newer</span>
+0003 <span class="comment">%version of the toolbox</span>
+0004 <span class="comment">%   Detailed explanation goes here</span>
+0005 
+0006 <span class="keyword">if</span> 1 <span class="comment">% check for initial ray</span>
+0007     <span class="comment">% Generate script file</span>
+0008     disp(<span class="string">'clc;'</span>);
+0009     disp(<span class="string">'clear all;'</span>);
+0010     disp(<span class="string">'close all;'</span>);
+0011     disp(<span class="string">'format long;'</span>);
+0012     disp(<span class="string">'% Initial ray'</span>);
+0013 
+0014     
+0015     
+0016     disp(<span class="string">'initialRay = Ray;'</span>);
+0017     disp([<span class="string">'initialRay.Position = ['</span>,num2str(initialRay.Position),<span class="string">'];'</span>]);
+0018     disp([<span class="string">'initialRay.Direction = ['</span>,num2str(initialRay.Direction),<span class="string">'];'</span>]);
+0019     disp([<span class="string">'initialRay.JonesVector = ['</span>,num2str(initialRay.JonesVector(1,:)),<span class="string">';'</span>,num2str(initialRay.JonesVector(2,:)),<span class="string">'];'</span>]);
+0020     disp([<span class="string">'initialRay.Polarized = ['</span>,num2str(initialRay.Polarized),<span class="string">'];'</span>]);
+0021     disp([<span class="string">'initialRay.Wavelength = ['</span>,num2str(initialRay.Wavelength),<span class="string">'];'</span>]);
+0022 <span class="keyword">else</span>
+0023     disp(<span class="string">'No initial ray defined'</span>);
+0024 <span class="keyword">end</span>
+0025 
+0026 <span class="keyword">if</span> 1 <span class="comment">% check for opticalSystem</span>
+0027         <span class="comment">%%Display the optical system script</span>
+0028     disp(<span class="string">'newSystem = OpticalSystem;'</span>);
+0029     disp([<span class="string">'newSystem.NumberOfSurface = ['</span>, num2str(opticalSystem.NumberOfSurface),<span class="string">'];'</span>]);
+0030     <span class="keyword">for</span> k = 1:1:opticalSystem.NumberOfSurface       
+0031         
+0032         
+0033         <span class="keyword">if</span> opticalSystem.SurfaceArray(k).ObjectSurface
+0034             disp(<span class="string">'%Object Surface'</span>);
+0035         <span class="keyword">elseif</span> opticalSystem.SurfaceArray(k).ImageSurface
+0036             disp(<span class="string">'%Image Surface'</span>);
+0037         <span class="keyword">elseif</span> opticalSystem.SurfaceArray(k).Stop
+0038             disp(<span class="string">'%Stop Surface'</span>);
+0039         <span class="keyword">else</span>
+0040             disp(<span class="string">'%Other Surface'</span>);
+0041         <span class="keyword">end</span>
+0042         <span class="comment">%standard data</span>
+0043         disp(<span class="string">'%standard data'</span>);
+0044         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').ObjectSurface = ['</span>, num2str(opticalSystem.SurfaceArray(k).ObjectSurface),<span class="string">'];'</span>]);
+0045         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').ImageSurface = ['</span>, num2str(opticalSystem.SurfaceArray(k).ImageSurface),<span class="string">'];'</span>]);
+0046         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').Stop = ['</span>, num2str(opticalSystem.SurfaceArray(k).Stop),<span class="string">'];'</span>]);
+0047         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').Comment = ['''</span>, (opticalSystem.SurfaceArray(k).Comment),<span class="string">'''];'</span>]);
+0048         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').Type = ['''</span>, (opticalSystem.SurfaceArray(k).Type),<span class="string">'''];'</span>]);
+0049         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').Radius = ['</span>, num2str(opticalSystem.SurfaceArray(k).Radius),<span class="string">'];'</span>]);
+0050         <span class="comment">%disp(['newSystem.SurfaceArray(',num2str(k),').Thickness = [', num2str(opticalSystem.SurfaceArray(k).Thickness),'];']);</span>
+0051         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').Glass = ['''</span>, (opticalSystem.SurfaceArray(k).Glass),<span class="string">'''];'</span>]);
+0052         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').DeviationMode = ['''</span>, num2str(opticalSystem.SurfaceArray(k).DeviationMode),<span class="string">'''];'</span>]);
+0053         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').SemiDiameter = ['</span>, num2str(opticalSystem.SurfaceArray(k).SemiDiameter),<span class="string">'];'</span>]);
+0054         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').Position = ['</span>, num2str(opticalSystem.SurfaceArray(k).Position),<span class="string">'];'</span>]);
+0055         
+0056         <span class="comment">%aperture data</span>
+0057         disp(<span class="string">'%aperture data'</span>);
+0058         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').ApertureType = ['''</span>, num2str(opticalSystem.SurfaceArray(k).ApertureType),<span class="string">'''];'</span>]);
+0059         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').ApertureParameter = ['</span>, num2str(opticalSystem.SurfaceArray(k).ApertureParameter),<span class="string">'];'</span>]);
+0060         
+0061         <span class="comment">%coating data</span>
+0062         disp(<span class="string">'%coating data'</span>);
+0063         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').CoatingType = ['''</span>, opticalSystem.SurfaceArray(k).CoatingType,<span class="string">'''];'</span>]);
+0064         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').CoatingParameter = ['</span>, opticalSystem.SurfaceArray(k).CoatingParameter,<span class="string">'];'</span>]);
+0065         <span class="comment">%CoatingType % {'None' 'Jones Matrix' 'Multilayer Coating'}</span>
+0066         
+0067         <span class="comment">%aspheric data</span>
+0068         disp(<span class="string">'%aspheric data'</span>);
+0069         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').ConicConstant = ['</span>, num2str(opticalSystem.SurfaceArray(k).ConicConstant),<span class="string">'];'</span>]);
+0070         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').PloynomialCoefficients = ['</span>, num2str(opticalSystem.SurfaceArray(k).PloynomialCoefficients),<span class="string">'];'</span>]);        
+0071         
+0072         <span class="comment">%tilt decenter data</span>
+0073         disp(<span class="string">'%tilt decenter data'</span>);
+0074         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').TiltDecenterOrder = ['''</span>, (opticalSystem.SurfaceArray(k).TiltDecenterOrder),<span class="string">'''];'</span>]);
+0075         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').TiltParameter = ['</span>, num2str(opticalSystem.SurfaceArray(k).TiltParameter),<span class="string">'];'</span>]);
+0076         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').DecenterParameter = ['</span>, num2str(opticalSystem.SurfaceArray(k).DecenterParameter),<span class="string">'];'</span>]);
+0077         disp([<span class="string">'newSystem.SurfaceArray('</span>,num2str(k),<span class="string">').TiltMode = ['''</span>, num2str(opticalSystem.SurfaceArray(k).TiltMode),<span class="string">'''];'</span>]);        
+0078 <span class="comment">%</span>
+0079 <span class="comment">%         %unused datas</span>
+0080 <span class="comment">%         disp('%unused datas');</span>
+0081 <span class="comment">%         disp(['%newSystem.SurfaceArray(',num2str(k),').Thickness = [', (opticalSystem.SurfaceArray(k).SurfaceColor),'];']);</span>
+0082 <span class="comment">%         disp(['%newSystem.SurfaceArray(',num2str(k),').Thickness = [', num2str(opticalSystem.SurfaceArray(k).Hidden),'];']);</span>
+0083 <span class="comment">%         disp(['%newSystem.SurfaceArray(',num2str(k),').Thickness = [', num2str(opticalSystem.SurfaceArray(k).Ignored),'];']);</span>
+0084         
+0085 
+0086            
+0087     <span class="keyword">end</span>
+0088         disp(<span class="string">'t1=clock;  %start to count the time'</span>);
+0089         disp(<span class="string">'%================================ RAYTRACE ========================'</span>);
+0090         disp(<span class="string">'polarizedRayTracerResult = polarizedRayTracer( newSystem, initialRay);'</span>);
+0091         disp(<span class="string">'disp(''System Data'');'</span>);
+0092         disp(<span class="string">'disp(newSystem);'</span>);
+0093         disp(<span class="string">'disp(newSystem.SurfaceArray);'</span>);
+0094         disp(<span class="string">'disp(''Ray Position'');'</span>);
+0095         disp(<span class="string">'disp(polarizedRayTracerResult.RayIntersectionPoint);'</span>);  
+0096         disp(<span class="string">'disp(''Ray Direction'');'</span>);
+0097         disp(<span class="string">'disp(polarizedRayTracerResult.ExitRayDirection);'</span>);
+0098         disp(<span class="string">'disp(''Surface Normals'');'</span>);
+0099         disp(<span class="string">'disp(polarizedRayTracerResult.SurfaceNormal);'</span>);
+0100         disp(<span class="string">'disp(''Incident Angle'');'</span>);
+0101         disp(<span class="string">'disp(polarizedRayTracerResult.IncidenceAngle);'</span>);
+0102         disp(<span class="string">'disp(''Path Length'');'</span>);
+0103         disp(<span class="string">'disp(polarizedRayTracerResult.PathLength);'</span>);   
+0104         disp(<span class="string">'disp(polarizedRayTracerResult.PathLength);'</span>);
+0105         disp(<span class="string">'disp(''Polarization Vector Before Coating'');'</span>);
+0106         disp(<span class="string">'disp(polarizedRayTracerResult.PolarizationVectorBeforeCoating);'</span>);
+0107         disp(<span class="string">'disp(''Polarization Vector After Coating'');'</span>);
+0108         disp(<span class="string">'disp(polarizedRayTracerResult.PolarizationVectorAfterCoating);'</span>);
+0109         disp(<span class="string">'disp(''Jones Vector Before Coating'');'</span>);
+0110         disp(<span class="string">'disp(polarizedRayTracerResult.JonesVector);'</span>);
+0111         disp(<span class="string">'disp(''Jones Vector After Coating'');'</span>);
+0112         disp(<span class="string">'disp(polarizedRayTracerResult.JonesVector);'</span>);
+0113         disp(<span class="string">'disp(''Polarization Ellipse Parameters After Coating'');'</span>);
+0114         disp(<span class="string">'disp(polarizedRayTracerResult.PolarizationEllipseAfterCoating);'</span>);
+0115 
+0116         disp(<span class="string">'%=================================== END ============================='</span>);
+0117         disp(<span class="string">'t2=clock;'</span>);
+0118         disp(<span class="string">'d = drawSystemLayOut(newSystem);'</span>);
+0119         disp(<span class="string">'plot3(polarizedRayTracerResult.RayIntersectionPoint(:,2),polarizedRayTracerResult.RayIntersectionPoint(:,3),polarizedRayTracerResult.RayIntersectionPoint(:,1)); hold on;'</span>);  
+0120         disp(<span class="string">'plot3(polarizedRayTracerResult.RayIntersectionPoint(:,2),polarizedRayTracerResult.RayIntersectionPoint(:,3),polarizedRayTracerResult.RayIntersectionPoint(:,1),''+''); hold off;'</span>);
+0121         disp(<span class="string">'time=etime(t2,t1);'</span>);
+0122         disp(<span class="string">'display(time);'</span>);
+0123 <span class="keyword">else</span>
+0124         disp(<span class="string">'No optical system defined'</span>);
+0125 <span class="keyword">end</span>
+0126 
+0127 <span class="keyword">end</span>
+0128</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotCoatingRetardanceVsAngle</title>
+  <meta name="keywords" content="plotCoatingRetardanceVsAngle">
+  <meta name="description" content="Plot retardance related to the coating for both transmission">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Coating -->
+<h1>plotCoatingRetardanceVsAngle
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Plot retardance related to the coating for both transmission</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function plotCoatingRetardanceVsAngle(Coating,wavLenInUm,minAngle,maxAngle,angleStep,primWavLenInUm,indexBefore,indexAfter,axesHandle,tableHandle,textHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Plot retardance related to the coating for both transmission
+ and reflection versus angle for fixed wavelength</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeProperRetardance.html" class="code" title="function allRetardance = computeProperRetardance( PorJ,QorR )">computeProperRetardance</a>	computeProperRetardance:  computes proper retardance associated with a</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plotCoatingRetardanceVsAngle(Coating,wavLenInUm,minAngle,maxAngle,</a><span class="keyword">...</span>
+0002     angleStep,primWavLenInUm,indexBefore,indexAfter,axesHandle,tableHandle,textHandle)
+0003     <span class="comment">% Plot retardance related to the coating for both transmission</span>
+0004     <span class="comment">% and reflection versus angle for fixed wavelength</span>
+0005     
+0006     <span class="comment">% Code Modification</span>
+0007     <span class="comment">% Mar 07,2014 : By Norman G.</span>
+0008     <span class="comment">% Check for inputs</span>
+0009     <span class="comment">% deafualt inputs</span>
+0010     <span class="keyword">if</span> nargin &lt; 7
+0011         disp([<span class="string">'Error: The function needs atleast 7 inputs: '</span><span class="keyword">...</span>
+0012         <span class="string">'Coating,wavLen,angleStep,minAngle,maxAngle,indexBefore and indexAfter.'</span>]);
+0013         <span class="keyword">return</span>;
+0014     <span class="keyword">elseif</span> nargin == 7
+0015         axesHandle = axes(<span class="string">'Parent'</span>,figure,<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+0016             <span class="string">'Position'</span>,[0.1,0.1,0.8,0.8]);
+0017     <span class="keyword">else</span>
+0018     <span class="keyword">end</span>
+0019     
+0020     localIncidenceAngle = minAngle:angleStep:maxAngle;
+0021     [ampRs,ampRp,powRs,powRp] = <span class="keyword">...</span>
+0022             Coating.getReflectionCoefficients(wavLenInUm,<span class="keyword">...</span>
+0023             localIncidenceAngle*pi/180,indexBefore,indexAfter,primWavLenInUm); 
+0024     [ampTs,ampTp,powTs,powTp] = <span class="keyword">...</span>
+0025             Coating.getTransmissionCoefficients(wavLenInUm,<span class="keyword">...</span>
+0026             localIncidenceAngle*pi/180,indexBefore,indexAfter,primWavLenInUm); 
+0027 
+0028     <span class="comment">% Reshape the vector to 1x1xN dimensional matrix and merge to get Jones</span>
+0029     <span class="comment">% matrix of 2x2xN size</span>
+0030     ampRs3d = reshape(ampRs,[1,1,length(ampRs)]);
+0031     ampRp3d = reshape(ampRp,[1,1,length(ampRp)]);
+0032     ampTs3d = reshape(ampTs,[1,1,length(ampTs)]);
+0033     ampTp3d = reshape(ampTp,[1,1,length(ampTp)]);
+0034     
+0035     powRs3d = reshape(powRs,[1,1,length(powRs)]);
+0036     powRp3d = reshape(powRp,[1,1,length(powRp)]);
+0037     powTs3d = reshape(powTs,[1,1,length(powTs)]);
+0038     powTp3d = reshape(powTp,[1,1,length(powTp)]);    
+0039     zeros3d = zeros(1,1,length(powRs));        
+0040 
+0041         
+0042     <span class="comment">% decide which of three fresnels coefficients to use for Jones Matrix</span>
+0043     <span class="comment">% Case 1: amplitude coefficients not additive but may be complex.</span>
+0044     <span class="comment">% (I think this one is correct)</span>
+0045     JRM_Amp = cat(1,(cat(2,ampRs3d,zeros3d)),(cat(2,zeros3d,ampRp3d)));
+0046     JTM_Amp = cat(1,(cat(2,ampTs3d,zeros3d)),(cat(2,zeros3d,ampTp3d)));
+0047     
+0048     <span class="comment">% Case 2: intensity coefficients not additive the abs of pow coeff.</span>
+0049 
+0050     <span class="comment">% Case 3: power coefficients additive to 1</span>
+0051     <span class="comment">% (As Used as in Zemax)</span>
+0052     JRM_Pow = cat(1,(cat(2,powRs3d,zeros3d)),(cat(2,zeros3d,powRp3d)));
+0053     JTM_Pow = cat(1,(cat(2,powTs3d,zeros3d)),(cat(2,zeros3d,powTp3d)));        
+0054     
+0055     
+0056     zeros2d = zeros(1,length(powRs)); 
+0057     ones2d = ones(1,length(powRs));
+0058     retardanceTrans = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeProperRetardance.html" class="code" title="function allRetardance = computeProperRetardance( PorJ,QorR )">computeProperRetardance</a>(JTM_Amp,zeros2d);
+0059             <span class="comment">% check for TIR</span>
+0060             nonTIRIndices = find(sum(sum(JTM_Pow)));
+0061             retardanceTrans = retardanceTrans - pi/2;            
+0062             retardanceTrans(nonTIRIndices) = retardanceTrans(nonTIRIndices) + pi/2;
+0063     retardanceRef =  <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeProperRetardance.html" class="code" title="function allRetardance = computeProperRetardance( PorJ,QorR )">computeProperRetardance</a>(JRM_Amp,ones2d);     
+0064     
+0065     ang = minAngle:angleStep:maxAngle;
+0066     plot(axesHandle,ang,retardanceTrans*180/pi,ang,retardanceRef*180/pi);
+0067     hleg1 = legend(axesHandle,<span class="string">'Transmission Retardance'</span>,<span class="string">'Reflection Retardance'</span>);
+0068     set(hleg1,<span class="string">'Location'</span>,<span class="string">'NorthWest'</span>) 
+0069 
+0070     xlabel(axesHandle,<span class="string">'Incidence Angle (deg)'</span>,<span class="string">'FontSize'</span>,12)
+0071     ylabel(axesHandle,<span class="string">'Retardance (deg)'</span>,<span class="string">'FontSize'</span>,12)
+0072     title(axesHandle,[Coating.Name,<span class="string">': Retardance Vs Incidence Angle'</span>],<span class="string">'FontSize'</span>,12)            
+0073     <span class="keyword">if</span> nargin &gt;= 9
+0074         <span class="comment">% Display tabular data on the tableHandle</span>
+0075         newTable1 = [ang',retardanceTrans',retardanceRef'];
+0076         newTable1 = mat2cell(newTable1,[ones(1,size(newTable1,1))],[ones(1,size(newTable1,2))]);
+0077         columnName1 = {<span class="string">'Angle (deg)'</span>,<span class="string">'Transmission Retardance'</span>,<span class="string">'Reflection Retardance'</span>};
+0078         columnWidth1 = {<span class="string">'auto'</span>,<span class="string">'auto'</span>,<span class="string">'auto'</span>};
+0079         set(tableHandle, <span class="string">'Data'</span>, newTable1,<span class="keyword">...</span>
+0080             <span class="string">'ColumnName'</span>, columnName1,<span class="string">'ColumnWidth'</span>,columnWidth1);
+0081     <span class="keyword">end</span>
+0082     <span class="keyword">if</span> nargin &gt;= 10
+0083         <span class="comment">% Write some note on the text window</span>
+0084         set(textHandle,<span class="string">'String'</span>,<span class="string">'No text to display ...'</span>);
+0085     <span class="keyword">end</span>
+0086 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

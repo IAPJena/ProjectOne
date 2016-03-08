@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of performParaxialAnalysis</title>
+  <meta name="keywords" content="performParaxialAnalysis">
+  <meta name="description" content="performParaxialAnalysis: Performs paraxial analysis on the given optical">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>performParaxialAnalysis
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>performParaxialAnalysis: Performs paraxial analysis on the given optical</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function performParaxialAnalysis(optSystem,wavLen,showOptions,textHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> performParaxialAnalysis: Performs paraxial analysis on the given optical
+ system and displays results in the textHandle based on the showOptions
+ structure.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001  <a name="_sub0" href="#_subfunctions" class="code">function performParaxialAnalysis(optSystem,wavLen,showOptions,textHandle)</a>
+0002  <span class="comment">% performParaxialAnalysis: Performs paraxial analysis on the given optical</span>
+0003  <span class="comment">% system and displays results in the textHandle based on the showOptions</span>
+0004  <span class="comment">% structure.</span>
+0005  
+0006  <span class="comment">% Default variables</span>
+0007  <span class="keyword">if</span> nargin &lt; 1
+0008      disp(<span class="string">'Error: The performParaxialAnalysis needs atleat the optical system.'</span>);
+0009      <span class="keyword">return</span>;
+0010  <span class="keyword">elseif</span> nargin == 1
+0011     wavLen = optSystem.getPrimaryWavelength;      
+0012      <span class="comment">% Show all results to the command window</span>
+0013     dispInTextHandle = 0;
+0014     showOptions.TotalNumberOfSurfaces = 1;
+0015     showOptions.StopSurfaceIndex = 1;
+0016     showOptions.SystemTotalTrack = 1;
+0017     showOptions.EffectiveFocalLength = 1;
+0018     showOptions.BackFocalLength = 1;
+0019     showOptions.AngularMagnification = 1;
+0020     showOptions.EntrancePupilDiameter = 1;
+0021     showOptions.EntrancePupilLocation = 1;
+0022     showOptions.ExitPupilDiameter = 1;
+0023     showOptions.ExitPupilLocation = 1;
+0024     showOptions.ObjectSpaceNA = 1;
+0025     showOptions.ImageSpaceNA = 1; 
+0026   <span class="keyword">elseif</span> nargin == 2    
+0027      <span class="comment">% Show all results to the command window</span>
+0028     dispInTextHandle = 0;
+0029     showOptions.TotalNumberOfSurfaces = 1;
+0030     showOptions.StopSurfaceIndex = 1;
+0031     showOptions.SystemTotalTrack = 1;
+0032     showOptions.EffectiveFocalLength = 1;
+0033     showOptions.BackFocalLength = 1;
+0034     showOptions.AngularMagnification = 1;
+0035     showOptions.EntrancePupilDiameter = 1;
+0036     showOptions.EntrancePupilLocation = 1;
+0037     showOptions.ExitPupilDiameter = 1;
+0038     showOptions.ExitPupilLocation = 1;
+0039     showOptions.ObjectSpaceNA = 1;
+0040     showOptions.ImageSpaceNA = 1;    
+0041  <span class="keyword">elseif</span> nargin == 3
+0042      <span class="comment">% Show the selected results to the command window</span>
+0043      dispInTextHandle = 0;     
+0044  <span class="keyword">elseif</span> nargin == 4
+0045       <span class="comment">% Show the selected results to the given text window</span>
+0046       dispInTextHandle = 1;
+0047  <span class="keyword">end</span>
+0048  
+0049     nSurfaces = optSystem.NumberOfSurfaces;
+0050     stopIndex = optSystem.getStopIndex;        
+0051     effectiveFocalLength = optSystem.getEffectiveFocalLength;     
+0052     totalTrack = optSystem.getTotalTrack;
+0053 <span class="comment">%     if optSystem.SurfaceArray(1).Thickness &gt; 10^10</span>
+0054 <span class="comment">%         paraxialMagnification = 0;</span>
+0055 <span class="comment">%         angularMagnification = optSystem.getAngularMagnification;</span>
+0056 <span class="comment">%     else</span>
+0057 <span class="comment">%         paraxialMagnification = optSystem.getParaxialMagnification;</span>
+0058 <span class="comment">%         angularMagnification = 0;</span>
+0059 <span class="comment">%     end</span>
+0060     angularMagnification = optSystem.getAngularMagnification(wavLen);
+0061     objectNA = optSystem.getObjectNA(wavLen);
+0062     entrancePupilDiameter = optSystem.getEntrancePupilDiameter(wavLen);
+0063     entrancePupilLocation = optSystem.getEntrancePupilLocation(wavLen);
+0064     exitPupilLocation = optSystem.getExitPupilLocation(wavLen);
+0065     exitPupilDiameter = optSystem.getExitPupilDiameter(wavLen);
+0066     backFocalLength = optSystem.getBackFocalLength(wavLen);
+0067     imageNA = optSystem.getImageNA(wavLen);
+0068     
+0069     textResult = char(<span class="string">''</span>,<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Paraxial Analysis Results &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>,<span class="string">''</span>);
+0070     <span class="keyword">if</span> showOptions.TotalNumberOfSurfaces 
+0071         textResult = char(textResult,[<span class="string">'Number of Surfaces:      '</span>,num2str(nSurfaces)]);
+0072     <span class="keyword">end</span>
+0073     <span class="keyword">if</span> showOptions.StopSurfaceIndex  
+0074         textResult = char(textResult,[<span class="string">'Stop Surface Index:      '</span>,num2str(stopIndex)]);
+0075     <span class="keyword">end</span>
+0076     <span class="keyword">if</span> showOptions.SystemTotalTrack  
+0077         textResult = char(textResult,[<span class="string">'System Total Track:      '</span>,num2str(totalTrack,<span class="string">'%f'</span>)]);
+0078     <span class="keyword">end</span>
+0079     <span class="keyword">if</span> showOptions.EffectiveFocalLength  
+0080         textResult = char(textResult,[<span class="string">'Effective Focal Length:  '</span>,num2str(effectiveFocalLength,<span class="string">'%f'</span>)]);
+0081     <span class="keyword">end</span>
+0082     <span class="keyword">if</span> showOptions.BackFocalLength  
+0083         textResult = char(textResult,[<span class="string">'Back Focal Length:       '</span>,num2str(backFocalLength,<span class="string">'%f'</span>)]);
+0084     <span class="keyword">end</span>
+0085     <span class="keyword">if</span> showOptions.AngularMagnification  
+0086         textResult = char(textResult,[<span class="string">'Angular Magnification:   '</span>,num2str(angularMagnification,<span class="string">'%f'</span>)]);
+0087     <span class="keyword">end</span>
+0088     <span class="keyword">if</span> showOptions.EntrancePupilDiameter  
+0089         textResult = char(textResult,[<span class="string">'Entrance Pupil Diameter: '</span>,num2str(entrancePupilDiameter,<span class="string">'%f'</span>)]);
+0090     <span class="keyword">end</span>
+0091     <span class="keyword">if</span> showOptions.EntrancePupilLocation  
+0092         textResult = char(textResult,[<span class="string">'Entrance Pupil Location: '</span>,num2str(entrancePupilLocation,<span class="string">'%f'</span>)]);
+0093     <span class="keyword">end</span>
+0094     <span class="keyword">if</span> showOptions.ExitPupilDiameter  
+0095         textResult = char(textResult,[<span class="string">'Exit Pupil Diameter:     '</span>,num2str(exitPupilDiameter,<span class="string">'%f'</span>)]);
+0096     <span class="keyword">end</span>
+0097     <span class="keyword">if</span> showOptions.ExitPupilLocation  
+0098         textResult = char(textResult,[<span class="string">'Exit Pupil Location:     '</span>,num2str(exitPupilLocation,<span class="string">'%f'</span>)]);
+0099     <span class="keyword">end</span>
+0100     <span class="keyword">if</span> showOptions.ObjectSpaceNA  
+0101         textResult = char(textResult,[<span class="string">'Object Space NA:         '</span>,num2str(objectNA,<span class="string">'%f'</span>)]);
+0102     <span class="keyword">end</span>
+0103     <span class="keyword">if</span> showOptions.ImageSpaceNA  
+0104         textResult = char(textResult,[<span class="string">'Image Space NA:          '</span>,num2str(imageNA,<span class="string">'%f'</span>)]);
+0105     <span class="keyword">end</span>
+0106 
+0107 <span class="keyword">if</span> dispInTextHandle
+0108     set(textHandle,<span class="string">'String'</span>,textResult);     
+0109 <span class="keyword">else</span>
+0110     disp(textResult);
+0111 <span class="keyword">end</span>
+0112                
+0113 
+0114  <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeEntrancePupilDiameter</title>
+  <meta name="keywords" content="computeEntrancePupilDiameter">
+  <meta name="description" content="computeObjectNA: compute the paraxial object space NA">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Paraxial_Optics_Module -->
+<h1>computeEntrancePupilDiameter
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>computeObjectNA: compute the paraxial object space NA</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function entPupilDiameter = computeEntrancePupilDiameter(systemApertureType,systemApertureValue,entPupilLocation, objectRefractiveIndex,objThick) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeObjectNA: compute the paraxial object space NA
+ Inputs
+   systemApertureType: 1 given enterenace pupil, 2 given object NA,
+   ...
+   systemApertureValue: value of aperture specified
+   entPupilLocation: location of enterenace pupil from first surface
+   objectRefractiveIndex: object side refractive index
+   objThick: thickness from object surface to 1st surface</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/getEntrancePupilDiameter.html" class="code" title="function EntrancePupilDiameter = getEntrancePupilDiameter(OS,wavLen)">getEntrancePupilDiameter</a>	getEntrancePupilDiameter: returns EP diameter</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function entPupilDiameter = computeEntrancePupilDiameter</a><span class="keyword">...</span>
+0002         (systemApertureType,systemApertureValue,entPupilLocation, objectRefractiveIndex,objThick) 
+0003     <span class="comment">% computeObjectNA: compute the paraxial object space NA</span>
+0004     <span class="comment">% Inputs</span>
+0005     <span class="comment">%   systemApertureType: 1 given enterenace pupil, 2 given object NA,</span>
+0006     <span class="comment">%   ...</span>
+0007     <span class="comment">%   systemApertureValue: value of aperture specified</span>
+0008     <span class="comment">%   entPupilLocation: location of enterenace pupil from first surface</span>
+0009     <span class="comment">%   objectRefractiveIndex: object side refractive index</span>
+0010     <span class="comment">%   objThick: thickness from object surface to 1st surface</span>
+0011     
+0012     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0013     <span class="comment">%</span>
+0014 
+0015     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0016     <span class="comment">%</span>
+0017 
+0018     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0019     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0020     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0021     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0022     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0023     <span class="comment">%   Institute of Applied Physics</span>
+0024     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0025                              
+0026     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0027     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0028     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0029 
+0030     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0031   
+0032     <span class="keyword">switch</span> systemApertureType
+0033         <span class="keyword">case</span> 1 <span class="comment">% given 'Enterance Pupil Diameter entPupilLocation, objectRefractiveIndex,objThick</span>
+0034              entPupilDiameter  = systemApertureValue;
+0035         <span class="keyword">case</span> 2 <span class="comment">% given 'Object Space NA'</span>
+0036           U0 = asin(systemApertureValue/objectRefractiveIndex); 
+0037           entPupilDiameter = abs(2*tan(U0)* (entPupilLocation + objThick));            
+0038         <span class="keyword">case</span> 3 <span class="comment">% given 'Image Space NA'</span>
+0039 
+0040         <span class="keyword">case</span> 4 <span class="comment">% given 'Image Space F#'</span>
+0041 
+0042         <span class="keyword">otherwise</span>
+0043 
+0044     <span class="keyword">end</span>            
+0045     
+0046</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

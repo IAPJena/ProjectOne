@@ -1,0 +1,10 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  zernike_fit_irreg -> zern_fun_irreg;
+  zernike_fit_irreg_test -> zern_fun_irreg;
+  zernike_fit_irreg_test -> zernike_fit_irreg;
+
+  zern_fun_irreg [URL="zern_fun_irreg.html"];
+  zernike_fit_irreg [URL="zernike_fit_irreg.html"];
+  zernike_fit_irreg_test [URL="zernike_fit_irreg_test.html"];
+}

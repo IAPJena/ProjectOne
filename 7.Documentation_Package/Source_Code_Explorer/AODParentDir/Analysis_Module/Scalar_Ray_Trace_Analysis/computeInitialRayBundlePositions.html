@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeInitialRayBundlePositions</title>
+  <meta name="keywords" content="computeInitialRayBundlePositions">
+  <meta name="description" content="computeInitialRayBundlePositions: computes and returns positions of a">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Analysis_Module --><!-- menu.html Scalar_Ray_Trace_Analysis -->
+<h1>computeInitialRayBundlePositions
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>computeInitialRayBundlePositions: computes and returns positions of a</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ initialRayBundlePositions ] = computeInitialRayBundlePositions(commonRayDirectionCosine,pupilSamplingPoints,entrancePupilLocationZ,objThick) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeInitialRayBundlePositions: computes and returns positions of a
+ collimated ray bundle at the object plane. For objects at infinity an 
+ imaginary object plane (which is 1 units behind the 1st surface) is
+ used.
+ The function is vectorized so initial directions for multiple field
+ points can be computed at the same time.    
+ Input:
+   commonRayDirectionCosine: 3 X nField Matrice of Direction cosine commn to all collimated
+   rays 
+   pupilSamplingPoints: 3 X nRay X nField matrix containg values of pupil sampling
+   coordinates.
+   entrancePupilLocationZ: Location of entrance pupil from the first lens surface
+   objThick: thickness related to the object surface
+ Outputs:
+   initialRayBundlePositions: matrix of ray bundle positions on the
+   object plane</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/multipleRayTracer.html" class="code" title="function [multipleRayTracerResult,pupilCoordinates,pupilGridIndices] =multipleRayTracer(optSystem,wavLen,fieldPointXY,nRay,PupSamplingType,JonesVec,considerSurfAperture) %">multipleRayTracer</a>	Trace bundle of rays through an optical system based on the pupil</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ initialRayBundlePositions ] = computeInitialRayBundlePositions</a><span class="keyword">...</span>
+0002     (commonRayDirectionCosine,pupilSamplingPoints,entrancePupilLocationZ,objThick)
+0003     <span class="comment">% computeInitialRayBundlePositions: computes and returns positions of a</span>
+0004     <span class="comment">% collimated ray bundle at the object plane. For objects at infinity an</span>
+0005     <span class="comment">% imaginary object plane (which is 1 units behind the 1st surface) is</span>
+0006     <span class="comment">% used.</span>
+0007     <span class="comment">% The function is vectorized so initial directions for multiple field</span>
+0008     <span class="comment">% points can be computed at the same time.</span>
+0009     <span class="comment">% Input:</span>
+0010     <span class="comment">%   commonRayDirectionCosine: 3 X nField Matrice of Direction cosine commn to all collimated</span>
+0011     <span class="comment">%   rays</span>
+0012     <span class="comment">%   pupilSamplingPoints: 3 X nRay X nField matrix containg values of pupil sampling</span>
+0013     <span class="comment">%   coordinates.</span>
+0014     <span class="comment">%   entrancePupilLocationZ: Location of entrance pupil from the first lens surface</span>
+0015     <span class="comment">%   objThick: thickness related to the object surface</span>
+0016     <span class="comment">% Outputs:</span>
+0017     <span class="comment">%   initialRayBundlePositions: matrix of ray bundle positions on the</span>
+0018     <span class="comment">%   object plane</span>
+0019     
+0020     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0021     <span class="comment">%</span>
+0022 
+0023     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0024     <span class="comment">%</span>
+0025 
+0026     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0027     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0028     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0029     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0030     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0031     <span class="comment">%   Institute of Applied Physics</span>
+0032     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0033                              
+0034     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0035     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0036     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0037     <span class="comment">% Jan 20,2014   Worku, Norman G.     Vectorized version</span>
+0038 
+0039     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0040     nRay = size(pupilSamplingPoints,2);
+0041     nField = size(commonRayDirectionCosine,2);
+0042 
+0043     <span class="comment">% Make both matrices of 3X(nRay*nField) matrix to enable simple subtraction</span>
+0044     <span class="comment">% field1,field1,field1 . . .(nRay times), field2,field2,field2 . . . .</span>
+0045     pupilSamplingPoints = repmat(pupilSamplingPoints,[1,nField]);    
+0046     allFieldDirectionCosine = cellfun(@(x) repmat(x,[1,nRay]),<span class="keyword">...</span>
+0047         num2cell(commonRayDirectionCosine,[1]),<span class="string">'UniformOutput'</span>,false);
+0048     commonRayDirectionCosine = cell2mat(allFieldDirectionCosine);    
+0049        
+0050     objZ = - objThick;
+0051     dx = commonRayDirectionCosine(1,:);
+0052     dy = commonRayDirectionCosine(2,:);
+0053     dz = commonRayDirectionCosine(3,:);
+0054     
+0055     rayPosX = pupilSamplingPoints(1,:) - <span class="keyword">...</span>
+0056         (dx./dz).*(pupilSamplingPoints(3,:)-objZ);
+0057     rayPosY = pupilSamplingPoints(2,:,:) - <span class="keyword">...</span>
+0058         (dy./dz).*(pupilSamplingPoints(3,:)-objZ);
+0059     rayPosZ = repmat(objZ,[1,nRay*nField]);
+0060 
+0061     initialRayBundlePositions = cat(1,rayPosX,rayPosY,rayPosZ);
+0062 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

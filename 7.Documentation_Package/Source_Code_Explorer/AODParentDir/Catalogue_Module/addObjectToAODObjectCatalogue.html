@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of addObjectToAODObjectCatalogue</title>
+  <meta name="keywords" content="addObjectToAODObjectCatalogue">
+  <meta name="description" content="addObjectToAODObjectCatalogue: Adds the given AOD object to the given">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Catalogue_Module -->
+<h1>addObjectToAODObjectCatalogue
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>addObjectToAODObjectCatalogue: Adds the given AOD object to the given</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">addObjectToAODObjectCatalogue: Adds the given AOD object to the given
+ catalogue.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>	addObjectToAODObjectCatalogue: Adds the given AOD object to the given</li><li><a href="isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>	ISVALIDCOATINGCATALOGUE Retruns whether the object catalogue is vlaid or</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>	addObjectToAODObjectCatalogue: Adds the given AOD object to the given</li><li><a href="mergeTwoAODObjectCatalogues.html" class="code" title="function [ merged ] = mergeTwoAODObjectCatalogues(objectType, objCatFullName1,objCatFullName2,objCatFullNameMergedFullName )">mergeTwoAODObjectCatalogues</a>	mergeTwoAODObjectCatalogues Merge two AOD object catalogues and save in a</li><li><a href="../../AODParentDir/Class_Definition/@AODParentWindow/InitializeMenuAndToolbarItems.html" class="code" title="function InitializeMenuAndToolbarItems(parentWindow)">InitializeMenuAndToolbarItems</a>	Defines all menu items and toolbar commands and all callbacks related</li><li><a href="../../AODParentDir/Coating_Catalogue_Module/coatingDataInputDialog.html" class="code" title="function [ figureHandle ] = coatingDataInputDialog(coatingCatalogueListFullNames,fontName,fontSize)">coatingDataInputDialog</a>	COATINGDATAINPUTDIALOG Defines a dilog box which is used to input coating</li><li><a href="../../AODParentDir/Glass_Catalogue_Module/glassDataInputDialog.html" class="code" title="function [ figureHandle ] = glassDataInputDialog(glassCatalogueListFullNames,fontName,fontSize)">glassDataInputDialog</a>	GLASSDATAINPUTDIALOG Defines a dilog box which is used to input glass</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ added ] = addObjectToAODObjectCatalogue</a><span class="keyword">...</span>
+0002     (objectType, aodObject,objectCatalogueFullName,ask_replace )
+0003 <span class="comment">%addObjectToAODObjectCatalogue: Adds the given AOD object to the given</span>
+0004 <span class="comment">% catalogue.</span>
+0005 
+0006 <span class="keyword">if</span> nargin == 3
+0007     ask_replace = <span class="string">'ask'</span>;
+0008 <span class="keyword">end</span>
+0009 <span class="keyword">switch</span> lower(ask_replace)
+0010     <span class="keyword">case</span> lower(<span class="string">'ask'</span>)
+0011         Ask = 1;
+0012         Replace = 0;
+0013     <span class="keyword">case</span> lower(<span class="string">'replace'</span>)
+0014         Ask = 0;
+0015         Replace = 1;        
+0016 <span class="keyword">end</span>
+0017     
+0018 <span class="keyword">if</span> ~strcmpi(class(aodObject),objectType)
+0019     disp(<span class="string">'Error: The object to be added and the catalogue type does not match.'</span>);
+0020     <span class="keyword">return</span>;
+0021 <span class="keyword">end</span>
+0022 
+0023 <span class="keyword">if</span> <a href="isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>(objectType, objectCatalogueFullName )
+0024     <span class="comment">%load the coating catalogue file</span>
+0025     load(objectCatalogueFullName,<span class="string">'AODObjectArray'</span>,<span class="string">'FileInfoStruct'</span>);   
+0026     <span class="comment">%check that the AOD Object doesnot exsist in the catalogue</span>
+0027     <span class="comment">% Compare the existance of each object on the catalogue</span>
+0028     existingObjectNames = {AODObjectArray.Name};
+0029     newObjectNames = {aodObject.Name};
+0030     <span class="comment">% locations will be cell array of logicals arrays indicating exactly</span>
+0031     <span class="comment">% where the new object name exists in the old catalogue</span>
+0032     locations = cellfun(@(x) strcmpi(x,existingObjectNames),newObjectNames,<span class="string">'UniformOutput'</span>, false);
+0033     locations = find(cell2mat(locations));
+0034     <span class="comment">% Indices of new object which are already exsisting</span>
+0035     alreadyExistingObjIndices = ceil(locations./size(existingObjectNames,2));
+0036 
+0037 <span class="comment">%     locations = reshape(cell2mat(locations),size(newObjectNames,2),size(existingObjectNames,2));</span>
+0038 <span class="comment">%     alreadyExistingObjIndices = find(sum(locations,2));</span>
+0039      <span class="keyword">if</span> ~isempty(alreadyExistingObjIndices)
+0040          <span class="keyword">for</span> k = 1:size(alreadyExistingObjIndices,1)
+0041              repeatedName = newObjectNames{alreadyExistingObjIndices(k)};
+0042              alternativeName = [repeatedName,<span class="string">'1'</span>];
+0043              <span class="keyword">if</span> Ask
+0044                  button = questdlg(strcat(repeatedName, <span class="string">' is already in the catalogue.'</span>,<span class="keyword">...</span>
+0045                      <span class="string">' Do you want to save with new object name: '</span>,alternativeName, <span class="string">' ?'</span>),<span class="string">'New Object Name'</span>,<span class="string">'Yes Save'</span>,<span class="string">'No Replace'</span>,<span class="string">'Yes Save'</span>);
+0046                  <span class="keyword">switch</span> button
+0047                      <span class="keyword">case</span> <span class="string">'Yes Save'</span>
+0048                          <span class="comment">% Give new name for the new object</span>
+0049                          aodObject(alreadyExistingObjIndices(k)).Name = alternativeName;
+0050                      <span class="keyword">case</span> <span class="string">'No Replace'</span>
+0051                          <span class="comment">% Delete the existing object</span>
+0052                          indexInTheCat = find(strcmpi(existingObjectNames,repeatedName));
+0053                          AODObjectArray(indexInTheCat(1)) = [];
+0054                          save(objectCatalogueFullName,<span class="string">'AODObjectArray'</span>,<span class="string">'FileInfoStruct'</span>);
+0055                  <span class="keyword">end</span>
+0056              <span class="keyword">else</span>
+0057                  <span class="comment">% Delete the existing object</span>
+0058                  indexInTheCat = find(strcmpi(existingObjectNames,repeatedName));
+0059                  AODObjectArray(indexInTheCat(1)) = [];
+0060                  save(objectCatalogueFullName,<span class="string">'AODObjectArray'</span>,<span class="string">'FileInfoStruct'</span>);
+0061              <span class="keyword">end</span>
+0062          <span class="keyword">end</span>
+0063         added = <a href="addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a><span class="keyword">...</span>
+0064             (objectType, aodObject,objectCatalogueFullName );
+0065      <span class="keyword">else</span>
+0066      
+0067     newObjectNames = {aodObject.Name};
+0068     AODObjectArray(end+1:end+size(aodObject,2)) = aodObject;
+0069     save(objectCatalogueFullName,<span class="string">'AODObjectArray'</span>,<span class="string">'FileInfoStruct'</span>);
+0070     clear AODObjectArray;
+0071     clear <span class="string">'FileInfoStruct'</span>;
+0072     disp(char([<span class="string">'Successfully added: '</span>,newObjectNames]));
+0073     added = 1;
+0074      <span class="keyword">end</span>
+0075 <span class="keyword">else</span>
+0076     added = 0;
+0077     disp(<span class="string">'Error: The catalogue is not valid.'</span>);
+0078 <span class="keyword">end</span>
+0079 <span class="keyword">end</span>
+0080</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

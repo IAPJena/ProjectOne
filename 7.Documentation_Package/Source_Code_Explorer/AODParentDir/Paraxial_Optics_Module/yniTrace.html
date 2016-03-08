@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of yniTrace</title>
+  <meta name="keywords" content="yniTrace">
+  <meta name="description" content="ynuTrace: Performs ynu trace for paraxial fileds">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Paraxial_Optics_Module -->
+<h1>yniTrace
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>ynuTrace: Performs ynu trace for paraxial fileds</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [yf uf] = yniTrace(yi,ui,initialSurf,finalSurf, refIndex,thick,curv) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> ynuTrace: Performs ynu trace for paraxial fileds
+ Inputs
+     yi,ui,: height from the optical axis, y, and its slope (tangent of angle), u
+     initialSurf,finalSurf,: initial and final surface indices
+     refIndex,thick,curv : arrays of n,t of medium following and C of each surface from object to image direction
+ Output
+     yf,uf,: height from the optical axis, y, and its slope (tangent of angle), u</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="computeBackFocalLength.html" class="code" title="function [ BFL ] = computeBackFocalLength( refIndex,thick,curv,obj_img )">computeBackFocalLength</a>	computeBackFocalLength: computes the back focal length of system by</li><li><a href="computeEffectiveFocalLength.html" class="code" title="function [ EFL ] = computeEffectiveFocalLength( refIndex,thick,curv,obj_img )">computeEffectiveFocalLength</a>	computeEffectiveFocalLength: computes the effective focal length of system by</li><li><a href="computeEntrancePupilLocation.html" class="code" title="function [ pupilPosition ] = computeEntrancePupilLocation(stopIndex,refIndex,thick,curv)">computeEntrancePupilLocation</a>	computeEntrancePupilLocation: compute the paraxial entrance pupil</li><li><a href="computeExitPupilLocation.html" class="code" title="function [ pupilPosition ] = computeExitPupilLocation(stopIndex,refIndex,thick,curv)">computeExitPupilLocation</a>	computeExitPupilLocation: compute the paraxial exit pupil</li><li><a href="computeParaxialAngularMagnification.html" class="code" title="function [ angMag] = computeParaxialAngularMagnification(refIndex,thick,curv,stopIndex)">computeParaxialAngularMagnification</a>	computeParaxialAngularMagnification: computes the paraxial angular</li><li><a href="computeParaxialImageLocation.html" class="code" title="function [ lastThickness] = computeParaxialImageLocation(refIndex,thick,curv,obj_img)">computeParaxialImageLocation</a>	computeParaxialImageLocation: solves for location of paraxial images.</li><li><a href="computeSystemStopIndex.html" class="code" title="function [ stopIndex] = computeSystemStopIndex(givenStopIndex,refIndex,thick,curv,clearAperture,obj_img)">computeSystemStopIndex</a>	computeSystemStopIndex: calculate the stop index</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [yf uf] = yniTrace(yi,ui,initialSurf,finalSurf, refIndex,thick,curv)</a>
+0002     <span class="comment">% ynuTrace: Performs ynu trace for paraxial fileds</span>
+0003     <span class="comment">% Inputs</span>
+0004     <span class="comment">%     yi,ui,: height from the optical axis, y, and its slope (tangent of angle), u</span>
+0005     <span class="comment">%     initialSurf,finalSurf,: initial and final surface indices</span>
+0006     <span class="comment">%     refIndex,thick,curv : arrays of n,t of medium following and C of each surface from object to image direction</span>
+0007     <span class="comment">% Output</span>
+0008     <span class="comment">%     yf,uf,: height from the optical axis, y, and its slope (tangent of angle), u</span>
+0009 
+0010 
+0011     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0012     <span class="comment">%</span>
+0013 
+0014     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0015     <span class="comment">% Example Call</span>
+0016     <span class="comment">% yniTrace(1,0.56,0,2,[1 1.4 1.4],[4 2 5],[Inf 3 -3])</span>
+0017 
+0018     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0019     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0020     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0021     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0022     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0023     <span class="comment">%   Institute of Applied Physics</span>
+0024     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0025                              
+0026     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0027     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0028     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0029 
+0030     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0031     <span class="keyword">if</span> initialSurf==finalSurf
+0032         yf=yi;
+0033         uf=ui;
+0034     <span class="keyword">elseif</span> initialSurf &lt; finalSurf
+0035         <span class="comment">%forward trace</span>
+0036         y=yi;
+0037         u=ui;
+0038         <span class="keyword">for</span> k=initialSurf:1:finalSurf-1
+0039             t=thick(k);
+0040             c=curv(k+1);
+0041             n=refIndex(k);
+0042             nPrime=refIndex(k+1);
+0043             
+0044             <span class="keyword">if</span> t~=Inf
+0045                 y=y+t*u;
+0046             <span class="keyword">end</span>
+0047             paI=u+y*c; <span class="comment">%The yui method generates the paraxial angles of incidence</span>
+0048             <span class="comment">% during the trace and is probably the most common method used in computer programs.</span>
+0049             u=u+((n/nPrime)-1)*paI;
+0050         <span class="keyword">end</span>
+0051         yf=y;
+0052         uf=u;
+0053     <span class="keyword">elseif</span> initialSurf &gt; finalSurf
+0054         <span class="comment">%reverse trace</span>
+0055         y=yi;
+0056         u=-ui;    
+0057         <span class="keyword">for</span> k=initialSurf:-1:1+finalSurf
+0058             t=thick(k-1);
+0059             c=-curv(k);
+0060             n=refIndex(k);
+0061             nPrime=refIndex(k-1);
+0062 
+0063             paI=u+y*c;
+0064             u=(u+((n/nPrime)-1)*paI);
+0065             <span class="keyword">if</span> t~=Inf
+0066                y=y+t*u;
+0067             <span class="keyword">end</span>
+0068         <span class="keyword">end</span>  
+0069         yf=y;
+0070         uf=-u;    
+0071     <span class="keyword">else</span>
+0072         
+0073     <span class="keyword">end</span>
+0074 <span class="keyword">end</span>
+0075</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

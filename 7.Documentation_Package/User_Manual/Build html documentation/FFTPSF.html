@@ -1,0 +1,149 @@
+﻿<html>
+	
+<head>
+	<title>FFT PSF</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "User Manual MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("FFTPSF");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FFT PSF</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="OpticalSystemAnalysis.html">Optical System Analysis</a> &rsaquo;&rsaquo; <a href="Diffraction.html">Diffraction</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="Diffraction.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="WavefrontExitPupil.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="PolarizationAberration.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps2"><span class="rvts34">FFT PSF</span></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem104.png"/><img alt="" style="padding : 1px;" src="lib/NewItem138.png"/></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts33">Purpose:</span></p>
+<p class="rvps2"><span class="rvts28">Display the point spread function of the system. It is based on the chirp Z-transform FFT algorithm.</span></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts33">Setting:</span></p>
+<p class="rvps2"><span class="rvts33"><br/></span></p>
+<div class="rvps2"><table border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps3"><span class="rvts33">Settings</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps3"><span class="rvts33">Description</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps3"><span class="rvts33">Remarks</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Surface Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">The surface index used to compute the OPD.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">Currently it is not functional and set fixed to the image surface.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Field Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Index of the field value &nbsp;for the rays to be displayed in the layout.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">A single index should be selected.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Wavelength Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Index of the wavelength value &nbsp;for the rays to be displayed in the layout.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">A single index should be selected.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">PSF plot radius.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Specify the radius required for the PSF plot. Changes the sampling distance in the focal plane.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">CZT FFT allows the decoupling of the sampling in the pupil plane from that in the focal plane.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Pupil Grid Size</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">The sampling grid size of the entrance pupil.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35"><br/></span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Polarized (check box)</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Compute the PSF for the selected component using scalar diffraction.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">Allows to account for effects of coating in the PSF.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Polarized (drop down)</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Select the field component used for the PSF computation. </span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">Sum of the components is also allowed which simply means the incoherent sum of each PSF.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/help-authoring-tool">Single source CHM, PDF, DOC and HTML Help creation</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getCheifRay</title>
+  <meta name="keywords" content="getCheifRay">
+  <meta name="description" content="getCheifRay returns the cheif ray (as Ray object) of the optical system">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>getCheifRay
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getCheifRay returns the cheif ray (as Ray object) of the optical system</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ cheifRay ] = getCheifRay( optSystem,fieldPointXY,wavLen ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getCheifRay returns the cheif ray (as Ray object) of the optical system
+ starting from a field point and passing through origin of the entrance pupil.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@Ray/Ray.html" class="code" title="">Ray</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ cheifRay ] = getCheifRay( optSystem,fieldPointXY,wavLen )</a>
+0002 <span class="comment">% getCheifRay returns the cheif ray (as Ray object) of the optical system</span>
+0003 <span class="comment">% starting from a field point and passing through origin of the entrance pupil.</span>
+0004 
+0005 pupilRadius = (optSystem.getEntrancePupilDiameter)/2;
+0006 pupilZLocation = (optSystem.getEntrancePupilLocation);
+0007 nField = size(fieldPointXY,2);
+0008 nWav  = size(wavLen,2);
+0009 
+0010 <span class="comment">% check if all field and wavelength is given or a single field or</span>
+0011 <span class="comment">% wavelength is to be used</span>
+0012 <span class="keyword">if</span> nWav == 1
+0013     <span class="comment">% Single wavelength is used for all fields</span>
+0014     wavLen = repmat(wavLen,[1,nField]);
+0015 <span class="keyword">elseif</span> nField == 1
+0016     <span class="comment">% single field is used with all waveleghts</span>
+0017     fieldPointXY = repmat(fieldPointXY,[1,nWav]);
+0018 <span class="keyword">elseif</span> nWav==nField
+0019     <span class="comment">% All field and wavelengths are given</span>
+0020 <span class="keyword">else</span>
+0021     <span class="comment">% invalid input</span>
+0022     disp(<span class="string">'Error: The value of nField and nWav should be equal if both are differnt from 1.'</span>);
+0023     <span class="keyword">return</span>;
+0024 <span class="keyword">end</span>
+0025 
+0026 <span class="keyword">if</span> abs(optSystem.SurfaceArray(1).Thickness) &gt; 10^10 <span class="comment">% object at infinity</span>
+0027     objThick = 0;
+0028 <span class="keyword">else</span>
+0029     objThick  = optSystem.SurfaceArray(1).Thickness;
+0030 <span class="keyword">end</span>
+0031 
+0032 <span class="comment">% Global reference is the 1st surface of the lens</span>
+0033 fieldPoint = [fieldPointXY; repmat(-objThick,[1,nField])];
+0034 pupilSamplingPoint = [0;0;pupilZLocation];
+0035 
+0036 <span class="keyword">switch</span> lower(optSystem.FieldType)
+0037     <span class="keyword">case</span> lower(<span class="string">'ObjectHeight'</span>)
+0038         <span class="keyword">if</span> abs(optSystem.SurfaceArray(1).Thickness) &gt; 10^10
+0039             <span class="comment">% Invalid specification</span>
+0040             disp(<span class="string">'Error: Object Height can not be used for objects at infinity'</span>);
+0041             <span class="keyword">return</span>;
+0042         <span class="keyword">else</span>
+0043             initialDirection = repmat(pupilSamplingPoint,[1,nField]) - fieldPoint;
+0044             initialDirection = initialDirection./repmat(sqrt(sum(initialDirection.^2)),[3,1]);
+0045             initialPosition = fieldPoint;
+0046         <span class="keyword">end</span>
+0047     <span class="keyword">case</span> lower(<span class="string">'Angle'</span>)
+0048         <span class="comment">% The angle given indicates the direction of the cheif ray</span>
+0049         <span class="comment">% Feild points are given by angles</span>
+0050         angX = fieldPoint(1,:)*pi/180;
+0051         angY = fieldPoint(2,:)*pi/180;
+0052         
+0053         <span class="comment">%convert field angle to ray direction as in Zemax</span>
+0054         dz = sqrt(1./((tan (angX)).^2+(tan (angY)).^2+1));
+0055         dx = dz.*tan (angX);
+0056         dy = dz.*tan (angY);
+0057         
+0058         initialDirection = [dx;dy;dz];
+0059         
+0060         <span class="comment">% Field point to the center of entrance pupil</span>
+0061         radFieldToEnP = (objThick + pupilZLocation)./initialDirection(3,:);
+0062         
+0063         initialPosition = <span class="keyword">...</span>
+0064             [-radFieldToEnP.*initialDirection(1,:);<span class="keyword">...</span>
+0065             -radFieldToEnP.*initialDirection(2,:);<span class="keyword">...</span>
+0066             repmat(-objThick,[1,nField])];
+0067 <span class="keyword">end</span>
+0068 wavLenInM = wavLen*optSystem.getWavelengthUnitFactor;
+0069 cheifRay = <a href="../../../AODParentDir/Class_Definition/@Ray/Ray.html" class="code" title="">Ray</a>(initialPosition,initialDirection,wavLenInM);
+0070 <span class="keyword">end</span>
+0071</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of displaySurfaceData</title>
+  <meta name="keywords" content="displaySurfaceData">
+  <meta name="description" content="Displays the surface properties of an optical system">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>displaySurfaceData
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Displays the surface properties of an optical system</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function displaySurfaceData(optSystem,dispStandard,dispAperture,dispCoating,dispAspheric,dispTiltDecenter) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Displays the surface properties of an optical system 
+ Inputs: Flags indicating which data to display</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001  <a name="_sub0" href="#_subfunctions" class="code">function displaySurfaceData(optSystem,dispStandard,dispAperture,</a><span class="keyword">...</span>
+0002          dispCoating,dispAspheric,dispTiltDecenter)
+0003      <span class="comment">% Displays the surface properties of an optical system</span>
+0004      <span class="comment">% Inputs: Flags indicating which data to display</span>
+0005      <span class="keyword">if</span> nargin == 1
+0006          dispStandard = 1;
+0007          dispAperture = 1;
+0008          dispCoating = 1;
+0009          dispAspheric = 1;
+0010          dispTiltDecenter = 1;
+0011      <span class="keyword">elseif</span> nargin == 2
+0012          dispAperture = 1;
+0013          dispCoating = 1;
+0014          dispAspheric = 1;
+0015          dispTiltDecenter = 1;             
+0016      <span class="keyword">elseif</span> nargin == 3
+0017          dispCoating = 1;
+0018          dispAspheric = 1;
+0019          dispTiltDecenter = 1;             
+0020      <span class="keyword">elseif</span> nargin == 4
+0021          dispAspheric = 1;
+0022          dispTiltDecenter = 1;             
+0023      <span class="keyword">elseif</span> nargin == 5
+0024          dispTiltDecenter = 1;             
+0025      <span class="keyword">elseif</span> nargin == 6
+0026 
+0027      <span class="keyword">end</span>         
+0028     disp(<span class="string">'************************************************************'</span>);
+0029     disp(<span class="string">'Optical System Surface Data'</span>); 
+0030     disp([<span class="string">'Total Number of Surface : '</span> num2str(optSystem.NumberOfSurfaces)]); 
+0031     disp(<span class="string">'************************************************************'</span>);
+0032     <span class="keyword">if</span> dispStandard             
+0033         Standard_Data = {<span class="string">'Index'</span> <span class="string">'Type'</span> <span class="string">'Radius'</span> <span class="string">'Thickness'</span> <span class="string">'Glass'</span><span class="keyword">...</span><span class="comment"> </span>
+0034         <span class="string">'Deviation Mode'</span> <span class="string">'SemiDiameter'</span>;<span class="string">'------'</span> <span class="string">'-----'</span> <span class="string">'------'</span><span class="keyword">...</span><span class="comment"> </span>
+0035         <span class="string">'----------'</span> <span class="string">'------'</span> <span class="string">'--------------'</span>  <span class="string">'------------'</span>};
+0036         <span class="keyword">for</span> k=1:1:optSystem.NumberOfSurfaces
+0037             Index = k;
+0038             <span class="keyword">if</span> optSystem.SurfaceArray(k).ObjectSurface
+0039                 Index = <span class="string">'OBJECT '</span>;
+0040             <span class="keyword">end</span>
+0041             <span class="keyword">if</span> optSystem.SurfaceArray(k).ImageSurface
+0042                 Index = <span class="string">'IMAGE '</span>;
+0043             <span class="keyword">end</span>
+0044             <span class="keyword">if</span> optSystem.SurfaceArray(k).Stop
+0045                 Index = <span class="string">'STOP'</span>;
+0046             <span class="keyword">end</span>    
+0047 
+0048             Type = optSystem.SurfaceArray(k).Type;
+0049             Radius = (optSystem.SurfaceArray(k).Radius);
+0050             Thickness = (optSystem.SurfaceArray(k).Thickness);
+0051             <a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a> = (optSystem.SurfaceArray(k).Glass.Name);
+0052             Deviation_Mode = optSystem.SurfaceArray(k).DeviationMode;
+0053             SemiDiameter =  (optSystem.SurfaceArray(k).SemiDiameter);
+0054             currentRow={Index  Type Radius  Thickness <a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a> Deviation_Mode SemiDiameter};
+0055             Standard_Data = [Standard_Data; currentRow];
+0056         <span class="keyword">end</span>
+0057          Standard_Data
+0058     <span class="keyword">end</span>
+0059     <span class="keyword">if</span> dispAperture 
+0060         Aperture_Data = {<span class="string">'Index'</span> <span class="string">'Type'</span> <span class="string">'Aper Type'</span> <span class="string">'Aper Param1'</span><span class="keyword">...</span>
+0061             <span class="string">'Aper Param2'</span> <span class="string">'Aper DecentX'</span> <span class="string">'Aper DecentY'</span>;
+0062             <span class="string">'-----'</span> <span class="string">'----'</span> <span class="string">'---------'</span> <span class="string">'-----------'</span><span class="keyword">...</span>
+0063             <span class="string">'-----------'</span> <span class="string">'------------'</span> <span class="string">'-----------'</span>}; 
+0064     <span class="keyword">for</span> k=1:1:optSystem.NumberOfSurfaces
+0065         Index = k;
+0066         <span class="keyword">if</span> optSystem.SurfaceArray(k).ObjectSurface
+0067             Index = <span class="string">'OBJECT '</span>;
+0068         <span class="keyword">end</span>
+0069         <span class="keyword">if</span> optSystem.SurfaceArray(k).ImageSurface
+0070             Index = <span class="string">'IMAGE '</span>;
+0071         <span class="keyword">end</span>
+0072         <span class="keyword">if</span> optSystem.SurfaceArray(k).Stop
+0073             Index = <span class="string">'STOP'</span>;
+0074         <span class="keyword">end</span>                 
+0075         Type = optSystem.SurfaceArray(k).Type;
+0076         Aperture_Type = (optSystem.SurfaceArray(k).ApertureType);
+0077         Aperture_Param1 = (optSystem.SurfaceArray(k).ApertureParameter(1));
+0078         Aperture_Param2 = (optSystem.SurfaceArray(k).ApertureParameter(2));
+0079 
+0080         Aperture_DecentX = (optSystem.SurfaceArray(k).ApertureParameter(3));
+0081         Aperture_DecentY = (optSystem.SurfaceArray(k).ApertureParameter(4));
+0082         currentRow = {Index  Type  Aperture_Type  Aperture_Param1  Aperture_Param2<span class="keyword">...</span><span class="comment"> </span>
+0083         Aperture_DecentX  Aperture_DecentY};  
+0084         Aperture_Data = [Aperture_Data;currentRow];
+0085     <span class="keyword">end</span>
+0086     Aperture_Data
+0087     <span class="keyword">end</span>
+0088     <span class="keyword">if</span> dispCoating 
+0089         Coating_Data = {<span class="string">'Index'</span> <span class="string">'Type'</span> <span class="string">'Coating Type'</span> <span class="string">'Name'</span> <span class="string">'Param2'</span><span class="keyword">...</span><span class="comment"> </span>
+0090         <span class="string">'Param3'</span> <span class="string">'Param4'</span>;<span class="string">'-----'</span> <span class="string">'----'</span> <span class="string">'----------'</span> <span class="string">'------'</span> <span class="string">'------'</span><span class="keyword">...</span>
+0091         <span class="string">'------'</span> <span class="string">'------'</span>};
+0092      <span class="keyword">for</span> k=1:1:optSystem.NumberOfSurfaces
+0093         Index = k;
+0094         <span class="keyword">if</span> optSystem.SurfaceArray(k).ObjectSurface
+0095             Index = <span class="string">'OBJECT '</span>;
+0096         <span class="keyword">end</span>
+0097         <span class="keyword">if</span> optSystem.SurfaceArray(k).ImageSurface
+0098             Index = <span class="string">'IMAGE '</span>;
+0099         <span class="keyword">end</span>
+0100         <span class="keyword">if</span> optSystem.SurfaceArray(k).Stop
+0101             Index = <span class="string">'STOP'</span>;
+0102         <span class="keyword">end</span>             
+0103         Type = optSystem.SurfaceArray(k).Type;
+0104         Coating_Type = optSystem.SurfaceArray(k).Coating.Type;
+0105         Param1 = optSystem.SurfaceArray(k).Coating.Name;
+0106         Param2 =  <span class="string">'--'</span>;
+0107         Param3 = <span class="string">'--'</span>;
+0108         Param4 = <span class="string">'--'</span>;
+0109         currentRow = {Index  Type  Coating_Type  Param1  Param2 Param3  Param4};
+0110         Coating_Data = [Coating_Data;currentRow];
+0111      <span class="keyword">end</span>
+0112      Coating_Data
+0113     <span class="keyword">end</span>
+0114     <span class="keyword">if</span> dispAspheric 
+0115         Aspheric_Data = {<span class="string">'Index'</span> <span class="string">'Type'</span> <span class="string">'Conic'</span> <span class="string">'A1'</span> <span class="string">'A2'</span> <span class="string">'A3'</span> <span class="string">'A4'</span><span class="keyword">...</span><span class="comment"> </span>
+0116         <span class="string">'A5'</span> <span class="string">'A6'</span> <span class="string">'A7'</span> <span class="string">'A8'</span> <span class="string">'A9'</span> <span class="string">'A10'</span> <span class="string">'A11'</span> <span class="string">'A12'</span>;<span class="string">'-----'</span> <span class="string">'----'</span> <span class="string">'-----'</span><span class="keyword">...</span>
+0117         <span class="string">'----'</span> <span class="string">'----'</span> <span class="string">'----'</span> <span class="string">'----'</span> <span class="string">'----'</span> <span class="string">'----'</span> <span class="string">'----'</span> <span class="string">'----'</span><span class="keyword">...</span>
+0118         <span class="string">'----'</span> <span class="string">'----'</span> <span class="string">'----'</span> <span class="string">'----'</span>};  
+0119      <span class="keyword">for</span> k=1:1:optSystem.NumberOfSurfaces
+0120         Index = k;
+0121         <span class="keyword">if</span> optSystem.SurfaceArray(k).ObjectSurface
+0122             Index = <span class="string">'OBJECT '</span>;
+0123         <span class="keyword">end</span>
+0124         <span class="keyword">if</span> optSystem.SurfaceArray(k).ImageSurface
+0125             Index = <span class="string">'IMAGE '</span>;
+0126         <span class="keyword">end</span>
+0127         <span class="keyword">if</span> optSystem.SurfaceArray(k).Stop
+0128             Index = <span class="string">'STOP'</span>;
+0129         <span class="keyword">end</span>              
+0130         Type = optSystem.SurfaceArray(k).Type;
+0131         Conic = (optSystem.SurfaceArray(k).ConicConstant);
+0132         coeff = optSystem.SurfaceArray(k).PloynomialCoefficients;
+0133         A1 = (coeff(1));A2 = (coeff(2));A3 = (coeff(3));A4 = (coeff(4));
+0134         A5 = (coeff(5));A6 = (coeff(6));A7 =(coeff(7));A8 = (coeff(8));
+0135         A9 = (coeff(9));A10 = (coeff(10));A11 = (coeff(11));A12 = (coeff(12));
+0136         currentRow = {Index Type Conic  A1 A2 A3  A4 A5 A6 A7 A8 A9 A10 A11 A12 };            
+0137         Aspheric_Data = [Aspheric_Data;currentRow];
+0138      <span class="keyword">end</span>
+0139      Aspheric_Data
+0140     <span class="keyword">end</span>
+0141     <span class="keyword">if</span> dispTiltDecenter 
+0142         Tilt_and_Decenter_Data = {<span class="string">'Index'</span> <span class="string">'Type'</span> <span class="string">'Order'</span> <span class="string">'Decent X'</span> <span class="string">'Decent Y'</span><span class="keyword">...</span><span class="comment"> </span>
+0143         <span class="string">'Tilt X'</span> <span class="string">'Tilt Y'</span> <span class="string">'Tilt Z'</span>;<span class="string">'-----'</span> <span class="string">'----'</span> <span class="string">'----'</span> <span class="string">'--------'</span> <span class="string">'--------'</span><span class="keyword">...</span>
+0144         <span class="string">'--------'</span> <span class="string">'--------'</span> <span class="string">'--------'</span>};   
+0145      <span class="keyword">for</span> k=1:1:optSystem.NumberOfSurfaces
+0146         Index = k;
+0147         <span class="keyword">if</span> optSystem.SurfaceArray(k).ObjectSurface
+0148             Index = <span class="string">'OBJECT '</span>;
+0149         <span class="keyword">end</span>
+0150         <span class="keyword">if</span> optSystem.SurfaceArray(k).ImageSurface
+0151             Index = <span class="string">'IMAGE '</span>;
+0152         <span class="keyword">end</span>
+0153         <span class="keyword">if</span> optSystem.SurfaceArray(k).Stop
+0154             Index = <span class="string">'STOP'</span>;
+0155         <span class="keyword">end</span>              
+0156         Type = optSystem.SurfaceArray(k).Type; 
+0157         Order = optSystem.SurfaceArray(k).TiltDecenterOrder;
+0158         Decent_X = num2str(optSystem.SurfaceArray(k).DecenterParameter(1));
+0159         Decent_Y = num2str(optSystem.SurfaceArray(k).DecenterParameter(2));
+0160         Tilt_X = num2str(optSystem.SurfaceArray(k).TiltParameter(1));
+0161         Tilt_Y = num2str(optSystem.SurfaceArray(k).TiltParameter(2));
+0162         Tilt_Z = num2str(optSystem.SurfaceArray(k).TiltParameter(3));
+0163         currentRow = {Index Type Order Decent_X  Decent_Y Tilt_X Tilt_Y  Tilt_Z};                         
+0164         Tilt_and_Decenter_Data = [Tilt_and_Decenter_Data;currentRow];
+0165      <span class="keyword">end</span>
+0166      Tilt_and_Decenter_Data
+0167     <span class="keyword">end</span>
+0168  <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

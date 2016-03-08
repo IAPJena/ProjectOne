@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of TiltAndDecenter</title>
+  <meta name="keywords" content="TiltAndDecenter">
+  <meta name="description" content="TiltAndDecenter: Update the coordinate transformation matrix">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Surface -->
+<h1>TiltAndDecenter
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>TiltAndDecenter: Update the coordinate transformation matrix</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [surfaceCoordinateTM,nextReferenceCoordinateTM] = TiltAndDecenter(surf,refCoordinateTM,prevSurfCoordinateTM,prevThickness) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> TiltAndDecenter: Update the coordinate transformation matrix
+ of the surface.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Mathematical_Functions/computeCoordinateTransformationMatrix.html" class="code" title="function transformationMatrix =computeCoordinateTransformationMatrix(Tx,Ty,Tz,Dx,Dy,Dz,order,refCoordinateTM)">computeCoordinateTransformationMatrix</a>	transformationMatrix: computes the coordinate transformation matrix M</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="Surface.html" class="code" title="">Surface</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [surfaceCoordinateTM,nextReferenceCoordinateTM] = TiltAndDecenter</a><span class="keyword">...</span>
+0002         (surf,refCoordinateTM,prevSurfCoordinateTM,prevThickness)
+0003     <span class="comment">% TiltAndDecenter: Update the coordinate transformation matrix</span>
+0004     <span class="comment">% of the surface.</span>
+0005 
+0006     <span class="comment">% For detailed see the documentation of the</span>
+0007     <span class="comment">% CoordinateTransformationMatrix function</span>
+0008     Tx = surf.TiltParameter(1);
+0009     Ty = surf.TiltParameter(2);
+0010     Tz = surf.TiltParameter(3);
+0011 
+0012     Dx = surf.DecenterParameter(1);
+0013     Dy = surf.DecenterParameter(2);
+0014     Dz = prevThickness;
+0015 
+0016     order = surf.TiltDecenterOrder;
+0017     tiltMode = surf.TiltMode;
+0018 
+0019     surfaceCoordinateTM = <span class="keyword">...</span>
+0020     <a href="../../../AODParentDir/Mathematical_Functions/computeCoordinateTransformationMatrix.html" class="code" title="function transformationMatrix =computeCoordinateTransformationMatrix(Tx,Ty,Tz,Dx,Dy,Dz,order,refCoordinateTM)">computeCoordinateTransformationMatrix</a><span class="keyword">...</span>
+0021     (Tx,Ty,Tz,Dx,Dy,Dz,order,refCoordinateTM);
+0022 
+0023     <span class="comment">% coordinate transformation matrix for coordinate after the surface calculations</span>
+0024     <span class="keyword">switch</span> tiltMode
+0025         <span class="keyword">case</span> <span class="string">'DAR'</span>
+0026             <span class="comment">% Reference axis for next surfaces starts at current</span>
+0027             <span class="comment">% surface vertex and oriented in the current</span>
+0028             <span class="comment">% reference axis</span>
+0029             nextReferenceCoordinateTM = refCoordinateTM;
+0030             nextReferenceCoordinateTM(1:3,4) = surfaceCoordinateTM(1:3,4)-[Dx;Dy;0];                      
+0031         <span class="keyword">case</span> <span class="string">'NAX'</span>
+0032             <span class="comment">% Reference axis for next surfaces starts at current</span>
+0033             <span class="comment">% surface vertex and oriented in the current surfaces</span>
+0034             <span class="comment">% local axis</span>
+0035             nextReferenceCoordinateTM = surfaceCoordinateTM;
+0036         <span class="keyword">case</span> <span class="string">'BEN'</span>
+0037             <span class="comment">% Apply Tx and Ty again for the new axis</span>
+0038             <span class="comment">% Compute Tz to readjust the new axis so that the meridional</span>
+0039             <span class="comment">% plane remains meridional after BENd (OpTaLix)</span>
+0040             Tz = acos((cos(Tx)+cos(Ty))/(1+ cos(Tx)*cos(Ty)));
+0041             Dx=0; Dy=0; Dz=0;
+0042 <span class="comment">%                     order = 'TxTyTzDxDyDz';</span>
+0043             nextReferenceCoordinateTM = <a href="../../../AODParentDir/Mathematical_Functions/computeCoordinateTransformationMatrix.html" class="code" title="function transformationMatrix =computeCoordinateTransformationMatrix(Tx,Ty,Tz,Dx,Dy,Dz,order,refCoordinateTM)">computeCoordinateTransformationMatrix</a><span class="keyword">...</span>
+0044             (Tx,Ty,Tz,Dx,Dy,Dz,order,surfaceCoordinateTM);
+0045     <span class="keyword">end</span>
+0046 <span class="keyword">end</span>
+0047</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

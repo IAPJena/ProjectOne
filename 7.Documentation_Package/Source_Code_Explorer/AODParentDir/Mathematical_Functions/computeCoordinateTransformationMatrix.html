@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeCoordinateTransformationMatrix</title>
+  <meta name="keywords" content="computeCoordinateTransformationMatrix">
+  <meta name="description" content="transformationMatrix: computes the coordinate transformation matrix M">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Mathematical_Functions -->
+<h1>computeCoordinateTransformationMatrix
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>transformationMatrix: computes the coordinate transformation matrix M</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function transformationMatrix =computeCoordinateTransformationMatrix(Tx,Ty,Tz,Dx,Dy,Dz,order,refCoordinateTM) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> transformationMatrix: computes the coordinate transformation matrix M 
+    (which can be used to transform from global to local coordinate
+    system after tilt and decenter operations) and given initial coordinate
+    transfer matrix.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@Surface/TiltAndDecenter.html" class="code" title="function [surfaceCoordinateTM,nextReferenceCoordinateTM] = TiltAndDecenter(surf,refCoordinateTM,prevSurfCoordinateTM,prevThickness)">TiltAndDecenter</a>	TiltAndDecenter: Update the coordinate transformation matrix</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function transformationMatrix = </a><span class="keyword">...</span>
+0002     computeCoordinateTransformationMatrix(Tx,Ty,Tz,Dx,Dy,Dz,order,refCoordinateTM)
+0003 
+0004 <span class="comment">% transformationMatrix: computes the coordinate transformation matrix M</span>
+0005 <span class="comment">%    (which can be used to transform from global to local coordinate</span>
+0006 <span class="comment">%    system after tilt and decenter operations) and given initial coordinate</span>
+0007 <span class="comment">%    transfer matrix.</span>
+0008 
+0009 <span class="comment">% Inputs</span>
+0010 <span class="comment">% Tx,Ty,Tz = tilt angles in degree about x,y and z axis</span>
+0011 <span class="comment">% Dx,Dy,Dz = decenter in x,y and z axis. Dz is taken to be the thickness</span>
+0012 <span class="comment">% Order: a string indcating the order in which the operations have to be</span>
+0013 <span class="comment">% performed. Any arbitrary order is possible</span>
+0014 <span class="comment">% refCoordinateTM: the cordinate transformation matrix describing the</span>
+0015 <span class="comment">% initial refernce coordinate</span>
+0016 
+0017 <span class="comment">% Outputs</span>
+0018 <span class="comment">% transformationMatrix: is a 4x4 matrix, the left upper 3x3 matrix represent</span>
+0019         <span class="comment">% rotation matrix from global to local coordinate and the last</span>
+0020         <span class="comment">% column gives the decenter of the current coordinates and the last</span>
+0021         <span class="comment">% row is just for maths</span>
+0022         
+0023 <span class="comment">% Example call:</span>
+0024 <span class="comment">% % Inputs</span>
+0025 <span class="comment">% Tx = -45; Ty = 0; Tz = 0;</span>
+0026 <span class="comment">% Dx = 0; Dy = 0; Dz = 1;</span>
+0027 <span class="comment">% % order = 'TxTyTzDxDyDz';</span>
+0028 <span class="comment">% order = 'DxDyDzTxTyTz';</span>
+0029 <span class="comment">% transMatrixBefore = [1,0,0,0;0,1,0,0;0,0,1,0;0,0,0,1]</span>
+0030 <span class="comment">% transformationMatrix = ...</span>
+0031 <span class="comment">%     computeCoordinateTransformationMatrix(Tx,Ty,Tz,Dx,Dy,Dz,order,transMatrixBefore)</span>
+0032 
+0033 
+0034 <span class="comment">% Main function definition</span>
+0035 
+0036 <span class="comment">% convert all angles to radians</span>
+0037 tx = Tx*pi/180;
+0038 ty = Ty*pi/180;
+0039 tz = Tz*pi/180;
+0040 
+0041 <span class="comment">% take the rotation matrix and decenter vector</span>
+0042 rotToLocal = refCoordinateTM(1:3,1:3); <span class="comment">% global to local</span>
+0043 decVector = refCoordinateTM(1:3,4);
+0044 ORDER = upper(order);
+0045 <span class="keyword">for</span> k = 1:2:11
+0046     <span class="keyword">switch</span> (ORDER(k:k+1))
+0047         <span class="comment">% compute the rotation matrix</span>
+0048         <span class="keyword">case</span> <span class="string">'TX'</span>
+0049             rotToLocal = [1 0 0;0 cos(tx) sin(tx);0 -sin(tx) cos(tx)]*rotToLocal;
+0050         <span class="keyword">case</span> <span class="string">'TY'</span>
+0051             rotToLocal = [cos(ty) 0 -sin(ty);0 1 0;sin(ty) 0 cos(ty)]*rotToLocal;
+0052         <span class="keyword">case</span> <span class="string">'TZ'</span>
+0053             rotToLocal = [cos(tz) sin(tz) 0;-sin(tz) cos(tz) 0;0 0 1]*rotToLocal;
+0054         
+0055         <span class="comment">% decenters are assumed to be in the current local coordinate system</span>
+0056         <span class="comment">% the decenter values in local are converted to global using</span>
+0057         <span class="comment">% transMatrix' and then added to the current transMatrix.</span>
+0058         <span class="comment">% Dz is thickness</span>
+0059         <span class="keyword">case</span> <span class="string">'DX'</span>
+0060             rotToGlobal = rotToLocal';
+0061             decVector =  decVector + rotToGlobal*[Dx;0;0];
+0062         <span class="keyword">case</span> <span class="string">'DY'</span>
+0063             rotToGlobal = rotToLocal';
+0064             decVector =  decVector + rotToGlobal*[0;Dy;0];
+0065         <span class="keyword">case</span> <span class="string">'DZ'</span>   
+0066             rotToGlobal = rotToLocal';
+0067             decVector =  decVector + rotToGlobal*[0;0;Dz];
+0068     <span class="keyword">end</span>  
+0069 <span class="keyword">end</span>
+0070 <span class="comment">% assemble the rotation matrix and the decenter vector togather for 4x4</span>
+0071 <span class="comment">% transformation matrix</span>
+0072 transMatrixSurface = [[rotToLocal;0 0 0],[decVector;1]];
+0073 transformationMatrix = transMatrixSurface;
+0074 
+0075</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

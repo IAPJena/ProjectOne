@@ -1,0 +1,39 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  AODParentWindow -> AODParentWindow;
+  AODParentWindow -> resetParentParameters;
+  InitializeSurfaceEditorPanel -> resetSurfaceEditorPanel;
+
+  AODParentWindow [URL="AODParentWindow.html"];
+  AddToOpenedWindowsList [URL="AddToOpenedWindowsList.html"];
+  InitializeMenuAndToolbarItems [URL="InitializeMenuAndToolbarItems.html"];
+  InitializeOpenedWindowsPanel [URL="InitializeOpenedWindowsPanel.html"];
+  InitializePanels [URL="InitializePanels.html"];
+  InitializeSurfaceEditorPanel [URL="InitializeSurfaceEditorPanel.html"];
+  InitializeSystemConfigurationPanel [URL="InitializeSystemConfigurationPanel.html"];
+  InitializeWelcomePanel [URL="InitializeWelcomePanel.html"];
+  RemoveFromOpenedWindowsList [URL="RemoveFromOpenedWindowsList.html"];
+  addChild [URL="addChild.html"];
+  closeAllChildWindows [URL="closeAllChildWindows.html"];
+  closeAllWindows [URL="closeAllWindows.html"];
+  closeChild [URL="closeChild.html"];
+  closeParent [URL="closeParent.html"];
+  computeFastSemidiameters [URL="computeFastSemidiameters.html"];
+  findChild [URL="findChild.html"];
+  getCurrentOpticalSystem [URL="getCurrentOpticalSystem.html"];
+  hideChild [URL="hideChild.html"];
+  hideParent [URL="hideParent.html"];
+  openFromMATFile [URL="openFromMATFile.html"];
+  openFromZemaxFile [URL="openFromZemaxFile.html"];
+  openNewOpticalSystem [URL="openNewOpticalSystem.html"];
+  openSavedOpticalSystem [URL="openSavedOpticalSystem.html"];
+  resetOpenedWindowsPanel [URL="resetOpenedWindowsPanel.html"];
+  resetParentParameters [URL="resetParentParameters.html"];
+  resetSurfaceEditorPanel [URL="resetSurfaceEditorPanel.html"];
+  resetSystemConfigurationPanel [URL="resetSystemConfigurationPanel.html"];
+  saveMySystem [URL="saveMySystem.html"];
+  saveMySystemAs [URL="saveMySystemAs.html"];
+  selectMainTab [URL="selectMainTab.html"];
+  showChild [URL="showChild.html"];
+  validateOpticalSystem [URL="validateOpticalSystem.html"];
+}

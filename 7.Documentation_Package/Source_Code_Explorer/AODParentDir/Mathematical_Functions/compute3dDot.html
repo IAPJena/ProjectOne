@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of compute3dDot</title>
+  <meta name="keywords" content="compute3dDot">
+  <meta name="description" content="compute3dDot: computes the dot product of two 3xN vectors">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Mathematical_Functions -->
+<h1>compute3dDot
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>compute3dDot: computes the dot product of two 3xN vectors</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ outVal ] = compute3dDot(vect1,vect2) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> compute3dDot: computes the dot product of two 3xN vectors
+   The function is also vectorized so if the inputs are array then 
+   the output will also be array of the same size.    
+   To replace the default cross function b/c it is faster
+ Input:
+    vect1,vect2: 3xN vectors
+ Output:
+    outVal : Nx1 the dot product</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/plotWavefrontAtExitPupil.html" class="code" title="function [ XMulti,YMulti,OPDAtExitPupilMulti,PupilWeightMatrixMulti,RMSMulti,WPVMulti,ZERMulti,AmpTransCoeffMulti,SrehlRatioMuti] =plotWavefrontAtExitPupil( optSystem,wavLen,fieldPointXY,rayGridSize,zerCoeff,polarized,jonesVec,resultComponent,plotPanelHandle,textHandle)">plotWavefrontAtExitPupil</a>	PLOTWAVEFRONTATEXITPUPIL: computes and plots the OPD surface in the exit pupil of</li><li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/tracePolarizedRay.html" class="code" title="function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture)">tracePolarizedRay</a>	tracePolarizedRay: main function of polarized ray tracer</li><li><a href="../../AODParentDir/Scalar_Ray_Tracing_Module/computeAngleBetweenVectors.html" class="code" title="function angle = computeAngleBetweenVectors (vect1,vect2);">computeAngleBetweenVectors</a>	computeAngleBetweenVectors: to calculate the angle inc (the angle betweent</li><li><a href="../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computeRefractedRayDirection.html" class="code" title="function [refLocalRayDirection,TIR] = computeRefractedRayDirection(incidentDirection,normalVector,indexBefore,indexAfter)">computeRefractedRayDirection</a>	COMPUTEREFRACTEDRAYDIRECTION to calculate the new direction after refraction</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ outVal ] = compute3dDot(vect1,vect2)</a>
+0002     <span class="comment">% compute3dDot: computes the dot product of two 3xN vectors</span>
+0003     <span class="comment">%   The function is also vectorized so if the inputs are array then</span>
+0004     <span class="comment">%   the output will also be array of the same size.</span>
+0005     <span class="comment">%   To replace the default cross function b/c it is faster</span>
+0006     <span class="comment">% Input:</span>
+0007     <span class="comment">%    vect1,vect2: 3xN vectors</span>
+0008     <span class="comment">% Output:</span>
+0009     <span class="comment">%    outVal : Nx1 the dot product</span>
+0010     
+0011     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0012     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0013     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0014     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0015     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0016     <span class="comment">%   Institute of Applied Physics</span>
+0017     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0018                              
+0019     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0020     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0021     <span class="comment">% Jan 18,2014   Worku, Norman G.     Original with Vectorized inputs and outputs</span>
+0022 
+0023     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0024       
+0025     outVal = vect1(1,:).*vect2(1,:) + vect1(2,:).*vect2(2,:)+ <span class="keyword">...</span>
+0026         vect1(3,:).*vect2(3,:);   
+0027 <span class="keyword">end</span>
+0028</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

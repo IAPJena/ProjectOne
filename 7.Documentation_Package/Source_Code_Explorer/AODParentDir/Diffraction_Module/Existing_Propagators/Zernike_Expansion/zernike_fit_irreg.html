@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of zernike_fit_irreg</title>
+  <meta name="keywords" content="zernike_fit_irreg">
+  <meta name="description" content="___________________________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- ../menu.html Existing_Propagators --><!-- menu.html Zernike_Expansion -->
+<h1>zernike_fit_irreg
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>___________________________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function [cout,phasout,wrms,wpv] = zernike_fit_irreg(xp,yp,nzern,a,phasin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">___________________________________________________________________________________
+
+  Aufruf :  
+
+  Berechnung der Zernikekoeffizienten auf einem irregulären Koordinaten-
+  raster durch least square Fit. Koordinaten und Phasenwerte sind linear
+  abgespeichert. 
+  Es sind maximal 64 Zernikes berücksichtigt
+
+  Version :   2010-04-02   H. Gross
+___________________________________________________________________________________
+
+  Input :  phasin(np)    : Input-Phasenfläche , skaliert in Lambda
+           a             : Normierungsradius Koordinaten
+           xp(np)        : x-Koordinatenvektoren
+           yp(np)        : y-Koordinatenvektoren
+           nzern         : Anzahl Zernikes
+
+  Output : cout(nzern)   : Zernikekoeffizienten in Lambda
+           phasout(np)   : Output-Phasenfläche , skaliert in Lambda
+           wrms          : Qualität der Anpassung, rms-Wert
+           wpv           : Qualität der Anpassung, Maximal-Wert
+___________________________________________________________________________________</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="zern_fun_irreg.html" class="code" title="function zern_fun = zern_fun_irreg(nzern,xp,yp,a)">zern_fun_irreg</a>	___________________________________________________________________________________</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="../../../../AODParentDir/Class_Definition/@OpticalSystem/plotWavefrontAtExitPupil.html" class="code" title="function [ XMulti,YMulti,OPDAtExitPupilMulti,PupilWeightMatrixMulti,RMSMulti,WPVMulti,ZERMulti,AmpTransCoeffMulti,SrehlRatioMuti] =plotWavefrontAtExitPupil( optSystem,wavLen,fieldPointXY,rayGridSize,zerCoeff,polarized,jonesVec,resultComponent,plotPanelHandle,textHandle)">plotWavefrontAtExitPupil</a>	PLOTWAVEFRONTATEXITPUPIL: computes and plots the OPD surface in the exit pupil of</li><li><a href="zernike_fit_irreg_test.html" class="code" title="">zernike_fit_irreg_test</a>	___________________________________________________________________________________</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [cout,phasout,wrms,wpv] = zernike_fit_irreg(xp,yp,nzern,a,phasin)</a>
+0002 <span class="comment">%___________________________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  Aufruf :</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%  Berechnung der Zernikekoeffizienten auf einem irregulären Koordinaten-</span>
+0007 <span class="comment">%  raster durch least square Fit. Koordinaten und Phasenwerte sind linear</span>
+0008 <span class="comment">%  abgespeichert.</span>
+0009 <span class="comment">%  Es sind maximal 64 Zernikes berücksichtigt</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">%  Version :   2010-04-02   H. Gross</span>
+0012 <span class="comment">%___________________________________________________________________________________</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">%  Input :  phasin(np)    : Input-Phasenfläche , skaliert in Lambda</span>
+0015 <span class="comment">%           a             : Normierungsradius Koordinaten</span>
+0016 <span class="comment">%           xp(np)        : x-Koordinatenvektoren</span>
+0017 <span class="comment">%           yp(np)        : y-Koordinatenvektoren</span>
+0018 <span class="comment">%           nzern         : Anzahl Zernikes</span>
+0019 <span class="comment">%</span>
+0020 <span class="comment">%  Output : cout(nzern)   : Zernikekoeffizienten in Lambda</span>
+0021 <span class="comment">%           phasout(np)   : Output-Phasenfläche , skaliert in Lambda</span>
+0022 <span class="comment">%           wrms          : Qualität der Anpassung, rms-Wert</span>
+0023 <span class="comment">%           wpv           : Qualität der Anpassung, Maximal-Wert</span>
+0024 <span class="comment">%___________________________________________________________________________________</span>
+0025 <span class="comment">%</span>
+0026 
+0027 <span class="comment">% % Calculation of the Zernike coefficients on an irregular coordinate</span>
+0028 <span class="comment">% % Grid by least square fit. Coordinates and phase values ??are linearly</span>
+0029 <span class="comment">% % Stored.</span>
+0030 <span class="comment">% % Input: phasin (np): Input phase surface, scaled in lambda</span>
+0031 <span class="comment">% % A: normalization radius coordinate</span>
+0032 <span class="comment">% % Xp (np): x-coordinate vectors</span>
+0033 <span class="comment">% % Yp (np): y-coordinate vectors</span>
+0034 <span class="comment">% % nzern: number of Zernike</span>
+0035 <span class="comment">% %</span>
+0036 <span class="comment">% % Output: cout (nzern): Zernike coefficients in lambda</span>
+0037 <span class="comment">% % Phasout (np): Output phase surface, scaled in lambda</span>
+0038 <span class="comment">% % wrms: quality of the fit, the rms value</span>
+0039 <span class="comment">% % wpv: quality of fit, maximum value</span>
+0040 
+0041 np   = length( xp );
+0042 <span class="comment">%</span>
+0043 zmat = <a href="zern_fun_irreg.html" class="code" title="function zern_fun = zern_fun_irreg(nzern,xp,yp,a)">zern_fun_irreg</a>(nzern,xp,yp,a);
+0044 <span class="comment">%</span>
+0045 <span class="comment">%  Phasenfläche und Zernikeflächen als Vektor formulieren</span>
+0046 <span class="comment">%</span>
+0047 zmatinv = pinv( (zmat.') * zmat ) ;
+0048 wmat = phasin(:)' * zmat ;
+0049 cout = ( wmat * zmatinv )' ;
+0050 <span class="comment">%</span>
+0051 <span class="comment">%  Abweichungen Original / Fit</span>
+0052 <span class="comment">%</span>
+0053 phasout = zeros(np,1);
+0054 <span class="keyword">for</span> j=1:nzern
+0055 phasout = phasout + cout(j) * zmat(:,j) ;
+0056 <span class="keyword">end</span>
+0057 dwe = phasout-phasin;
+0058 <span class="comment">%</span>
+0059 <span class="comment">%  PV- und Rms-Wert für synthetische Daten berechnen</span>
+0060 <span class="comment">%</span>
+0061 wpv = max(abs( dwe));
+0062 wnor = numel( dwe );
+0063 wlin = sum( dwe ) / wnor;
+0064 wrms = sqrt( sum( ( dwe - wlin ).^2 ) / wnor );
+0065 <span class="comment">%</span>
+0066 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of field_2D_aniso</title>
+  <meta name="keywords" content="field_2D_aniso">
+  <meta name="description" content="___________________________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- menu.html Existing_Propagators -->
+<h1>field_2D_aniso
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>___________________________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function ftwo = field_2D_aniso(xp,yp,ampx,ampy,phasx,phasy) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">___________________________________________________________________________________
+
+  Erzeugung eines zweidimensionalen komplexen Feldes aus der eindimensionalen
+  Feldern von Amplitude und Phase
+  Die Amplitude wird multiplikativ überlagert
+  Die Phase wir additiv überlagert</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fraunhofer_Scalar/prop_fraun_fft_test.html" class="code" title="">prop_fraun_fft_test</a>	Test Fraunhofer-Propagator</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function ftwo = field_2D_aniso(xp,yp,ampx,ampy,phasx,phasy)</a>
+0002 <span class="comment">%___________________________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  Erzeugung eines zweidimensionalen komplexen Feldes aus der eindimensionalen</span>
+0005 <span class="comment">%  Feldern von Amplitude und Phase</span>
+0006 <span class="comment">%  Die Amplitude wird multiplikativ überlagert</span>
+0007 <span class="comment">%  Die Phase wir additiv überlagert</span>
+0008 <span class="comment">%</span>
+0009 
+0010 <span class="comment">% Generating a two-dimensional complex field from the one-dimensional</span>
+0011 <span class="comment">% Fields of amplitude and phase</span>
+0012 <span class="comment">%, The amplitude is superposed on a multiplicative</span>
+0013 <span class="comment">% The phase we additively superimposed</span>
+0014 
+0015 
+0016 <span class="comment">%  Version :   04.02.06   H. Gross</span>
+0017 <span class="comment">%              02.02.08   Korrektur</span>
+0018 <span class="comment">%___________________________________________________________________________________</span>
+0019 <span class="comment">%</span>
+0020 <span class="comment">%  Input :  xp(np)        : x-Koordinate</span>
+0021 <span class="comment">%           yp(np)        : y-Koordinate</span>
+0022 <span class="comment">%           ampx(np)      : Amplitude im x-Schnitt</span>
+0023 <span class="comment">%           ampy(np)      : Amplitude im y-Schnitt</span>
+0024 <span class="comment">%           phasx(np)     : Phase im x-Schnitt</span>
+0025 <span class="comment">%           phasy(np)     : Phase im y-Schnitt</span>
+0026 <span class="comment">%</span>
+0027 <span class="comment">%</span>
+0028 <span class="comment">%  Output : ftwo(np,np)   : Zweidimensionales Feld</span>
+0029 <span class="comment">%___________________________________________________________________________________</span>
+0030 <span class="comment">%</span>
+0031 npx = length( xp ); npy = length(yp);
+0032 ftwo  = zeros(npx,npy,1);
+0033 famp  = zeros(npx,npy,1);
+0034 fphas = zeros(npx,npy,1);
+0035 <span class="comment">%</span>
+0036 <span class="comment">%  2D-Überlagerung zu komplexem Feld</span>
+0037 <span class="comment">%</span>
+0038 v = 2 * pi * i ;
+0039 <span class="keyword">for</span> j=1:npx
+0040     <span class="keyword">for</span> k=1:npy
+0041         ampxy  = ampx(j) * ampy(k) ;
+0042         phasxy = phasx(j) + phasy(k);
+0043         ftwo(j,k) = ampxy * exp( v * phasxy );
+0044     <span class="keyword">end</span>
+0045 <span class="keyword">end</span>
+0046 <span class="comment">%</span>
+0047 
+0048         
+0049         
+0050 
+0051</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

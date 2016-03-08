@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of clearAODObjectCatalogue</title>
+  <meta name="keywords" content="clearAODObjectCatalogue">
+  <meta name="description" content="CLEARCOATINGCATALOGUE Remove all AODobject from the catalogue">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Catalogue_Module -->
+<h1>clearAODObjectCatalogue
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>CLEARCOATINGCATALOGUE Remove all AODobject from the catalogue</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ cleared ] = clearAODObjectCatalogue(objectType, objectCatalogueFullName ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">CLEARCOATINGCATALOGUE Remove all AODobject from the catalogue</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>	CREATENEWCOATINGCATALOGUE Create anew AOD object catalogue and intialize</li><li><a href="isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>	ISVALIDCOATINGCATALOGUE Retruns whether the object catalogue is vlaid or</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ cleared ] = clearAODObjectCatalogue(objectType, objectCatalogueFullName )</a>
+0002 <span class="comment">%CLEARCOATINGCATALOGUE Remove all AODobject from the catalogue</span>
+0003 <span class="keyword">if</span> <a href="isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>(objectType, objectCatalogueFullName )
+0004     <span class="comment">% delete the exsisting and create anew one</span>
+0005     delete(objectCatalogueFullName);
+0006     cleared = <a href="createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>(objectType, objectCatalogueFullName );
+0007     disp(<span class="string">'The catalogue is successfully cleared.'</span>);
+0008 <span class="keyword">else</span>
+0009     cleared = 0;
+0010     disp(<span class="string">'Error: The catalogue is not valid.'</span>);
+0011 <span class="keyword">end</span>
+0012 <span class="keyword">end</span>
+0013</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

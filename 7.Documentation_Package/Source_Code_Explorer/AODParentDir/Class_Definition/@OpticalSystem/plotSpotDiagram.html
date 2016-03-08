@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotSpotDiagram</title>
+  <meta name="keywords" content="plotSpotDiagram">
+  <meta name="description" content="Plots the spot diagram at a given surface.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>plotSpotDiagram
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Plots the spot diagram at a given surface.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function plotSpotDiagram(optSystem,axesHandle,surfIndex,wavLen,fieldPointXY,numberOfRays,PupSamplingType,directionCosines,spotSymbal,spotColor) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Plots the spot diagram at a given surface.
+ If directionCosines = 0 then the spatial coordinates of
+ the intersection points of all rays with the given surface will be
+ displayed. The graph will be in the local cooordinate of the surface.
+ If directionCosines = 1 then the X and Y values displayed will be the
+ direction cosines in X and Y direction instead. The later can be
+ used for afocal system system evaluation.
+ spotSymbal,spotColor: characterrs indncating spot color and symboals</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/globalToLocalPosition.html" class="code" title="function [ localPosition ] = globalToLocalPosition( globalPosition,surfaceCoordinateTM)">globalToLocalPosition</a>	globalToLocalPosition: converts position given in global coordinate to</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plotSpotDiagram(optSystem,axesHandle,surfIndex,wavLen,</a><span class="keyword">...</span>
+0002                      fieldPointXY,numberOfRays,PupSamplingType,directionCosines,spotSymbal,spotColor)
+0003     <span class="comment">% Plots the spot diagram at a given surface.</span>
+0004     <span class="comment">% If directionCosines = 0 then the spatial coordinates of</span>
+0005     <span class="comment">% the intersection points of all rays with the given surface will be</span>
+0006     <span class="comment">% displayed. The graph will be in the local cooordinate of the surface.</span>
+0007     <span class="comment">% If directionCosines = 1 then the X and Y values displayed will be the</span>
+0008     <span class="comment">% direction cosines in X and Y direction instead. The later can be</span>
+0009     <span class="comment">% used for afocal system system evaluation.</span>
+0010     <span class="comment">% spotSymbal,spotColor: characterrs indncating spot color and symboals</span>
+0011     
+0012     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0013     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0014     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0015     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0016     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0017     <span class="comment">%   Institute of Applied Physics</span>
+0018     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0019                              
+0020     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0021     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0022     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0023     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized version</span>
+0024     
+0025     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0026        
+0027     
+0028     <span class="comment">% Default Inputs</span>
+0029     <span class="keyword">if</span> nargin &lt; 8
+0030         directionCosines = 0;
+0031         spotSymbal = [<span class="string">'.'</span>,<span class="string">'o'</span>,<span class="string">'x'</span>,<span class="string">'+'</span>,<span class="string">'*'</span>,<span class="string">'s'</span>,<span class="string">'d'</span>,<span class="string">'v'</span>,<span class="string">'^'</span>,<span class="string">'&lt;'</span>,<span class="string">'&gt;'</span>];
+0032         spotColor = [<span class="string">'b'</span>,<span class="string">'g'</span>,<span class="string">'r'</span>,<span class="string">'c'</span>,<span class="string">'m'</span>,<span class="string">'y'</span>,<span class="string">'k'</span>];
+0033     <span class="keyword">end</span>
+0034     
+0035     cla(axesHandle,<span class="string">'reset'</span>)
+0036     JonesVec = [NaN;NaN];
+0037     <span class="comment">% polarizedRayTracerResult =  nSurf X nRay X nField X nWav</span>
+0038     [polarizedRayTracerResult,pupilCoordinates] = optSystem.multipleRayTracer(wavLen,<span class="keyword">...</span>
+0039                 fieldPointXY,numberOfRays,PupSamplingType,JonesVec);
+0040 
+0041     <span class="comment">% Spatial Distribution of spot diagram in a given surface</span>
+0042     <span class="comment">% Use different color for diffrent wavelengths and different symbal for</span>
+0043     <span class="comment">% different field points.</span>
+0044     entrancePupilRadius = (optSystem.getEntrancePupilDiameter)/2;
+0045     nSurface = size(polarizedRayTracerResult,1);
+0046     nRay = size(polarizedRayTracerResult,2);
+0047     nField = size(polarizedRayTracerResult,3);
+0048     nWav = size(polarizedRayTracerResult,4);
+0049     SurfaceCoordinateTM = optSystem.SurfaceArray(surfIndex).SurfaceCoordinateTM;
+0050     <span class="keyword">for</span> wavIndex = 1:nWav
+0051         <span class="keyword">for</span> fieldIndex = 1:nField
+0052             globalIntersectionPoints = <span class="keyword">...</span>
+0053                 [polarizedRayTracerResult(surfIndex,:,fieldIndex,wavIndex).RayIntersectionPoint];
+0054             <span class="comment">% convert from global to local coordinate of the surface</span>
+0055             localIntersectionPoints = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/globalToLocalPosition.html" class="code" title="function [ localPosition ] = globalToLocalPosition( globalPosition,surfaceCoordinateTM)">globalToLocalPosition</a><span class="keyword">...</span>
+0056                 (globalIntersectionPoints, SurfaceCoordinateTM);
+0057             px = localIntersectionPoints(1,:); py = localIntersectionPoints(2,:);
+0058             spotShapeColor = [spotSymbal(wavIndex),spotColor(fieldIndex)];
+0059             plot(axesHandle,px,py,spotShapeColor);
+0060             hold on;
+0061         <span class="keyword">end</span>
+0062     <span class="keyword">end</span>
+0063 <span class="comment">%     globalIntersectionPoints = [polarizedRayTracerResult(surfIndex,:).RayIntersectionPoint];</span>
+0064 <span class="comment">%</span>
+0065 <span class="comment">%     % convert from global to local coordinate of the surface</span>
+0066 <span class="comment">%     localIntersectionPoints = globalToLocalPosition(globalIntersectionPoints,...</span>
+0067 <span class="comment">%         optSystem.SurfaceArray(surfIndex).SurfaceCoordinateTM);</span>
+0068 <span class="comment">%     px = localIntersectionPoints(1,:); py = localIntersectionPoints(2,:);</span>
+0069 <span class="comment">%     plot(axesHandle,px,py,spotSymbal);</span>
+0070     
+0071     <span class="comment">% finally set the axis to the apperture size of the surface</span>
+0072     appType = optSystem.SurfaceArray(surfIndex).ApertureType;
+0073     appParam = optSystem.SurfaceArray(surfIndex).ApertureParameter;
+0074     xmin = -max(appParam);
+0075     xmax = max(appParam);
+0076     ymin = -max(appParam);
+0077     ymax = max(appParam);
+0078     axis([xmin xmax ymin ymax]);
+0079     
+0080     hold on;    
+0081     axis equal;
+0082     xlabel(<span class="string">'X Coordinate'</span>,<span class="string">'FontSize'</span>,12);
+0083     ylabel(<span class="string">'Y Coordinate'</span>,<span class="string">'FontSize'</span>,12);
+0084     title([<span class="string">'Spot Diagram at surface : '</span>,num2str(surfIndex)],<span class="string">'FontSize'</span>,12)             
+0085 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

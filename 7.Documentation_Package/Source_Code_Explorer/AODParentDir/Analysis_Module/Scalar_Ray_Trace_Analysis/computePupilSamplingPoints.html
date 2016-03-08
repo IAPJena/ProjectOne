@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computePupilSamplingPoints</title>
+  <meta name="keywords" content="computePupilSamplingPoints">
+  <meta name="description" content="computePupilSamplingPoints:  Returns coordinates of pupil sampling points">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Analysis_Module --><!-- menu.html Scalar_Ray_Trace_Analysis -->
+<h1>computePupilSamplingPoints
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>computePupilSamplingPoints:  Returns coordinates of pupil sampling points</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ pupilSamplingPoints,pupilGridIndices ] = computePupilSamplingPoints(nRay,pupilZLocation,pupilRadius,pupilSampling,objThick) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computePupilSamplingPoints:  Returns coordinates of pupil sampling points
+ Inputs:
+   nRay: Total number of pupil sampling points required
+   pupilZLocation: Location of entrance pupil from the first lens surface
+   pupilRadius: The radius of the entrance pupil
+   pupilSampling: Type of pupil sampling used
+   objThick: thickness related to the object surface
+ Outputs:
+   pupilSamplingPoints: 3 x nRay matrix containg values of pupil sampling
+   coordinates.
+   pupilGridIndices: the grid indices corresponding to each sampling
+   points for cartesian sampling. Not used for other sampling.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/multipleRayTracer.html" class="code" title="function [multipleRayTracerResult,pupilCoordinates,pupilGridIndices] =multipleRayTracer(optSystem,wavLen,fieldPointXY,nRay,PupSamplingType,JonesVec,considerSurfAperture) %">multipleRayTracer</a>	Trace bundle of rays through an optical system based on the pupil</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ pupilSamplingPoints,pupilGridIndices ] = computePupilSamplingPoints</a><span class="keyword">...</span>
+0002                         (nRay,pupilZLocation,pupilRadius,pupilSampling,objThick)
+0003     <span class="comment">% computePupilSamplingPoints:  Returns coordinates of pupil sampling points</span>
+0004     <span class="comment">% Inputs:</span>
+0005     <span class="comment">%   nRay: Total number of pupil sampling points required</span>
+0006     <span class="comment">%   pupilZLocation: Location of entrance pupil from the first lens surface</span>
+0007     <span class="comment">%   pupilRadius: The radius of the entrance pupil</span>
+0008     <span class="comment">%   pupilSampling: Type of pupil sampling used</span>
+0009     <span class="comment">%   objThick: thickness related to the object surface</span>
+0010     <span class="comment">% Outputs:</span>
+0011     <span class="comment">%   pupilSamplingPoints: 3 x nRay matrix containg values of pupil sampling</span>
+0012     <span class="comment">%   coordinates.</span>
+0013     <span class="comment">%   pupilGridIndices: the grid indices corresponding to each sampling</span>
+0014     <span class="comment">%   points for cartesian sampling. Not used for other sampling.</span>
+0015 
+0016     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0017     <span class="comment">%</span>
+0018 
+0019     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0020     <span class="comment">%</span>
+0021 
+0022     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0023     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0024     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0025     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0026     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0027     <span class="comment">%   Institute of Applied Physics</span>
+0028     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0029                              
+0030     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0031     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0032     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0033 
+0034     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0035  
+0036     <span class="comment">% objPupilDistZ = objThick + pupilZLocation;</span>
+0037     
+0038     
+0039     <span class="comment">% currently only 1,5, 6 and 7 are supported all others will be trated as 1</span>
+0040     <span class="keyword">if</span> pupilSampling == 2 || pupilSampling == 3 || pupilSampling == 4 
+0041         pupilSampling = 1;
+0042     <span class="keyword">end</span> 
+0043     
+0044     
+0045     <span class="keyword">switch</span> pupilSampling
+0046         <span class="keyword">case</span> 1 <span class="comment">% 1: Cartesian</span>
+0047             <span class="comment">% For caretesian sampling the number of rays specifed correspond</span>
+0048             <span class="comment">% to the rectangular pupil. So the effective number of rays traced</span>
+0049             <span class="comment">% through circular pupil may be less than that specified.</span>
+0050             Nt = nRay;            
+0051             <span class="comment">% Determine the grid size which can give the number of sampling</span>
+0052             <span class="comment">% points inside the pupil.</span>
+0053             Ntx = sqrt(Nt); <span class="comment">% Assumed to be odd</span>
+0054             <span class="comment">% And take the nearest odd intiger above Ntx to make sure that</span>
+0055             <span class="comment">% the circular entrance pupil is sampled symetrically.</span>
+0056             Ntx = 2*floor(ceil(Ntx)/2)+1;
+0057             <span class="keyword">if</span> Ntx == 1 <span class="comment">% single ray in cartesian coordinate = cheif ray</span>
+0058                 <span class="comment">% the global coordinates of the pupil sample point</span>
+0059                 pupilPoint(1,:)=[0,0,pupilZLocation];
+0060                 <span class="comment">% indexing starts from lower left corner from 1 1</span>
+0061                 gridIndices(1,:) = [1,1];
+0062             <span class="keyword">else</span>
+0063                 dx = 2*pupilRadius/(Ntx-1); <span class="comment">% spacing</span>
+0064                 dy = dx;
+0065                 Nr = floor((Ntx-1)/2); <span class="comment">%total number of points along the radius of pupil</span>
+0066                 kk = 0;
+0067                 <span class="keyword">for</span> rr = -Nr:1:Nr
+0068                     <span class="keyword">for</span> cc = -Nr:1:Nr
+0069                         xCoord = dx*cc;  <span class="comment">% the coordinate of the point along x-axis</span>
+0070                         yCoord = dy*rr;  <span class="comment">% the coordinate of the point along y-axis</span>
+0071                         <span class="keyword">if</span> (xCoord^2+yCoord^2)&lt;= pupilRadius^2
+0072                             kk = kk+1;     <span class="comment">% count the number of sampling points</span>
+0073                             <span class="comment">% the global coordinates of the pupil sample point</span>
+0074                             pupilPoint(kk,:)=[xCoord,yCoord,pupilZLocation];
+0075                             <span class="comment">% indexing starts from lower left corner from 1 1</span>
+0076                             gridIndices(kk,:) = [cc+Nr+1,rr+Nr+1];
+0077                         <span class="keyword">end</span>
+0078                         
+0079                     <span class="keyword">end</span>
+0080                 <span class="keyword">end</span>
+0081             <span class="keyword">end</span>
+0082 
+0083         <span class="keyword">case</span> 2 <span class="comment">%2: Polar Grid</span>
+0084 
+0085         <span class="keyword">case</span> 3 <span class="comment">%3: Hexagonal</span>
+0086 
+0087         <span class="keyword">case</span> 4 <span class="comment">%4: Isoenergetic Circular</span>
+0088 
+0089         <span class="keyword">case</span> 5 <span class="comment">%5: Tangential Plane</span>
+0090             <span class="comment">% single ray in tangential plane = cheif ray</span>
+0091             <span class="keyword">if</span> nRay == 1
+0092                 pupilPoint(1,:)=[0,0,pupilZLocation];
+0093                 gridIndices = NaN; <span class="comment">% not defined</span>
+0094             <span class="keyword">elseif</span> nRay == 2 <span class="comment">% Take only the two mariggianl rays</span>
+0095                 pupilPoint(1,:)=[0,pupilRadius,pupilZLocation];
+0096                 pupilPoint(2,:)=[0,-pupilRadius,pupilZLocation];
+0097                 gridIndices = NaN; <span class="comment">% not defined</span>
+0098             <span class="keyword">else</span>
+0099                 dy = 2*pupilRadius/(nRay-1); <span class="comment">% spacing</span>
+0100                 Nr = round((nRay-1)/2); <span class="comment">%total number of points along the radius of pupil</span>
+0101                 kk = 0;
+0102                 <span class="keyword">for</span> rr = -Nr:1:Nr
+0103                     xCoord = 0;  <span class="comment">% the coordinate of the point along x-axis</span>
+0104                     yCoord = dy*rr;  <span class="comment">% the coordinate of the point along y-axis</span>
+0105                     <span class="keyword">if</span> (xCoord^2+yCoord^2)&lt;= pupilRadius^2
+0106                         kk = kk+1;     <span class="comment">% count the number of sampling points</span>
+0107                         <span class="comment">% the global coordinates of the pupil sample point</span>
+0108                         pupilPoint(kk,:)=[xCoord,yCoord,pupilZLocation];
+0109                         gridIndices = NaN; <span class="comment">% not defined</span>
+0110                     <span class="keyword">end</span>
+0111                 <span class="keyword">end</span>
+0112             <span class="keyword">end</span>
+0113         <span class="keyword">case</span> 6 <span class="comment">%6: Sagital Plane</span>
+0114             <span class="comment">% single ray in sagital plane = cheif ray</span>
+0115             <span class="keyword">if</span> nRay == 1
+0116                 pupilPoint(1,:)=[0,0,pupilZLocation];
+0117                 gridIndices = NaN; <span class="comment">% not defined</span>
+0118             <span class="keyword">elseif</span> nRay == 2 <span class="comment">% Take only the two mariggianl rays</span>
+0119                 pupilPoint(1,:)=[pupilRadius,0,pupilZLocation];
+0120                 pupilPoint(2,:)=[-pupilRadius,0,pupilZLocation];
+0121                 gridIndices = NaN; <span class="comment">% not defined</span>
+0122             <span class="keyword">else</span>
+0123                 dx = 2*pupilRadius/(nRay-1); <span class="comment">% spacing</span>
+0124                 Nr = round((nRay-1)/2); <span class="comment">%total number of points along the radius of pupil</span>
+0125                 kk = 0;
+0126                 <span class="keyword">for</span> rr = -Nr:1:Nr
+0127                     xCoord = dx*rr;  <span class="comment">% the coordinate of the point along x-axis</span>
+0128                     yCoord = 0;  <span class="comment">% the coordinate of the point along y-axis</span>
+0129                     <span class="keyword">if</span> (xCoord^2+yCoord^2)&lt;= pupilRadius^2
+0130                         kk = kk+1;     <span class="comment">% count the number of sampling points</span>
+0131                         <span class="comment">% the global coordinates of the pupil sample point</span>
+0132                         pupilPoint(kk,:)=[xCoord,yCoord,pupilZLocation];
+0133                         gridIndices = NaN; <span class="comment">% not defined</span>
+0134                     <span class="keyword">end</span>
+0135                 <span class="keyword">end</span>
+0136                 
+0137             <span class="keyword">end</span>
+0138          <span class="keyword">case</span> 7 <span class="comment">%7: Random</span>
+0139                 theta = rand(nRay,1)*(2*pi);
+0140                 r = sqrt(rand(nRay,1))*pupilRadius;
+0141                 randX = r.*cos(theta);
+0142                 randY = r.*sin(theta);
+0143                 pupilPoint = [randX randY repmat(pupilZLocation,nRay,1)];
+0144                 gridIndices = [NaN,NaN]; <span class="comment">% not defined</span>
+0145                 <span class="comment">% Replace the first ray with a cheif ray</span>
+0146                 pupilPoint(1,:) = [0,0,pupilZLocation];
+0147         <span class="keyword">otherwise</span> 
+0148 
+0149     <span class="keyword">end</span>
+0150     <span class="comment">% Make the output in 3xnRay size</span>
+0151     pupilSamplingPoints = pupilPoint';
+0152     pupilGridIndices = gridIndices';
+0153 <span class="keyword">end</span>
+0154</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of convertJonesMatrixToPolarizationMatrix</title>
+  <meta name="keywords" content="convertJonesMatrixToPolarizationMatrix">
+  <meta name="description" content="convertJonesToPolarizationMatrix:  Converts 2D Jones Matrix to 3D P Matrix">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Polarization_Ray_Tracing_Module -->
+<h1>convertJonesMatrixToPolarizationMatrix
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>convertJonesToPolarizationMatrix:  Converts 2D Jones Matrix to 3D P Matrix</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ Pqm1 ] = convertJonesMatrixToPolarizationMatrix( JMq,Kqm1,Kq) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> convertJonesToPolarizationMatrix:  Converts 2D Jones Matrix to 3D P Matrix
+ The function is vectorized so it can work on
+ multiple sets of inputs once at the same time.
+  Input
+     JMq: 2X2XN Jones Matrix for the component
+     Kqm1,Kq:3XN Wave vector before component q and just after component q   
+  Output
+     Pq: a 3X3XN P matrix</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Mathematical_Functions/compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>	compute3dCross: computes the cross product of two 1X3 vectors(Originaly).</li><li><a href="../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>	multiplySliced3DMatrices: To perform slicewise multiplication of 3D</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/tracePolarizedRay.html" class="code" title="function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture)">tracePolarizedRay</a>	tracePolarizedRay: main function of polarized ray tracer</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ Pqm1 ] = convertJonesMatrixToPolarizationMatrix( JMq,Kqm1,Kq)</a>
+0002     <span class="comment">% convertJonesToPolarizationMatrix:  Converts 2D Jones Matrix to 3D P Matrix</span>
+0003     <span class="comment">% The function is vectorized so it can work on</span>
+0004     <span class="comment">% multiple sets of inputs once at the same time.</span>
+0005     <span class="comment">%  Input</span>
+0006     <span class="comment">%     JMq: 2X2XN Jones Matrix for the component</span>
+0007     <span class="comment">%     Kqm1,Kq:3XN Wave vector before component q and just after component q</span>
+0008     <span class="comment">%  Output</span>
+0009     <span class="comment">%     Pq: a 3X3XN P matrix</span>
+0010 
+0011     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0012     <span class="comment">%</span>
+0013 
+0014     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0015     <span class="comment">%</span>
+0016 
+0017     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0018     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0019     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0020     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0021     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0022     <span class="comment">%   Institute of Applied Physics</span>
+0023     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0024                              
+0025     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0026     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0027     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0028     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0029     
+0030     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0031     <span class="comment">% Compute local coordinates before {Sq,Pq,Kqm1} and after the component  {Sqp,Pqp,Kq}</span>
+0032     nRay = size(JMq,3);
+0033     temp1 = <a href="../../AODParentDir/Mathematical_Functions/compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>(Kqm1,Kq);
+0034     <span class="comment">% For temp1~=0</span>
+0035     cond1 = sum(temp1.^2,1)~=0;
+0036     Sqm1 = temp1;
+0037     Sqm1(:,cond1) = temp1(:,cond1)./repmat(sqrt(sum(temp1(:,cond1).^2,1)),[3,1]);
+0038     <span class="comment">% Handle case for Kqm1 = Kq so temp1==0</span>
+0039     temp2 = <a href="../../AODParentDir/Mathematical_Functions/compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>(Kqm1,[0;0;1]);
+0040     cond2 = sum(temp1.^2,1)==0&amp;sum(temp2.^2,1)~=0;
+0041     Sqm1(:,cond2) = temp2(:,cond2)./repmat(sqrt(sum(temp2(:,cond2).^2,1)),[3,1]);
+0042     <span class="comment">% Handle case Kqm1=[0 0 1]</span>
+0043     cond3 = sum(temp1.^2,1)==0&amp;sum(temp2.^2,1)==0;
+0044     <span class="comment">% Sq = [1 ;0 ;0]</span>
+0045     Sqm1(1,cond3) = 1;
+0046     Sqm1(2,cond3) = 0;
+0047     Sqm1(3,cond3) = 0;
+0048    
+0049     Pqm1 = <a href="../../AODParentDir/Mathematical_Functions/compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>(Kqm1,Sqm1);
+0050     Sq = Sqm1;
+0051     Pq = <a href="../../AODParentDir/Mathematical_Functions/compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>(Kq,Sqm1);
+0052 
+0053     <span class="comment">% Compute the Orthogonal matrices to transform to and from local</span>
+0054     <span class="comment">% coordinates before and after the component p</span>
+0055 
+0056     <span class="comment">% Transform incident light [Exq-1 Eyq-1 Ezq-1] = [Esq-1,Epq-1,0] from global</span>
+0057     <span class="comment">% coordinate {x,y,z} to local coordinate {Sq,Pq,Kqm1}</span>
+0058     Oinq(1,1,:) = Sqm1(1,:);Oinq(1,2,:) = Sqm1(2,:);Oinq(1,3,:) = Sqm1(3,:);
+0059     Oinq(2,1,:) = Pqm1(1,:);Oinq(2,2,:) = Pqm1(2,:);Oinq(2,3,:) = Pqm1(3,:);
+0060     Oinq(3,1,:) = Kqm1(1,:);Oinq(3,2,:) = Kqm1(2,:);Oinq(3,3,:) = Kqm1(3,:);
+0061     
+0062     <span class="comment">% Transform light [Exq Eyq Ezq] = [Esqp,Epqp,0] from local</span>
+0063     <span class="comment">% coordinate {Sqp,Pqp,Kq} to global coordinate {x,y,z}</span>
+0064     Ooutq(1,1,:) = Sq(1,:);Ooutq(1,2,:) = Pq(1,:);Ooutq(1,3,:) = Kq(1,:);
+0065     Ooutq(2,1,:) = Sq(2,:);Ooutq(2,2,:) = Pq(2,:);Ooutq(2,3,:) = Kq(2,:);
+0066     Ooutq(3,1,:) = Sq(3,:);Ooutq(3,2,:) = Pq(3,:);Ooutq(3,3,:) = Kq(3,:);
+0067     
+0068     <span class="comment">% Change the 2x2 Jones to 3x3 by just adding 0 and 1</span>
+0069     JMq_new = JMq;
+0070     JMq_new(:,3,:) = repmat([0;0],[1,nRay]);
+0071     JMq_new(3,:,:) = repmat([0;0;1],[1,nRay]);
+0072 
+0073     <span class="comment">% Finally compute your P matrix</span>
+0074     Pqm1 = <a href="../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>( <a href="../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>( Ooutq,JMq_new ),Oinq );
+0075 <span class="keyword">end</span>
+0076</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

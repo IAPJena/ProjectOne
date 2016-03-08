@@ -1,0 +1,90 @@
+﻿<html>
+	
+<head>
+	<title>Results</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("Results1");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Results</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ExamplesofExtendingtheToolbox.html">Examples of Extending the Toolbox</a> &rsaquo;&rsaquo; <a href="Method2Asseparatetoolusingtheexi.html">Method 2: As separate tool using the existing toolbox</a> &rsaquo;&rsaquo; <a href="LongitudinalRayAberrationDiagram.html">Longitudinal Ray Aberration Diagram</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="LongitudinalRayAberrationDiagram.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="Procedures1.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts59">Results: Longitudinal Ray Aberration Diagram</span></span></h1>
+<p class="rvps45"><span class="rvts38">As the new feature is not integrated in to the main toolbox, it can not be used from the GUI of the toolbox, rather it can be accessed only from command window writing a matlab script. To test the new longitudinal aberration diagram, the following test script was written;</span></p>
+<p class="rvps2"><span class="rvts85">% Test script for plotLongitudinalAberration.m function</span></p>
+<p class="rvps2"><span class="rvts85"> </span></p>
+<p class="rvps2"><span class="rvts85">% Read the double gauss system</span></p>
+<p class="rvps2"><span class="rvts85">% Open saved optical system</span></p>
+<p class="rvps2"><span class="rvts85">% Get path of the single lens system used for testing</span></p>
+<p class="rvps2"><span class="rvts41">doubleGauss28 = which(</span><span class="rvts88">'DoubleGauss28.mat'</span><span class="rvts41">);</span></p>
+<p class="rvps2"><span class="rvts85">% Construct the optical system object from the saved file</span></p>
+<p class="rvps2"><span class="rvts41">OS = OpticalSystem(doubleGauss28);</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts41">plotLongitudinalAberration(OS);</span></p>
+<p class="rvps2"><span class="rvts41"><br/></span></p>
+<p class="rvps10"><span class="rvts37">Setting Window:</span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem248.png"/></p>
+<p class="rvps2"><span class="rvts37"><br/></span></p>
+<p class="rvps10"><span class="rvts37">Graphical Longitudinal Ray Aberration Diagram Window:</span></p>
+<p class="rvps2"><img width="312" height="276" alt="" style="padding : 1px;" src="lib/NewItem249.png"/></p>
+<p class="rvps2"><span class="rvts37"><br/></span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/create-epub-ebooks">Produce electronic books easily</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

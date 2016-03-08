@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getParaxialImageLocation</title>
+  <meta name="keywords" content="getParaxialImageLocation">
+  <meta name="description" content="getEffectiveFocalLength: returns location of paraxial focus">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>getParaxialImageLocation
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getEffectiveFocalLength: returns location of paraxial focus</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function paraxialImageLocation = getParaxialImageLocation(OS,wavLen) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getEffectiveFocalLength: returns location of paraxial focus 
+ from the principal plane</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Paraxial_Optics_Module/computeParaxialImageLocation.html" class="code" title="function [ lastThickness] = computeParaxialImageLocation(refIndex,thick,curv,obj_img)">computeParaxialImageLocation</a>	computeParaxialImageLocation: solves for location of paraxial images.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function paraxialImageLocation = getParaxialImageLocation(OS,wavLen)</a>
+0002     <span class="comment">% getEffectiveFocalLength: returns location of paraxial focus</span>
+0003     <span class="comment">% from the principal plane</span>
+0004     refIndex = zeros(1,OS.NumberOfSurfaces);
+0005     thick = zeros(1,OS.NumberOfSurfaces);
+0006     curv = zeros(1,OS.NumberOfSurfaces);
+0007     <span class="keyword">if</span> nargin &lt; 2
+0008         wavLen = OS.getPrimaryWavelength;      
+0009     <span class="keyword">end</span>    
+0010      <span class="keyword">for</span> kk=1:1:OS.NumberOfSurfaces
+0011         refIndex(kk) = OS.SurfaceArray(kk).Glass<span class="keyword">...</span>
+0012             .getRefractiveIndex(wavLen);
+0013         thick(kk) = OS.SurfaceArray(kk).Thickness;
+0014         curv(kk) = 1/(OS.SurfaceArray(kk).Radius);                      
+0015      <span class="keyword">end</span> 
+0016      
+0017      <span class="comment">% For -ve thickness refindex should also be negative</span>
+0018      refIndex = refIndex.*sign(thick);
+0019      <span class="comment">% Replace zero index with 1 to avoid division by zero</span>
+0020      refIndex(refIndex==0) = 1;
+0021      
+0022        <span class="keyword">if</span> abs(thick(1))&gt;10^10 || OS.ObjectAfocal
+0023           thick(1)=10^10;
+0024           obj = <span class="string">'I'</span>;
+0025        <span class="keyword">else</span>
+0026            obj = <span class="string">'F'</span>;
+0027        <span class="keyword">end</span>
+0028        <span class="keyword">if</span> OS.ImageAfocal
+0029            img = <span class="string">'I'</span>;
+0030        <span class="keyword">else</span>
+0031            img = <span class="string">'F'</span>;
+0032        <span class="keyword">end</span>
+0033    obj_img = [obj, img];
+0034    paraxialImageLocation = <a href="../../../AODParentDir/Paraxial_Optics_Module/computeParaxialImageLocation.html" class="code" title="function [ lastThickness] = computeParaxialImageLocation(refIndex,thick,curv,obj_img)">computeParaxialImageLocation</a>(refIndex,thick,curv,obj_img);
+0035 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

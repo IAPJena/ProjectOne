@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotPupilPolarizationEllipseMap</title>
+  <meta name="keywords" content="plotPupilPolarizationEllipseMap">
+  <meta name="description" content="Plot polarization ellipse map in the pupil of the system for given">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>plotPupilPolarizationEllipseMap
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Plot polarization ellipse map in the pupil of the system for given</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function drawn = plotPupilPolarizationEllipseMap(optSystem,surfIndex,wavLen,fieldPointXY,sampleGridSize,JonesVec,plotPanelHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Plot polarization ellipse map in the pupil of the system for given
+ input polarization states.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Mathematical_Functions/plot_ellipse.html" class="code" title="function plot_ellipse(axesHandle,a,b,cx,cy,angle,direc)">plot_ellipse</a>	plot_ellipse: plots an ellipse on a given axes from its parameters</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function drawn = plotPupilPolarizationEllipseMap(optSystem,surfIndex,</a><span class="keyword">...</span>
+0002     wavLen,fieldPointXY,sampleGridSize,JonesVec,plotPanelHandle)
+0003 <span class="comment">% Plot polarization ellipse map in the pupil of the system for given</span>
+0004 <span class="comment">% input polarization states.</span>
+0005 
+0006 <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0007 <span class="comment">%   Written By: Worku, Norman Girma</span>
+0008 <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0009 <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0010 <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0011 <span class="comment">%   Institute of Applied Physics</span>
+0012 <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0013 
+0014 <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0015 <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0016 <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0017 <span class="comment">% Jan 21,2014   Worku, Norman G.     Vectorized version</span>
+0018 
+0019 <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0020 
+0021 <span class="comment">% Default Inputs</span>
+0022 <span class="keyword">if</span> nargin &lt; 6
+0023     disp(<span class="string">'Error: The function requires atleast 6 arguments, optSystem,'</span>,<span class="keyword">...</span>
+0024         <span class="string">' surfIndex, wavLen, fieldPointXY, sampleGridSize and JonesVec'</span>);
+0025     <span class="keyword">return</span>;
+0026 <span class="keyword">elseif</span> nargin == 6
+0027     plotPanelHandle = uipanel(<span class="string">'Parent'</span>,figure(<span class="string">'Name'</span>,<span class="string">'Pupil Polarization Ellipse Map'</span>),<span class="keyword">...</span>
+0028         <span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0,0,1,1]);
+0029 <span class="keyword">end</span>
+0030 
+0031 <span class="comment">%     cla(axesHandle,'reset')</span>
+0032 nSurf = optSystem.NumberOfSurfaces;
+0033 PupSamplingType = 1; <span class="comment">%cartesian sampling</span>
+0034 numberOfRays = sampleGridSize^2;
+0035 [polarizedRayTracerResult,pupilCoordinates,pupilGridIndices] = optSystem.multipleRayTracer(wavLen,<span class="keyword">...</span>
+0036     fieldPointXY,numberOfRays,PupSamplingType,JonesVec);<span class="comment">%</span>
+0037 <span class="comment">% Spatial Distribution of Polarization Ellipse in a given surface</span>
+0038 entrancePupilRadius = (optSystem.getEntrancePupilDiameter)/2;
+0039 nRay=size(polarizedRayTracerResult,2);
+0040 nField = size(polarizedRayTracerResult,3);
+0041 nWav = size(polarizedRayTracerResult,4);
+0042 
+0043 <span class="comment">% Generate a new panel for each field and wavelength combination to display</span>
+0044 <span class="comment">% the Polarization Ellipse map in the subplots.</span>
+0045 <span class="keyword">for</span> wavIndex = 1:nWav
+0046     <span class="keyword">for</span> fieldIndex = 1:nField
+0047         subplotPanel = uipanel(<span class="string">'Parent'</span>,plotPanelHandle,<span class="keyword">...</span>
+0048             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0049             <span class="string">'Position'</span>,[(wavIndex-1)/nWav,(nField-fieldIndex)/nField,<span class="keyword">...</span>
+0050             min([1/nWav,1/nField]),min([1/nWav,1/nField])],<span class="keyword">...</span>
+0051             <span class="string">'Title'</span>,[<span class="string">'WaveLen Index : '</span>, num2str(wavIndex),<span class="keyword">...</span>
+0052             <span class="string">' &amp; Field Index : '</span>,num2str(fieldIndex)]);
+0053         subplotAxes = axes(<span class="string">'Parent'</span>,subplotPanel,<span class="keyword">...</span>
+0054             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0055             <span class="string">'Position'</span>,[0,0,1,1]);
+0056         
+0057         [ellBeforeCoating,ellAfterCoating] = polarizedRayTracerResult<span class="keyword">...</span>
+0058             (surfIndex,:,fieldIndex,wavIndex).getPolarizationEllipseParameters;
+0059         
+0060         <span class="comment">% Plot ellipse</span>
+0061         ellParamAtSurf = ellBeforeCoating;
+0062         a = ellParamAtSurf(1,:);
+0063         b = ellParamAtSurf(2,:);
+0064         direction = ellParamAtSurf(3,:);
+0065         phi = ellParamAtSurf(4,:);
+0066         
+0067         <span class="comment">% normalize to pupil radius</span>
+0068         cx = pupilCoordinates(1,:)*sampleGridSize./entrancePupilRadius;
+0069         cy = pupilCoordinates(2,:)*sampleGridSize./entrancePupilRadius;
+0070         <a href="../../../AODParentDir/Mathematical_Functions/plot_ellipse.html" class="code" title="function plot_ellipse(axesHandle,a,b,cx,cy,angle,direc)">plot_ellipse</a>(subplotAxes,a,b,cx,cy,phi,direction);
+0071     <span class="keyword">end</span>
+0072 <span class="keyword">end</span>
+0073 set(gcf,<span class="string">'Name'</span>,[<span class="string">'Pupil Polarization Ellipse Map at surface : '</span>,num2str(surfIndex)]);
+0074 drawn = 1;
+0075 <span class="comment">% axis equal;</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

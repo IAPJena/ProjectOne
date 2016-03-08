@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of draw3DLens</title>
+  <meta name="keywords" content="draw3DLens">
+  <meta name="description" content="draw3DLens: Plots the 3 dimensional lay out of alens in 3d Space">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Analysis_Module --><!-- # System_Layout --><!-- menu.html system_3D_layout_v2.0 -->
+<h1>draw3DLens
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>draw3DLens: Plots the 3 dimensional lay out of alens in 3d Space</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function [ lensH,xyzPoints1, xyzPoints2] = draw3DLens(surf1CoordinateTM,rad1,conic1,semiDiam1,surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,lensColor ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> draw3DLens: Plots the 3 dimensional lay out of alens in 3d Space
+ given its two surfaces
+ Inputs
+   surf1CoordinateTM,rad1,conic1,semiDiam1: coordinate transfer matrix
+                        , radius, conic constant and
+   semidiameter of the surface 1 ( the same is true for the second surface)
+   axesHandle: axes to plot the lens
+   radSpacing: radius sampling Spacing 
+ Output
+   lensH:  height of the lens drawn</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="draw3DSurface.html" class="code" title="function [ surfH,xyzPoints ] = draw3DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw3DSurface</a>	draw3DSurface: Drwas a single surface in 3D layout diagram</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="draw3DMirror.html" class="code" title="function [ mirrorH,xyzPoints1, xyzPoints2] = draw3DMirror(surfCoordinateTM,rad,conic,semiDiam,axesHandle,radSpacing,mirrorColor,negThick,varagrin)">draw3DMirror</a>	draw3DSMirror: Drwas a single Mirror in 3D layout diagram</li><li><a href="../../../../AODParentDir/Class_Definition/@OpticalSystem/plot3DLayout.html" class="code" title="function draw = plot3DLayout( optSystem,rayPathMatrix,axesHandle)">plot3DLayout</a>	plot3DSurface: Drwas a 3D layout diagram</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ lensH,xyzPoints1, xyzPoints2] = draw3DLens(surf1CoordinateTM,rad1,conic1,semiDiam1, </a><span class="keyword">...</span>
+0002     surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,lensColor )
+0003     <span class="comment">% draw3DLens: Plots the 3 dimensional lay out of alens in 3d Space</span>
+0004     <span class="comment">% given its two surfaces</span>
+0005     <span class="comment">% Inputs</span>
+0006     <span class="comment">%   surf1CoordinateTM,rad1,conic1,semiDiam1: coordinate transfer matrix</span>
+0007     <span class="comment">%                        , radius, conic constant and</span>
+0008     <span class="comment">%   semidiameter of the surface 1 ( the same is true for the second surface)</span>
+0009     <span class="comment">%   axesHandle: axes to plot the lens</span>
+0010     <span class="comment">%   radSpacing: radius sampling Spacing</span>
+0011     <span class="comment">% Output</span>
+0012     <span class="comment">%   lensH:  height of the lens drawn</span>
+0013 
+0014     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0015     <span class="comment">%</span>
+0016 
+0017     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0018     <span class="comment">%</span>
+0019 
+0020     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0021     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0022     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0023     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0024     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0025     <span class="comment">%   Institute of Applied Physics</span>
+0026     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0027                              
+0028     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0029     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0030     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0031 
+0032     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0033 
+0034     lensHeight = max(min(abs([rad1,semiDiam1])),min(abs([rad2,semiDiam2])));
+0035     
+0036     actualSurfHeight1 = semiDiam1;
+0037     drawnSurfHeight1 = lensHeight;
+0038     
+0039     actualSurfHeight2 = semiDiam2;
+0040     drawnSurfHeight2 = lensHeight;    
+0041     <span class="comment">% Compute the surface coordinate points for 2D plots with out plotting the</span>
+0042     <span class="comment">% individual surfaces.</span>
+0043     [ surfH1,xyzPoints1 ] = <a href="draw3DSurface.html" class="code" title="function [ surfH,xyzPoints ] = draw3DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw3DSurface</a>(surf1CoordinateTM,rad1,conic1,<span class="keyword">...</span>
+0044         actualSurfHeight1,drawnSurfHeight1,-1,radSpacing);
+0045     [ surfH2,xyzPoints2 ] = <a href="draw3DSurface.html" class="code" title="function [ surfH,xyzPoints ] = draw3DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw3DSurface</a>(surf2CoordinateTM,rad2,conic2,<span class="keyword">...</span>
+0046         actualSurfHeight2,drawnSurfHeight2,-1,radSpacing);
+0047     
+0048     x1 = xyzPoints1(:,:,1);
+0049     y1 = xyzPoints1(:,:,2);
+0050     z1 = xyzPoints1(:,:,3);
+0051 
+0052     x2 = xyzPoints2(:,:,1);
+0053     y2 = xyzPoints2(:,:,2);
+0054     z2 = xyzPoints2(:,:,3);
+0055     
+0056     <span class="comment">% Draw the lens surfaces</span>
+0057     surf(axesHandle,x1,z1,y1,<span class="string">'facecolor'</span>,lensColor,<span class="keyword">...</span>
+0058         <span class="string">'edgecolor'</span>,<span class="string">'none'</span>,<span class="keyword">...</span>
+0059         <span class="string">'facelighting'</span>,<span class="string">'phong'</span>); 
+0060     hold on;
+0061     surf(axesHandle,x2,z2,y2,<span class="string">'facecolor'</span>,lensColor,<span class="keyword">...</span>
+0062         <span class="string">'edgecolor'</span>,<span class="string">'none'</span>,<span class="keyword">...</span>
+0063         <span class="string">'facelighting'</span>,<span class="string">'phong'</span>); 
+0064     <span class="comment">% Draw lens edges with black line</span>
+0065     borderColor = [0.6,0.6,0.6];
+0066     plot3(x2(1,:),z2(1,:),y2(1,:),<span class="string">'Color'</span>,borderColor,<span class="string">'Parent'</span>,axesHandle)
+0067     plot3(x1(1,:),z1(1,:),y1(1,:),<span class="string">'Color'</span>,borderColor,<span class="string">'Parent'</span>,axesHandle)
+0068     <span class="comment">% Draw lens edges surface</span>
+0069     surf(axesHandle,[x2(1,:); x1(1,:)],[z2(1,:); z1(1,:)],[y2(1,:); y1(1,:)],<span class="keyword">...</span>
+0070         <span class="string">'facecolor'</span>,lensColor,<span class="string">'edgecolor'</span>,<span class="string">'none'</span>,<span class="string">'facelighting'</span>,<span class="string">'phong'</span>);
+0071     
+0072     hold off;
+0073     lensH = lensHeight;
+0074</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,366 @@
+﻿<html>
+	
+<head>
+	<title>Surface Editor Panel</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("SurfaceEditorPanel");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Surface Editor Panel</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ClassDefinitionModule.html">Class Definition Module</a> &rsaquo;&rsaquo; <a href="GUIRelatedClass.html">GUI Related Class</a> &rsaquo;&rsaquo; <a href="AODParentWindowClass.html">AODParentWindow: Class</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="AODParentWindowClass.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="AODParentWindowClass.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="SystemConfigurationPanel.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps12"><span class="rvts31">Surface Editor Panel</span></p>
+<p class="rvps12"><span class="rvts27">It is part of the main panel of the parent window and contains spreadsheet like data editors for entering and editing the surface data of an optical system. </span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem27.png"/></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><span class="rvts27">It is organized in to different tabs: Standard data, Aperture Data, Aspheric Data, and Tilt and Decenter Data. Each of the tabs are discussed below.</span></p>
+<p class="rvps12"><span class="rvts30"><br/></span></p>
+<p class="rvps12"><span class="rvts30">1. Standard Data</span></p>
+<p class="rvps12"><span class="rvts27">It contains surface data which are required for conventional optical systems.</span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem28.png"/></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<div class="rvps12"><table border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps15"><span class="rvts28">Column Header</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps15"><span class="rvts28">Description</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps15"><span class="rvts28">Remarks</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps12"><span class="rvts27">Surface</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps12"><span class="rvts27">Used to indicate the surface index or whether the surface is object or, image or stop surface or not.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps13"><span class="rvts29">Object and image surfaces are always the first and the last surfaces of the system.</span></p>
+<p class="rvps13"><span class="rvts29">To make a surface a stop, type “s” or “stop” in the surface column.</span></p>
+<p class="rvps12"><span class="rvts27">Any text inputs other than “s” or “stop” will be rejected by the system</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps12"><span class="rvts27">Name/Comment</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps12"><span class="rvts27">To enter name and notes related to the surface. </span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps12"><span class="rvts27">Any text inputs are accepted and it has no real functional significance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps12"><span class="rvts27">Surface Type</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps12"><span class="rvts27">A pop up menu to choose the type of surface. </span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps12"><span class="rvts27">Currently Plane, Spherical, and Conic Aspherical surfaces are functional. Other surface types are to be included in the future.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps12"><span class="rvts27">Radius</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps12"><span class="rvts27">Used to input the radius of curvature of the surface. The unit of the number will be that specified in the “System Configuration” window.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps12"><span class="rvts27">All numeric values including 0 and Inf are accepted by the system. Other inputs are not allowed. The surface type and radius fields are interlinked and changing one automatically affects the other. For instance, selecting plane surface for the surface type automatically sets the radius to infinity. And changing the radius to some finite value changes the surface type to Spherical if it is Plane.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps12"><span class="rvts27">Thickness</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps12"><span class="rvts27">To enter the thickness the medium that follows the current surface. The unit of the number will be that specified in the “System Configuration” window.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps12"><span class="rvts27">All numeric values including 0 and Inf are accepted by the system. Other inputs are not allowed. But entering Inf thickness for surfaces other than the object surface and the last surface of the system will result in an invalid optical system. </span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps12"><span class="rvts27">Glass</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps12"><span class="rvts27">To enter the glass name or the refractive index of the medium that follows the current surface. </span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps12"><span class="rvts27">Any number value is treated as refractive index of the medium. And any non-numerical text will be treated as the name of the glass from glass catalogue. If the glass name entered exists in the catalogue, it will be confirmed by changing the entered text to upper case. If the system fails to find the glass name entered then, the Glass data editor window will automatically appear &nbsp;to enable user select or enter the new glass. &nbsp;</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps12"><span class="rvts27">Deviation Mode</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps12"><span class="rvts27">Pop up menu used to indicate the surface as reflective (-1) or refractive (+1).</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps12"><span class="rvts27"><br/></span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps12"><span class="rvts27">Semi diameter</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps12"><span class="rvts27">Define the semi diameter of the surface. </span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps12"><span class="rvts27">This is linked with the surface aperture definition spreadsheet. If the surface aperture type is “None” and some value is entered for semi diameter then, the aperture type will automatically be changed to circular with radius equal to the semi diameter entered. But if the surface has its aperture defined, then the semi diameter will only be used to plot the surface and not for aperture calculations. </span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 81px;"><p class="rvps12"><span class="rvts27">Coating</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 174px;"><p class="rvps12"><span class="rvts27">Name of coating used. "None" for bare glass.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 223px;"><p class="rvps12"><span class="rvts27">Any non-numerical text will be treated as the name of the glass from coating catalogue. If the coating name entered exists in the catalogue, it will be confirmed by changing the entered text to upper case. If the system fails to find the coating name entered then, the Coating data editor window will automatically appear &nbsp;to enable user select or enter the new coating.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps14"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><span class="rvts27">Notes:</span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><span class="rvts27">Unlike most optical design softwares, the object surface is considered to be the first surface in the toolbox. This is follows from the fact that indexing begins from index 1 in Matlab. </span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><span class="rvts30">2. Aperture Data</span></p>
+<p class="rvps12"><span class="rvts27">It contains data defining surface apertures.</span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem29.png"/></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<div class="rvps12"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts32">Column Header</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts32">Description</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts32">Remarks</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Surface</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">See “standard data” sheet</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Just repeated from standard data entry sheet &nbsp;for surface identification.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Surface Type</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">See “standard data” sheet</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Just repeated from standard data entry sheet &nbsp;for surface identification.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Aperture Type</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Pop up menu to select the type of aperture used for the surface</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Currently “Circular” , "Elliptical"and “Rectangular” aperture shapes are functional. Others are left for future versions. </span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Aperture Param 1</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Aperture Parameter</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps13"><span class="rvts34">Only positive numerical values are allowed. It has different purpose for different aperture types.</span></p>
+<p class="rvps13"><span class="rvts34">Radius for circular aperture and x side length for rectangular.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Aperture Param 2</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Aperture Parameter</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Only positive numerical values are allowed. Not applied for circular and y side length for rectangular.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Aper Decenter X</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Aperture Decenter in X</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Not functional</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Aper Decenter Y</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Aperture Decenter in Y</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Not functional</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><span class="rvts30">3. Aspheric Data</span></p>
+<p class="rvps12"><span class="rvts27">It contains data defining aspherical surfaces such as aspheric constants and polynomial coefficients.</span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem30.png"/></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<div class="rvps12"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts32">Column Header</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts32">Description</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts32">Remarks</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Surface</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">See “standard data” sheet</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Just repeated from standard data entry sheet &nbsp;for surface identification.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Surface Type</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">See “standard data” sheet</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Just repeated from standard data entry sheet &nbsp;for surface identification.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Conic</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">To enter the conic constant of the surface. &nbsp;</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">This is used for surface types indicated to be aspherical in the standard data entry. If the surface type is not aspheric then the conic constant will automatically be 0. &nbsp;</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">A1…A12</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Polynomial Coefficients</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Not functional</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><span class="rvts30">4. Tilt and Decenter Data</span></p>
+<p class="rvps12"><span class="rvts27">It includes tilt and decenter parameters of the surfaces.</span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem31.png"/></p>
+<p class="rvps12"><span class="rvts35"><br/></span></p>
+<div class="rvps12"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts32">Column Header</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts32">Description</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts32">Remarks</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Surface</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">See “standard data” sheet</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Just repeated from standard data entry sheet &nbsp;for surface identification.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Surface Type</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">See “standard data” sheet</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Just repeated from standard data entry sheet &nbsp;for surface identification.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Order</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Order in which tilt and decenter are performed.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">All the tilt and decenter operations shall be listed otherwise it will be invalid. &nbsp;</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Decenter X,Y</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Surface decenter in X and Y coordinate</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Non infinite numeric values are allowed. &nbsp;</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Tilt X,Y,Z</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Tilt angle (in deg) about the corresponding axes.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Currently they are used as successive rotation angles in degrees.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Tilt Mode</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33">Pop up menu for selecting the mode of the tilt determining the reference coordinate axis after the current surface.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid;"><p class="rvps12"><span class="rvts33"><br/></span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p class="rvps12"><span class="rvts27"><br/></span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com">Easy EBook and documentation generator</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

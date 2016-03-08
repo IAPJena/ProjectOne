@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of boundary_condition_2d</title>
+  <meta name="keywords" content="boundary_condition_2d">
+  <meta name="description" content="__________________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- menu.html Existing_Propagators -->
+<h1>boundary_condition_2d
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>__________________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function efd = boundary_condition_2d(efd,ibdc,varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">__________________________________________________________________________
+
+ Aufruf:  efd = boundary_condition_2d(efd,ibdc)
+          efd = boundary_condition_2d(efd,ibdc,para)
+ 
+ Schlagworte: 
+ Beam Propagation, split step method, finite differences, boundary condition  
+
+ Kurzbeschreibung:  
+ Calculation of the field boundary condition for split step propagators.
+
+ Beschreibung:  
+ Calculation of the field boundary condition for split step propagators.
+ There are two options for the choice of the boundary condition:
+ In the transparent boundary condition, the field leaves the computational domain 
+ without reflection. The energy is not constant.
+ In the absorbing boundary condition, the field is damped near the boundary to avoid 
+ reflections. The energy remains constant, but the field ne3ar the boundary is wrong.
+ 
+ Version:  23.02.09  Herbert Gross  Matlab 7.4      first version
+           22.04.10  Tuning, nur 10% möglich
+
+ Owner: Herbert Gross
+
+ Input: 
+
+  efd(npy,npx)      : input field, the numbers of points must be a power of 2
+  ibdc              : switch for the choice of the boundary condition:
+                      ibdc = 0 : no special treatment of the field at the boundary
+                      ibdc = 1 : transparent boundary condition
+                      ibdc = 2 : absorbing boundary condition
+
+ Varargin:
+
+  para              : parameter to control the extension of the width of the 
+                      absorbing boundary. Default : 40
+                      para &gt; 40 : smaler range, para &lt; 40 : broader range
+
+ Output:
+
+  efd(npy,npx)      : output field as a function of x,y
+
+ Abhängigkeiten in 1. Ordnung: --
+ Referenzen: --
+ Beispiel:  --
+ Testfile: --
+ ToDo : --
+_________________________________________________________________</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Split_Z_Beam_Propagation/prop_bpm_2d.html" class="code" title="function [eout,zs,ener] = prop_bpm_2d_new(efd,wl,xp,yp,z,nz,nza,varargin)">prop_bpm_2d</a>	_________________________________________________________________</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function efd = boundary_condition_2d(efd,ibdc,varargin)</a>
+0002 <span class="comment">%__________________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Aufruf:  efd = boundary_condition_2d(efd,ibdc)</span>
+0005 <span class="comment">%          efd = boundary_condition_2d(efd,ibdc,para)</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% Schlagworte:</span>
+0008 <span class="comment">% Beam Propagation, split step method, finite differences, boundary condition</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">% Kurzbeschreibung:</span>
+0011 <span class="comment">% Calculation of the field boundary condition for split step propagators.</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">% Beschreibung:</span>
+0014 <span class="comment">% Calculation of the field boundary condition for split step propagators.</span>
+0015 <span class="comment">% There are two options for the choice of the boundary condition:</span>
+0016 <span class="comment">% In the transparent boundary condition, the field leaves the computational domain</span>
+0017 <span class="comment">% without reflection. The energy is not constant.</span>
+0018 <span class="comment">% In the absorbing boundary condition, the field is damped near the boundary to avoid</span>
+0019 <span class="comment">% reflections. The energy remains constant, but the field ne3ar the boundary is wrong.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% Version:  23.02.09  Herbert Gross  Matlab 7.4      first version</span>
+0022 <span class="comment">%           22.04.10  Tuning, nur 10% möglich</span>
+0023 <span class="comment">%</span>
+0024 <span class="comment">% Owner: Herbert Gross</span>
+0025 <span class="comment">%</span>
+0026 <span class="comment">% Input:</span>
+0027 <span class="comment">%</span>
+0028 <span class="comment">%  efd(npy,npx)      : input field, the numbers of points must be a power of 2</span>
+0029 <span class="comment">%  ibdc              : switch for the choice of the boundary condition:</span>
+0030 <span class="comment">%                      ibdc = 0 : no special treatment of the field at the boundary</span>
+0031 <span class="comment">%                      ibdc = 1 : transparent boundary condition</span>
+0032 <span class="comment">%                      ibdc = 2 : absorbing boundary condition</span>
+0033 <span class="comment">%</span>
+0034 <span class="comment">% Varargin:</span>
+0035 <span class="comment">%</span>
+0036 <span class="comment">%  para              : parameter to control the extension of the width of the</span>
+0037 <span class="comment">%                      absorbing boundary. Default : 40</span>
+0038 <span class="comment">%                      para &gt; 40 : smaler range, para &lt; 40 : broader range</span>
+0039 <span class="comment">%</span>
+0040 <span class="comment">% Output:</span>
+0041 <span class="comment">%</span>
+0042 <span class="comment">%  efd(npy,npx)      : output field as a function of x,y</span>
+0043 <span class="comment">%</span>
+0044 <span class="comment">% Abhängigkeiten in 1. Ordnung: --</span>
+0045 <span class="comment">% Referenzen: --</span>
+0046 <span class="comment">% Beispiel:  --</span>
+0047 <span class="comment">% Testfile: --</span>
+0048 <span class="comment">% ToDo : --</span>
+0049 <span class="comment">%_________________________________________________________________</span>
+0050 <span class="comment">%</span>
+0051 <span class="keyword">if</span> nargin &gt; 2 ; para = varargin{1} ; <span class="keyword">else</span> ; para = 40 ; <span class="keyword">end</span>
+0052 [npy,npx] = size(efd);
+0053 <span class="comment">%</span>
+0054 <span class="comment">%  first case : transparent boundary condition</span>
+0055 <span class="comment">%</span>
+0056 <span class="keyword">if</span> ibdc == 1
+0057 <span class="comment">%</span>
+0058     gamL = zeros(1,npx) ; gamR = zeros(1,npx);
+0059     gamU = zeros(npy,1) ; gamO = zeros(npy,1) ;
+0060     <span class="comment">%</span>
+0061     efdcheck = max(abs(efd(2,:))) + max(abs(efd(npy,:))) + max(abs(efd(:,2))) + max(abs(efd(:,npx))) ;
+0062     efdmax = max(max(abs(efd)));
+0063     eps  = efdmax * 1.e-8 ;
+0064     efdm = efdmax * 1.e-6 ;
+0065 <span class="comment">%</span>
+0066     <span class="keyword">if</span> efdcheck &gt; efdm ;
+0067           gamL = 0.5*( efd(4,1:npx)./( efd(5,1:npx) + eps ) <span class="keyword">...</span>
+0068                     + efd(5,1:npx)./( efd(6,1:npx) + eps ) );
+0069           gamR = 0.5*( efd(npy-2,1:npx)./( efd(npy-3,1:npx) + eps )<span class="keyword">...</span>
+0070                     + efd(npy-3,1:npx)./( efd(npy-4,1:npx) + eps )) ;
+0071           gamU = 0.5*( efd(1:npy,4)./( efd(1:npy,5) + eps )<span class="keyword">...</span>
+0072                     + efd(1:npy,5)./( efd(1:npy,6) + eps ) );
+0073           gamO = 0.5*( efd(1:npy,npx-2)./( efd(1:npy,npx-3) + eps )<span class="keyword">...</span>
+0074                     + efd(1:npy,npx-3)./( efd(1:npy,npx-4) + eps ) ) ;
+0075 <span class="comment">%</span>
+0076           efd(3,1:npx) = efd(4,1:npx) .* gamL ;
+0077           efd(2,1:npx) = efd(3,1:npx) .* gamL ;
+0078           efd(npy-1,1:npx) = efd(npy-2,1:npx) .* gamR ;
+0079           efd(npy  ,1:npx) = efd(npy-1,1:npx) .* gamR ;
+0080 <span class="comment">%</span>
+0081           efd(1:npy,3) = efd(1:npy,4) .* gamU ;
+0082           efd(1:npy,2) = efd(1:npy,3) .* gamU ;
+0083           efd(1:npy,npx-1) = efd(1:npy,npx-2) .* gamO ;
+0084           efd(1:npy,npx  ) = efd(1:npy,npx-1) .* gamO ;
+0085           efd(:,1) = efd(:,2) ;     efd(1,:) = efd(2,:) ;
+0086     <span class="keyword">end</span>
+0087 <span class="keyword">end</span>
+0088 <span class="comment">%</span>
+0089 <span class="comment">%  second case: absorbing boundary condition</span>
+0090 <span class="comment">%</span>
+0091 <span class="keyword">if</span> ibdc == 2
+0092     mex = para ;
+0093     dax = 1 - (abs(cos(pi/(npx-1)*(npx-[1:npx])))).^mex ;
+0094     day = 1 - (abs(cos(pi/(npy-1)*(npy-[1:npy])))).^mex ;
+0095     [ dampx , dampy ] = meshgrid( dax , day );
+0096     efd = efd .* dampx .* dampy ; 
+0097 <span class="keyword">end</span>
+0098 <span class="comment">%</span>
+0099 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

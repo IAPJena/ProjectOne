@@ -1,0 +1,129 @@
+﻿<html>
+	
+<head>
+	<title>System Configuration Panel</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "User Manual MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("SystemConfigurationPanel");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">System Configuration Panel</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ParentWindow.html">Parent Window</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="ParentWindow.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="SurfaceEditorPanel.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MenuItems.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps2"><span class="rvts34">System Configuration Panel</span></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts28">It is part of the main panel of the parent window and contains tabbed windows for entering and editing the system configuration data of an optical system. </span></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem82.png"/></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts28">In the following section each tabbed windows will be briefly discussed.</span></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts41">1. Aperture</span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><span class="rvts40">Define system aperture. System aperture can be specified by either Entrance Pupil Diameter or Object Space NA. All other methods of system aperture specifications are left for the future.&nbsp;</span><span class="rvts37"> For objects at finite distance both can be used whereas &nbsp;for infinite objects, the object space numerical aperture is not defined and so it cannot be set in the aperture window. </span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem90.png"/></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts42">2. General</span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><span class="rvts40">Here the general information relating the current optical system can be entered or modified including the units used for the lens and wavelength measurements.</span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem91.png"/></p>
+<p class="rvps2"><span class="rvts42"><br/></span></p>
+<p class="rvps2"><span class="rvts41">3. Field Points </span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps14"><span class="rvts37">To define set of field points, which can later be used to analyze the system. Field points can be defined either by specifying the object height or by ray angles. If object heights are used to define the field points, the heights are measured in lens units. Field angles are always in degrees. The angles are measured with respect to the object space z axis and the paraxial entrance pupil position on the object space z axis. Like in Zemax, &nbsp;x field angles and y field angles &nbsp;can be converted to ray direction cosines using the following formulas:</span></p>
+<p class="rvps14"><span class="rvts37"><br/></span></p>
+<p class="rvps14"><span class="rvts37">tan (Fx) = l/n</span></p>
+<p class="rvps14"><span class="rvts37">tan (Fy) = m/n</span></p>
+<p class="rvps14"><span class="rvts37">l</span><span class="rvts43">2</span><span class="rvts37">+m</span><span class="rvts43">2</span><span class="rvts37">+n</span><span class="rvts43">2</span><span class="rvts37"> = 1</span></p>
+<p class="rvps14"><span class="rvts37"><br/></span></p>
+<p class="rvps14"><span class="rvts37">Where l,m and n are the x,y and z direction cosines.</span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem92.png"/></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><span class="rvts41">4. Wavelengths</span></p>
+<p class="rvps2"><span class="rvts37"><br/></span></p>
+<p class="rvps2"><span class="rvts37">To define wavelengths which the system can use for different analysis.The weight related to each wavelength values are not functional for current version. And the units of the wavelength specified are in the general tab. &nbsp;Predefined wavelengths can also be selected directly.</span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem93.png"/></p>
+<p class="rvps2"><span class="rvts41"><br/></span></p>
+<p class="rvps2"><span class="rvts41">5. Coating Catalogue</span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><span class="rvts40">List of all coating cataloogue used in the optical system. They can be deselected to remove from the used catalogue list. When optical system is saved those only selected ones will be saved as used coating catalogues. A new catalogue can also be added to the list. If the new catalogue added is not in the default catalogue files folder of the toolbox it will be automatically copied to that folder. Only those selected catalogues are cosidered during caoting analysis.</span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem94.png"/></p>
+<p class="rvps2"><span class="rvts41"><br/></span></p>
+<p class="rvps2"><span class="rvts41">6. Glass Catalogue</span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><span class="rvts40">List of all glass cataloogue used in the optical system. They can be deselected to remove from the used catalogue list. When optical system is saved those only selected ones will be saved as used glass catalogues. A new catalogue can also be added to the list. If the new catalogue added is not in the default catalogue files folder of the toolbox it will be automatically copied to that folder. Only those selected catalogues are cosidered during glass analysis.</span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem95.png"/></p>
+<p class="rvps2"><span class="rvts41"><br/></span></p>
+<p class="rvps2"><span class="rvts41">7. Pupil Apodization</span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><span class="rvts40">It is used to define the pupil apodization to be used in the system to simulate the effect of non-uniform illumination. Currently only uniform and super-gaussian profiles are supported. </span></p>
+<p class="rvps2"><span class="rvts40"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem96.png"/></p>
+<p class="rvps2"><span class="rvts41"><br/></span></p>
+<p class="rvps13"><span class="rvts39"><br/></span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/help-authoring-tool">Easy to use tool to create HTML Help files and Help web sites</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

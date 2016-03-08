@@ -1,0 +1,9 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  draw3DLens -> draw3DSurface;
+  draw3DMirror -> draw3DLens;
+
+  draw3DLens [URL="draw3DLens.html"];
+  draw3DMirror [URL="draw3DMirror.html"];
+  draw3DSurface [URL="draw3DSurface.html"];
+}

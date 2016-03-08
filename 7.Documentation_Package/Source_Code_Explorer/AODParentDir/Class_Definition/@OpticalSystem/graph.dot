@@ -1,0 +1,49 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  OpticalSystem -> OpticalSystem;
+  computeRayPathMatrix -> multipleRayTracer;
+  getPrimaryWavelength -> getWavelengthUnitFactor;
+  plotWavefrontAtExitPupil -> plotPupilApodization;
+
+  OpticalSystem [URL="OpticalSystem.html"];
+  computeRayPathMatrix [URL="computeRayPathMatrix.html"];
+  displaySurfaceData [URL="displaySurfaceData.html"];
+  displaySystemConfiguration [URL="displaySystemConfiguration.html"];
+  getAngularMagnification [URL="getAngularMagnification.html"];
+  getBackFocalLength [URL="getBackFocalLength.html"];
+  getCheifRay [URL="getCheifRay.html"];
+  getEffectiveFocalLength [URL="getEffectiveFocalLength.html"];
+  getEntrancePupilDiameter [URL="getEntrancePupilDiameter.html"];
+  getEntrancePupilLocation [URL="getEntrancePupilLocation.html"];
+  getExitPupilDiameter [URL="getExitPupilDiameter.html"];
+  getExitPupilLocation [URL="getExitPupilLocation.html"];
+  getImageNA [URL="getImageNA.html"];
+  getLensUnitFactor [URL="getLensUnitFactor.html"];
+  getMariginalRay [URL="getMariginalRay.html"];
+  getObjectNA [URL="getObjectNA.html"];
+  getParaxialImageLocation [URL="getParaxialImageLocation.html"];
+  getPrimaryWavelength [URL="getPrimaryWavelength.html"];
+  getStopIndex [URL="getStopIndex.html"];
+  getTotalTrack [URL="getTotalTrack.html"];
+  getWavelengthUnitFactor [URL="getWavelengthUnitFactor.html"];
+  multipleRayTracer [URL="multipleRayTracer.html"];
+  performParaxialAnalysis [URL="performParaxialAnalysis.html"];
+  plot2DLayout [URL="plot2DLayout.html"];
+  plot3DLayout [URL="plot3DLayout.html"];
+  plotAmplitudeTransmissionMap [URL="plotAmplitudeTransmissionMap.html"];
+  plotDelanoDiagram [URL="plotDelanoDiagram.html"];
+  plotFFTPointSpreadFunction [URL="plotFFTPointSpreadFunction.html"];
+  plotFootprintDiagram [URL="plotFootprintDiagram.html"];
+  plotPhaseMap [URL="plotPhaseMap.html"];
+  plotPupilApodization [URL="plotPupilApodization.html"];
+  plotPupilPolarizationEllipseMap [URL="plotPupilPolarizationEllipseMap.html"];
+  plotSpotDiagram [URL="plotSpotDiagram.html"];
+  plotTransverseRayAberration [URL="plotTransverseRayAberration.html"];
+  plotWavefrontAtExitPupil [URL="plotWavefrontAtExitPupil.html"];
+  plotWavefrontDiattenuationMap [URL="plotWavefrontDiattenuationMap.html"];
+  plotWavefrontRetardanceMap [URL="plotWavefrontRetardanceMap.html"];
+  saveToMATFile [URL="saveToMATFile.html"];
+  traceCheifRay [URL="traceCheifRay.html"];
+  traceMariginalRay [URL="traceMariginalRay.html"];
+  tracePolarizedRay [URL="tracePolarizedRay.html"];
+}

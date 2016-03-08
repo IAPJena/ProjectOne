@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of draw2DLens</title>
+  <meta name="keywords" content="draw2DLens">
+  <meta name="description" content="draw2DLens: Plots the 2 dimensional lay out of alens in meridional plane">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Analysis_Module --><!-- # System_Layout --><!-- menu.html system_2D_layout_v3.0 -->
+<h1>draw2DLens
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>draw2DLens: Plots the 2 dimensional lay out of alens in meridional plane</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function [ lensH,zyPoints,errCode ] = draw2DLens(surf1CoordinateTM,rad1,conic1,semiDiam1,surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,lensColor) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> draw2DLens: Plots the 2 dimensional lay out of alens in meridional plane
+ given its two surfaces
+ Inputs
+   surf1CoordinateTM,rad1,conic1,semiDiam1: coordinate transfer matrix
+                        , radius, conic constant and
+   semidiameter of the surface 1 ( the same is true for the second surface)
+   axesHandle: axes to plot the lens
+   radSpacing: radius sampling Spacing 
+ Output
+   lensH:  height of the lens drawn
+   zyPoints:  Coordinates of points on the surface</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="draw2DSurface.html" class="code" title="function [ surfH,zyPoints,errCode] = draw2DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw2DSurface</a>	draw2DSurface: Drwas a single surface in 2D layout diagram</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="draw2DMirror.html" class="code" title="function [ mirrorH,zyPoints,errCode] = draw2DMirror(surfCoordinateTM,rad,conic,semiDiam,axesHandle,radSpacing,mirrorColor, negThick,varagrin)">draw2DMirror</a>	draw2DMirror: Drwas a single Mirror in 2D layout diagram</li><li><a href="../../../../AODParentDir/Class_Definition/@OpticalSystem/plot2DLayout.html" class="code" title="function draw =  plot2DLayout(optSystem,rayPathMatrix,axesHandle)">plot2DLayout</a>	plot2DSurface: Drwas a 2D layout diagram</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ lensH,zyPoints,errCode ] = draw2DLens(surf1CoordinateTM,rad1,conic1,semiDiam1, </a><span class="keyword">...</span>
+0002     surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,lensColor)
+0003     <span class="comment">% draw2DLens: Plots the 2 dimensional lay out of alens in meridional plane</span>
+0004     <span class="comment">% given its two surfaces</span>
+0005     <span class="comment">% Inputs</span>
+0006     <span class="comment">%   surf1CoordinateTM,rad1,conic1,semiDiam1: coordinate transfer matrix</span>
+0007     <span class="comment">%                        , radius, conic constant and</span>
+0008     <span class="comment">%   semidiameter of the surface 1 ( the same is true for the second surface)</span>
+0009     <span class="comment">%   axesHandle: axes to plot the lens</span>
+0010     <span class="comment">%   radSpacing: radius sampling Spacing</span>
+0011     <span class="comment">% Output</span>
+0012     <span class="comment">%   lensH:  height of the lens drawn</span>
+0013     <span class="comment">%   zyPoints:  Coordinates of points on the surface</span>
+0014 
+0015     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0016     <span class="comment">%</span>
+0017 
+0018     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0019     <span class="comment">%</span>
+0020 
+0021     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0022     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0023     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0024     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0025     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0026     <span class="comment">%   Institute of Applied Physics</span>
+0027     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0028                              
+0029     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0030     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0031     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0032 
+0033     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0034 
+0035     surf1Position = surf1CoordinateTM(1:3,4);
+0036     surf2Position = surf2CoordinateTM(1:3,4);
+0037     
+0038    
+0039 
+0040     lensHeight = max(min(abs([rad1,semiDiam1])),min(abs([rad2,semiDiam2])));
+0041     
+0042     actualSurfHeight1 = semiDiam1;
+0043     drawnSurfHeight1 = lensHeight;
+0044     
+0045     actualSurfHeight2 = semiDiam2;
+0046     drawnSurfHeight2 = lensHeight;    
+0047     <span class="comment">% Compute the surface coordinate points for 2D plots with out plotting the</span>
+0048     <span class="comment">% individual surfaces.</span>
+0049     hold on;
+0050     surfColor1 = lensColor/2;
+0051     [ surfH1,zyPoints1,errCode1 ] = <a href="draw2DSurface.html" class="code" title="function [ surfH,zyPoints,errCode] = draw2DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw2DSurface</a>(surf1CoordinateTM,rad1,<span class="keyword">...</span>
+0052         conic1,actualSurfHeight1,drawnSurfHeight1,-1,radSpacing,surfColor1);
+0053     hold on;
+0054     <span class="keyword">if</span> errCode1
+0055         lensH = NaN;
+0056         zyPoints = NaN;
+0057         errCode = 1; <span class="comment">% Surface vertex is not in the Meridional Plane</span>
+0058         <span class="keyword">return</span>;
+0059     <span class="keyword">end</span>
+0060     surfColor2 = lensColor/4;
+0061     [ surfH2,zyPoints2,errCode2 ] = <a href="draw2DSurface.html" class="code" title="function [ surfH,zyPoints,errCode] = draw2DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw2DSurface</a>(surf2CoordinateTM,rad2,<span class="keyword">...</span>
+0062         conic2,actualSurfHeight2,drawnSurfHeight2,-1,radSpacing,surfColor2);
+0063     <span class="keyword">if</span> errCode2
+0064         lensH = [];
+0065         zyPoints = [];
+0066         errCode = 1; <span class="comment">% Surface vertex is not in the Meridional Plane</span>
+0067         <span class="keyword">return</span>;
+0068     <span class="keyword">end</span>
+0069     <span class="comment">% Take the ZY cooridnates for the tangential layout plot.</span>
+0070     vertices1 = zyPoints1;
+0071     vertices2 = zyPoints2;
+0072 
+0073     <span class="comment">% check the continuity of the surface 2 data otherwise flipit upside down</span>
+0074     <span class="comment">% compute the distance between Vertice1(End) to Vertice2(1) and to</span>
+0075     <span class="comment">% Vertice2(End). Compare the distances and decide whether to flip</span>
+0076     <span class="comment">% the matrices..</span>
+0077 
+0078     surf1_Beg = vertices1(1,:);
+0079     surf1_End = vertices1(<span class="keyword">end</span>,:);
+0080     surf2_Beg = vertices2(1,:);
+0081     surf2_End = vertices2(<span class="keyword">end</span>,:);
+0082 
+0083     surf1_EndTosurf2_Beg = sqrt((surf1_End(1)-surf2_Beg(1))^2 + <span class="keyword">...</span>
+0084         (surf1_End(2)-surf2_Beg(2))^2);
+0085     surf1_EndTosurf2_End = sqrt((surf1_End(1)-surf2_End(1))^2 + <span class="keyword">...</span>
+0086         (surf1_End(2)-surf2_End(2))^2);
+0087     <span class="keyword">if</span> (surf1_EndTosurf2_End &lt; surf1_EndTosurf2_Beg)
+0088         vertices2 = flipud(vertices2);
+0089     <span class="keyword">end</span>
+0090 
+0091     lensVertices = [vertices1;vertices2];
+0092     hold on;
+0093     patch(lensVertices(:,1),lensVertices(:,2),lensColor,<span class="string">'Parent'</span>,axesHandle);
+0094     hold on;
+0095 <span class="comment">%     axis equal</span>
+0096     lensH = lensHeight;
+0097     zyPoints = lensVertices;
+0098     errCode = 0; <span class="comment">% No error</span>
+0099 <span class="keyword">end</span>
+0100 
+0101</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

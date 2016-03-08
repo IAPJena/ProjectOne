@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeMultilayerTransfermatrix</title>
+  <meta name="keywords" content="computeMultilayerTransfermatrix">
+  <meta name="description" content="computeMultilayerTransfermatrix: Computes the transfer matrix">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Polarization_Ray_Tracing_Module -->
+<h1>computeMultilayerTransfermatrix
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>computeMultilayerTransfermatrix: Computes the transfer matrix</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function transMatrix = computeMultilayerTransfermatrix(refIndex, thickness, polarisation, lambda, kx) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeMultilayerTransfermatrix: Computes the transfer matrix  
+                           for a given stratified media 
+ The function is vectorized so it can work on multiple sets of 
+ inputs once at the same time.
+ All dimensions are in µm
+ Inputs:
+   refIndex: refractive index of the layers (complex vector) or 2D
+             matrix if it is different for each wavelength
+   thickness: Thicknesses of the layers (Vector)or 2D matrix if it 
+              is different for each wavelength
+   polarization: Polarisation of the field to be computed (string: 'TE' or 'TM')
+   lambda: Wavelength of the light (scalar)
+   kx: Component of the wavevector in transvers direction [1/µm] (scalar)
+ Output:
+   M: Transfer matrix (matrix)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>	multiplySliced3DMatrices: To perform slicewise multiplication of 3D</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="computeMultilayerFresnelsCoefficients.html" class="code" title="function [T,R,tau,rho] = computeMultilayerFresnelsCoefficients(refIndex,thickness,polarisation,lambda,incAngle,n_s,n_c,primaryWaveLenInUm)">computeMultilayerFresnelsCoefficients</a>	computeMultilayerFresnelsCoefficients: Computes the reflection and</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function transMatrix = computeMultilayerTransfermatrix </a><span class="keyword">...</span>
+0002     (refIndex, thickness, polarisation, lambda, kx)
+0003     <span class="comment">% computeMultilayerTransfermatrix: Computes the transfer matrix</span>
+0004     <span class="comment">%                           for a given stratified media</span>
+0005     <span class="comment">% The function is vectorized so it can work on multiple sets of</span>
+0006     <span class="comment">% inputs once at the same time.</span>
+0007     <span class="comment">% All dimensions are in µm</span>
+0008     <span class="comment">% Inputs:</span>
+0009     <span class="comment">%   refIndex: refractive index of the layers (complex vector) or 2D</span>
+0010     <span class="comment">%             matrix if it is different for each wavelength</span>
+0011     <span class="comment">%   thickness: Thicknesses of the layers (Vector)or 2D matrix if it</span>
+0012     <span class="comment">%              is different for each wavelength</span>
+0013     <span class="comment">%   polarization: Polarisation of the field to be computed (string: 'TE' or 'TM')</span>
+0014     <span class="comment">%   lambda: Wavelength of the light (scalar)</span>
+0015     <span class="comment">%   kx: Component of the wavevector in transvers direction [1/µm] (scalar)</span>
+0016     <span class="comment">% Output:</span>
+0017     <span class="comment">%   M: Transfer matrix (matrix)</span>
+0018 
+0019     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0020     <span class="comment">% This function calculates the transfer matrix of a given system of nLayer.</span>
+0021     <span class="comment">% Basically it works as follows:</span>
+0022 
+0023     <span class="comment">% 1. Compute permitivity vector from refIndex vector and Compares the</span>
+0024     <span class="comment">% length of thickness vector and epsilon vector. If they are not</span>
+0025     <span class="comment">% equal, display error message and exits the function.</span>
+0026 
+0027     <span class="comment">% 2. Make sure valid polarisation is defined. Otherwise prompt error</span>
+0028     <span class="comment">% message to the user and exit.</span>
+0029 
+0030     <span class="comment">% 3. Claculate z component of K vector for each nLayer</span>
+0031 
+0032     <span class="comment">% 4. Calculate alpha which is different for the two polarisations</span>
+0033 
+0034     <span class="comment">% 5. Finally determine the transfer matrix of each nLayer and multiply</span>
+0035     <span class="comment">% iteratively to determine the total transfer matrix of the system.</span>
+0036 
+0037     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0038     <span class="comment">% Function call M = computeMultnLayerTransfermatrix(epsilon, thickness, ...</span>
+0039     <span class="comment">%                                            polarisation, lambda, kx);</span>
+0040 
+0041     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0042     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0043     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0044     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0045     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0046     <span class="comment">%   Institute of Applied Physics</span>
+0047     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0048                              
+0049     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0050     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0051     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0052     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0053     
+0054     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0055 
+0056     <span class="comment">% Handle Multiple ray inputs lambda, kx</span>
+0057         nLambda = size(lambda,2);
+0058         nKx = size(kx,2);
+0059         <span class="keyword">if</span> nLambda == 1
+0060             nRay = nKx;
+0061             lambda = repmat(lambda,[1,nRay]);
+0062         <span class="keyword">elseif</span> nKx == 1
+0063             nRay = nLambda;
+0064             kx = repmat(kx,[1,nRay]);
+0065         <span class="keyword">elseif</span> nKx == nLambda <span class="comment">% Both kx and lambda for all rays given</span>
+0066              nRay = nLambda;
+0067         <span class="keyword">else</span>
+0068             disp([<span class="string">'Error: The size of lambda and kx should '</span><span class="keyword">...</span>
+0069                 <span class="string">'be equal or one of them should be 1.'</span>]);
+0070             <span class="keyword">return</span>;
+0071         <span class="keyword">end</span>
+0072     
+0073     <span class="comment">% compute permitivity vector</span>
+0074     epsilon = (refIndex).^2;
+0075     <span class="comment">% make sure epsilon and thickness vectors are of equal size</span>
+0076     <span class="keyword">if</span> size(epsilon,1) == size(thickness,1)
+0077         nLayer = size(epsilon,1);
+0078     <span class="keyword">else</span>
+0079         msgbox(<span class="string">'The length of epsilon vector should be equal to that of thickness vector.'</span> ,<span class="string">'Error'</span>);
+0080         M = repmat(NaN*eye(2),[1,nRay]);
+0081         <span class="keyword">return</span>
+0082     <span class="keyword">end</span>
+0083 
+0084     <span class="comment">%Validate polarisation</span>
+0085     <span class="keyword">if</span> ~(strcmpi(polarisation,<span class="string">'TE'</span>) || strcmpi(polarisation,<span class="string">'TM'</span>))
+0086         msgbox(<span class="string">'Polarisation should be either TE or TM'</span>,<span class="string">'Error'</span>);
+0087         M = repmat(NaN*eye(2),[1,nRay]);
+0088         <span class="keyword">return</span>
+0089     <span class="keyword">end</span>
+0090 
+0091     <span class="comment">% calculate alpha for two cases of polarisation</span>
+0092     <span class="keyword">switch</span> upper(polarisation)
+0093         <span class="keyword">case</span> <span class="string">'TE'</span>
+0094             alpha = ones([1,nLayer]); <span class="comment">%just to make it 1</span>
+0095         <span class="keyword">case</span> <span class="string">'TM'</span>
+0096             alpha =1./epsilon;
+0097     <span class="keyword">end</span>
+0098 
+0099     <span class="comment">% multiply the transfer matrix of each nLayer to get the total transfer</span>
+0100     <span class="comment">% matrix</span>
+0101     M = repmat(eye(2),[1,1,nRay]);
+0102     <span class="keyword">for</span> t=1:1:nLayer
+0103         <span class="comment">% claculate z component of K vector for each nLayer</span>
+0104         kz = sqrt((2*pi./lambda).^2.* epsilon(t,:)-(kx).^2);
+0105         <span class="comment">% tempM = [[m11,m12,m21,m22]',...]</span>
+0106         m11 = cos(kz.*thickness(t,:));
+0107         m12 = sin(kz.*thickness(t,:))./(kz.*alpha(t));
+0108         m21 =  -sin(kz.*thickness(t,:)).*(kz.*alpha(t));
+0109         m22 = cos(kz.*thickness(t,:));
+0110         <span class="comment">% Construct 2x2xnRay matrix of mi</span>
+0111         mi(1,1,:)= m11;
+0112         mi(1,2,:)= m12;
+0113         mi(2,1,:)= m21;
+0114         mi(2,2,:)= m22;         
+0115         M  = <a href="../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>( mi,M );
+0116     <span class="keyword">end</span>
+0117     transMatrix = M;
+0118 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,21 @@
+function [ harmonicField ] = convertToHarmonicField( rayTraceResult,initialHarmonicField,...
+        effectsToInclude )
+%convertToHarmonicField Converts ray data to harmonic field 
+
+% 
+sizeOfRayTraceResult = size(rayTraceResult);
+
+if effectsToInclude == 1 % OPL
+    wavLen = initialHarmonicField.Wavelength;
+    k0 = 2*pi./wavLen;
+    OPL = [rayTraceResult.TotalOpticalPathLength];
+    
+    polarizationVector2 = polarizationVector1.*repmat(exp(1i*k0*OPL),[3,1]);
+else % OPL + Fresnels refraction/reflection
+    disp('Error: Currently polarization is not supported.');
+    harmonicField = [];
+    return;
+end
+
+end
+

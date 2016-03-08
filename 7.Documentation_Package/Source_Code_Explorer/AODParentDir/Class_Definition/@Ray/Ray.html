@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Ray</title>
+  <meta name="keywords" content="Ray">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Ray -->
+<h1>Ray
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="Ray.html" class="code" title="">Ray</a>	</li><li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/convertJVToPolVector.html" class="code" title="function polarizationVector = convertJVToPolVector(JV,dirK)">convertJVToPolVector</a>	convertJonesVectToPolVect Converts a given jones vector to polarization</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@AODChildWindow/btnOkCallback.html" class="code" title="function btnOkCallback(childWindow,parentWindow)">btnOkCallback</a>	btnOkCallback: Define  the callback actions associated with the button</li><li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/getCheifRay.html" class="code" title="function [ cheifRay ] = getCheifRay( optSystem,fieldPointXY,wavLen )">getCheifRay</a>	getCheifRay returns the cheif ray (as Ray object) of the optical system</li><li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/getMariginalRay.html" class="code" title="function [ mariginalRay ] = getMariginalRay(optSystem,fieldPointXY,wavLen,angleFromYinRad)">getMariginalRay</a>	getMariginalRay Returns the Mariginal ray (as Ray object)  which starts</li><li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/multipleRayTracer.html" class="code" title="function [multipleRayTracerResult,pupilCoordinates,pupilGridIndices] =multipleRayTracer(optSystem,wavLen,fieldPointXY,nRay,PupSamplingType,JonesVec,considerSurfAperture) %">multipleRayTracer</a>	Trace bundle of rays through an optical system based on the pupil</li><li><a href="Ray.html" class="code" title="">Ray</a>	</li><li><a href="../../../AODParentDir/Test_Scripts/Single_Polarization_Ray_Trace.html" class="code" title="">Single_Polarization_Ray_Trace</a>	Clear command window</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function newRay = Ray(pos,dir,wav,pol,jonesVect)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="Ray.html" class="code" title="">Ray</a> 
+0002     <span class="comment">% RAY class:</span>
+0003     <span class="comment">%   To represent all polarized ray objects</span>
+0004     <span class="comment">%   The class supports constructors to construct an array of Ray</span>
+0005     <span class="comment">%   objects from array of its properties.</span>
+0006     <span class="comment">% Properties</span>
+0007     <span class="comment">%     Position % 3 X N position vector</span>
+0008     <span class="comment">%     Direction % 3 X N Direction cosines</span>
+0009     <span class="comment">%     Polarized % scalar: 1 for Polarized and 0 for not Polarized</span>
+0010     <span class="comment">%     JonesVector % 2 X N complex valued jones vector in s-p axis [Jsmag&amp;Jsphase;Jpmag&amp;Jpphase]</span>
+0011     <span class="comment">%     Wavelength % Wavelength in wavelength unit</span>
+0012     <span class="comment">%     PolarizationVector % 3 X N complex field vector</span>
+0013     <span class="comment">%     Vignated % 1 for true and 0 for false</span>
+0014     
+0015     <span class="comment">% Methods:</span>
+0016     <span class="comment">% No methods yet defined for this class</span>
+0017     
+0018     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0019     <span class="comment">%</span>
+0020 
+0021     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0022     <span class="comment">%</span>
+0023 
+0024     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0025     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0026     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0027     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0028     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0029     <span class="comment">%   Institute of Applied Physics</span>
+0030     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0031                              
+0032     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0033     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0034     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0035     <span class="comment">% Jan 17,2014   Worku, Norman G.     Vectorized Constructor Version</span>
+0036     
+0037     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0038       
+0039     properties        
+0040         Position <span class="comment">% 3 X N position vector</span>
+0041         Direction <span class="comment">% 3 X N Direction cosines</span>
+0042         Polarized <span class="comment">% scalar: 1 for Polarized and 0 for not Polarized</span>
+0043         JonesVector <span class="comment">% 2 X N complex valued jones vector in s-p axis [Jsmag&amp;Jsphase;Jpmag&amp;Jpphase]</span>
+0044         Wavelength <span class="comment">% 1 X N Wavelength in wavelength unit</span>
+0045         PolarizationVector <span class="comment">% 3 X N complex field vector</span>
+0046         Vignated <span class="comment">% scalar showing vignation</span>
+0047     <span class="keyword">end</span> <span class="comment">% Public properties</span>
+0048       
+0049     methods       
+0050         <span class="comment">% Constructors methods</span>
+0051         <a name="_sub0" href="#_subfunctions" class="code">function newRay = Ray(pos,dir,wav,pol,jonesVect) </a><span class="comment">% Constructor</span>
+0052             <span class="keyword">if</span> nargin == 0
+0053                 <span class="comment">% Empty constructor</span>
+0054                 newRay.Position = [0;0;0]; <span class="comment">% default position</span>
+0055                 newRay.Direction = [0;0;1]; <span class="comment">% default dirction</span>
+0056                 newRay.Wavelength = 0.55; <span class="comment">% default</span>
+0057                 newRay.Polarized = 0; <span class="comment">% default</span>
+0058                 newRay.JonesVector = NaN*[1;2]; 
+0059                 newRay.PolarizationVector  = NaN*[1;2;3];  
+0060                 newRay.Vignated = 0;                 
+0061             <span class="keyword">else</span>
+0062                 <span class="keyword">if</span> nargin == 1
+0063                     dir = [0;0;1]; <span class="comment">% default dirction</span>
+0064                     wav = 0.55;  <span class="comment">% default</span>
+0065                     pol = 0; <span class="comment">% default</span>
+0066                     jonesVect = NaN*[1;2]; 
+0067                     polVector = NaN*[1;2;3];                    
+0068                 <span class="keyword">elseif</span> nargin == 2
+0069                     wav = 0.55; <span class="comment">% default</span>
+0070                     pol = 0; <span class="comment">% default</span>
+0071                     jonesVect = NaN*[1;2]; 
+0072                     polVector = NaN*[1;2;3];                   
+0073                 <span class="keyword">elseif</span> nargin == 3  
+0074                     pol = 0; <span class="comment">% default</span>
+0075                     jonesVect = NaN*[1;2]; 
+0076                     polVector = NaN*[1;2;3]; 
+0077                 <span class="keyword">elseif</span> nargin == 4
+0078                     jonesVect = NaN*[1;2]; 
+0079                     polVector = NaN*[1;2;3];                     
+0080                 <span class="keyword">elseif</span> nargin == 5
+0081                     <span class="keyword">if</span> isnan(jonesVect(1,1))
+0082                         jonesVect = NaN*[1;2]; 
+0083                         polVector = NaN*[1;2;3];                    
+0084                     <span class="keyword">else</span>
+0085                         <span class="comment">% convertJVToPolVector shall operate on 2x1 matrix of</span>
+0086                         <span class="comment">% jones vector and  return 3XN matrix of polVector</span>
+0087                         polVector = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/convertJVToPolVector.html" class="code" title="function polarizationVector = convertJVToPolVector(JV,dirK)">convertJVToPolVector</a>(jonesVect,dir);
+0088                         <span class="comment">% Jones Vector is the same for all rays</span>
+0089                         jonesVect = repmat(jonesVect,[1,size(polVector,2)]);
+0090                     <span class="keyword">end</span>
+0091                 <span class="keyword">else</span>
+0092                 <span class="keyword">end</span>
+0093      
+0094                 <span class="comment">% If the inputs are arrays the newRay becomes object array</span>
+0095                 <span class="comment">% That is when dir, pos and polVector = 3 X N matrix</span>
+0096                 <span class="comment">% jonesVect = 2 X 2 X N matrix</span>
+0097 
+0098                 <span class="comment">% Determine the size of each inputs</span>
+0099                 nPos = size(pos,2);
+0100                 nDir = size(dir,2);
+0101                 nJV = size(jonesVect,2);
+0102                 nWav = size(wav,2);
+0103                 nPol = size(pol,2);
+0104                 <span class="comment">% The number of array to be initialized is maximum of all inputs</span>
+0105                 nMax = max([nPos,nDir,nJV,nWav,nPol]);
+0106                                 
+0107                 <span class="comment">% Set vignated properties to 0 for all rays</span>
+0108                 vig = zeros(1,nMax);
+0109                 
+0110                 <span class="comment">% Fill the smaller inputs to have nMax size by repeating their</span>
+0111                 <span class="comment">% last element</span>
+0112                 <span class="keyword">if</span> nPos &lt; nMax
+0113                     pos = cat(2,pos,repmat(pos(:,end),[1,nMax-nPos]));
+0114                 <span class="keyword">end</span>
+0115                 <span class="keyword">if</span> nDir &lt; nMax
+0116                     dir = cat(2,dir,repmat(dir(:,end),[1,nMax-nDir]));
+0117                 <span class="keyword">end</span>
+0118                 <span class="keyword">if</span> nJV &lt; nMax
+0119                     jonesVect = cat(2,jonesVect,repmat(jonesVect(:,end),[1,nMax-nJV]));
+0120                     polVector = cat(2,polVector,repmat(polVector(:,end),[1,nMax-nJV]));
+0121                 <span class="keyword">end</span>
+0122                 <span class="keyword">if</span> nWav &lt; nMax
+0123                     wav = cat(2,wav,repmat(wav(end),[1,nMax-nWav]));
+0124                 <span class="keyword">end</span>
+0125                 <span class="keyword">if</span> nPol &lt; nMax
+0126                     pol = cat(2,pol,repmat(pol(end),[1,nMax-nPol]));
+0127                 <span class="keyword">end</span>
+0128                 
+0129                 <span class="comment">% Preallocate object array</span>
+0130                 newRay(nMax) = <a href="Ray.html" class="code" title="">Ray</a>;
+0131                 <span class="keyword">for</span> kk = 1:nMax
+0132                     newRay(kk).Position = pos(:,kk);
+0133                     newRay(kk).Direction = dir(:,kk);
+0134                     newRay(kk).Polarized = pol(kk); 
+0135                     newRay(kk).JonesVector = jonesVect(:,kk);
+0136                     newRay(kk).Wavelength = wav(kk);       
+0137                     newRay(kk).PolarizationVector = polVector(:,kk);
+0138                     newRay(kk).Vignated = vig(kk);
+0139                 <span class="keyword">end</span>
+0140             <span class="keyword">end</span>
+0141         <span class="keyword">end</span>
+0142     <span class="keyword">end</span>
+0143     
+0144 <span class="keyword">end</span>
+0145</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

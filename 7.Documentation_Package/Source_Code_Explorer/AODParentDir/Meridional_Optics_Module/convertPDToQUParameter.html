@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of convertPDToQUParameter</title>
+  <meta name="keywords" content="convertPDToQUParameter">
+  <meta name="description" content="convert the Position and Direction parameter of ray to Q U parameter">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Meridional_Optics_Module -->
+<h1>convertPDToQUParameter
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>convert the Position and Direction parameter of ray to Q U parameter</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [Q,U] = convertPDToQUParameter(P,D,surfVertexZ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> convert the Position and Direction parameter of ray to Q U parameter
+ Assume meridional plane ray (y z plane)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="traceMeridionalRay.html" class="code" title="function [ Zpoints,Ypoints ] = traceMeridionalRay( y0,U0,refIndex,thick,curv)">traceMeridionalRay</a>	UNTITLED Summary of this function goes here</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [Q,U] = convertPDToQUParameter(P,D,surfVertexZ) </a>
+0002 <span class="comment">% convert the Position and Direction parameter of ray to Q U parameter</span>
+0003 <span class="comment">% Assume meridional plane ray (y z plane)</span>
+0004 
+0005 <span class="comment">%check for meridionality of the ray</span>
+0006 <span class="keyword">if</span> P(1)~= 0 || D(1) ~= 0
+0007    disp(<span class="string">'The ray is not in the yz plane.'</span>); 
+0008 <span class="keyword">else</span>
+0009    U = sign(D(2))*(acos(D(3))); 
+0010    H = P(2); <span class="comment">% height of ray position from optical axis</span>
+0011    S = P(3)-surfVertexZ; <span class="comment">% distance from vertex to ray position along axis</span>
+0012  
+0013    L = S - H/tan(U); <span class="comment">%distance from vertex to ray intersection point with optical axis</span>
+0014    <span class="keyword">if</span> abs(L) == inf
+0015        Q = H;
+0016    <span class="keyword">else</span>
+0017       Q = -L*sin(U);
+0018    <span class="keyword">end</span>
+0019 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeDiattenuation</title>
+  <meta name="keywords" content="computeDiattenuation">
+  <meta name="description" content="computeDiatteunation: computes the diatteunation related to the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Polarization_Ray_Tracing_Module -->
+<h1>computeDiattenuation
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>computeDiatteunation: computes the diatteunation related to the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function diattenuation = computeDiattenuation( PorJ ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeDiatteunation: computes the diatteunation related to the
+ Polarization matrix using singular value  or the Jones matrix using eigen
+ value decomposisiton. The function can accept multiple
+ Jones/polarization matrices as 3x3xN or 2x2xN matrix and gives out 
+ 1xN vector of diattenuation values.
+ Input:
+   PorJ: Either the polarization matrix or the Jones matrix. They can be
+   identified by their sizes.
+ Output:
+   diattenuation: diattenuation related to the polarization matrix or the
+   jones matrix</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Mathematical_Functions/extractNoneUnityDiagonal.html" class="code" title="function noneUnityDiag = extractNoneUnityDiagonal(S)">extractNoneUnityDiagonal</a>	extractNoneUnityDiagonal: Extracts and returns diagonal elements of</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@Coating/plotCoatingDiattenuationVsAngle.html" class="code" title="function plotCoatingDiattenuationVsAngle(Coating,wavLenInUm,minAngle,maxAngle,angleStep,primWavLenInUm,indexBefore,indexAfter,axesHandle,tableHandle,textHandle)">plotCoatingDiattenuationVsAngle</a>	Plot diattenuation related to the coating for both transmission</li><li><a href="../../AODParentDir/Class_Definition/@Coating/plotCoatingDiattenuationVsWavelength.html" class="code" title="function plotCoatingDiattenuationVsWavelength(Coating,incAngle,minWavelengthInUm, maxWavelengthInUm, wavelengthStepInUm,primWavLenInUm,indexBefore,indexAfter,axesHandle,tableHandle,textHandle)">plotCoatingDiattenuationVsWavelength</a>	Plot diattenuation related to the coating for both transmission</li><li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/plotWavefrontDiattenuationMap.html" class="code" title="function plotWavefrontDiattenuationMap(optSystem,surfIndex,wavLen,fieldPointXY,sampleGridSize,plotPanelHandle)">plotWavefrontDiattenuationMap</a>	Displays the wavefront diattenuation map of the system (or subsystem before a particular</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function diattenuation = computeDiattenuation( PorJ )</a>
+0002     <span class="comment">% computeDiatteunation: computes the diatteunation related to the</span>
+0003     <span class="comment">% Polarization matrix using singular value  or the Jones matrix using eigen</span>
+0004     <span class="comment">% value decomposisiton. The function can accept multiple</span>
+0005     <span class="comment">% Jones/polarization matrices as 3x3xN or 2x2xN matrix and gives out</span>
+0006     <span class="comment">% 1xN vector of diattenuation values.</span>
+0007     <span class="comment">% Input:</span>
+0008     <span class="comment">%   PorJ: Either the polarization matrix or the Jones matrix. They can be</span>
+0009     <span class="comment">%   identified by their sizes.</span>
+0010     <span class="comment">% Output:</span>
+0011     <span class="comment">%   diattenuation: diattenuation related to the polarization matrix or the</span>
+0012     <span class="comment">%   jones matrix</span>
+0013     
+0014     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0015     <span class="comment">%</span>
+0016 
+0017     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0018     <span class="comment">%</span>
+0019 
+0020     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0021     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0022     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0023     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0024     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0025     <span class="comment">%   Institute of Applied Physics</span>
+0026     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0027                              
+0028     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0029     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0030     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0031     <span class="comment">% Mar 07,2014   Worku, Norman G.     Vectorial input/output</span>
+0032     
+0033     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0034 
+0035     <span class="comment">% Check for the size of the input matrix to determine whether 2x2 Jones matrix</span>
+0036     <span class="comment">% or 3x3 Polarization ray tracing matrix</span>
+0037     matDim = size(PorJ);
+0038     diattenuation = zeros(1,matDim(3));
+0039     <span class="comment">% As matlab functions such as eigs don't support 3d matrix input loop</span>
+0040     <span class="comment">% is used to compute for multiple inputs.</span>
+0041     <span class="keyword">for</span> k = 1:matDim(3)
+0042         <span class="keyword">if</span> matDim(1) == 2 <span class="comment">% PorJ is a 2X2 jones matrix</span>
+0043             J = PorJ(:,:,k);
+0044             <span class="keyword">if</span> ~(isnan(J(1,1)) || isnan(J(2,2)))
+0045                 <span class="comment">%eigenValues = eig(abs(J));</span>
+0046                 <span class="comment">%diattenuation = abs((eigenValues(1)-eigenValues(2))/(eigenValues(1)+eigenValues(2)));</span>
+0047                 eigenValues = eigs(abs(J)); <span class="comment">% Sorted eigen values (decending)</span>
+0048                 diattenuation(k) = <span class="keyword">...</span>
+0049                     (((eigenValues(1)))^2-((eigenValues(2)))^2)/<span class="keyword">...</span>
+0050                     (((eigenValues(1)))^2+((eigenValues(2)))^2);
+0051             <span class="keyword">else</span>
+0052                 diattenuation(k) = NaN;
+0053             <span class="keyword">end</span>
+0054         <span class="keyword">elseif</span> matDim(1) == 3 <span class="comment">% PorJ is a 3X3 polarization matrix</span>
+0055             P = PorJ(:,:,k);
+0056             <span class="keyword">if</span> ~(isnan(P(1,1)) || isnan(P(2,2)) || isnan(P(3,3)))
+0057                 [U,S,V] = svd(P);
+0058                 noneUnityDiag = <a href="../../AODParentDir/Mathematical_Functions/extractNoneUnityDiagonal.html" class="code" title="function noneUnityDiag = extractNoneUnityDiagonal(S)">extractNoneUnityDiagonal</a>(S);
+0059                 diattenuation(k) = <span class="keyword">...</span>
+0060                     ((max(noneUnityDiag))^2-(min(noneUnityDiag))^2)/<span class="keyword">...</span>
+0061                     ((max(noneUnityDiag))^2+(min(noneUnityDiag))^2);
+0062             <span class="keyword">else</span>
+0063                 diattenuation(k) = NaN;
+0064             <span class="keyword">end</span>
+0065         <span class="keyword">else</span>
+0066             
+0067         <span class="keyword">end</span>
+0068     <span class="keyword">end</span>
+0069     <span class="comment">% Replace very small numbers &lt; 10^-8 with 0</span>
+0070     diattenuation(diattenuation&lt;10^-8) = 0;
+0071 <span class="keyword">end</span>
+0072</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

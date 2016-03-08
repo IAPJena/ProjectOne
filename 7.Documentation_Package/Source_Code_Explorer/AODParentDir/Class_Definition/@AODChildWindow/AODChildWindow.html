@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of AODChildWindow</title>
+  <meta name="keywords" content="AODChildWindow">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODChildWindow -->
+<h1>AODChildWindow
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="AODChildWindow.html" class="code" title="">AODChildWindow</a>	</li><li><a href="../../../AODParentDir/Class_Definition/@AODParentWindow/AODParentWindow.html" class="code" title="">AODParentWindow</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="AODChildWindow.html" class="code" title="">AODChildWindow</a>	</li><li><a href="../../../AODParentDir/Class_Definition/@AODParentWindow/InitializeMenuAndToolbarItems.html" class="code" title="function InitializeMenuAndToolbarItems(parentWindow)">InitializeMenuAndToolbarItems</a>	Defines all menu items and toolbar commands and all callbacks related</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function NewChild = AODChildWindow(myName,myParent)</a></li><li><a href="#_sub2" class="code">function btnMainTab_Callback(childWindow,~, ~,tabInd)</a></li><li><a href="#_sub3" class="code">function btnOk_Callback(childWindow,~,~, myParent)</a></li><li><a href="#_sub4" class="code">function btnCancel_Callback(childWindow,~,~, myParent)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="AODChildWindow.html" class="code" title="">AODChildWindow</a> &lt; handle
+0002     <span class="comment">% AODChildWindow: class defining all child windows. Defining all</span>
+0003     <span class="comment">% childwindows in the same class file enables shared usage of UI controls</span>
+0004     <span class="comment">% among all windows and simplifies any future modifications.</span>
+0005     
+0006     properties
+0007         AODChildHandles
+0008     <span class="keyword">end</span>
+0009     
+0010     methods
+0011         <span class="comment">% Constructor method</span>
+0012         <a name="_sub0" href="#_subfunctions" class="code">function NewChild = AODChildWindow(myName,myParent)</a>
+0013             
+0014             fontSize = myParent.AODParentHandles.FontSize;
+0015             [ currentOpticalSystem,saved] = <span class="keyword">...</span>
+0016                 myParent.getCurrentOpticalSystem;
+0017             nSurface = currentOpticalSystem.NumberOfSurfaces;
+0018             nField = currentOpticalSystem.NumberOfFieldPoints;
+0019             nWavelength = currentOpticalSystem.NumberOfWavelengths;
+0020             
+0021             <span class="keyword">if</span> nargin == 0
+0022                 <span class="comment">% If nothing is given, then just abort the operation</span>
+0023                 NewChild.AODChildHandles = struct();
+0024                 <span class="keyword">return</span>;
+0025             <span class="keyword">elseif</span> nargin == 1
+0026                 <span class="comment">% If only name of the child is given, then initialize a new parent window</span>
+0027                 myParent = <a href="../../../AODParentDir/Class_Definition/@AODParentWindow/AODParentWindow.html" class="code" title="">AODParentWindow</a>;
+0028             <span class="keyword">elseif</span> nargin == 2
+0029                 <span class="comment">% If both inputs given then continue normally</span>
+0030             <span class="keyword">end</span>
+0031             NewChild.AODChildHandles = struct();
+0032             NewChild.AODChildHandles.Name = myName;
+0033             NewChild.AODChildHandles.Index = size(myParent.AODChildWindows,2)+1;
+0034             NewChild.AODChildHandles.FontSize = fontSize;
+0035             NewChild.AODChildHandles.nMainTab = 4;
+0036             NewChild.AODChildHandles.FigureHandle = figure( <span class="keyword">...</span>
+0037                 <span class="string">'Tag'</span>, <span class="string">'AODChildWindow'</span>, <span class="keyword">...</span>
+0038                 <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0039                 <span class="string">'Name'</span>, myName, <span class="keyword">...</span>
+0040                 <span class="string">'MenuBar'</span>, <span class="string">'figure'</span>, <span class="keyword">...</span>
+0041                 <span class="string">'Toolbar'</span>,<span class="string">'figure'</span>,<span class="keyword">...</span>
+0042                 <span class="string">'NumberTitle'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0043                 <span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+0044                 <span class="string">'Position'</span>,[0.2,0.2,0.5,0.6],<span class="keyword">...</span>
+0045                 <span class="string">'Color'</span>, get(0,<span class="string">'DefaultUicontrolBackgroundColor'</span>), <span class="keyword">...</span>
+0046                 <span class="string">'Resize'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0047                 <span class="string">'Visible'</span>, <span class="string">'off'</span>);
+0048             <span class="comment">% Add the child to the parent</span>
+0049             myParent.addChild(NewChild);
+0050             
+0051             <span class="comment">% Build the GUI based on the myName</span>
+0052             <span class="comment">% Common panels shared by multiple windows</span>
+0053             
+0054             <span class="comment">%% Edit Standard Toolbar by removing the first two toolbar buttons</span>
+0055             stdToolBar = (findall(<span class="keyword">...</span>
+0056                 NewChild.AODChildHandles.FigureHandle,<span class="string">'Type'</span>,<span class="string">'uitoolbar'</span>));
+0057             stdToolBarBtns = allchild(stdToolBar);
+0058             set(stdToolBarBtns(end),<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0059             set(stdToolBarBtns(end-1),<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0060             <span class="comment">% Add a refresh button at the end</span>
+0061             updateIcon = rand(19,23,3)*0;
+0062             updateIcon(4:17,5:7,:) = 1;
+0063             updateIcon(4:17,16:18,:) = 1;
+0064             updateIcon(15:17,5:16,:) = 1;
+0065             
+0066             NewChild.AODChildHandles.btnRefresh = uitoggletool(stdToolBar,<span class="keyword">...</span>
+0067                 <span class="string">'CData'</span>,updateIcon,<span class="keyword">...</span>
+0068                 <span class="string">'Separator'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0069                 <span class="string">'TooltipString'</span>,<span class="string">'Update'</span>,<span class="keyword">...</span>
+0070                 <span class="string">'HandleVisibility'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0071                 <span class="string">'ClickedCallback'</span>, {@NewChild.btnOk_Callback,<span class="keyword">...</span>
+0072                 myParent});
+0073             
+0074             
+0075             <span class="comment">% Define three tabs as combination  of button and panels</span>
+0076             NewChild.AODChildHandles.mainTabGroup = uipanel(<span class="keyword">...</span>
+0077                 <span class="string">'Parent'</span>, NewChild.AODChildHandles.FigureHandle, <span class="keyword">...</span>
+0078                 <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0079                 <span class="string">'Position'</span>, [0, 0, 1.0, 1.0]);
+0080             
+0081             tabBtnWidth = 0.12;
+0082             tabBtnHeight = 0.04;
+0083             <span class="keyword">for</span> k = 1:NewChild.AODChildHandles.nMainTab
+0084                 <span class="keyword">switch</span> k
+0085                     <span class="keyword">case</span> 1
+0086                         tabString = <span class="string">'Setting'</span>;
+0087                     <span class="keyword">case</span> 2
+0088                         tabString = <span class="string">'Graph'</span>;
+0089                     <span class="keyword">case</span> 3
+0090                         tabString = <span class="string">'Text'</span>;
+0091                     <span class="keyword">case</span> 4
+0092                         tabString = <span class="string">'Table'</span>;
+0093                 <span class="keyword">end</span>
+0094                 NewChild.AODChildHandles.panelMainTab(k) = <span class="keyword">...</span><span class="comment">.</span>
+0095                     uipanel(NewChild.AODChildHandles.mainTabGroup,<span class="keyword">...</span>
+0096                     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0097                     <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0098                     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0099                     <span class="string">'Position'</span>, [0, 0, 1.0, 0.95]);
+0100                 NewChild.AODChildHandles.btnMainTab(k) = <span class="keyword">...</span><span class="comment">.</span>
+0101                     uicontrol(NewChild.AODChildHandles.mainTabGroup,<span class="keyword">...</span>
+0102                     <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0103                     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0104                     <span class="string">'Style'</span>,<span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+0105                     <span class="string">'BackgroundColor'</span>,[200,200,200]./256,<span class="keyword">...</span>
+0106                     <span class="string">'Position'</span>, [(k-1)*tabBtnWidth, 0.955, tabBtnWidth, tabBtnHeight],<span class="keyword">...</span>
+0107                     <span class="string">'String'</span>,tabString);
+0108             <span class="keyword">end</span>
+0109             <span class="keyword">for</span> k = 1:NewChild.AODChildHandles.nMainTab
+0110                 set(NewChild.AODChildHandles.btnMainTab(k),<span class="keyword">...</span>
+0111                     <span class="string">'Callback'</span>,{@NewChild.btnMainTab_Callback,k});
+0112             <span class="keyword">end</span>
+0113             
+0114             
+0115             
+0116             NewChild.AODChildHandles.axesHandle = axes( <span class="keyword">...</span>
+0117                 <span class="string">'parent'</span>,NewChild.AODChildHandles.panelMainTab(2),<span class="keyword">...</span>
+0118                 <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0119                 <span class="string">'Units'</span>, <span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0120                 <span class="string">'Position'</span>, [0.1,0.1, 0.8, 0.8]);
+0121             
+0122             NewChild.AODChildHandles.textHandle = uicontrol( <span class="keyword">...</span>
+0123                 NewChild.AODChildHandles.panelMainTab(3),<span class="keyword">...</span>
+0124                 <span class="string">'Units'</span>, <span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0125                 <span class="string">'Style'</span>,<span class="string">'edit'</span>,<span class="keyword">...</span>
+0126                 <span class="string">'Enable'</span>,<span class="string">'inactive'</span>,<span class="keyword">...</span>
+0127                 <span class="string">'FontSize'</span>,fontSize,<span class="keyword">...</span>
+0128                 <span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0129                 <span class="string">'Min'</span>,0,<span class="keyword">...</span>
+0130                 <span class="string">'Max'</span>,10000,<span class="keyword">...</span>
+0131                 <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0132                 <span class="string">'BackgroundColor'</span>,[1,1,1],<span class="keyword">...</span>
+0133                 <span class="string">'String'</span>,<span class="string">'All text outputs will be displayed here . . . '</span>,<span class="keyword">...</span>
+0134                 <span class="string">'Position'</span>, [0,0,1,1]);
+0135             
+0136             NewChild.AODChildHandles.tableHandle = uitable( <span class="keyword">...</span>
+0137                 <span class="string">'Parent'</span>,NewChild.AODChildHandles.panelMainTab(4),<span class="keyword">...</span>
+0138                 <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0139                 <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0140                 <span class="string">'ColumnName'</span>, {[<span class="string">'----------------------------------'</span><span class="keyword">...</span>
+0141                 <span class="string">' Data Table ------------------------------------'</span>]},<span class="keyword">...</span>
+0142                 <span class="string">'Position'</span>, [0,0, 1, 1]);
+0143             
+0144             <span class="comment">% Create all uicontrols which can be used in the setting</span>
+0145             <span class="comment">% windows</span>
+0146             NewChild.BuildChildWindowSettingPanel(myParent,<span class="keyword">...</span>
+0147                 fontSize, nSurface, nField, nWavelength);
+0148             
+0149             <span class="comment">% Define Ok, Cancel and close buttons and add to Setting Tab</span>
+0150             btnWidth = .18;
+0151             btnHeight = .06;
+0152             NewChild.AODChildHandles.btnOk = uicontrol( <span class="keyword">...</span>
+0153                 NewChild.AODChildHandles.panelMainTab(1),<span class="keyword">...</span>
+0154                 <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0155                 <span class="string">'Style'</span>,<span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+0156                 <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0157                 <span class="string">'Position'</span>, [0.6, 0.03, btnWidth, btnHeight],<span class="keyword">...</span>
+0158                 <span class="string">'String'</span>,<span class="string">'Ok'</span>,<span class="keyword">...</span>
+0159                 <span class="string">'Callback'</span>, {@NewChild.btnOk_Callback,<span class="keyword">...</span>
+0160                 myParent});
+0161             
+0162             NewChild.AODChildHandles.btnCancel = uicontrol( <span class="keyword">...</span>
+0163                 NewChild.AODChildHandles.panelMainTab(1),<span class="keyword">...</span>
+0164                 <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0165                 <span class="string">'Style'</span>,<span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+0166                 <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0167                 <span class="string">'Position'</span>, [0.8, 0.03, btnWidth, btnHeight],<span class="keyword">...</span>
+0168                 <span class="string">'String'</span>,<span class="string">'Cancel'</span>,<span class="keyword">...</span>
+0169                 <span class="string">'Callback'</span>, {@NewChild.btnCancel_Callback,<span class="keyword">...</span>
+0170                 myParent});
+0171             
+0172             set(NewChild.AODChildHandles.FigureHandle,<span class="keyword">...</span>
+0173                 <span class="string">'CloseRequestFcn'</span>,{@NewChild.btnCancel_Callback,<span class="keyword">...</span>
+0174                 myParent})
+0175             
+0176             
+0177             <span class="comment">% Click setting tab programatically</span>
+0178             ind = 1;
+0179             NewChild.selectMainTab(ind);
+0180         <span class="keyword">end</span>
+0181         
+0182         <span class="comment">% Callbacks</span>
+0183         <a name="_sub1" href="#_subfunctions" class="code">function btnMainTab_Callback(childWindow,~, ~,tabInd)</a>
+0184             childWindow.selectMainTab(tabInd)
+0185         <span class="keyword">end</span>
+0186         
+0187         <span class="comment">% Function Callbacks for Ok and cancel buttons</span>
+0188         <a name="_sub2" href="#_subfunctions" class="code">function btnOk_Callback(childWindow,~,~, myParent)</a>
+0189             childWindow.btnOkCallback(myParent);
+0190         <span class="keyword">end</span>
+0191         <a name="_sub3" href="#_subfunctions" class="code">function btnCancel_Callback(childWindow,~,~, myParent)</a>
+0192             myParent.RemoveFromOpenedWindowsList(childWindow);
+0193             childWindow.closeChild;
+0194         <span class="keyword">end</span>
+0195     <span class="keyword">end</span>
+0196 <span class="keyword">end</span>
+0197</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

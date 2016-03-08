@@ -1,0 +1,10 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+
+  computeIncidenceAngle [URL="computeIncidenceAngle.html"];
+  computeIntersectionPoint [URL="computeIntersectionPoint.html"];
+  computePathLength [URL="computePathLength.html"];
+  computeReflectedRayDirection [URL="computeReflectedRayDirection.html"];
+  computeRefractedRayDirection [URL="computeRefractedRayDirection.html"];
+  computeSurfaceNormal [URL="computeSurfaceNormal.html"];
+}

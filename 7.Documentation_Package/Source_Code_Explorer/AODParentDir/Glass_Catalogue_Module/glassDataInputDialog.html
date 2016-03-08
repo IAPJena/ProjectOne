@@ -1,0 +1,464 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of glassDataInputDialog</title>
+  <meta name="keywords" content="glassDataInputDialog">
+  <meta name="description" content="GLASSDATAINPUTDIALOG Defines a dilog box which is used to input glass">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Glass_Catalogue_Module -->
+<h1>glassDataInputDialog
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>GLASSDATAINPUTDIALOG Defines a dilog box which is used to input glass</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ figureHandle ] = glassDataInputDialog(glassCatalogueListFullNames,fontName,fontSize) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">GLASSDATAINPUTDIALOG Defines a dilog box which is used to input glass
+ data based on its type. And returns a glass object constructed from the
+ input data.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Catalogue_Module/addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>	addObjectToAODObjectCatalogue: Adds the given AOD object to the given</li><li><a href="../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a>	EXTRACTCOATINGFROMCOATINGCATALOGUE extracts a AOD object from the catalogue</li><li><a href="../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>	FINDALLCOATINGCATALOGUES Searches for all aodObject catalogue files in the</li><li><a href="../../AODParentDir/Catalogue_Module/removeObjectFromAODObjectCatalogue.html" class="code" title="function [ removed ] = removeObjectFromAODObjectCatalogue(objectType, objectName,objectCatalogueFullName )">removeObjectFromAODObjectCatalogue</a>	REMOVECOATINGTOCOATINGCATALOGUE removes a object to the given</li><li><a href="../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Catalogue_Module/objectDataInputDialog.html" class="code" title="function inputDialog = objectDataInputDialog(objectType)">objectDataInputDialog</a>	objectDataInputDialog: Defines a dilog box which is used to input object</li><li><a href="../../AODParentDir/Class_Definition/@AODParentWindow/InitializeMenuAndToolbarItems.html" class="code" title="function InitializeMenuAndToolbarItems(parentWindow)">InitializeMenuAndToolbarItems</a>	Defines all menu items and toolbar commands and all callbacks related</li><li><a href="../../AODParentDir/Class_Definition/@AODParentWindow/InitializeSurfaceEditorPanel.html" class="code" title="function InitializeSurfaceEditorPanel(parentWindow)">InitializeSurfaceEditorPanel</a>	InitializeSurfaceEditorPanel: Define and initialized the uicontrols of the</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function build_gui(glassObj)</a></li><li><a href="#_sub2" class="code">function popGlassCatalogueName_Callback(~,~,handles )</a></li><li><a href="#_sub3" class="code">function refreshGlassDataInputDialog(handles)</a></li><li><a href="#_sub4" class="code">function popGlassType_Callback(hObject,~,handles)</a></li><li><a href="#_sub5" class="code">function tblGlassList_CellSelectionCallback(hObject,eventdata,handles)</a></li><li><a href="#_sub6" class="code">function displayGlassData(selectedCatalogueFullName,selectedGlassIndex,handles)</a></li><li><a href="#_sub7" class="code">function cmdDeleteGlass_Callback(hObject,evendata,handles)</a></li><li><a href="#_sub8" class="code">function cmdClearAll_Callback(hObject,evendata,handles)</a></li><li><a href="#_sub9" class="code">function cmdSaveGlass_Callback(~,~,handles)</a></li><li><a href="#_sub10" class="code">function cmdOk_Callback(hObject,evendata,handles)</a></li><li><a href="#_sub11" class="code">function currentGlass = getCurrentGlass(handles)</a></li><li><a href="#_sub12" class="code">function cmdCancel_Callback(hObject,evendata,handles)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ figureHandle ] = glassDataInputDialog(glassCatalogueListFullNames,fontName,fontSize)</a>
+0002 <span class="comment">%GLASSDATAINPUTDIALOG Defines a dilog box which is used to input glass</span>
+0003 <span class="comment">% data based on its type. And returns a glass object constructed from the</span>
+0004 <span class="comment">% input data.</span>
+0005 
+0006 <span class="comment">% Default Input</span>
+0007 <span class="keyword">if</span> nargin &lt; 1
+0008     <span class="comment">% Get all catalogues from current folder</span>
+0009     glassCatalogueListFullNames = <a href="../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>(<span class="string">'glass'</span>);
+0010     fontSize = 9.5;
+0011     fontName = <span class="string">'FixedWidth'</span>;
+0012 <span class="keyword">elseif</span> nargin == 1
+0013     fontSize = 9.5;
+0014     fontName = <span class="string">'FixedWidth'</span>;    
+0015 <span class="keyword">elseif</span> nargin == 2
+0016     fontName = <span class="string">'FixedWidth'</span>;    
+0017 <span class="keyword">end</span>
+0018 
+0019 <span class="keyword">if</span> isempty(glassCatalogueListFullNames)
+0020     figureHandle = NaN;
+0021     disp(<span class="string">'Error: No glass catalogue is found in the current folder.'</span>);
+0022     <span class="keyword">return</span>;
+0023 <span class="keyword">else</span>
+0024     [~,catalogueListFileNames,~] = cellfun(@(x) fileparts(x),<span class="keyword">...</span>
+0025        glassCatalogueListFullNames,<span class="string">'UniformOutput'</span>,false);
+0026    <span class="comment">% extract the first catalogue and first glass from the catalogue</span>
+0027     firstCatalogueGlassArray = <a href="../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0028     (<span class="string">'glass'</span>,<span class="string">'all'</span>,glassCatalogueListFullNames{1});
+0029     firstCatalogueGlassgNames =  {firstCatalogueGlassArray.Name};
+0030     <span class="keyword">try</span>
+0031         firstGlass = firstCatalogueGlassArray(1);
+0032     <span class="keyword">catch</span>
+0033         firstGlass = <a href="../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>;
+0034     <span class="keyword">end</span>
+0035     firstType = firstGlass.Type;
+0036     <span class="keyword">switch</span> lower(firstType)
+0037         <span class="keyword">case</span> lower(<span class="string">'FixedIndex'</span>)
+0038             firstTypeIndex = 1;
+0039             firstGlassFixedIndexParameters = firstGlass.GlassParameters;
+0040             firstGlassSellmeier1Parameters = [0,0,0,0,0,0]';
+0041             visibilityFixedIndexGlassPanel = <span class="string">'on'</span>;
+0042             visibilitySellmeier1Panel = <span class="string">'off'</span>;                        
+0043         <span class="keyword">case</span> lower(<span class="string">'Sellmeier1'</span>)
+0044             firstTypeIndex = 2;
+0045             firstGlassSellmeier1Parameters = firstGlass.GlassParameters;
+0046             firstGlassFixedIndexParameters = [1,0,0]';
+0047             visibilityFixedIndexGlassPanel = <span class="string">'off'</span>;
+0048             visibilitySellmeier1Panel = <span class="string">'on'</span>;             
+0049     <span class="keyword">end</span> 
+0050     firstName = firstGlass.Name;   
+0051 <span class="keyword">end</span>
+0052 <span class="comment">% Initialize handles structure</span>
+0053 handles = struct();
+0054 
+0055 glassObj = <a href="../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>;
+0056 <span class="comment">% Create all UI controls</span>
+0057 <a href="#_sub1" class="code" title="subfunction build_gui(glassObj)">build_gui</a>(glassObj);
+0058 
+0059 <span class="comment">% Assign function output</span>
+0060 figureHandle = handles.FigureHandle;
+0061 
+0062     <a name="_sub1" href="#_subfunctions" class="code">function build_gui(glassObj)</a>
+0063         <span class="comment">% Creation of all uicontrols</span>
+0064 <span class="comment">%         handles.glassObject = glass;</span>
+0065         <span class="comment">% --- FIGURE -------------------------------------</span>
+0066         handles.FigureHandle = figure( <span class="keyword">...</span>
+0067             <span class="string">'Tag'</span>, <span class="string">'FigureHandle'</span>, <span class="keyword">...</span>
+0068             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0069             <span class="string">'Position'</span>, [0.3,0.3,0.5,0.5], <span class="keyword">...</span>
+0070             <span class="string">'Name'</span>, <span class="string">'Glass Data Entry'</span>, <span class="keyword">...</span><span class="comment"> %'WindowStyle','Modal',...</span>
+0071             <span class="string">'MenuBar'</span>, <span class="string">'none'</span>, <span class="keyword">...</span>
+0072             <span class="string">'NumberTitle'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0073             <span class="string">'Color'</span>, get(0,<span class="string">'DefaultUicontrolBackgroundColor'</span>));
+0074         
+0075         <span class="comment">% --- PANELS -------------------------------------</span>
+0076         handles.panelSellmeier1GlassData = uipanel( <span class="keyword">...</span>
+0077             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0078             <span class="string">'Tag'</span>, <span class="string">'panelMultilayerData'</span>, <span class="keyword">...</span>
+0079             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0080             <span class="string">'Position'</span>, [0.45,0.12,0.53,0.85], <span class="keyword">...</span>
+0081             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0082             <span class="string">'Visible'</span>,visibilitySellmeier1Panel,<span class="keyword">...</span>
+0083             <span class="string">'Title'</span>, <span class="string">'Sellmeier1 Coefficients'</span>);
+0084         handles.panelFixedIndexGlassData = uipanel( <span class="keyword">...</span>
+0085             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0086             <span class="string">'Tag'</span>, <span class="string">'panelMultilayerData'</span>, <span class="keyword">...</span>
+0087             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0088             <span class="string">'Position'</span>, [0.45,0.12,0.53,0.85], <span class="keyword">...</span>
+0089              <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0090             <span class="string">'Visible'</span>,visibilityFixedIndexGlassPanel,<span class="keyword">...</span>
+0091             <span class="string">'Title'</span>, <span class="string">'FixedIndex Glass Partameters'</span>);        
+0092         handles.panelGlassListing = uipanel( <span class="keyword">...</span>
+0093             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0094             <span class="string">'Tag'</span>, <span class="string">'panelGlassListing'</span>, <span class="keyword">...</span>
+0095             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0096             <span class="string">'Position'</span>, [0.02,0.02,0.43,0.94], <span class="keyword">...</span>
+0097              <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0098             <span class="string">'Visible'</span>,<span class="string">'On'</span>);
+0099         
+0100         <span class="comment">% -----------------------------------------------------------------</span>
+0101         handles.lblGlassCatalogueName = uicontrol( <span class="keyword">...</span>
+0102             <span class="string">'Parent'</span>, handles.panelGlassListing, <span class="keyword">...</span>
+0103             <span class="string">'Tag'</span>, <span class="string">'lblGlassCatalogueName'</span>, <span class="keyword">...</span>
+0104             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0105             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0106             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0107             <span class="string">'Position'</span>, [0.02,0.9,0.48,0.05], <span class="keyword">...</span>
+0108             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0109             <span class="string">'String'</span>, <span class="string">'Catalogue Name'</span>);   
+0110         
+0111         handles.popGlassCatalogueName = uicontrol( <span class="keyword">...</span>
+0112             <span class="string">'Parent'</span>, handles.panelGlassListing, <span class="keyword">...</span>
+0113             <span class="string">'Tag'</span>, <span class="string">'popGlassCatalogueName'</span>, <span class="keyword">...</span>
+0114             <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0115             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0116             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0117             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0118             <span class="string">'Position'</span>, [0.50,0.9,0.48,0.055], <span class="keyword">...</span>
+0119             <span class="string">'BackgroundColor'</span>, [1 1 1],<span class="keyword">...</span>
+0120             <span class="string">'String'</span>,catalogueListFileNames);
+0121                 
+0122         <span class="comment">%-----------------------------------------------------------------</span>
+0123         
+0124         handles.lblGlassName = uicontrol( <span class="keyword">...</span>
+0125             <span class="string">'Parent'</span>, handles.panelGlassListing, <span class="keyword">...</span>
+0126             <span class="string">'Tag'</span>, <span class="string">'lblGlassName'</span>, <span class="keyword">...</span>
+0127             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0128             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0129             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0130             <span class="string">'Position'</span>, [0.02,0.8,0.48,0.05], <span class="keyword">...</span>
+0131             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0132             <span class="string">'String'</span>, <span class="string">'Glass Name'</span>);
+0133        
+0134          
+0135         handles.txtGlassName = uicontrol( <span class="keyword">...</span>
+0136             <span class="string">'Parent'</span>, handles.panelGlassListing, <span class="keyword">...</span>
+0137             <span class="string">'Tag'</span>, <span class="string">'txtGlassName'</span>, <span class="keyword">...</span>
+0138             <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0139             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0140             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0141             <span class="string">'Position'</span>, [0.50,0.79,0.48,0.065], <span class="keyword">...</span>
+0142             <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0143             <span class="string">'String'</span>, firstName, <span class="keyword">...</span>
+0144             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName);             
+0145         <span class="comment">% -----------------------------------------------------------------</span>
+0146         handles.lblGlassType = uicontrol( <span class="keyword">...</span>
+0147             <span class="string">'Parent'</span>, handles.panelGlassListing, <span class="keyword">...</span>
+0148             <span class="string">'Tag'</span>, <span class="string">'lblGlassType'</span>, <span class="keyword">...</span>
+0149             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0150             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0151             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0152             <span class="string">'Position'</span>, [0.02,0.7,0.48,0.05], <span class="keyword">...</span>
+0153             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0154             <span class="string">'String'</span>, <span class="string">'Glass Type'</span>);   
+0155         
+0156         handles.popGlassType = uicontrol( <span class="keyword">...</span>
+0157             <span class="string">'Parent'</span>, handles.panelGlassListing, <span class="keyword">...</span>
+0158             <span class="string">'Tag'</span>, <span class="string">'popGlassType'</span>, <span class="keyword">...</span>
+0159             <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0160             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0161             <span class="string">'HorizontalAlignment'</span>,<span class="string">'left'</span>,<span class="keyword">...</span>
+0162             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0163             <span class="string">'Position'</span>, [0.50,0.7,0.48,0.055], <span class="keyword">...</span><span class="comment"> </span>
+0164             <span class="string">'BackgroundColor'</span>, [1 1 1],<span class="keyword">...</span>
+0165             <span class="string">'String'</span>,{<span class="string">'FixedIndex'</span>,<span class="string">'Sellmeier1'</span>},<span class="keyword">...</span>
+0166             <span class="string">'Value'</span>,firstTypeIndex);      
+0167         <span class="comment">%------------------------------------------------------------------</span>
+0168         
+0169         
+0170         <span class="comment">%-----------------------------------------------------------------</span>
+0171         handles.tblFixedIndexParameters = uitable( <span class="keyword">...</span>
+0172             <span class="string">'Parent'</span>,handles.panelFixedIndexGlassData,<span class="keyword">...</span>
+0173             <span class="string">'Tag'</span>, <span class="string">'tblFixedIndexParameters'</span>, <span class="keyword">...</span>
+0174             <span class="string">'UserData'</span>, zeros(1,0), <span class="keyword">...</span><span class="comment"> </span>
+0175             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0176             <span class="string">'Position'</span>, [0.15,0.1,0.7,0.85], <span class="keyword">...</span>
+0177             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span><span class="comment"> ...</span>
+0178             <span class="string">'BackgroundColor'</span>, [1 1 1;0.961 0.961 0.961], <span class="keyword">...</span>
+0179             <span class="string">'ColumnEditable'</span>, [true], <span class="keyword">...</span>
+0180             <span class="string">'ColumnFormat'</span>, {<span class="string">'numeric'</span>}, <span class="keyword">...</span>
+0181             <span class="string">'ColumnName'</span>, {<span class="string">'Fixed Index Glass Parameters'</span>}, <span class="keyword">...</span>
+0182             <span class="string">'ColumnWidth'</span>, {200}, <span class="keyword">...</span>
+0183             <span class="string">'RowName'</span>, {<span class="string">'Nd'</span>,<span class="string">'Vd'</span>,<span class="string">'PgF'</span>},<span class="keyword">...</span>
+0184             <span class="string">'Data'</span>,firstGlassFixedIndexParameters); 
+0185         
+0186         handles.tblSellmeier1Parameters = uitable( <span class="keyword">...</span>
+0187             <span class="string">'Parent'</span>,handles.panelSellmeier1GlassData,<span class="keyword">...</span>
+0188             <span class="string">'Tag'</span>, <span class="string">'tblSellmeier1Parameters'</span>, <span class="keyword">...</span>
+0189             <span class="string">'UserData'</span>, zeros(1,0), <span class="keyword">...</span>
+0190             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0191             <span class="string">'Position'</span>, [0.15,0.1,0.7,0.85], <span class="keyword">...</span>
+0192             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span><span class="comment"> ...</span>
+0193             <span class="string">'BackgroundColor'</span>, [1 1 1;0.961 0.961 0.961], <span class="keyword">...</span>
+0194             <span class="string">'ColumnEditable'</span>, [true], <span class="keyword">...</span>
+0195             <span class="string">'ColumnFormat'</span>, {<span class="string">'numeric'</span>}, <span class="keyword">...</span>
+0196             <span class="string">'ColumnName'</span>, {<span class="string">'Sellmeier Coefficients (in sq. um)'</span>}, <span class="keyword">...</span>
+0197             <span class="string">'ColumnWidth'</span>, {200}, <span class="keyword">...</span>
+0198             <span class="string">'RowName'</span>,  {<span class="string">'B1'</span>,<span class="string">'C1'</span>,<span class="string">'B2'</span>,<span class="string">'C2'</span>,<span class="string">'B3'</span>,<span class="string">'C3'</span>},<span class="keyword">...</span>
+0199             <span class="string">'Data'</span>,firstGlassSellmeier1Parameters);        
+0200         <span class="comment">%-----------------------------------------------------------------</span>
+0201         handles.tblGlassList = uitable( <span class="keyword">...</span>
+0202             <span class="string">'Parent'</span>, handles.panelGlassListing, <span class="keyword">...</span>
+0203             <span class="string">'Tag'</span>, <span class="string">'tblGlassList'</span>, <span class="keyword">...</span>
+0204             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0205             <span class="string">'Position'</span>, [0.02,0.02,0.96,0.65], <span class="keyword">...</span>
+0206             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span><span class="comment"> ...</span>
+0207             <span class="string">'BackgroundColor'</span>, [1 1 1;0.961 0.961 0.961], <span class="keyword">...</span>
+0208             <span class="string">'ColumnEditable'</span>, [false], <span class="keyword">...</span>
+0209             <span class="string">'ColumnFormat'</span>, {<span class="string">'char'</span>}, <span class="keyword">...</span>
+0210             <span class="string">'ColumnName'</span>, {<span class="string">'Glass Names'</span>}, <span class="keyword">...</span>
+0211             <span class="string">'ColumnWidth'</span>, {220}, <span class="keyword">...</span>
+0212             <span class="string">'RowName'</span>, <span class="string">'numbered'</span>,<span class="keyword">...</span>
+0213             <span class="string">'Data'</span>,firstCatalogueGlassgNames');        
+0214       <span class="comment">%-------------------------------------------------------------------</span>
+0215       <span class="comment">% Callbacks</span>
+0216        set(handles.popGlassCatalogueName,<span class="keyword">...</span>
+0217            <span class="string">'Callback'</span>,{@<a href="#_sub2" class="code" title="subfunction popGlassCatalogueName_Callback(~,~,handles )">popGlassCatalogueName_Callback</a>,handles});
+0218        set(handles.popGlassType,<span class="keyword">...</span>
+0219            <span class="string">'Callback'</span>,{@<a href="#_sub4" class="code" title="subfunction popGlassType_Callback(hObject,~,handles)">popGlassType_Callback</a>,handles});       
+0220        set(handles.tblGlassList,<span class="keyword">...</span>
+0221            <span class="string">'CellSelectionCallback'</span>,{@<a href="#_sub5" class="code" title="subfunction tblGlassList_CellSelectionCallback(hObject,eventdata,handles)">tblGlassList_CellSelectionCallback</a>,handles});
+0222  
+0223       <span class="comment">%------------------------------------------------------------------</span>
+0224       
+0225       handles.cmdDeleteGlass = uicontrol( <span class="keyword">...</span>
+0226             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0227             <span class="string">'Tag'</span>, <span class="string">'cmdDeleteGlass'</span>, <span class="keyword">...</span>
+0228             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0229             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0230             <span class="string">'Position'</span>, [0.45,0.02,0.12,0.065], <span class="keyword">...</span>
+0231             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0232             <span class="string">'String'</span>, <span class="string">'Delete'</span>, <span class="keyword">...</span>
+0233             <span class="string">'Callback'</span>, {@<a href="#_sub7" class="code" title="subfunction cmdDeleteGlass_Callback(hObject,evendata,handles) ">cmdDeleteGlass_Callback</a>,handles});
+0234        handles.cmdSaveGlass = uicontrol( <span class="keyword">...</span>
+0235             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0236             <span class="string">'Tag'</span>, <span class="string">'cmdSaveGlass'</span>, <span class="keyword">...</span>
+0237             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0238             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0239             <span class="string">'Position'</span>, [0.59,0.02,0.12,0.065], <span class="keyword">...</span>
+0240             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0241             <span class="string">'String'</span>, <span class="string">'Save'</span>, <span class="keyword">...</span>
+0242             <span class="string">'Callback'</span>, {@<a href="#_sub9" class="code" title="subfunction cmdSaveGlass_Callback(~,~,handles) ">cmdSaveGlass_Callback</a>,handles});        
+0243        handles.cmdOk = uicontrol( <span class="keyword">...</span>
+0244             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0245             <span class="string">'Tag'</span>, <span class="string">'cmdOk'</span>, <span class="keyword">...</span>
+0246             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0247             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0248             <span class="string">'Position'</span>, [0.73,0.02,0.12,0.065], <span class="keyword">...</span>
+0249             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0250             <span class="string">'String'</span>, <span class="string">'Ok'</span>, <span class="keyword">...</span>
+0251             <span class="string">'Callback'</span>, {@<a href="#_sub10" class="code" title="subfunction cmdOk_Callback(hObject,evendata,handles) ">cmdOk_Callback</a>,handles});         
+0252        handles.cmdCancel = uicontrol( <span class="keyword">...</span>
+0253             <span class="string">'Parent'</span>, handles.FigureHandle, <span class="keyword">...</span>
+0254             <span class="string">'Tag'</span>, <span class="string">'cmdCancel'</span>, <span class="keyword">...</span>
+0255             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0256             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0257             <span class="string">'Position'</span>, [0.87,0.02,0.12,0.065], <span class="keyword">...</span>
+0258             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0259             <span class="string">'String'</span>, <span class="string">'Cancel'</span>, <span class="keyword">...</span>
+0260             <span class="string">'Callback'</span>, {@<a href="#_sub12" class="code" title="subfunction cmdCancel_Callback(hObject,evendata,handles) ">cmdCancel_Callback</a>,handles});           
+0261     <span class="keyword">end</span>
+0262 
+0263 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0264     <a name="_sub2" href="#_subfunctions" class="code">function popGlassCatalogueName_Callback(~,~,handles )</a>
+0265         <a href="#_sub3" class="code" title="subfunction refreshGlassDataInputDialog(handles)">refreshGlassDataInputDialog</a>(handles);
+0266     <span class="keyword">end</span>
+0267 
+0268     <a name="_sub3" href="#_subfunctions" class="code">function refreshGlassDataInputDialog(handles)</a>
+0269         selectedCatalogueFullName = glassCatalogueListFullNames{get(handles.popGlassCatalogueName,<span class="string">'Value'</span>)};
+0270         <span class="comment">% extract the selected catalogue and Glass from the catalogue</span>
+0271         selectedCatalogueGlassArray = <a href="../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0272             (<span class="string">'Glass'</span>,<span class="string">'all'</span>,selectedCatalogueFullName);
+0273         selectedCatalogueGlassNames =  {selectedCatalogueGlassArray.Name};
+0274         set(handles.tblGlassList,<span class="string">'Data'</span>,selectedCatalogueGlassNames');
+0275         selectedGlassIndex = 1;
+0276         <a href="#_sub6" class="code" title="subfunction displayGlassData(selectedCatalogueFullName,selectedGlassIndex,handles)">displayGlassData</a>(selectedCatalogueFullName,selectedGlassIndex,handles);
+0277     <span class="keyword">end</span>
+0278 
+0279 
+0280 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0281 <a name="_sub4" href="#_subfunctions" class="code">function popGlassType_Callback(hObject,~,handles)</a>
+0282     glassTypeList =  get(handles.popGlassType,<span class="string">'String'</span>);
+0283     selectedGlassType = glassTypeList{get(hObject,<span class="string">'Value'</span>)};
+0284         
+0285     <span class="keyword">switch</span> lower(selectedGlassType)
+0286         <span class="keyword">case</span> lower(<span class="string">'FixedIndex'</span>)
+0287             fixedIndexGlassPanelVisible = <span class="string">'on'</span>;
+0288             sellmeier1PanelVisible = <span class="string">'off'</span>;                        
+0289         <span class="keyword">case</span> lower(<span class="string">'Sellmeier1'</span>)
+0290             fixedIndexGlassPanelVisible = <span class="string">'off'</span>;
+0291             sellmeier1PanelVisible = <span class="string">'on'</span>;             
+0292     <span class="keyword">end</span>
+0293     
+0294     set(handles.panelSellmeier1GlassData,<span class="keyword">...</span>
+0295         <span class="string">'Visible'</span>,sellmeier1PanelVisible);
+0296     set(handles.panelFixedIndexGlassData,<span class="keyword">...</span>
+0297         <span class="string">'Visible'</span>,fixedIndexGlassPanelVisible);
+0298 <span class="keyword">end</span>
+0299 
+0300 <a name="_sub5" href="#_subfunctions" class="code">function tblGlassList_CellSelectionCallback(hObject,eventdata,handles)</a>
+0301     selCell = eventdata.Indices;
+0302     <span class="keyword">if</span> ~isempty(selCell)
+0303         selRow = selCell(1,1);
+0304         selCol = selCell(1,2);
+0305         selectedGlassIndex = selRow;
+0306         selectedCatalogueFullName = glassCatalogueListFullNames<span class="keyword">...</span>
+0307             {get(handles.popGlassCatalogueName,<span class="string">'Value'</span>)};
+0308         <a href="#_sub6" class="code" title="subfunction displayGlassData(selectedCatalogueFullName,selectedGlassIndex,handles)">displayGlassData</a>(selectedCatalogueFullName,selectedGlassIndex,handles)
+0309     <span class="keyword">end</span>
+0310 <span class="keyword">end</span>
+0311 
+0312 <a name="_sub6" href="#_subfunctions" class="code">function displayGlassData(selectedCatalogueFullName,selectedGlassIndex,handles)</a>
+0313     <span class="comment">% extract the selected Glass from the catalogue</span>
+0314     catalogueGlassArray = <a href="../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0315         (<span class="string">'Glass'</span>,<span class="string">'all'</span>,selectedCatalogueFullName);
+0316     <span class="keyword">if</span> isempty(catalogueGlassArray)
+0317         catalogueGlassArray = <a href="../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>;
+0318     <span class="keyword">end</span>
+0319     catalogueGlassNames =  {catalogueGlassArray.Name};
+0320     <span class="keyword">if</span> ~isempty(catalogueGlassNames)
+0321         selectedGlassObject = catalogueGlassArray(selectedGlassIndex);
+0322 
+0323         selectedGlassType = selectedGlassObject.Type;
+0324         selectedGlassParameters = selectedGlassObject.GlassParameters;
+0325         selectedGlassName = selectedGlassObject.Name;
+0326         
+0327         <span class="keyword">switch</span> lower(selectedGlassType)
+0328             <span class="keyword">case</span> lower(<span class="string">'FixedIndex'</span>)
+0329                 selectedGlassTypeIndex = 1;
+0330                 fixedIndexGlassPanelVisible = <span class="string">'on'</span>;
+0331                 sellmeier1PanelVisible = <span class="string">'off'</span>;  
+0332                 set(handles.tblFixedIndexParameters ,<span class="string">'Data'</span>,selectedGlassParameters);
+0333             <span class="keyword">case</span> lower(<span class="string">'Sellmeier1'</span>)
+0334                 selectedGlassTypeIndex = 2;
+0335                 fixedIndexGlassPanelVisible = <span class="string">'off'</span>;
+0336                 sellmeier1PanelVisible = <span class="string">'on'</span>;
+0337                 set(handles.tblSellmeier1Parameters,<span class="string">'Data'</span>,selectedGlassParameters);
+0338         <span class="keyword">end</span>
+0339         <span class="comment">% Update all data</span>
+0340         set(handles.panelSellmeier1GlassData,<span class="keyword">...</span>
+0341             <span class="string">'Visible'</span>,sellmeier1PanelVisible);
+0342         set(handles.panelFixedIndexGlassData,<span class="keyword">...</span>
+0343             <span class="string">'Visible'</span>,fixedIndexGlassPanelVisible);
+0344         
+0345         set(handles.popGlassType,<span class="string">'Value'</span>,selectedGlassTypeIndex);
+0346         set(handles.txtGlassName,<span class="string">'String'</span>,selectedGlassName);
+0347         
+0348     <span class="keyword">end</span>
+0349 <span class="keyword">end</span>
+0350 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0351     <a name="_sub7" href="#_subfunctions" class="code">function cmdDeleteGlass_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0352         glassCatalogueIndex = get(handles.popGlassCatalogueName,<span class="string">'Value'</span>);
+0353         selectedGlassCatalogueFullName = glassCatalogueListFullNames{glassCatalogueIndex};
+0354         objectType = <span class="string">'Glass'</span>;
+0355         objectName = get(handles.txtGlassName,<span class="string">'String'</span>);
+0356         objectCatalogueFullName = selectedGlassCatalogueFullName;       
+0357         <a href="../../AODParentDir/Catalogue_Module/removeObjectFromAODObjectCatalogue.html" class="code" title="function [ removed ] = removeObjectFromAODObjectCatalogue(objectType, objectName,objectCatalogueFullName )">removeObjectFromAODObjectCatalogue</a>(objectType, objectName,objectCatalogueFullName )
+0358         <a href="#_sub3" class="code" title="subfunction refreshGlassDataInputDialog(handles)">refreshGlassDataInputDialog</a>(handles);
+0359     <span class="keyword">end</span>
+0360 
+0361 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0362     <a name="_sub8" href="#_subfunctions" class="code">function cmdClearAll_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0363         set(handles.txtGlassName,<span class="string">'String'</span>,<span class="string">'New'</span>);
+0364         set(handles.tblSellmeier1Parameters,<span class="string">'Data'</span>,[0,0,0,0,0,0]');
+0365         set(handles.tblFixedIndexParameters,<span class="string">'Data'</span>,[1,0,0]');
+0366     <span class="keyword">end</span>
+0367 
+0368 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0369     <a name="_sub9" href="#_subfunctions" class="code">function cmdSaveGlass_Callback(~,~,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0370         objectType = <span class="string">'Glass'</span>;
+0371         aodObject = <a href="#_sub11" class="code" title="subfunction currentGlass = getCurrentGlass(handles)">getCurrentGlass</a>(handles);
+0372         glassCatalogueIndex = get(handles.popGlassCatalogueName,<span class="string">'Value'</span>);
+0373         objectCatalogueFullName = glassCatalogueListFullNames{glassCatalogueIndex};
+0374         <a href="../../AODParentDir/Catalogue_Module/addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>(objectType, aodObject,objectCatalogueFullName,<span class="string">'ask'</span>);
+0375         <a href="#_sub3" class="code" title="subfunction refreshGlassDataInputDialog(handles)">refreshGlassDataInputDialog</a>(handles);       
+0376     <span class="keyword">end</span>
+0377 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0378     <a name="_sub10" href="#_subfunctions" class="code">function cmdOk_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0379         objectType = <span class="string">'Glass'</span>;
+0380         aodObject = <a href="#_sub11" class="code" title="subfunction currentGlass = getCurrentGlass(handles)">getCurrentGlass</a>(handles);
+0381         glassCatalogueIndex = get(handles.popGlassCatalogueName,<span class="string">'Value'</span>);
+0382         objectCatalogueFullName = glassCatalogueListFullNames{glassCatalogueIndex};
+0383         <a href="../../AODParentDir/Catalogue_Module/addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>(objectType, aodObject,objectCatalogueFullName,<span class="string">'replace'</span>);
+0384         <a href="#_sub3" class="code" title="subfunction refreshGlassDataInputDialog(handles)">refreshGlassDataInputDialog</a>(handles);
+0385         glassObj = aodObject;
+0386         save(<span class="string">'tempglass.mat'</span>,<span class="string">'glassObj'</span>);
+0387         close(handles.FigureHandle);
+0388         
+0389     <span class="keyword">end</span>
+0390 
+0391 <a name="_sub11" href="#_subfunctions" class="code">function currentGlass = getCurrentGlass(handles)</a>
+0392     glassTypeList = get(handles.popGlassType,<span class="string">'String'</span>);
+0393     glassType = glassTypeList{get(handles.popGlassType,<span class="string">'Value'</span>)};
+0394     glassName = get(handles.txtGlassName,<span class="string">'String'</span>);
+0395         
+0396     <span class="keyword">switch</span> lower(glassType)
+0397         <span class="keyword">case</span> lower(<span class="string">'FixedIndex'</span>)
+0398              glassParameters = (get(handles.tblFixedIndexParameters,<span class="string">'Data'</span>));
+0399         <span class="keyword">case</span> lower(<span class="string">'Sellmeier1'</span>)
+0400             glassParameters = (get(handles.tblSellmeier1Parameters,<span class="string">'Data'</span>));
+0401     <span class="keyword">end</span>    
+0402     currentGlass = <a href="../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>(glassName,glassType,glassParameters);
+0403 <span class="keyword">end</span>
+0404 
+0405 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0406     <a name="_sub12" href="#_subfunctions" class="code">function cmdCancel_Callback(hObject,evendata,handles) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0407         currentGlass = <a href="../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>;
+0408         <a href="#_sub3" class="code" title="subfunction refreshGlassDataInputDialog(handles)">refreshGlassDataInputDialog</a>(handles);
+0409 <span class="comment">%         glassObj = Glass;</span>
+0410 <span class="comment">%         save('tempglass.mat','glassObj');</span>
+0411         close(handles.FigureHandle);
+0412     <span class="keyword">end</span>
+0413 <span class="keyword">end</span>
+0414</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of grid_new</title>
+  <meta name="keywords" content="grid_new">
+  <meta name="description" content="___________________________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- menu.html Existing_Propagators -->
+<h1>grid_new
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>___________________________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [xn,yn] = grid_new(npx,npy,dux,duy) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">___________________________________________________________________________________
+
+  Erzeugen der linearen Koordinaten für ein neues Raster
+  Die Punktzahlen npx, npy müssen geradzahlig sein.
+  Die Mittenkoordinate mit x = 0 liegt beim Index npx/2+1, y analog
+  Die erste Stützstelle j = 1 liegt außerhalb des gewünschten Durchmessers.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fraunhofer_Scalar/prop_fraun_fft_test.html" class="code" title="">prop_fraun_fft_test</a>	Test Fraunhofer-Propagator</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [xn,yn] = grid_new(npx,npy,dux,duy)</a>
+0002 <span class="comment">%___________________________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  Erzeugen der linearen Koordinaten für ein neues Raster</span>
+0005 <span class="comment">%  Die Punktzahlen npx, npy müssen geradzahlig sein.</span>
+0006 <span class="comment">%  Die Mittenkoordinate mit x = 0 liegt beim Index npx/2+1, y analog</span>
+0007 <span class="comment">%  Die erste Stützstelle j = 1 liegt außerhalb des gewünschten Durchmessers.</span>
+0008 
+0009 <span class="comment">% English...</span>
+0010 <span class="comment">% Generating the linear coordinates for a new grid</span>
+0011 <span class="comment">% The point numbers Npx and NPY must be even.</span>
+0012 <span class="comment">% The center coordinate x = 0 is at index npx/2+1, y analogous</span>
+0013 <span class="comment">% The first support point j = 1 is outside of the desired diameter,</span>
+0014 
+0015 <span class="comment">%  Version :   02.02.08       H. Gross</span>
+0016 <span class="comment">%___________________________________________________________________________________</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%  Input :  npx      : Punktzahl in x</span>
+0019 <span class="comment">%           npy      : Punktzahl in y</span>
+0020 <span class="comment">%           rx       : Durchmesser in x-Richtung</span>
+0021 <span class="comment">%           ry       : Durchmesser in y-Richtung</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">%  Output : xn(npx)  : Rasterkoordinaten in x-Richtung = Scanning coordinate in the x direction</span>
+0024 <span class="comment">%           yn(npy)  : Rasterkoordinaten in y-Richtung</span>
+0025 <span class="comment">%___________________________________________________________________________________</span>
+0026 <span class="comment">%</span>
+0027 xn = zeros(npx,1);
+0028 yn = zeros(npy,1);
+0029 <span class="comment">%</span>
+0030 dx = dux / ( npx-2 );
+0031 dy = duy / ( npy-2 );
+0032 <span class="comment">%</span>
+0033 xn = ( -dux/2 - dx : dx : dux/2 )' ;
+0034 yn = ( -duy/2 - dy : dy : duy/2 )' ;
+0035 
+0036 <span class="comment">%</span>
+0037         
+0038         
+0039 
+0040</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

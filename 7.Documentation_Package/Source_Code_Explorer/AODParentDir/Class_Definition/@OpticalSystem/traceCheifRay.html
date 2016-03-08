@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of traceCheifRay</title>
+  <meta name="keywords" content="traceCheifRay">
+  <meta name="description" content="TRACECHEIFRAY Computes the cheif ray and traces it theough the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>traceCheifRay
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>TRACECHEIFRAY Computes the cheif ray and traces it theough the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ cheifRayTraceResult ] = traceCheifRay( optSystem,fieldPointXY,wavLen,considerSurfAperture ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">TRACECHEIFRAY Computes the cheif ray and traces it theough the
+ given system</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ cheifRayTraceResult ] = traceCheifRay( optSystem,fieldPointXY,wavLen,considerSurfAperture )</a>
+0002 <span class="comment">%TRACECHEIFRAY Computes the cheif ray and traces it theough the</span>
+0003 <span class="comment">% given system</span>
+0004 
+0005 <span class="comment">% Deafault inputs</span>
+0006 <span class="keyword">if</span> nargin &lt; 1
+0007     disp(<span class="string">'Error: The function traceCheifRay needs atleast optical system'</span>);
+0008     <span class="keyword">return</span>;
+0009 <span class="keyword">elseif</span> nargin == 1
+0010     <span class="comment">% Take all field points and primary wavelength</span>
+0011     nField = optSystem.NumberOfFieldPoints;
+0012     fieldPointMatrix = optSystem.FieldPointMatrix;
+0013     fieldPointXY = (fieldPointMatrix(:,1:2))';
+0014     wavLen = repmat(optSystem.getPrimaryWavelength,[1,nField]);
+0015 
+0016     considerSurfAperture = 1;
+0017 <span class="keyword">elseif</span> nargin == 2 
+0018     <span class="comment">% Take the primary wavelength</span>
+0019     nField = size(fieldPointXY,2);
+0020     wavLen = repmat(optSystem.getPrimaryWavelength,[1,nField]);
+0021     considerSurfAperture = 1;    
+0022 <span class="keyword">elseif</span> nargin == 3
+0023     considerSurfAperture = 1; 
+0024 <span class="keyword">elseif</span> nargin == 4
+0025     
+0026 <span class="keyword">end</span>
+0027 cheifRay = optSystem.getCheifRay(fieldPointXY,wavLen);
+0028 cheifRayTraceResult = optSystem.tracePolarizedRay(cheifRay,considerSurfAperture);
+0029 <span class="keyword">end</span>
+0030</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

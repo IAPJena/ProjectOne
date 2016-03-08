@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getAbbeNumber</title>
+  <meta name="keywords" content="getAbbeNumber">
+  <meta name="description" content="getAbbeNumber: Returns abbe number of glass computed from">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Glass -->
+<h1>getAbbeNumber
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getAbbeNumber: Returns abbe number of glass computed from</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [abbeNumber] = getAbbeNumber(Glass,wavLenF,wavLenD,wavLenC) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getAbbeNumber: Returns abbe number of glass computed from
+ refractive indices at three different wavelengths
+ It supports vector inputs of wavlengths and gives vector output of
+ abbeNumber</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="getRefractiveIndex.html" class="code" title="function [n] = getRefractiveIndex(Glass,wavLen)">getRefractiveIndex</a>	getRefractiveIndex: Returns the refractive index of the glass</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [abbeNumber] = getAbbeNumber(Glass,wavLenF,wavLenD,wavLenC)</a>
+0002 <span class="comment">% getAbbeNumber: Returns abbe number of glass computed from</span>
+0003 <span class="comment">% refractive indices at three different wavelengths</span>
+0004 <span class="comment">% It supports vector inputs of wavlengths and gives vector output of</span>
+0005 <span class="comment">% abbeNumber</span>
+0006 
+0007 
+0008 nRay = size(wavLenF,2);
+0009 glassParameters = Glass.GlassParameters;
+0010 <span class="keyword">switch</span> lower(strtrim(Glass.Type))
+0011     <span class="keyword">case</span> lower(<span class="string">'FixedIndex'</span>)
+0012         abbeNumber = repmat(glassParameters(2),[1,nRay]);
+0013     <span class="keyword">case</span>  lower(<span class="string">'Sellmeier1'</span>)
+0014         <span class="comment">% Compute refractive indices at different wavelengths</span>
+0015         nf = <a href="getRefractiveIndex.html" class="code" title="function [n] = getRefractiveIndex(Glass,wavLen)">getRefractiveIndex</a> <span class="keyword">...</span>
+0016             (wavLenF,glassParameters);
+0017         nd = <a href="getRefractiveIndex.html" class="code" title="function [n] = getRefractiveIndex(Glass,wavLen)">getRefractiveIndex</a> <span class="keyword">...</span>
+0018             (wavLenD,glassParameters);
+0019         nc = <a href="getRefractiveIndex.html" class="code" title="function [n] = getRefractiveIndex(Glass,wavLen)">getRefractiveIndex</a> <span class="keyword">...</span>
+0020             (wavLenC,glassParameters);
+0021         abbeNumber = (nd-1)./(nf-nc);
+0022 <span class="keyword">end</span>
+0023 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

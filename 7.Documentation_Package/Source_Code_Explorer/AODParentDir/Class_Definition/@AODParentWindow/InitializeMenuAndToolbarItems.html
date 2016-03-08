@@ -1,0 +1,1149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of InitializeMenuAndToolbarItems</title>
+  <meta name="keywords" content="InitializeMenuAndToolbarItems">
+  <meta name="description" content="Defines all menu items and toolbar commands and all callbacks related">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>InitializeMenuAndToolbarItems
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Defines all menu items and toolbar commands and all callbacks related</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function InitializeMenuAndToolbarItems(parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Defines all menu items and toolbar commands and all callbacks related 
+ with the menu commands. 
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Catalogue_Module/addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>	addObjectToAODObjectCatalogue: Adds the given AOD object to the given</li><li><a href="../../../AODParentDir/Catalogue_Module/createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>	CREATENEWCOATINGCATALOGUE Create anew AOD object catalogue and intialize</li><li><a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>	</li><li><a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>	</li><li><a href="../../../AODParentDir/Coating_Catalogue_Module/coatingDataInputDialog.html" class="code" title="function [ figureHandle ] = coatingDataInputDialog(coatingCatalogueListFullNames,fontName,fontSize)">coatingDataInputDialog</a>	COATINGDATAINPUTDIALOG Defines a dilog box which is used to input coating</li><li><a href="../../../AODParentDir/Documentation_Module/aboutWindow.html" class="code" title="function figureHandle = aboutWindow(fontName)">aboutWindow</a>	About Window</li><li><a href="../../../AODParentDir/Glass_Catalogue_Module/glassDataInputDialog.html" class="code" title="function [ figureHandle ] = glassDataInputDialog(glassCatalogueListFullNames,fontName,fontSize)">glassDataInputDialog</a>	GLASSDATAINPUTDIALOG Defines a dilog box which is used to input glass</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function menuTry_Callback(~,~,myParent)</a></li><li><a href="#_sub2" class="code">function menuFile_Callback(~,~,myParent)</a></li><li><a href="#_sub3" class="code">function menuEdit_Callback(~,~,myParent)</a></li><li><a href="#_sub4" class="code">function menuOptimization_Callback(~,~,myParent)</a></li><li><a href="#_sub5" class="code">function menuRayTrace_Callback(~,~,myParent)</a></li><li><a href="#_sub6" class="code">function menuDiffraction_Callback(~,~,myParent)</a></li><li><a href="#_sub7" class="code">function menuWavefrontAtExitPupil_Callback(~,~,myParent)</a></li><li><a href="#_sub8" class="code">function menuPupilApodization_Callback(~,~,myParent)</a></li><li><a href="#_sub9" class="code">function menuFFTPSF_Callback(~,~,myParent)</a></li><li><a href="#_sub10" class="code">function menuHelp_Callback(~,~,myParent)</a></li><li><a href="#_sub11" class="code">function menuView_Callback(~,~,myParent)</a></li><li><a href="#_sub12" class="code">function menuScalarRayTrace_Callback(~,~,myParent)</a></li><li><a href="#_sub13" class="code">function menuSurfaceProperties_Callback(~,~,myParent)</a></li><li><a href="#_sub14" class="code">function menuSystemConfiguration_Callback(~,~,myParent)</a></li><li><a href="#_sub15" class="code">function menuNew_Callback(~,~,myParent)</a></li><li><a href="#_sub16" class="code">function menuOpen_Callback(~,~,myParent)</a></li><li><a href="#_sub17" class="code">function menuSave_Callback(~,~,myParent)</a></li><li><a href="#_sub18" class="code">function menuSavaAs_Callback(~,~,myParent)</a></li><li><a href="#_sub19" class="code">function menuClose_Callback(~,~,myParent)</a></li><li><a href="#_sub20" class="code">function menu2DSystemLayout_Callback(~,~,myParent)</a></li><li><a href="#_sub21" class="code">function menu3DSystemLayout_Callback(~,~,myParent)</a></li><li><a href="#_sub22" class="code">function menuUserManual_Callback(~,~,myParent)</a></li><li><a href="#_sub23" class="code">function menuAbout_Callback(~,~,myParent)</a></li><li><a href="#_sub24" class="code">function menuImportGlassCatalogue_Callback(~,~,myParent)</a></li><li><a href="#_sub25" class="code">function menuCoatingCatalogue_Callback(~,~,myParent)</a></li><li><a href="#_sub26" class="code">function menuImportZMXFile_Callback(~,~,myParent)</a></li><li><a href="#_sub27" class="code">function menuPolarizationRayTrace_Callback(~,~,myParent)</a></li><li><a href="#_sub28" class="code">function menuCoatingAnalysis_Callback(~,~,myParent)</a></li><li><a href="#_sub29" class="code">function menuRefractiveIndexProfile_Callback(~,~,myParent)</a></li><li><a href="#_sub30" class="code">function menuTransmissionVsAngle_Callback(~,~,myParent)</a></li><li><a href="#_sub31" class="code">function menuReflectionVsAngle_Callback(~,~,myParent)</a></li><li><a href="#_sub32" class="code">function menuDiattenuationVsAngle_Callback(~,~,myParent)</a></li><li><a href="#_sub33" class="code">function menuRetardanceVsAngle_Callback(~,~,myParent)</a></li><li><a href="#_sub34" class="code">function menuTransmissionVsWavelength_Callback(~,~,myParent)</a></li><li><a href="#_sub35" class="code">function menuReflectionVsWavelength_Callback(~,~,myParent)</a></li><li><a href="#_sub36" class="code">function menuDiattenuationVsWavelength_Callback(~,~,myParent)</a></li><li><a href="#_sub37" class="code">function menRetardanceVsWavelength_Callback(~,~,myParent)</a></li><li><a href="#_sub38" class="code">function menuOpticalSystem_Callback(~,~,myParent)</a></li><li><a href="#_sub39" class="code">function menuFootprintDiagram_Callback(~,~,myParent)</a></li><li><a href="#_sub40" class="code">function menuPolarizationEllipseMap_Callback(~,~,myParent)</a></li><li><a href="#_sub41" class="code">function menuParaxialAnalysis_Callback(~,~,myParent)</a></li><li><a href="#_sub42" class="code">function menuTransverseRayAberration_Callback(~,~,myParent)</a></li><li><a href="#_sub43" class="code">function menuPolarizationAbberation_Callback(~,~,myParent)</a></li><li><a href="#_sub44" class="code">function menuAmplitudeTransmissionMap_Callback(~,~,myParent)</a></li><li><a href="#_sub45" class="code">function menuPhaseMap_Callback(~,~,myParent)</a></li><li><a href="#_sub46" class="code">function menuWavefrontDiattenuationMap_Callback(~,~,myParent)</a></li><li><a href="#_sub47" class="code">function menuWavefrontRetardanceMap_Callback(~,~,myParent)</a></li><li><a href="#_sub48" class="code">function menuCoating_Callback(~,~,myParent)</a></li><li><a href="#_sub49" class="code">function menuGlassDataEditor_Callback(~,~,myParent)</a></li><li><a href="#_sub50" class="code">function menuCoatingDataEditor_Callback(~,~,myParent)</a></li><li><a href="#_sub51" class="code">function menuImportOpticalSystem_Callback(~,~,myParent)</a></li><li><a href="#_sub52" class="code">function menuExportOpticalSystem_Callback(~,~,myParent)</a></li><li><a href="#_sub53" class="code">function menuNewCoatingCatalogue_Callback(~,~,myParent)</a></li><li><a href="#_sub54" class="code">function fullFileName = addNewCoatingCatalogue(myParent)</a></li><li><a href="#_sub55" class="code">function menuCoatingCatalogueAnalysis_Callback(~,~,myParent)</a></li><li><a href="#_sub56" class="code">function menuImportCoatingCatalogue_Callback(~,~,myParent)</a></li><li><a href="#_sub57" class="code">function menuExportCoatingCatalogue_Callback(~,~,myParent)</a></li><li><a href="#_sub58" class="code">function menuGlass_Callback(~,~,myParent)</a></li><li><a href="#_sub59" class="code">function menuProgramminReference_Callback(~,~,myParent)</a></li><li><a href="#_sub60" class="code">function menuNewGlass_Callback(~,~,myParent)</a></li><li><a href="#_sub61" class="code">function menuGlassAnalysis_Callback(~,~,myParent)</a></li><li><a href="#_sub62" class="code">function menuGlassCatalogue_Callback(~,~,myParent)</a></li><li><a href="#_sub63" class="code">function menuNewGlassCatalogue_Callback(~,~,myParent)</a></li><li><a href="#_sub64" class="code">function fullFileName = addNewGlassCatalogue(myParent)</a></li><li><a href="#_sub65" class="code">function menuExportGlassCatalogue_Callback(~,~,myParent)</a></li><li><a href="#_sub66" class="code">function menuGlassCatalogueAnalysis_Callback(~,~,myParent)</a></li><li><a href="#_sub67" class="code">function menuDispersionGraph_Callback(~,~,~)</a></li><li><a href="#_sub68" class="code">function menuOpticalSystemAnalysis_Callback(~,~,~)</a></li><li><a href="#_sub69" class="code">function menuImageAtBfp_Callback(~,~,~,myParent)</a></li><li><a href="#_sub70" class="code">function btnInsertSurface_ClickedCallback(~,~,myParent)</a></li><li><a href="#_sub71" class="code">function btnRemoveSurface_ClickedCallback(~,~,myParent)</a></li><li><a href="#_sub72" class="code">function RemoveThisSurface(aodHandles)</a></li><li><a href="#_sub73" class="code">function InsertNewSurface(aodHandles)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function InitializeMenuAndToolbarItems(parentWindow)</a>
+0002 <span class="comment">% Defines all menu items and toolbar commands and all callbacks related</span>
+0003 <span class="comment">% with the menu commands.</span>
+0004 <span class="comment">% Member of AODParentWindow class</span>
+0005 
+0006 aodHandles = parentWindow.AODParentHandles;
+0007 <span class="comment">%   fontSize = str2double(get(aodHandles.fontSize,'String'));</span>
+0008     fontSize = aodHandles.FontSize;
+0009     nMainTab = aodHandles.nMainTab;
+0010     aodHandles.menuTry = uimenu( <span class="keyword">...</span>
+0011         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0012         <span class="string">'Tag'</span>, <span class="string">'menuTry'</span>, <span class="keyword">...</span>
+0013         <span class="string">'Label'</span>, <span class="string">'Try'</span>, <span class="keyword">...</span>
+0014         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0015         <span class="string">'visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0016         <span class="string">'Callback'</span>, {@<a href="#_sub1" class="code" title="subfunction menuTry_Callback(~,~,myParent)">menuTry_Callback</a>,parentWindow});
+0017     <a name="_sub1" href="#_subfunctions" class="code">function menuTry_Callback(~,~,myParent)                  </a>
+0018         aodHandles = myParent.AODParentHandles;
+0019         disp(<span class="string">'try clicked'</span>);
+0020     <span class="keyword">end</span>
+0021     <span class="comment">%% Menu Items</span>
+0022     aodHandles.menuFile = uimenu( <span class="keyword">...</span>
+0023         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0024         <span class="string">'Tag'</span>, <span class="string">'menuFile'</span>, <span class="keyword">...</span>
+0025         <span class="string">'Label'</span>, <span class="string">'File'</span>, <span class="keyword">...</span>
+0026         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0027         <span class="string">'Callback'</span>, {@<a href="#_sub2" class="code" title="subfunction menuFile_Callback(~,~,myParent)">menuFile_Callback</a>,parentWindow});
+0028 
+0029     aodHandles.menuNew = uimenu( <span class="keyword">...</span>
+0030         <span class="string">'Parent'</span>, aodHandles.menuFile, <span class="keyword">...</span>
+0031         <span class="string">'Tag'</span>, <span class="string">'menuNew'</span>, <span class="keyword">...</span>
+0032         <span class="string">'Label'</span>, <span class="string">'New...'</span>, <span class="keyword">...</span>
+0033         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0034         <span class="string">'Callback'</span>, {@<a href="#_sub15" class="code" title="subfunction menuNew_Callback(~,~,myParent)">menuNew_Callback</a>,parentWindow});
+0035 
+0036     aodHandles.menuOpen = uimenu( <span class="keyword">...</span>
+0037         <span class="string">'Parent'</span>, aodHandles.menuFile, <span class="keyword">...</span>
+0038         <span class="string">'Tag'</span>, <span class="string">'menuOpen'</span>, <span class="keyword">...</span>
+0039         <span class="string">'Label'</span>, <span class="string">'Open'</span>, <span class="keyword">...</span>
+0040         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0041         <span class="string">'Callback'</span>, {@<a href="#_sub16" class="code" title="subfunction menuOpen_Callback(~,~,myParent)">menuOpen_Callback</a>,parentWindow});
+0042 
+0043     aodHandles.menuSave = uimenu( <span class="keyword">...</span>
+0044         <span class="string">'Parent'</span>, aodHandles.menuFile, <span class="keyword">...</span>
+0045         <span class="string">'Tag'</span>, <span class="string">'menuSave'</span>, <span class="keyword">...</span>
+0046         <span class="string">'Label'</span>, <span class="string">'Save'</span>, <span class="keyword">...</span>
+0047         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0048         <span class="string">'Callback'</span>, {@<a href="#_sub17" class="code" title="subfunction menuSave_Callback(~,~,myParent)">menuSave_Callback</a>,parentWindow});
+0049 
+0050     aodHandles.menuSavaAs = uimenu( <span class="keyword">...</span>
+0051         <span class="string">'Parent'</span>, aodHandles.menuFile, <span class="keyword">...</span>
+0052         <span class="string">'Tag'</span>, <span class="string">'menuSavaAs'</span>, <span class="keyword">...</span>
+0053         <span class="string">'Label'</span>, <span class="string">'Save As...'</span>, <span class="keyword">...</span>
+0054         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0055         <span class="string">'Callback'</span>, {@<a href="#_sub18" class="code" title="subfunction menuSavaAs_Callback(~,~,myParent)">menuSavaAs_Callback</a>,parentWindow});
+0056 
+0057     aodHandles.menuClose = uimenu( <span class="keyword">...</span>
+0058         <span class="string">'Parent'</span>, aodHandles.menuFile, <span class="keyword">...</span>
+0059         <span class="string">'Tag'</span>, <span class="string">'menuClose'</span>, <span class="keyword">...</span>
+0060         <span class="string">'Label'</span>, <span class="string">'Close'</span>, <span class="keyword">...</span>
+0061         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0062         <span class="string">'Callback'</span>, {@<a href="#_sub19" class="code" title="subfunction menuClose_Callback(~,~,myParent)">menuClose_Callback</a>,parentWindow});
+0063 
+0064     aodHandles.menuEdit = uimenu( <span class="keyword">...</span>
+0065         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0066         <span class="string">'Tag'</span>, <span class="string">'menuEdit'</span>, <span class="keyword">...</span>
+0067         <span class="string">'Label'</span>, <span class="string">'Edit'</span>, <span class="keyword">...</span>
+0068         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0069         <span class="string">'Callback'</span>, {@<a href="#_sub3" class="code" title="subfunction menuEdit_Callback(~,~,myParent)">menuEdit_Callback</a>,parentWindow});
+0070 
+0071     aodHandles.menuSurfaceProperties = uimenu( <span class="keyword">...</span>
+0072         <span class="string">'Parent'</span>, aodHandles.menuEdit, <span class="keyword">...</span>
+0073         <span class="string">'Tag'</span>, <span class="string">'menuSurfaceProperties'</span>, <span class="keyword">...</span>
+0074         <span class="string">'Label'</span>, <span class="string">'Surface Properties'</span>, <span class="keyword">...</span>
+0075         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0076         <span class="string">'Callback'</span>, {@<a href="#_sub13" class="code" title="subfunction menuSurfaceProperties_Callback(~,~,myParent)">menuSurfaceProperties_Callback</a>,parentWindow});
+0077 
+0078     aodHandles.menuSystemConfiguration = uimenu( <span class="keyword">...</span>
+0079         <span class="string">'Parent'</span>, aodHandles.menuEdit, <span class="keyword">...</span>
+0080         <span class="string">'Tag'</span>, <span class="string">'menuSystemConfiguration'</span>, <span class="keyword">...</span>
+0081         <span class="string">'Label'</span>, <span class="string">'System Configuration'</span>, <span class="keyword">...</span>
+0082         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0083         <span class="string">'Callback'</span>, {@<a href="#_sub14" class="code" title="subfunction menuSystemConfiguration_Callback(~,~,myParent)">menuSystemConfiguration_Callback</a>,parentWindow});
+0084 
+0085     aodHandles.menuView = uimenu( <span class="keyword">...</span>
+0086         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0087         <span class="string">'Tag'</span>, <span class="string">'menuView'</span>, <span class="keyword">...</span>
+0088         <span class="string">'Label'</span>, <span class="string">'View'</span>, <span class="keyword">...</span>
+0089         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0090         <span class="string">'Callback'</span>, {@<a href="#_sub11" class="code" title="subfunction menuView_Callback(~,~,myParent)">menuView_Callback</a>,parentWindow});
+0091 
+0092     aodHandles.menu2DSystemLayout = uimenu( <span class="keyword">...</span>
+0093         <span class="string">'Parent'</span>, aodHandles.menuView, <span class="keyword">...</span>
+0094         <span class="string">'Tag'</span>, <span class="string">'menu2DSystemLayout'</span>, <span class="keyword">...</span>
+0095         <span class="string">'Label'</span>, <span class="string">'2D System Layout'</span>, <span class="keyword">...</span>
+0096         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0097         <span class="string">'Callback'</span>, {@<a href="#_sub20" class="code" title="subfunction menu2DSystemLayout_Callback(~,~,myParent)">menu2DSystemLayout_Callback</a>,parentWindow});
+0098 
+0099     aodHandles.menu3DSystemLayout = uimenu( <span class="keyword">...</span>
+0100         <span class="string">'Parent'</span>, aodHandles.menuView, <span class="keyword">...</span>
+0101         <span class="string">'Tag'</span>, <span class="string">'menu3DSystemLayout'</span>, <span class="keyword">...</span>
+0102         <span class="string">'Label'</span>, <span class="string">'3D System Layout'</span>, <span class="keyword">...</span>
+0103         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0104         <span class="string">'Callback'</span>, {@<a href="#_sub21" class="code" title="subfunction menu3DSystemLayout_Callback(~,~,myParent)">menu3DSystemLayout_Callback</a>,parentWindow});
+0105     <span class="comment">%---------------------------------------------------------------------</span>
+0106     <span class="comment">% Ray Trace menu</span>
+0107     aodHandles.menuRayTrace = uimenu( <span class="keyword">...</span>
+0108         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0109         <span class="string">'Tag'</span>, <span class="string">'menuRayTrace'</span>, <span class="keyword">...</span>
+0110         <span class="string">'Label'</span>, <span class="string">'Ray Trace'</span>, <span class="keyword">...</span>
+0111         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0112         <span class="string">'visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span><span class="comment">        </span>
+0113         <span class="string">'Callback'</span>, {@<a href="#_sub5" class="code" title="subfunction menuRayTrace_Callback(~,~,myParent)">menuRayTrace_Callback</a>,parentWindow});
+0114 
+0115     aodHandles.menuScalarRayTrace = uimenu( <span class="keyword">...</span>
+0116         <span class="string">'Parent'</span>, aodHandles.menuRayTrace, <span class="keyword">...</span>
+0117         <span class="string">'Tag'</span>, <span class="string">'menuScalarRayTrace'</span>, <span class="keyword">...</span>
+0118         <span class="string">'Label'</span>, <span class="string">'Scalar Ray Trace'</span>, <span class="keyword">...</span>
+0119         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0120         <span class="string">'Callback'</span>, {@<a href="#_sub12" class="code" title="subfunction menuScalarRayTrace_Callback(~,~,myParent)">menuScalarRayTrace_Callback</a>,parentWindow});
+0121 
+0122     aodHandles.menuPolarizationRayTrace = uimenu( <span class="keyword">...</span>
+0123         <span class="string">'Parent'</span>, aodHandles.menuRayTrace, <span class="keyword">...</span>
+0124         <span class="string">'Tag'</span>, <span class="string">'menuPolarizationRayTrace'</span>, <span class="keyword">...</span>
+0125         <span class="string">'Label'</span>, <span class="string">'Polarization Ray Trace'</span>, <span class="keyword">...</span>
+0126         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0127         <span class="string">'visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span><span class="comment"> </span>
+0128         <span class="string">'Callback'</span>, {@<a href="#_sub27" class="code" title="subfunction menuPolarizationRayTrace_Callback(~,~,myParent)">menuPolarizationRayTrace_Callback</a>,parentWindow});
+0129     <span class="comment">%---------------------------------------------------------------------</span>
+0130     <span class="comment">% Diffraction Analysis</span>
+0131     aodHandles.menuDiffraction = uimenu( <span class="keyword">...</span>
+0132         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0133         <span class="string">'Tag'</span>, <span class="string">'menuDiffraction'</span>, <span class="keyword">...</span>
+0134         <span class="string">'Label'</span>, <span class="string">'Diffraction'</span>, <span class="keyword">...</span>
+0135         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0136         <span class="string">'Callback'</span>, {@<a href="#_sub6" class="code" title="subfunction menuDiffraction_Callback(~,~,myParent)">menuDiffraction_Callback</a>,parentWindow});
+0137     aodHandles.menuWavefrontAtExitPupil = uimenu( <span class="keyword">...</span>
+0138         <span class="string">'Parent'</span>, aodHandles.menuDiffraction, <span class="keyword">...</span>
+0139         <span class="string">'Tag'</span>, <span class="string">'menuWavefrontAtExitPupil'</span>, <span class="keyword">...</span>
+0140         <span class="string">'Label'</span>, <span class="string">'Wavefront At Exit Pupil'</span>, <span class="keyword">...</span>
+0141         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0142         <span class="string">'Callback'</span>, {@<a href="#_sub7" class="code" title="subfunction menuWavefrontAtExitPupil_Callback(~,~,myParent)">menuWavefrontAtExitPupil_Callback</a>,parentWindow});
+0143     aodHandles.menuPupilApodization = uimenu( <span class="keyword">...</span>
+0144         <span class="string">'Parent'</span>, aodHandles.menuDiffraction, <span class="keyword">...</span>
+0145         <span class="string">'Tag'</span>, <span class="string">'menuPupilApodization'</span>, <span class="keyword">...</span>
+0146         <span class="string">'Label'</span>, <span class="string">'Pupil Apodization'</span>, <span class="keyword">...</span>
+0147         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0148         <span class="string">'Callback'</span>, {@<a href="#_sub8" class="code" title="subfunction menuPupilApodization_Callback(~,~,myParent)">menuPupilApodization_Callback</a>,parentWindow});
+0149     aodHandles.menuFFTPSF = uimenu( <span class="keyword">...</span>
+0150         <span class="string">'Parent'</span>, aodHandles.menuDiffraction, <span class="keyword">...</span>
+0151         <span class="string">'Tag'</span>, <span class="string">'menuFFTPSF'</span>, <span class="keyword">...</span>
+0152         <span class="string">'Label'</span>, <span class="string">'FFT PSF'</span>, <span class="keyword">...</span>
+0153         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0154         <span class="string">'Callback'</span>, {@<a href="#_sub9" class="code" title="subfunction menuFFTPSF_Callback(~,~,myParent)">menuFFTPSF_Callback</a>,parentWindow});    
+0155     <span class="comment">%---------------------------------------------------------------------</span>
+0156     
+0157     
+0158     aodHandles.menuOptimization = uimenu( <span class="keyword">...</span>
+0159         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0160         <span class="string">'Tag'</span>, <span class="string">'menuOptimization'</span>, <span class="keyword">...</span>
+0161         <span class="string">'Label'</span>, <span class="string">'Optimization'</span>, <span class="keyword">...</span>
+0162         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0163         <span class="string">'visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0164         <span class="string">'Callback'</span>, {@<a href="#_sub4" class="code" title="subfunction menuOptimization_Callback(~,~,myParent)">menuOptimization_Callback</a>,parentWindow});
+0165 
+0166     aodHandles.menuImageAtBfp = uimenu( <span class="keyword">...</span>
+0167         <span class="string">'Parent'</span>, aodHandles.menuOptimization, <span class="keyword">...</span>
+0168         <span class="string">'Tag'</span>, <span class="string">'menuImageAtBfp'</span>, <span class="keyword">...</span>
+0169         <span class="string">'Label'</span>, <span class="string">'Image @ BFP'</span>, <span class="keyword">...</span>
+0170         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0171         <span class="string">'Callback'</span>, {@<a href="#_sub69" class="code" title="subfunction menuImageAtBfp_Callback(~,~,~,myParent)">menuImageAtBfp_Callback</a>,parentWindow});
+0172 
+0173     aodHandles.menuOpticalSystem = uimenu( <span class="keyword">...</span>
+0174         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0175         <span class="string">'Tag'</span>, <span class="string">'menuOpticalSystem'</span>, <span class="keyword">...</span>
+0176         <span class="string">'Label'</span>, <span class="string">'Optical System'</span>, <span class="keyword">...</span>
+0177         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0178         <span class="string">'Callback'</span>, {@<a href="#_sub38" class="code" title="subfunction menuOpticalSystem_Callback(~,~,myParent)">menuOpticalSystem_Callback</a>,parentWindow});
+0179 
+0180     aodHandles.menuImportOpticalSystem = uimenu( <span class="keyword">...</span>
+0181         <span class="string">'Parent'</span>, aodHandles.menuOpticalSystem, <span class="keyword">...</span>
+0182         <span class="string">'Tag'</span>, <span class="string">'menuImportOpticalSystem'</span>, <span class="keyword">...</span>
+0183         <span class="string">'Label'</span>, <span class="string">'Import Optical System'</span>, <span class="keyword">...</span>
+0184         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0185         <span class="string">'visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0186         <span class="string">'Callback'</span>, {@<a href="#_sub51" class="code" title="subfunction menuImportOpticalSystem_Callback(~,~,myParent)">menuImportOpticalSystem_Callback</a>,parentWindow});
+0187 
+0188     aodHandles.menuImportZMXFile = uimenu( <span class="keyword">...</span>
+0189         <span class="string">'Parent'</span>, aodHandles.menuImportOpticalSystem, <span class="keyword">...</span>
+0190         <span class="string">'Tag'</span>, <span class="string">'menuImportZMXFile'</span>, <span class="keyword">...</span>
+0191         <span class="string">'Label'</span>, <span class="string">'From ZMX File'</span>, <span class="keyword">...</span>
+0192         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0193         <span class="string">'Callback'</span>, {@<a href="#_sub26" class="code" title="subfunction menuImportZMXFile_Callback(~,~,myParent)">menuImportZMXFile_Callback</a>,parentWindow});
+0194 
+0195     aodHandles.menuExportOpticalSystem = uimenu( <span class="keyword">...</span>
+0196         <span class="string">'Parent'</span>, aodHandles.menuOpticalSystem, <span class="keyword">...</span>
+0197         <span class="string">'Tag'</span>, <span class="string">'menuExportOpticalSystem'</span>, <span class="keyword">...</span>
+0198         <span class="string">'Visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0199         <span class="string">'Label'</span>, <span class="string">'Export Optical System'</span>, <span class="keyword">...</span>
+0200         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0201         <span class="string">'Callback'</span>, {@<a href="#_sub52" class="code" title="subfunction menuExportOpticalSystem_Callback(~,~,myParent)">menuExportOpticalSystem_Callback</a>,parentWindow});
+0202 
+0203     aodHandles.menuOpticalSystemAnalysis = uimenu( <span class="keyword">...</span>
+0204         <span class="string">'Parent'</span>, aodHandles.menuOpticalSystem, <span class="keyword">...</span>
+0205         <span class="string">'Tag'</span>, <span class="string">'menuOpticalSystemAnalysis'</span>, <span class="keyword">...</span>
+0206         <span class="string">'Label'</span>, <span class="string">'Optical System Analysis'</span>, <span class="keyword">...</span>
+0207         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0208         <span class="string">'Callback'</span>, {@<a href="#_sub68" class="code" title="subfunction menuOpticalSystemAnalysis_Callback(~,~,~)">menuOpticalSystemAnalysis_Callback</a>,parentWindow});
+0209 
+0210     aodHandles.menuFootprintDiagram = uimenu( <span class="keyword">...</span>
+0211         <span class="string">'Parent'</span>, aodHandles.menuOpticalSystemAnalysis, <span class="keyword">...</span>
+0212         <span class="string">'Tag'</span>, <span class="string">'menuFootprintDiagram'</span>, <span class="keyword">...</span>
+0213         <span class="string">'Label'</span>, <span class="string">'Footprint Diagram'</span>, <span class="keyword">...</span>
+0214         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0215         <span class="string">'Callback'</span>, {@<a href="#_sub39" class="code" title="subfunction menuFootprintDiagram_Callback(~,~,myParent)">menuFootprintDiagram_Callback</a>,parentWindow});
+0216 
+0217     aodHandles.menuPolarizationEllipseMap = uimenu( <span class="keyword">...</span>
+0218         <span class="string">'Parent'</span>, aodHandles.menuOpticalSystemAnalysis, <span class="keyword">...</span>
+0219         <span class="string">'Tag'</span>, <span class="string">'menuPolarizationEllipseMap'</span>, <span class="keyword">...</span>
+0220         <span class="string">'Label'</span>, <span class="string">'Polarization Ellipse Map'</span>, <span class="keyword">...</span>
+0221         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0222         <span class="string">'visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0223         <span class="string">'Callback'</span>, {@<a href="#_sub40" class="code" title="subfunction menuPolarizationEllipseMap_Callback(~,~,myParent)">menuPolarizationEllipseMap_Callback</a>,parentWindow});
+0224 
+0225     aodHandles.menuParaxialAnalysis = uimenu( <span class="keyword">...</span>
+0226         <span class="string">'Parent'</span>, aodHandles.menuOpticalSystemAnalysis, <span class="keyword">...</span>
+0227         <span class="string">'Tag'</span>, <span class="string">'menuParaxialAnalysis'</span>, <span class="keyword">...</span>
+0228         <span class="string">'Label'</span>, <span class="string">'Paraxial Analysis'</span>, <span class="keyword">...</span>
+0229         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0230         <span class="string">'Callback'</span>, {@<a href="#_sub41" class="code" title="subfunction menuParaxialAnalysis_Callback(~,~,myParent)">menuParaxialAnalysis_Callback</a>,parentWindow});
+0231 
+0232     aodHandles.menuTransverseRayAberration = uimenu( <span class="keyword">...</span>
+0233         <span class="string">'Parent'</span>, aodHandles.menuOpticalSystemAnalysis, <span class="keyword">...</span>
+0234         <span class="string">'Tag'</span>, <span class="string">'menuTransverseRayAberration'</span>, <span class="keyword">...</span>
+0235         <span class="string">'Label'</span>, <span class="string">'Transverse Ray Aberration'</span>, <span class="keyword">...</span>
+0236         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0237         <span class="string">'Callback'</span>, {@<a href="#_sub42" class="code" title="subfunction menuTransverseRayAberration_Callback(~,~,myParent)">menuTransverseRayAberration_Callback</a>,parentWindow});    
+0238     
+0239     aodHandles.menuPolarizationAbberation = uimenu( <span class="keyword">...</span>
+0240         <span class="string">'Parent'</span>, aodHandles.menuOpticalSystemAnalysis, <span class="keyword">...</span>
+0241         <span class="string">'Tag'</span>, <span class="string">'menuPolarizationAbberation'</span>, <span class="keyword">...</span>
+0242         <span class="string">'Label'</span>, <span class="string">'Polarization Abberation'</span>, <span class="keyword">...</span>
+0243         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0244         <span class="string">'visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0245         <span class="string">'Callback'</span>, {@<a href="#_sub43" class="code" title="subfunction menuPolarizationAbberation_Callback(~,~,myParent)">menuPolarizationAbberation_Callback</a>,parentWindow});
+0246 
+0247     aodHandles.menuAmplitudeTransmissionMap = uimenu( <span class="keyword">...</span>
+0248         <span class="string">'Parent'</span>, aodHandles.menuPolarizationAbberation, <span class="keyword">...</span>
+0249         <span class="string">'Tag'</span>, <span class="string">'menuAmplitudeTransmissionMap'</span>, <span class="keyword">...</span>
+0250         <span class="string">'Label'</span>, <span class="string">'Amplitude Transmission Map'</span>, <span class="keyword">...</span>
+0251         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0252         <span class="string">'Callback'</span>, {@<a href="#_sub44" class="code" title="subfunction menuAmplitudeTransmissionMap_Callback(~,~,myParent)">menuAmplitudeTransmissionMap_Callback</a>,parentWindow});
+0253 
+0254     aodHandles.menuPhaseMap = uimenu( <span class="keyword">...</span>
+0255         <span class="string">'Parent'</span>, aodHandles.menuPolarizationAbberation, <span class="keyword">...</span>
+0256         <span class="string">'Tag'</span>, <span class="string">'menuPhaseMap'</span>, <span class="keyword">...</span>
+0257         <span class="string">'Label'</span>, <span class="string">'Phase Map'</span>, <span class="keyword">...</span>
+0258         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0259         <span class="string">'Callback'</span>, {@<a href="#_sub45" class="code" title="subfunction menuPhaseMap_Callback(~,~,myParent)">menuPhaseMap_Callback</a>,parentWindow});
+0260 
+0261     aodHandles.menuWavefrontDiattenuationMap = uimenu( <span class="keyword">...</span>
+0262         <span class="string">'Parent'</span>, aodHandles.menuPolarizationAbberation, <span class="keyword">...</span>
+0263         <span class="string">'Tag'</span>, <span class="string">'menuWavefrontDiattenuationMap'</span>, <span class="keyword">...</span>
+0264         <span class="string">'Label'</span>, <span class="string">'Wavefront Diattenuation Map'</span>, <span class="keyword">...</span>
+0265         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0266         <span class="string">'Callback'</span>, {@<a href="#_sub46" class="code" title="subfunction menuWavefrontDiattenuationMap_Callback(~,~,myParent)">menuWavefrontDiattenuationMap_Callback</a>,parentWindow});
+0267 
+0268     aodHandles.menuWavefrontRetardanceMap = uimenu( <span class="keyword">...</span>
+0269         <span class="string">'Parent'</span>, aodHandles.menuPolarizationAbberation, <span class="keyword">...</span>
+0270         <span class="string">'Tag'</span>, <span class="string">'menuWavefrontRetardanceMap'</span>, <span class="keyword">...</span>
+0271         <span class="string">'Label'</span>, <span class="string">'Wavefront Retardance Map'</span>, <span class="keyword">...</span>
+0272         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0273         <span class="string">'Callback'</span>, {@<a href="#_sub47" class="code" title="subfunction menuWavefrontRetardanceMap_Callback(~,~,myParent)">menuWavefrontRetardanceMap_Callback</a>,parentWindow});
+0274 
+0275     aodHandles.menuCoating = uimenu( <span class="keyword">...</span>
+0276         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0277         <span class="string">'Tag'</span>, <span class="string">'menuCoating'</span>, <span class="keyword">...</span>
+0278         <span class="string">'Label'</span>, <span class="string">'Coating'</span>, <span class="keyword">...</span>
+0279         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0280         <span class="string">'visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0281         <span class="string">'Callback'</span>, {@<a href="#_sub48" class="code" title="subfunction menuCoating_Callback(~,~,myParent)">menuCoating_Callback</a>,parentWindow});
+0282 
+0283     aodHandles.menuCoatingDataEditor = uimenu( <span class="keyword">...</span>
+0284         <span class="string">'Parent'</span>, aodHandles.menuCoating, <span class="keyword">...</span>
+0285         <span class="string">'Tag'</span>, <span class="string">'menuNewCoating'</span>, <span class="keyword">...</span>
+0286         <span class="string">'Visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0287         <span class="string">'Label'</span>, <span class="string">'Coating Data Editor'</span>, <span class="keyword">...</span>
+0288         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0289         <span class="string">'Callback'</span>, {@<a href="#_sub50" class="code" title="subfunction menuCoatingDataEditor_Callback(~,~,myParent)">menuCoatingDataEditor_Callback</a>,parentWindow});
+0290 
+0291     aodHandles.menuCoatingAnalysis = uimenu( <span class="keyword">...</span>
+0292         <span class="string">'Parent'</span>, aodHandles.menuCoating, <span class="keyword">...</span>
+0293         <span class="string">'Tag'</span>, <span class="string">'menuCoatingAnalysis'</span>, <span class="keyword">...</span>
+0294         <span class="string">'Label'</span>, <span class="string">'CoatingAnalysis'</span>, <span class="keyword">...</span>
+0295         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0296         <span class="string">'Callback'</span>, {@<a href="#_sub28" class="code" title="subfunction menuCoatingAnalysis_Callback(~,~,myParent)">menuCoatingAnalysis_Callback</a>,parentWindow});
+0297 
+0298     aodHandles.menuRefractiveIndexProfile = uimenu( <span class="keyword">...</span>
+0299         <span class="string">'Parent'</span>, aodHandles.menuCoatingAnalysis, <span class="keyword">...</span>
+0300         <span class="string">'Tag'</span>, <span class="string">'menuRefractiveIndexProfile'</span>, <span class="keyword">...</span>
+0301         <span class="string">'Label'</span>, <span class="string">'Refractive Index Profile'</span>, <span class="keyword">...</span>
+0302         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0303         <span class="string">'Callback'</span>, {@<a href="#_sub29" class="code" title="subfunction menuRefractiveIndexProfile_Callback(~,~,myParent)">menuRefractiveIndexProfile_Callback</a>,parentWindow});
+0304 
+0305     aodHandles.menuTransmissionVsAngle = uimenu( <span class="keyword">...</span>
+0306         <span class="string">'Parent'</span>, aodHandles.menuCoatingAnalysis, <span class="keyword">...</span>
+0307         <span class="string">'Tag'</span>, <span class="string">'menuTransmissionVsAngle'</span>, <span class="keyword">...</span>
+0308         <span class="string">'Label'</span>, <span class="string">'Transmission Vs Angle'</span>, <span class="keyword">...</span>
+0309         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0310         <span class="string">'Callback'</span>, {@<a href="#_sub30" class="code" title="subfunction menuTransmissionVsAngle_Callback(~,~,myParent)">menuTransmissionVsAngle_Callback</a>,parentWindow});
+0311 
+0312     aodHandles.menuReflectionVsAngle = uimenu( <span class="keyword">...</span>
+0313         <span class="string">'Parent'</span>, aodHandles.menuCoatingAnalysis, <span class="keyword">...</span>
+0314         <span class="string">'Tag'</span>, <span class="string">'menuReflectionVsAngle'</span>, <span class="keyword">...</span>
+0315         <span class="string">'Label'</span>, <span class="string">'Reflection Vs Angle'</span>, <span class="keyword">...</span>
+0316         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0317         <span class="string">'Callback'</span>, {@<a href="#_sub31" class="code" title="subfunction menuReflectionVsAngle_Callback(~,~,myParent)">menuReflectionVsAngle_Callback</a>,parentWindow});
+0318 
+0319     aodHandles.menuDiattenuationVsAngle = uimenu( <span class="keyword">...</span>
+0320         <span class="string">'Parent'</span>, aodHandles.menuCoatingAnalysis, <span class="keyword">...</span>
+0321         <span class="string">'Tag'</span>, <span class="string">'menuDiattenuationVsAngle'</span>, <span class="keyword">...</span>
+0322         <span class="string">'Label'</span>, <span class="string">'Diattenuation Vs Angle'</span>, <span class="keyword">...</span>
+0323         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0324         <span class="string">'Callback'</span>, {@<a href="#_sub32" class="code" title="subfunction menuDiattenuationVsAngle_Callback(~,~,myParent)">menuDiattenuationVsAngle_Callback</a>,parentWindow});
+0325 
+0326     aodHandles.menuRetardanceVsAngle = uimenu( <span class="keyword">...</span>
+0327         <span class="string">'Parent'</span>, aodHandles.menuCoatingAnalysis, <span class="keyword">...</span>
+0328         <span class="string">'Tag'</span>, <span class="string">'menuRetardanceVsAngle'</span>, <span class="keyword">...</span>
+0329         <span class="string">'Label'</span>, <span class="string">'Retardance Vs Angle'</span>, <span class="keyword">...</span>
+0330         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0331         <span class="string">'Callback'</span>, {@<a href="#_sub33" class="code" title="subfunction menuRetardanceVsAngle_Callback(~,~,myParent)">menuRetardanceVsAngle_Callback</a>,parentWindow});
+0332 
+0333     aodHandles.menuTransmissionVsWavelength = uimenu( <span class="keyword">...</span>
+0334         <span class="string">'Parent'</span>, aodHandles.menuCoatingAnalysis, <span class="keyword">...</span>
+0335         <span class="string">'Tag'</span>, <span class="string">'menuTransmissionVsWavelength'</span>, <span class="keyword">...</span>
+0336         <span class="string">'Label'</span>, <span class="string">'Transmission Vs Wavelength'</span>, <span class="keyword">...</span>
+0337         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0338         <span class="string">'Callback'</span>, {@<a href="#_sub34" class="code" title="subfunction menuTransmissionVsWavelength_Callback(~,~,myParent)">menuTransmissionVsWavelength_Callback</a>,parentWindow});
+0339 
+0340     aodHandles.menuReflectionVsWavelength = uimenu( <span class="keyword">...</span>
+0341         <span class="string">'Parent'</span>, aodHandles.menuCoatingAnalysis, <span class="keyword">...</span>
+0342         <span class="string">'Tag'</span>, <span class="string">'menuReflectionVsWavelength'</span>, <span class="keyword">...</span>
+0343         <span class="string">'Label'</span>, <span class="string">'Reflection Vs Wavelength'</span>, <span class="keyword">...</span>
+0344         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0345         <span class="string">'Callback'</span>, {@<a href="#_sub35" class="code" title="subfunction menuReflectionVsWavelength_Callback(~,~,myParent)">menuReflectionVsWavelength_Callback</a>,parentWindow});
+0346 
+0347     aodHandles.menuDiattenuationVsWavelength = uimenu( <span class="keyword">...</span>
+0348         <span class="string">'Parent'</span>, aodHandles.menuCoatingAnalysis, <span class="keyword">...</span>
+0349         <span class="string">'Tag'</span>, <span class="string">'menuDiattenuationVsWavelength'</span>, <span class="keyword">...</span>
+0350         <span class="string">'Label'</span>, <span class="string">'Diattenuation Vs Wavelength'</span>, <span class="keyword">...</span>
+0351         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0352         <span class="string">'Callback'</span>, {@<a href="#_sub36" class="code" title="subfunction menuDiattenuationVsWavelength_Callback(~,~,myParent)">menuDiattenuationVsWavelength_Callback</a>,parentWindow});
+0353 
+0354     aodHandles.menRetardanceVsWavelength = uimenu( <span class="keyword">...</span>
+0355         <span class="string">'Parent'</span>, aodHandles.menuCoatingAnalysis, <span class="keyword">...</span>
+0356         <span class="string">'Tag'</span>, <span class="string">'menRetardanceVsWavelength'</span>, <span class="keyword">...</span>
+0357         <span class="string">'Label'</span>, <span class="string">'Retardance Vs Wavelength'</span>, <span class="keyword">...</span>
+0358         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0359         <span class="string">'Callback'</span>, {@<a href="#_sub37" class="code" title="subfunction menRetardanceVsWavelength_Callback(~,~,myParent)">menRetardanceVsWavelength_Callback</a>,parentWindow});
+0360 
+0361     aodHandles.menuCoatingCatalogue = uimenu( <span class="keyword">...</span>
+0362         <span class="string">'Parent'</span>, aodHandles.menuCoating, <span class="keyword">...</span>
+0363         <span class="string">'Tag'</span>, <span class="string">'menuCoatingCatalogue'</span>, <span class="keyword">...</span>
+0364         <span class="string">'Visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0365         <span class="string">'Label'</span>, <span class="string">'Coating Catalogue'</span>, <span class="keyword">...</span>
+0366         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0367         <span class="string">'Callback'</span>, {@<a href="#_sub25" class="code" title="subfunction menuCoatingCatalogue_Callback(~,~,myParent)">menuCoatingCatalogue_Callback</a>,parentWindow});
+0368 
+0369     aodHandles.menuNewCoatingCatalogue = uimenu( <span class="keyword">...</span>
+0370         <span class="string">'Parent'</span>, aodHandles.menuCoatingCatalogue, <span class="keyword">...</span>
+0371         <span class="string">'Tag'</span>, <span class="string">'menuNewCoatingCatalogue'</span>, <span class="keyword">...</span>
+0372         <span class="string">'Visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0373         <span class="string">'Label'</span>, <span class="string">'New Coating Catalogue'</span>, <span class="keyword">...</span>
+0374         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0375         <span class="string">'Callback'</span>, {@<a href="#_sub53" class="code" title="subfunction menuNewCoatingCatalogue_Callback(~,~,myParent)">menuNewCoatingCatalogue_Callback</a>,parentWindow});
+0376 
+0377     aodHandles.menuCoatingCatalogueAnalysis = uimenu( <span class="keyword">...</span>
+0378         <span class="string">'Parent'</span>, aodHandles.menuCoatingCatalogue, <span class="keyword">...</span>
+0379         <span class="string">'Tag'</span>, <span class="string">'menuCoatingCatalogueAnalysis'</span>, <span class="keyword">...</span>
+0380         <span class="string">'Visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0381         <span class="string">'Label'</span>, <span class="string">'Coating Catalogue Analysis'</span>, <span class="keyword">...</span>
+0382         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0383         <span class="string">'Callback'</span>, {@<a href="#_sub55" class="code" title="subfunction menuCoatingCatalogueAnalysis_Callback(~,~,myParent)">menuCoatingCatalogueAnalysis_Callback</a>,parentWindow});
+0384 
+0385     aodHandles.menuImportCoatingCatalogue = uimenu( <span class="keyword">...</span>
+0386         <span class="string">'Parent'</span>, aodHandles.menuCoatingCatalogue, <span class="keyword">...</span>
+0387         <span class="string">'Tag'</span>, <span class="string">'menuImportCoatingCatalogue'</span>, <span class="keyword">...</span>
+0388         <span class="string">'Visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0389         <span class="string">'Label'</span>, <span class="string">'Import Coating Catalogue'</span>, <span class="keyword">...</span>
+0390         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0391         <span class="string">'Callback'</span>, {@<a href="#_sub56" class="code" title="subfunction menuImportCoatingCatalogue_Callback(~,~,myParent)">menuImportCoatingCatalogue_Callback</a>,parentWindow});
+0392 
+0393     aodHandles.menuExportCoatingCatalogue = uimenu( <span class="keyword">...</span>
+0394         <span class="string">'Parent'</span>, aodHandles.menuCoatingCatalogue, <span class="keyword">...</span>
+0395         <span class="string">'Tag'</span>, <span class="string">'menuExportCoatingCatalogue'</span>, <span class="keyword">...</span>
+0396         <span class="string">'Visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0397         <span class="string">'Label'</span>, <span class="string">'Export Coating Catalogue'</span>, <span class="keyword">...</span>
+0398         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0399         <span class="string">'Callback'</span>, {@<a href="#_sub57" class="code" title="subfunction menuExportCoatingCatalogue_Callback(~,~,myParent)">menuExportCoatingCatalogue_Callback</a>,parentWindow});
+0400 
+0401     aodHandles.menuGlass = uimenu( <span class="keyword">...</span>
+0402         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0403         <span class="string">'Tag'</span>, <span class="string">'menuGlass'</span>, <span class="keyword">...</span>
+0404         <span class="string">'Label'</span>, <span class="string">'Glass'</span>, <span class="keyword">...</span>
+0405         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0406         <span class="string">'visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0407         <span class="string">'Callback'</span>, {@<a href="#_sub58" class="code" title="subfunction menuGlass_Callback(~,~,myParent)">menuGlass_Callback</a>,parentWindow});
+0408 
+0409     aodHandles.menuGlassDataEditor = uimenu( <span class="keyword">...</span>
+0410         <span class="string">'Parent'</span>, aodHandles.menuGlass, <span class="keyword">...</span>
+0411         <span class="string">'Tag'</span>, <span class="string">'menuGlassDataEditor'</span>, <span class="keyword">...</span>
+0412         <span class="string">'Label'</span>, <span class="string">'Glass Data Editor'</span>, <span class="keyword">...</span>
+0413         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0414         <span class="string">'Callback'</span>, {@<a href="#_sub49" class="code" title="subfunction menuGlassDataEditor_Callback(~,~,myParent)">menuGlassDataEditor_Callback</a>,parentWindow});
+0415 
+0416     aodHandles.menuGlassAnalysis = uimenu( <span class="keyword">...</span>
+0417         <span class="string">'Parent'</span>, aodHandles.menuGlass, <span class="keyword">...</span>
+0418         <span class="string">'Tag'</span>, <span class="string">'menuGlassAnalysis'</span>, <span class="keyword">...</span>
+0419         <span class="string">'Visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0420         <span class="string">'Label'</span>, <span class="string">'Glass Analysis'</span>, <span class="keyword">...</span>
+0421         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0422         <span class="string">'Callback'</span>, {@<a href="#_sub61" class="code" title="subfunction menuGlassAnalysis_Callback(~,~,myParent)">menuGlassAnalysis_Callback</a>,parentWindow});
+0423 
+0424     aodHandles.menuDispersionGraph = uimenu( <span class="keyword">...</span>
+0425         <span class="string">'Parent'</span>, aodHandles.menuGlassAnalysis, <span class="keyword">...</span>
+0426         <span class="string">'Tag'</span>, <span class="string">'menuDispersionGraph'</span>, <span class="keyword">...</span>
+0427         <span class="string">'Visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0428         <span class="string">'Label'</span>, <span class="string">'Dispersion Graph'</span>, <span class="keyword">...</span>
+0429         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0430         <span class="string">'Callback'</span>, {@<a href="#_sub67" class="code" title="subfunction menuDispersionGraph_Callback(~,~,~)">menuDispersionGraph_Callback</a>,parentWindow});
+0431 
+0432     aodHandles.menuGlassCatalogue = uimenu( <span class="keyword">...</span>
+0433         <span class="string">'Parent'</span>, aodHandles.menuGlass, <span class="keyword">...</span>
+0434         <span class="string">'Tag'</span>, <span class="string">'menuGlassCatalogue'</span>, <span class="keyword">...</span>
+0435         <span class="string">'Label'</span>, <span class="string">'Glass Catalogue'</span>, <span class="keyword">...</span>
+0436         <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0437         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0438         <span class="string">'Callback'</span>, {@<a href="#_sub62" class="code" title="subfunction menuGlassCatalogue_Callback(~,~,myParent)">menuGlassCatalogue_Callback</a>,parentWindow});
+0439 
+0440     aodHandles.menuNewGlassCatalogue = uimenu( <span class="keyword">...</span>
+0441         <span class="string">'Parent'</span>, aodHandles.menuGlassCatalogue, <span class="keyword">...</span>
+0442         <span class="string">'Tag'</span>, <span class="string">'menuNewGlassCatalogue'</span>, <span class="keyword">...</span>
+0443         <span class="string">'Visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0444         <span class="string">'Label'</span>, <span class="string">'New Glass Catalogue'</span>, <span class="keyword">...</span>
+0445         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0446         <span class="string">'Callback'</span>, {@<a href="#_sub63" class="code" title="subfunction menuNewGlassCatalogue_Callback(~,~,myParent)">menuNewGlassCatalogue_Callback</a>,parentWindow});
+0447 
+0448     aodHandles.menuImportGlassCatalogue = uimenu( <span class="keyword">...</span>
+0449         <span class="string">'Parent'</span>, aodHandles.menuGlassCatalogue, <span class="keyword">...</span>
+0450         <span class="string">'Tag'</span>, <span class="string">'menuImportGlassCatalogue'</span>, <span class="keyword">...</span>
+0451         <span class="string">'Label'</span>, <span class="string">'Import Glass Catalogue'</span>, <span class="keyword">...</span>
+0452         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0453         <span class="string">'Visible'</span>, <span class="string">'on'</span>, <span class="keyword">...</span>
+0454         <span class="string">'Callback'</span>, {@<a href="#_sub24" class="code" title="subfunction menuImportGlassCatalogue_Callback(~,~,myParent)">menuImportGlassCatalogue_Callback</a>,parentWindow});
+0455 
+0456     aodHandles.menuExportGlassCatalogue = uimenu( <span class="keyword">...</span>
+0457         <span class="string">'Parent'</span>, aodHandles.menuGlassCatalogue, <span class="keyword">...</span>
+0458         <span class="string">'Tag'</span>, <span class="string">'menuExportGlassCatalogue'</span>, <span class="keyword">...</span>
+0459         <span class="string">'Visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0460         <span class="string">'Label'</span>, <span class="string">'Export Glass Catalogue'</span>, <span class="keyword">...</span>
+0461         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0462         <span class="string">'Callback'</span>, {@<a href="#_sub65" class="code" title="subfunction menuExportGlassCatalogue_Callback(~,~,myParent)">menuExportGlassCatalogue_Callback</a>,parentWindow});
+0463 
+0464     aodHandles.menuGlassCatalogueAnalysis = uimenu( <span class="keyword">...</span>
+0465         <span class="string">'Parent'</span>, aodHandles.menuGlassCatalogue, <span class="keyword">...</span>
+0466         <span class="string">'Tag'</span>, <span class="string">'menuGlassCatalogueAnalysis'</span>, <span class="keyword">...</span>
+0467         <span class="string">'Visible'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0468         <span class="string">'Label'</span>, <span class="string">'Glass Catalogue Analysis'</span>, <span class="keyword">...</span>
+0469         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0470         <span class="string">'Callback'</span>, {@<a href="#_sub66" class="code" title="subfunction menuGlassCatalogueAnalysis_Callback(~,~,myParent)">menuGlassCatalogueAnalysis_Callback</a>,parentWindow});
+0471 
+0472     aodHandles.menuHelp = uimenu( <span class="keyword">...</span>
+0473         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0474         <span class="string">'Tag'</span>, <span class="string">'menuHelp'</span>, <span class="keyword">...</span>
+0475         <span class="string">'Label'</span>, <span class="string">'Help'</span>, <span class="keyword">...</span>
+0476         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0477         <span class="string">'Callback'</span>, {@<a href="#_sub10" class="code" title="subfunction menuHelp_Callback(~,~,myParent)">menuHelp_Callback</a>,parentWindow});
+0478 
+0479     aodHandles.menuAbout = uimenu( <span class="keyword">...</span>
+0480         <span class="string">'Parent'</span>, aodHandles.menuHelp, <span class="keyword">...</span>
+0481         <span class="string">'Tag'</span>, <span class="string">'menuAbout'</span>, <span class="keyword">...</span>
+0482         <span class="string">'Label'</span>, <span class="string">'About'</span>, <span class="keyword">...</span>
+0483         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0484         <span class="string">'Callback'</span>, {@<a href="#_sub23" class="code" title="subfunction menuAbout_Callback(~,~,myParent)">menuAbout_Callback</a>,parentWindow});
+0485 
+0486     aodHandles.menuUserManual = uimenu( <span class="keyword">...</span>
+0487         <span class="string">'Parent'</span>, aodHandles.menuHelp, <span class="keyword">...</span>
+0488         <span class="string">'Tag'</span>, <span class="string">'menuUserManual'</span>, <span class="keyword">...</span>
+0489         <span class="string">'Label'</span>, <span class="string">'User Manual'</span>, <span class="keyword">...</span>
+0490         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0491         <span class="string">'Callback'</span>, {@<a href="#_sub22" class="code" title="subfunction menuUserManual_Callback(~,~,myParent)">menuUserManual_Callback</a>,parentWindow});
+0492 
+0493     aodHandles.menuProgramminReference = uimenu( <span class="keyword">...</span>
+0494         <span class="string">'Parent'</span>, aodHandles.menuHelp, <span class="keyword">...</span>
+0495         <span class="string">'Tag'</span>, <span class="string">'menuProgramminReference'</span>, <span class="keyword">...</span>
+0496         <span class="string">'Label'</span>, <span class="string">'Programmin Reference'</span>, <span class="keyword">...</span>
+0497         <span class="string">'Checked'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0498         <span class="string">'Callback'</span>, {@<a href="#_sub59" class="code" title="subfunction menuProgramminReference_Callback(~,~,myParent)">menuProgramminReference_Callback</a>,parentWindow});
+0499     
+0500     <span class="comment">%% Toolbar Icon</span>
+0501     aodHandles.toolBarHandle = uitoolbar(<span class="keyword">...</span>
+0502         <span class="string">'Parent'</span>, aodHandles.FigureHandle, <span class="keyword">...</span>
+0503         <span class="string">'Tag'</span>, <span class="string">'toolBar'</span>);
+0504     <span class="comment">% Toolbar Icon Images</span>
+0505     toolbarIcon = rand(19,19,3)*0;
+0506     plusIcon = toolbarIcon;
+0507     plusIcon(5:16,8:11,:) = 1;
+0508     plusIcon(9:12,4:15,:) = 1;
+0509     minusIcon = toolbarIcon;
+0510     minusIcon(9:12,4:15,:) = 1;
+0511     
+0512     aodHandles.btnInsertSurface = uipushtool(<span class="keyword">...</span>
+0513         aodHandles.toolBarHandle,<span class="keyword">...</span>
+0514         <span class="string">'CData'</span>,plusIcon,<span class="keyword">...</span>
+0515         <span class="string">'TooltipString'</span>,<span class="string">'Insert Surface'</span>,<span class="keyword">...</span>
+0516         <span class="string">'ClickedCallback'</span>,{@<a href="#_sub70" class="code" title="subfunction btnInsertSurface_ClickedCallback(~,~,myParent)">btnInsertSurface_ClickedCallback</a>,parentWindow});
+0517 
+0518     aodHandles.btnRemoveSurface = uipushtool(<span class="keyword">...</span>
+0519         aodHandles.toolBarHandle,<span class="keyword">...</span>
+0520         <span class="string">'CData'</span>,minusIcon,<span class="keyword">...</span>
+0521         <span class="string">'TooltipString'</span>,<span class="string">'Remove Surface'</span>,<span class="keyword">...</span>
+0522         <span class="string">'ClickedCallback'</span>,{@<a href="#_sub71" class="code" title="subfunction btnRemoveSurface_ClickedCallback(~,~,myParent)">btnRemoveSurface_ClickedCallback</a>,parentWindow}); 
+0523   <span class="keyword">end</span> 
+0524     <span class="comment">%% Menu Item Callbacks</span>
+0525     
+0526     <span class="comment">% ---------------------------------------------------------------------</span>
+0527     <a name="_sub2" href="#_subfunctions" class="code">function menuFile_Callback(~,~,myParent)</a>
+0528 
+0529     <span class="keyword">end</span>
+0530 
+0531     <span class="comment">% ---------------------------------------------------------------------</span>
+0532     <a name="_sub3" href="#_subfunctions" class="code">function menuEdit_Callback(~,~,myParent)</a>
+0533 
+0534     <span class="keyword">end</span>
+0535 
+0536     <span class="comment">% ---------------------------------------------------------------------</span>
+0537     <a name="_sub4" href="#_subfunctions" class="code">function menuOptimization_Callback(~,~,myParent)</a>
+0538 
+0539     <span class="keyword">end</span>
+0540 
+0541     <span class="comment">% ---------------------------------------------------------------------</span>
+0542     <a name="_sub5" href="#_subfunctions" class="code">function menuRayTrace_Callback(~,~,myParent)</a>
+0543 
+0544     <span class="keyword">end</span>
+0545     
+0546     <span class="comment">% ---------------------------------------------------------------------</span>
+0547     <a name="_sub6" href="#_subfunctions" class="code">function menuDiffraction_Callback(~,~,myParent)</a>
+0548 
+0549     <span class="keyword">end</span>
+0550     <span class="comment">% ---------------------------------------------------------------------</span>
+0551     <a name="_sub7" href="#_subfunctions" class="code">function menuWavefrontAtExitPupil_Callback(~,~,myParent)</a>
+0552         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'wavefrontAtExitPupil'</span>,myParent);
+0553     <span class="keyword">end</span>
+0554     <span class="comment">% ---------------------------------------------------------------------</span>
+0555     <a name="_sub8" href="#_subfunctions" class="code">function menuPupilApodization_Callback(~,~,myParent)</a>
+0556         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'pupilApodization'</span>,myParent);
+0557     <span class="keyword">end</span>  
+0558     <span class="comment">% ---------------------------------------------------------------------</span>
+0559     <a name="_sub9" href="#_subfunctions" class="code">function menuFFTPSF_Callback(~,~,myParent)</a>
+0560         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'FFTPSF'</span>,myParent);
+0561     <span class="keyword">end</span>    
+0562      
+0563     <span class="comment">% ---------------------------------------------------------------------</span>
+0564     <a name="_sub10" href="#_subfunctions" class="code">function menuHelp_Callback(~,~,myParent)</a>
+0565     <span class="keyword">end</span>
+0566 
+0567 
+0568     <span class="comment">% ---------------------------------------------------------------------</span>
+0569     <a name="_sub11" href="#_subfunctions" class="code">function menuView_Callback(~,~,myParent)</a>
+0570 
+0571     <span class="keyword">end</span>
+0572 
+0573     <span class="comment">% ---------------------------------------------------------------------</span>
+0574     <a name="_sub12" href="#_subfunctions" class="code">function menuScalarRayTrace_Callback(~,~,myParent)</a>
+0575         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'scalarRayTrace'</span>,myParent);
+0576     <span class="keyword">end</span>
+0577     <span class="comment">% ---------------------------------------------------------------------</span>
+0578     <a name="_sub13" href="#_subfunctions" class="code">function menuSurfaceProperties_Callback(~,~,myParent)                  </a>
+0579        aodHandles = myParent.AODParentHandles;
+0580         <span class="comment">% Make SystemConfiguration tab visible and all others invisible</span>
+0581 <span class="comment">%         nMainTab = str2double(get(aodHandles.nMainTab,'String'));</span>
+0582         nMainTab = aodHandles.nMainTab;
+0583         <span class="keyword">for</span> k = 1:nMainTab
+0584             set(get(aodHandles.panelMainTab(k),<span class="string">'Children'</span>),<span class="string">'Visible'</span>, <span class="string">'off'</span>);
+0585             set(aodHandles.btnMainTab(k),<span class="string">'BackgroundColor'</span>,[200,200,200]./256);
+0586         <span class="keyword">end</span>
+0587         set(get(aodHandles.panelMainTab(2),<span class="string">'Children'</span>),<span class="string">'Visible'</span>, <span class="string">'on'</span>);
+0588         set(aodHandles.btnMainTab(2),<span class="string">'BackgroundColor'</span>,[240,240,240]./256);      
+0589         
+0590         
+0591     <span class="keyword">end</span>
+0592     <span class="comment">% ---------------------------------------------------------------------</span>
+0593     <a name="_sub14" href="#_subfunctions" class="code">function menuSystemConfiguration_Callback(~,~,myParent)                  </a>
+0594     aodHandles = myParent.AODParentHandles;
+0595         <span class="comment">% Make SystemConfiguration tab visible and all others invisible</span>
+0596 <span class="comment">%         nMainTab = str2double(get(aodHandles.nMainTab,'String'));</span>
+0597         nMainTab = aodHandles.nMainTab;
+0598         <span class="keyword">for</span> k = 1:nMainTab
+0599             set(get(aodHandles.panelMainTab(k),<span class="string">'Children'</span>),<span class="string">'Visible'</span>, <span class="string">'off'</span>);
+0600             set(aodHandles.btnMainTab(k),<span class="string">'BackgroundColor'</span>,[200,200,200]./256);
+0601         <span class="keyword">end</span>
+0602         set(get(aodHandles.panelMainTab(3),<span class="string">'Children'</span>),<span class="string">'Visible'</span>, <span class="string">'on'</span>);
+0603         set(aodHandles.btnMainTab(3),<span class="string">'BackgroundColor'</span>,[240,240,240]./256);      
+0604     <span class="keyword">end</span>
+0605     <span class="comment">% ---------------------------------------------------------------------</span>
+0606     <a name="_sub15" href="#_subfunctions" class="code">function menuNew_Callback(~,~,myParent)                  </a>
+0607         myParent.openNewOpticalSystem;
+0608     <span class="keyword">end</span>
+0609 
+0610     <span class="comment">% ---------------------------------------------------------------------</span>
+0611     <a name="_sub16" href="#_subfunctions" class="code">function menuOpen_Callback(~,~,myParent) </a>
+0612     
+0613     [FileName,PathName] = uigetfile(<span class="string">'*.mat'</span>,<span class="string">'Select Optical System file'</span>);
+0614     <span class="keyword">if</span> (FileName~=0) <span class="comment">% FileName=0 when no file is selected</span>
+0615         fullFileName = [PathName <span class="string">'\'</span> FileName];
+0616         myParent.openFromMATFile(fullFileName);
+0617     <span class="keyword">else</span>
+0618         <span class="keyword">return</span>
+0619     <span class="keyword">end</span>
+0620         
+0621 <span class="comment">%         openSavedOpticalSystem(fullFileName);</span>
+0622 <span class="comment">%         OPTICAL_SYSTEM.Saved = true;</span>
+0623 <span class="comment">%         OPTICAL_SYSTEM.PathName = PathName;</span>
+0624 <span class="comment">%         OPTICAL_SYSTEM.FileName = FileName;</span>
+0625     <span class="keyword">end</span>
+0626     <span class="comment">% ---------------------------------------------------------------------</span>
+0627     <a name="_sub17" href="#_subfunctions" class="code">function menuSave_Callback(~,~,myParent)                  </a>
+0628         myParent.saveMySystem;
+0629     <span class="keyword">end</span>
+0630 
+0631     <span class="comment">% ---------------------------------------------------------------------</span>
+0632     <a name="_sub18" href="#_subfunctions" class="code">function menuSavaAs_Callback(~,~,myParent)                  </a>
+0633         myParent.saveMySystemAs;
+0634     <span class="keyword">end</span>
+0635 
+0636     <span class="comment">% ---------------------------------------------------------------------</span>
+0637     <a name="_sub19" href="#_subfunctions" class="code">function menuClose_Callback(~,~,myParent)</a>
+0638         myParent.closeAllWindows();
+0639     <span class="keyword">end</span>
+0640 
+0641     <span class="comment">% ---------------------------------------------------------------------</span>
+0642     <a name="_sub20" href="#_subfunctions" class="code">function menu2DSystemLayout_Callback(~,~,myParent)</a>
+0643         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'system2DLayoutDiagram'</span>,myParent);
+0644     <span class="keyword">end</span>
+0645     <span class="comment">% ---------------------------------------------------------------------</span>
+0646     <a name="_sub21" href="#_subfunctions" class="code">function menu3DSystemLayout_Callback(~,~,myParent)</a>
+0647         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'system3DLayoutDiagram'</span>,myParent);
+0648     <span class="keyword">end</span>
+0649     <span class="comment">% ---------------------------------------------------------------------</span>
+0650     <a name="_sub22" href="#_subfunctions" class="code">function menuUserManual_Callback(~,~,myParent)</a>
+0651         web(which(<span class="string">'UserManualVersion10.html'</span>))
+0652     <span class="keyword">end</span>
+0653 
+0654     <span class="comment">% ---------------------------------------------------------------------</span>
+0655     <a name="_sub23" href="#_subfunctions" class="code">function menuAbout_Callback(~,~,myParent)</a>
+0656         aodHandles = myParent.AODParentHandles;
+0657         fontSize = aodHandles.FontSize;
+0658         fontName = aodHandles.FontName;
+0659         <a href="../../../AODParentDir/Documentation_Module/aboutWindow.html" class="code" title="function figureHandle = aboutWindow(fontName)">aboutWindow</a>(fontName);
+0660     <span class="keyword">end</span>
+0661 
+0662     <span class="comment">% ---------------------------------------------------------------------</span>
+0663     <a name="_sub24" href="#_subfunctions" class="code">function menuImportGlassCatalogue_Callback(~,~,myParent)        </a>
+0664         <span class="comment">%Read from excel sheet downloaded from Schott website</span>
+0665         [FileName,PathName] = uigetfile(<span class="string">'*.xls'</span>,<span class="string">'Select Glasss Catalogue File'</span>);
+0666         <span class="keyword">if</span> (FileName~=0) <span class="comment">% FileName=0 when no file is selected</span>
+0667             <span class="comment">% 'G:\MSc Photonics 2st Semster Docs\OOP version of Basic Ray Tracer\...</span>
+0668             <span class="comment">% Ray Tracer Toolbox 2.1 (OOP Version)\DatabaseFiles\...</span>
+0669             <span class="comment">% schott_optical_glass_catalogue_excel_april_2013.xls';</span>
+0670             fullFileName = [PathName,<span class="string">'\'</span>,FileName];
+0671             [~,~,alldata]  = xlsread(fullFileName,<span class="string">'A5:L200'</span>);
+0672             tableSize = size(alldata);
+0673             glassCatalogueFullFileName = <a href="#_sub64" class="code" title="subfunction fullFileName = addNewGlassCatalogue(myParent)">addNewGlassCatalogue</a>(myParent);
+0674             
+0675             <span class="comment">%add each glass to the catalogue</span>
+0676             <span class="keyword">for</span> kk = 1:tableSize(1)
+0677                 name = cell2mat(alldata(kk,1));
+0678                 <span class="keyword">if</span> isnan(name)
+0679                     <span class="keyword">break</span>;
+0680                 <span class="keyword">end</span>
+0681                 glassName = num2str(name);
+0682                 glassType = <span class="string">'Sellmeier1'</span>;
+0683                 glassParameters = <span class="keyword">...</span>
+0684                     [cell2mat(alldata(kk,7)),cell2mat(alldata(kk,8)),<span class="keyword">...</span>
+0685                     cell2mat(alldata(kk,9)),cell2mat(alldata(kk,10)),<span class="keyword">...</span>
+0686                     cell2mat(alldata(kk,11)),cell2mat(alldata(kk,12))]';
+0687                 newGlass = <a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>(glassName,glassType,glassParameters);
+0688                 <a href="../../../AODParentDir/Catalogue_Module/addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a><span class="keyword">...</span>
+0689                (<span class="string">'glass'</span>, newGlass,glassCatalogueFullFileName,<span class="string">'replace'</span> );
+0690             <span class="keyword">end</span>
+0691         <span class="keyword">else</span>
+0692             <span class="keyword">return</span>;
+0693         <span class="keyword">end</span>
+0694     <span class="keyword">end</span>
+0695         <span class="comment">% ---------------------------------------------------------------------</span>
+0696     <a name="_sub25" href="#_subfunctions" class="code">function menuCoatingCatalogue_Callback(~,~,myParent)</a>
+0697 
+0698     <span class="keyword">end</span>
+0699 
+0700         <span class="comment">% ---------------------------------------------------------------------</span>
+0701     <a name="_sub26" href="#_subfunctions" class="code">function menuImportZMXFile_Callback(~,~,myParent)</a>
+0702         [FileName,PathName] = uigetfile(<span class="string">'*.zmx'</span>,<span class="string">'Select Zemax file'</span>);
+0703         <span class="keyword">if</span> (FileName~=0) <span class="comment">% FileName=0 when no file is selected</span>
+0704             zmxFullFileName = [PathName,<span class="string">'\'</span>,FileName];
+0705             myParent.openFromZemaxFile(zmxFullFileName)
+0706         <span class="keyword">else</span>
+0707             <span class="keyword">return</span>
+0708         <span class="keyword">end</span>
+0709     <span class="keyword">end</span>
+0710 
+0711         <span class="comment">% ---------------------------------------------------------------------</span>
+0712     <a name="_sub27" href="#_subfunctions" class="code">function menuPolarizationRayTrace_Callback(~,~,myParent)</a>
+0713         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'polarizationRayTrace'</span>,myParent);
+0714     <span class="keyword">end</span>
+0715 
+0716         <span class="comment">% ---------------------------------------------------------------------</span>
+0717     <a name="_sub28" href="#_subfunctions" class="code">function menuCoatingAnalysis_Callback(~,~,myParent)</a>
+0718 
+0719     <span class="keyword">end</span>
+0720         <span class="comment">% ---------------------------------------------------------------------</span>
+0721     <a name="_sub29" href="#_subfunctions" class="code">function menuRefractiveIndexProfile_Callback(~,~,myParent)</a>
+0722         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'coatingRefractiveIndexProfile'</span>,myParent);
+0723     <span class="keyword">end</span>
+0724         <span class="comment">% ---------------------------------------------------------------------</span>
+0725     <a name="_sub30" href="#_subfunctions" class="code">function menuTransmissionVsAngle_Callback(~,~,myParent)</a>
+0726         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'coatingTransmissionVsAngle'</span>,myParent);
+0727     <span class="keyword">end</span>
+0728 
+0729         <span class="comment">% ---------------------------------------------------------------------</span>
+0730     <a name="_sub31" href="#_subfunctions" class="code">function menuReflectionVsAngle_Callback(~,~,myParent)</a>
+0731         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'coatingReflectionVsAngle'</span>,myParent);
+0732     <span class="keyword">end</span>
+0733         <span class="comment">% ---------------------------------------------------------------------</span>
+0734     <a name="_sub32" href="#_subfunctions" class="code">function menuDiattenuationVsAngle_Callback(~,~,myParent)</a>
+0735         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'coatingDiattenuationVsAngle'</span>,myParent);
+0736     <span class="keyword">end</span>
+0737         <span class="comment">% ---------------------------------------------------------------------</span>
+0738     <a name="_sub33" href="#_subfunctions" class="code">function menuRetardanceVsAngle_Callback(~,~,myParent)</a>
+0739         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'coatingRetardanceVsAngle'</span>,myParent);
+0740     <span class="keyword">end</span>
+0741 
+0742         <span class="comment">% ---------------------------------------------------------------------</span>
+0743     <a name="_sub34" href="#_subfunctions" class="code">function menuTransmissionVsWavelength_Callback(~,~,myParent)</a>
+0744         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'coatingTransmissionVsWavelength'</span>,myParent);
+0745     <span class="keyword">end</span>
+0746         <span class="comment">% ---------------------------------------------------------------------</span>
+0747     <a name="_sub35" href="#_subfunctions" class="code">function menuReflectionVsWavelength_Callback(~,~,myParent)</a>
+0748         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'coatingReflectionVsWavelength'</span>,myParent);
+0749     <span class="keyword">end</span>
+0750 
+0751         <span class="comment">% ---------------------------------------------------------------------</span>
+0752     <a name="_sub36" href="#_subfunctions" class="code">function menuDiattenuationVsWavelength_Callback(~,~,myParent)</a>
+0753         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'coatingDiattenuationVsWavelength'</span>,myParent);
+0754     <span class="keyword">end</span>
+0755 
+0756         <span class="comment">% ---------------------------------------------------------------------</span>
+0757     <a name="_sub37" href="#_subfunctions" class="code">function menRetardanceVsWavelength_Callback(~,~,myParent)</a>
+0758         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'coatingRetardanceVsWavelength'</span>,myParent);
+0759     <span class="keyword">end</span>
+0760 
+0761         <span class="comment">% ---------------------------------------------------------------------</span>
+0762     <a name="_sub38" href="#_subfunctions" class="code">function menuOpticalSystem_Callback(~,~,myParent)</a>
+0763 
+0764     <span class="keyword">end</span>
+0765 
+0766         <span class="comment">% ---------------------------------------------------------------------</span>
+0767     <a name="_sub39" href="#_subfunctions" class="code">function menuFootprintDiagram_Callback(~,~,myParent)</a>
+0768         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'FootprintDiagram'</span>,myParent);
+0769     <span class="keyword">end</span>
+0770         <span class="comment">% ---------------------------------------------------------------------</span>
+0771     <a name="_sub40" href="#_subfunctions" class="code">function menuPolarizationEllipseMap_Callback(~,~,myParent)</a>
+0772         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'polarizationEllipseMap'</span>,myParent);
+0773     <span class="keyword">end</span>
+0774         <span class="comment">% ---------------------------------------------------------------------</span>
+0775     <a name="_sub41" href="#_subfunctions" class="code">function menuParaxialAnalysis_Callback(~,~,myParent)</a>
+0776         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'paraxialAnalysis'</span>,myParent);
+0777     <span class="keyword">end</span>
+0778  
+0779          <span class="comment">% ---------------------------------------------------------------------</span>
+0780     <a name="_sub42" href="#_subfunctions" class="code">function menuTransverseRayAberration_Callback(~,~,myParent)</a>
+0781         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'transverseRayAberration'</span>,myParent);
+0782     <span class="keyword">end</span>   
+0783     
+0784         <span class="comment">% ---------------------------------------------------------------------</span>
+0785     <a name="_sub43" href="#_subfunctions" class="code">function menuPolarizationAbberation_Callback(~,~,myParent)</a>
+0786     <span class="keyword">end</span>
+0787 
+0788         <span class="comment">% ---------------------------------------------------------------------</span>
+0789     <a name="_sub44" href="#_subfunctions" class="code">function menuAmplitudeTransmissionMap_Callback(~,~,myParent)</a>
+0790         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'amplitudeTransmissionMap'</span>,myParent);
+0791     <span class="keyword">end</span>
+0792         <span class="comment">% ---------------------------------------------------------------------</span>
+0793     <a name="_sub45" href="#_subfunctions" class="code">function menuPhaseMap_Callback(~,~,myParent)</a>
+0794         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'phaseMap'</span>,myParent);
+0795     <span class="keyword">end</span>
+0796         <span class="comment">% ---------------------------------------------------------------------</span>
+0797     <a name="_sub46" href="#_subfunctions" class="code">function menuWavefrontDiattenuationMap_Callback(~,~,myParent)</a>
+0798     <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'wavefrontDiattenuationMap'</span>,myParent);   
+0799     <span class="keyword">end</span>
+0800         <span class="comment">% ---------------------------------------------------------------------</span>
+0801     <a name="_sub47" href="#_subfunctions" class="code">function menuWavefrontRetardanceMap_Callback(~,~,myParent)</a>
+0802         <a href="../../../AODParentDir/Class_Definition/@AODChildWindow/AODChildWindow.html" class="code" title="">AODChildWindow</a>(<span class="string">'wavefrontRetardanceMap'</span>,myParent);
+0803     <span class="keyword">end</span>
+0804 
+0805         <span class="comment">% ---------------------------------------------------------------------</span>
+0806     <a name="_sub48" href="#_subfunctions" class="code">function menuCoating_Callback(~,~,myParent)</a>
+0807 
+0808     <span class="keyword">end</span>
+0809 
+0810     
+0811 
+0812   <a name="_sub49" href="#_subfunctions" class="code">function menuGlassDataEditor_Callback(~,~,myParent)</a>
+0813   [ currentOpticalSystem,saved] = <span class="keyword">...</span>
+0814                 myParent.getCurrentOpticalSystem;
+0815    aodHandles = myParent.AODParentHandles;
+0816     <span class="comment">% Glass Catalogue</span>
+0817     tableData1 = get(aodHandles.tblGlassCatalogues,<span class="string">'data'</span>);
+0818     <span class="keyword">if</span> ~isempty(tableData1)
+0819         <span class="comment">% Take only the selected ones</span>
+0820         selectedRows1 = find(cell2mat(tableData1(:,1)));
+0821         <span class="keyword">if</span> ~isempty(selectedRows1)
+0822             glassCatalogueListFullNames = tableData1(selectedRows1,3);
+0823         <span class="keyword">else</span>
+0824             glassCatalogueListFullNames = <span class="string">''</span>;
+0825         <span class="keyword">end</span>
+0826     <span class="keyword">else</span>
+0827         glassCatalogueListFullNames = <span class="string">''</span>;
+0828     <span class="keyword">end</span>
+0829     fontSize = aodHandles.FontSize;
+0830     fontName = aodHandles.FontName;    
+0831 
+0832     <a href="../../../AODParentDir/Glass_Catalogue_Module/glassDataInputDialog.html" class="code" title="function [ figureHandle ] = glassDataInputDialog(glassCatalogueListFullNames,fontName,fontSize)">glassDataInputDialog</a>(glassCatalogueListFullNames,fontName,fontSize);    
+0833   <span class="keyword">end</span>  
+0834     
+0835     <span class="comment">% ---------------------------------------------------------------------</span>
+0836     <a name="_sub50" href="#_subfunctions" class="code">function menuCoatingDataEditor_Callback(~,~,myParent)</a>
+0837     [ currentOpticalSystem,saved] = <span class="keyword">...</span>
+0838                 myParent.getCurrentOpticalSystem;
+0839     aodHandles = myParent.AODParentHandles; 
+0840     
+0841     <span class="comment">% Coating Catalogue</span>
+0842     tableData1 = get(aodHandles.tblCoatingCatalogues,<span class="string">'data'</span>);
+0843     <span class="keyword">if</span> ~isempty(tableData1)
+0844         <span class="comment">% Take only the selected ones</span>
+0845         selectedRows1 = find(cell2mat(tableData1(:,1)));
+0846         <span class="keyword">if</span> ~isempty(selectedRows1)
+0847             coatingCatalogueListFullNames = tableData1(selectedRows1,3);
+0848         <span class="keyword">else</span>
+0849             coatingCatalogueListFullNames = <span class="string">''</span>;
+0850         <span class="keyword">end</span>
+0851     <span class="keyword">else</span>
+0852         coatingCatalogueListFullNames = <span class="string">''</span>;
+0853     <span class="keyword">end</span>
+0854     fontSize = aodHandles.FontSize;
+0855     fontName = aodHandles.FontName;    
+0856     <a href="../../../AODParentDir/Coating_Catalogue_Module/coatingDataInputDialog.html" class="code" title="function [ figureHandle ] = coatingDataInputDialog(coatingCatalogueListFullNames,fontName,fontSize)">coatingDataInputDialog</a>(coatingCatalogueListFullNames,fontName,fontSize);    
+0857     <span class="keyword">end</span>
+0858 
+0859         <span class="comment">% ---------------------------------------------------------------------</span>
+0860     <a name="_sub51" href="#_subfunctions" class="code">function menuImportOpticalSystem_Callback(~,~,myParent)</a>
+0861 
+0862     <span class="keyword">end</span>
+0863 
+0864     <span class="comment">% ---------------------------------------------------------------------</span>
+0865     <a name="_sub52" href="#_subfunctions" class="code">function menuExportOpticalSystem_Callback(~,~,myParent)</a>
+0866 
+0867     <span class="keyword">end</span>
+0868 
+0869     <span class="comment">% ---------------------------------------------------------------------</span>
+0870     <a name="_sub53" href="#_subfunctions" class="code">function menuNewCoatingCatalogue_Callback(~,~,myParent)</a>
+0871         <a href="#_sub54" class="code" title="subfunction fullFileName = addNewCoatingCatalogue(myParent)">addNewCoatingCatalogue</a>(myParent);
+0872     <span class="keyword">end</span>
+0873     
+0874     <a name="_sub54" href="#_subfunctions" class="code">function fullFileName = addNewCoatingCatalogue(myParent)</a>
+0875         newCatlogueName = char(cellstr(inputdlg(<span class="string">'Enter New Catalogue Name'</span>,<span class="string">'New Catalogue Name'</span>,1,{<span class="string">'CoatingCat01'</span>})));
+0876         objectType = <span class="string">'Coating'</span>;
+0877         objectCatalogueFullName = [pwd,<span class="string">'\Catalogue_Files\'</span>,newCatlogueName,<span class="string">'.mat'</span>];
+0878         ask_replace = <span class="string">'ask'</span>;
+0879         [ fullFileName ] = <a href="../../../AODParentDir/Catalogue_Module/createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>(objectType, objectCatalogueFullName,ask_replace );
+0880         
+0881         <span class="comment">% Add a row with the new coating catalogue</span>
+0882         aodHandles = myParent.AODParentHandles;
+0883         tblData1 = get(aodHandles.tblCoatingCatalogues,<span class="string">'data'</span>);
+0884         newRow1 =  {[true],[newCatlogueName],[fullFileName]};
+0885         newTable1 = [tblData1; newRow1];
+0886         set(aodHandles.tblCoatingCatalogues, <span class="string">'Data'</span>, newTable1);  
+0887         set(aodHandles.txtTotalCoatingCataloguesSelected, <span class="string">'String'</span>,<span class="keyword">...</span>
+0888         str2double(get(aodHandles.txtTotalCoatingCataloguesSelected, <span class="string">'String'</span>))+1); 
+0889     <span class="keyword">end</span>
+0890     <span class="comment">% ---------------------------------------------------------------------</span>
+0891     <a name="_sub55" href="#_subfunctions" class="code">function menuCoatingCatalogueAnalysis_Callback(~,~,myParent)</a>
+0892 
+0893     <span class="keyword">end</span>
+0894 
+0895     <span class="comment">% ---------------------------------------------------------------------</span>
+0896     <a name="_sub56" href="#_subfunctions" class="code">function menuImportCoatingCatalogue_Callback(~,~,myParent)</a>
+0897 
+0898     <span class="keyword">end</span>
+0899 
+0900     <span class="comment">% ---------------------------------------------------------------------</span>
+0901     <a name="_sub57" href="#_subfunctions" class="code">function menuExportCoatingCatalogue_Callback(~,~,myParent)</a>
+0902 
+0903     <span class="keyword">end</span>
+0904 
+0905     <span class="comment">% ---------------------------------------------------------------------</span>
+0906     <a name="_sub58" href="#_subfunctions" class="code">function menuGlass_Callback(~,~,myParent)</a>
+0907 
+0908     <span class="keyword">end</span>
+0909 
+0910     <span class="comment">% ---------------------------------------------------------------------</span>
+0911     <a name="_sub59" href="#_subfunctions" class="code">function menuProgramminReference_Callback(~,~,myParent)</a>
+0912         web(which(<span class="string">'index.html'</span>))
+0913     <span class="keyword">end</span>
+0914     <span class="comment">% ---------------------------------------------------------------------</span>
+0915     <a name="_sub60" href="#_subfunctions" class="code">function menuNewGlass_Callback(~,~,myParent)</a>
+0916     
+0917     <span class="keyword">end</span>
+0918 
+0919     <span class="comment">% ---------------------------------------------------------------------</span>
+0920     <a name="_sub61" href="#_subfunctions" class="code">function menuGlassAnalysis_Callback(~,~,myParent)</a>
+0921 
+0922     <span class="keyword">end</span>
+0923 
+0924     <span class="comment">% ---------------------------------------------------------------------</span>
+0925     <a name="_sub62" href="#_subfunctions" class="code">function menuGlassCatalogue_Callback(~,~,myParent)</a>
+0926 
+0927     <span class="keyword">end</span>
+0928 
+0929     <span class="comment">% ---------------------------------------------------------------------</span>
+0930     <a name="_sub63" href="#_subfunctions" class="code">function menuNewGlassCatalogue_Callback(~,~,myParent)</a>
+0931         <a href="#_sub64" class="code" title="subfunction fullFileName = addNewGlassCatalogue(myParent)">addNewGlassCatalogue</a>(myParent)        
+0932     <span class="keyword">end</span>
+0933     
+0934    <a name="_sub64" href="#_subfunctions" class="code">function fullFileName = addNewGlassCatalogue(myParent)</a>
+0935         newCatlogueName = char(cellstr(inputdlg(<span class="string">'Enter New Catalogue Name'</span>,<span class="string">'New Catalogue Name'</span>,1,{<span class="string">'GlassCat01'</span>})));
+0936         objectType = <span class="string">'Glass'</span>;
+0937         objectCatalogueFullName = [pwd,<span class="string">'\Catalogue_Files\'</span>,newCatlogueName,<span class="string">'.mat'</span>];
+0938         ask_replace = <span class="string">'ask'</span>;
+0939         [ fullFileName ] = <a href="../../../AODParentDir/Catalogue_Module/createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>(objectType, objectCatalogueFullName,ask_replace );
+0940        
+0941         <span class="comment">% Add a row with the new glass catalogue</span>
+0942         aodHandles = myParent.AODParentHandles;
+0943         tblData1 = get(aodHandles.tblGlassCatalogues,<span class="string">'data'</span>);
+0944         newRow1 =  {[true],[newCatlogueName],[fullFileName]};
+0945         newTable1 = [tblData1; newRow1];
+0946         set(aodHandles.tblGlassCatalogues, <span class="string">'Data'</span>, newTable1);  
+0947         set(aodHandles.txtTotalGlassCataloguesSelected, <span class="string">'String'</span>,<span class="keyword">...</span>
+0948         str2double(get(aodHandles.txtTotalGlassCataloguesSelected, <span class="string">'String'</span>))+1);        
+0949 <span class="keyword">end</span>
+0950 
+0951     
+0952     <span class="comment">% ---------------------------------------------------------------------</span>
+0953     <a name="_sub65" href="#_subfunctions" class="code">function menuExportGlassCatalogue_Callback(~,~,myParent)</a>
+0954 
+0955     <span class="keyword">end</span>
+0956 
+0957     <span class="comment">% ---------------------------------------------------------------------</span>
+0958     <a name="_sub66" href="#_subfunctions" class="code">function menuGlassCatalogueAnalysis_Callback(~,~,myParent)</a>
+0959 
+0960     <span class="keyword">end</span>
+0961 
+0962     <span class="comment">% ---------------------------------------------------------------------</span>
+0963     <a name="_sub67" href="#_subfunctions" class="code">function menuDispersionGraph_Callback(~,~,~)</a>
+0964 
+0965     <span class="keyword">end</span>
+0966 
+0967     <span class="comment">% ---------------------------------------------------------------------</span>
+0968     <a name="_sub68" href="#_subfunctions" class="code">function menuOpticalSystemAnalysis_Callback(~,~,~)</a>
+0969 
+0970     <span class="keyword">end</span>
+0971 
+0972     <span class="comment">% ---------------------------------------------------------------------</span>
+0973     <a name="_sub69" href="#_subfunctions" class="code">function menuImageAtBfp_Callback(~,~,~,myParent)</a>
+0974         aodHandles = myParent.AODParentHandles;
+0975         <span class="comment">% determine the back focal length of the optical system</span>
+0976         SavedOpticalSystem = myParent.getCurrentOpticalSystem;
+0977         bfl = SavedOpticalSystem.getBackFocalLength;
+0978 
+0979         <span class="comment">% set the last thickness = bfl</span>
+0980         tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0981         imgSurfIndex = SavedOpticalSystem.NumberOfSurface;
+0982         tblData1{imgSurfIndex-1,7} = num2str(bfl);
+0983         set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);
+0984     <span class="keyword">end</span>  
+0985 
+0986     <span class="comment">%% Toolbar Callbacks</span>
+0987     <a name="_sub70" href="#_subfunctions" class="code">function btnInsertSurface_ClickedCallback(~,~,myParent)                  </a>
+0988         aodHandles = myParent.AODParentHandles;
+0989         <a href="#_sub73" class="code" title="subfunction InsertNewSurface(aodHandles)">InsertNewSurface</a>(aodHandles);
+0990     <span class="keyword">end</span>
+0991 
+0992     <a name="_sub71" href="#_subfunctions" class="code">function btnRemoveSurface_ClickedCallback(~,~,myParent)                  </a>
+0993         aodHandles = myParent.AODParentHandles;
+0994         <a href="#_sub72" class="code" title="subfunction RemoveThisSurface(aodHandles)">RemoveThisSurface</a>(aodHandles);
+0995     <span class="keyword">end</span>
+0996 
+0997     <span class="comment">%% Local Function</span>
+0998     <a name="_sub72" href="#_subfunctions" class="code">function RemoveThisSurface(aodHandles)</a>
+0999         <span class="keyword">global</span> SELECTED_CELL
+1000         <span class="keyword">global</span> CAN_REMOVE
+1001         <span class="keyword">if</span> isempty(SELECTED_CELL)
+1002             <span class="keyword">return</span>
+1003         <span class="keyword">end</span>
+1004 
+1005         <span class="keyword">if</span> CAN_REMOVE
+1006             removePosition = SELECTED_CELL(1);
+1007 
+1008             <span class="comment">%update standard data table</span>
+1009             tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+1010             sizeTblData1 = size(tblData1);
+1011             parta1 = tblData1(1:removePosition-1,:);
+1012             partb1 = tblData1(removePosition+1:sizeTblData1 ,:);
+1013             newTable1 = [parta1; partb1];
+1014             sysTable1 = aodHandles.tblStandardData;
+1015             set(sysTable1, <span class="string">'Data'</span>, newTable1);
+1016 
+1017              <span class="comment">%update aperture table</span>
+1018             tblData3 = get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+1019             sizeTblData3 = size(tblData3);
+1020             parta3 = tblData3(1:removePosition-1,:);
+1021             partb3 = tblData3(removePosition+1:sizeTblData3 ,:);
+1022             newTable3 = [parta3; partb3];
+1023             sysTable3 = aodHandles.tblApertureData;
+1024             set(sysTable3, <span class="string">'Data'</span>, newTable3);
+1025 
+1026             <span class="comment">%update Aspheric table</span>
+1027             tblData4 = get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+1028             sizeTblData4 = size(tblData4);
+1029             parta4 = tblData4(1:removePosition-1,:);
+1030             partb4 = tblData4(removePosition+1:sizeTblData4 ,:);
+1031             newTable4 = [parta4; partb4];
+1032             sysTable4 = aodHandles.tblAsphericData;
+1033             set(sysTable4, <span class="string">'Data'</span>, newTable4);   
+1034 
+1035              <span class="comment">%update tilt decenter table</span>
+1036             tblData5 = get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+1037             sizeTblData5 = size(tblData5);
+1038             parta5 = tblData5(1:removePosition-1,:);
+1039             partb5 = tblData5(removePosition+1:sizeTblData5 ,:);
+1040             newTable5 = [parta5; partb5];
+1041             sysTable5 = aodHandles.tblTiltDecenterData;
+1042             set(sysTable5, <span class="string">'Data'</span>, newTable5);      
+1043         <span class="keyword">end</span>
+1044     <span class="keyword">end</span>
+1045 
+1046 
+1047     <a name="_sub73" href="#_subfunctions" class="code">function InsertNewSurface(aodHandles)</a>
+1048         <span class="keyword">global</span> SELECTED_CELL
+1049         <span class="keyword">global</span> CAN_ADD
+1050         <span class="keyword">if</span> isempty(SELECTED_CELL)
+1051             <span class="keyword">return</span>
+1052         <span class="keyword">end</span>
+1053         <span class="keyword">if</span> CAN_ADD
+1054             insertPosition = SELECTED_CELL(1);
+1055             <span class="comment">%update standard data table</span>
+1056             tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+1057             sizeTblData1 = size(tblData1);
+1058             parta1 = tblData1(1:insertPosition-1,:);
+1059             newRow1 =  {<span class="string">'Surf'</span>,<span class="string">''</span>,<span class="string">'Plane'</span>,<span class="string">''</span>,<span class="string">'Inf'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">'+1 Refractive'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>};
+1060             partb1 = tblData1(insertPosition:sizeTblData1 ,:);
+1061             newTable1 = [parta1; newRow1; partb1];
+1062             sysTable1 = aodHandles.tblStandardData;
+1063             set(sysTable1, <span class="string">'Data'</span>, newTable1);
+1064 
+1065              <span class="comment">%update aperture table</span>
+1066             tblData3 = get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+1067             sizeTblData3 = size(tblData3);
+1068             parta3 = tblData3(1:insertPosition-1,:);
+1069             newRow3 =  {<span class="string">'Surf'</span>,<span class="string">'Plane'</span>,<span class="string">'Floating'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>};
+1070             partb3 = tblData3(insertPosition:sizeTblData3 ,:);
+1071             newTable3 = [parta3; newRow3; partb3];
+1072             sysTable3 = aodHandles.tblApertureData;
+1073             set(sysTable3, <span class="string">'Data'</span>, newTable3);
+1074 
+1075             <span class="comment">%update Aspheric table</span>
+1076             tblData4 = get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+1077             sizeTblData4 = size(tblData4);
+1078             parta4 = tblData4(1:insertPosition-1,:);
+1079             newRow4 =  {<span class="string">'Surf'</span>,<span class="string">'Plane'</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>};
+1080             partb4 = tblData4(insertPosition:sizeTblData4 ,:);
+1081             newTable4 = [parta4; newRow4; partb4];
+1082             sysTable4 = aodHandles.tblAsphericData;
+1083             set(sysTable4, <span class="string">'Data'</span>, newTable4);   
+1084 
+1085              <span class="comment">%update tilt decenter table</span>
+1086             tblData5 = get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+1087             sizeTblData5 = size(tblData5);
+1088             parta5 = tblData5(1:insertPosition-1,:);
+1089             newRow5 =  {<span class="string">'Surf'</span>,<span class="string">'Plane'</span>,<span class="string">'DxDyDzTxTyTz'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'DAR'</span>,<span class="string">''</span>};
+1090             partb5 = tblData5(insertPosition:sizeTblData5 ,:);
+1091             newTable5 = [parta5; newRow5; partb5];
+1092             sysTable5 = aodHandles.tblTiltDecenterData;
+1093             set(sysTable5, <span class="string">'Data'</span>, newTable5);
+1094 
+1095             <span class="comment">% If possible add here a code to select the first cell of newly added row</span>
+1096             <span class="comment">% automatically</span>
+1097         <span class="keyword">end</span>
+1098     <span class="keyword">end</span>    
+1099</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

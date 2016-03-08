@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of convertJonesVectorToPolarizationVectorNew</title>
+  <meta name="keywords" content="convertJonesVectorToPolarizationVectorNew">
+  <meta name="description" content="convertJonesVectorToPolarizationVector: Converts a given jones vector to polarization">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Polarization_Ray_Tracing_Module -->
+<h1>convertJonesVectorToPolarizationVectorNew
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>convertJonesVectorToPolarizationVector: Converts a given jones vector to polarization</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function polarizationVector =convertJonesVectorToPolarizationVectorNew(jonesVector,rayDirection,surfaceNormal) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> convertJonesVectorToPolarizationVector: Converts a given jones vector to polarization
+ vector based on the coordinate transformation concept. 
+ The function is vectorized so if the inputs are vectors then 
+ the output will also be vector of the same size.
+ 
+ Inputs:
+   jonesVector: % 2xN matrix : complex valued jones vector in s-p axis 
+                      [Jsmag*exp(i*Jsphase);Jpmag*exp(i*Jpphase)]
+   rayDirection: 3XN matrix : direction cosines of the ray
+   surfaceNormal: 3XN matrix with each column corresponding to the
+   surface normal used for conversion.
+ Outputs:
+   polarizationVector: 3XN matrix : The electric field vector</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Mathematical_Functions/compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>	compute3dCross: computes the cross product of two 1X3 vectors(Originaly).</li><li><a href="../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>	multiplySliced3DMatrices: To perform slicewise multiplication of 3D</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function polarizationVector = </a><span class="keyword">...</span>
+0002         convertJonesVectorToPolarizationVectorNew<span class="keyword">...</span>
+0003         (jonesVector,rayDirection,surfaceNormal)
+0004     <span class="comment">% convertJonesVectorToPolarizationVector: Converts a given jones vector to polarization</span>
+0005     <span class="comment">% vector based on the coordinate transformation concept.</span>
+0006     <span class="comment">% The function is vectorized so if the inputs are vectors then</span>
+0007     <span class="comment">% the output will also be vector of the same size.</span>
+0008     <span class="comment">%</span>
+0009     <span class="comment">% Inputs:</span>
+0010     <span class="comment">%   jonesVector: % 2xN matrix : complex valued jones vector in s-p axis</span>
+0011     <span class="comment">%                      [Jsmag*exp(i*Jsphase);Jpmag*exp(i*Jpphase)]</span>
+0012     <span class="comment">%   rayDirection: 3XN matrix : direction cosines of the ray</span>
+0013     <span class="comment">%   surfaceNormal: 3XN matrix with each column corresponding to the</span>
+0014     <span class="comment">%   surface normal used for conversion.</span>
+0015     <span class="comment">% Outputs:</span>
+0016     <span class="comment">%   polarizationVector: 3XN matrix : The electric field vector</span>
+0017 
+0018     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0019     <span class="comment">%</span>
+0020 
+0021     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0022     <span class="comment">%</span>
+0023 
+0024     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0025     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0026     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0027     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0028     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0029     <span class="comment">%   Institute of Applied Physics</span>
+0030     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0031                              
+0032     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0033     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0034     <span class="comment">% Jan 18,2014   Worku, Norman G.     Original Version       Version 3.0</span>
+0035     <span class="comment">% Jan 30,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0036 
+0037     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0038 
+0039     nRay = size(jonesVector,2);
+0040     <span class="comment">% Form a marix of local polarization vector from the jones vector</span>
+0041     localVector = [jonesVector;zeros(1,nRay)];
+0042     
+0043     <span class="comment">% Find axes of spk local coordinate interms of global coordinate</span>
+0044     dirK = rayDirection;
+0045     <span class="comment">% We use 3rd option in Zemax in the Object space but to generalize for</span>
+0046     <span class="comment">% any surface surfaceNormal is taken as input.</span>
+0047     <span class="comment">% Using Z Axis Reference:</span>
+0048     <span class="comment">% The S vector is determined from K cross Z, and P = K cross S</span>
+0049     <span class="comment">% dirZ = repmat([0;0;1],[1,nRay]);</span>
+0050     
+0051     <span class="comment">% The S vector is determined from K cross surfaceNormal, and P = K cross S</span>
+0052     dirS = <a href="../../AODParentDir/Mathematical_Functions/compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>(dirK,surfaceNormal);
+0053     <span class="comment">% For dirK || surfaceNormal =&gt; dirS = 0, the S and P components correspond to X and</span>
+0054     <span class="comment">% Y components respectively. So handle that condition carefully.</span>
+0055     <span class="keyword">try</span> 
+0056     <span class="comment">% If sum(abs(dirS),1)==0 is false for all then error occurs and we</span>
+0057     <span class="comment">% just want to skip the line in that case as the dirS != 0 for</span>
+0058     <span class="comment">% all and no problem exsists</span>
+0059         dirS(:,sum(abs(dirS),1)==0) = [1;0;0];
+0060     <span class="keyword">catch</span>
+0061         
+0062     <span class="keyword">end</span>
+0063     dirP = <a href="../../AODParentDir/Mathematical_Functions/compute3dCross.html" class="code" title="function [ outVect ] = compute3dCross(vect1,vect2)">compute3dCross</a>(dirK,dirS);  
+0064     
+0065     <span class="comment">%Normalize the direction cosines</span>
+0066     dirS = dirS./repmat(sqrt(sum(dirS.^2,1)),[3,1]);
+0067     dirP = dirP./repmat(sqrt(sum(dirP.^2,1)),[3,1]);
+0068     dirK = dirK./repmat(sqrt(sum(dirK.^2,1)),[3,1]);
+0069     <span class="comment">% Rotation matrix from local to global coordinate. The dirS,dirP and</span>
+0070     <span class="comment">% dirK shall be the column of the rotation matrix.</span>
+0071     toGlobalRotation(:,1,:) = dirS;
+0072     toGlobalRotation(:,2,:) = dirP;
+0073     toGlobalRotation(:,3,:) = dirK;
+0074     <span class="comment">% Multiply the rotation matrix slicewisely with the</span>
+0075     <span class="comment">% localPolarizationVector</span>
+0076     product3DMatrix = <a href="../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>( toGlobalRotation,localVector);
+0077     
+0078     polarizationVector = product3DMatrix;
+0079 <span class="keyword">end</span>
+0080</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

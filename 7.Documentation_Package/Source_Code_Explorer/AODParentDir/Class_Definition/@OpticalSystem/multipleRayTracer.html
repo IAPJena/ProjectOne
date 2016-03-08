@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of multipleRayTracer</title>
+  <meta name="keywords" content="multipleRayTracer">
+  <meta name="description" content="Trace bundle of rays through an optical system based on the pupil">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>multipleRayTracer
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Trace bundle of rays through an optical system based on the pupil</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [multipleRayTracerResult,pupilCoordinates,pupilGridIndices] =multipleRayTracer(optSystem,wavLen,fieldPointXY,nRay,PupSamplingType,JonesVec,considerSurfAperture) % </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Trace bundle of rays through an optical system based on the pupil 
+ sampling specified. Multiple rays can be defined with wavLen (1XnWav),
+ fieldPointXY (2XnField) and the total number of ray will be nRay*nWav*nField
+ That is all rays from each field point with each of wavelegths will be
+ traced. And the result will be 4 dimensional matrix (nSurf X nRay X nField X nWav).</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Analysis_Module/Scalar_Ray_Trace_Analysis/computeInitialRayBundleDirections.html" class="code" title="function [ initialRayBundleDirections ] = computeInitialRayBundleDirections(fieldPointPosition,pupilSamplingPoints)">computeInitialRayBundleDirections</a>	computeInitialRayBundleDirections: computes and returns direction of</li><li><a href="../../../AODParentDir/Analysis_Module/Scalar_Ray_Trace_Analysis/computeInitialRayBundlePositions.html" class="code" title="function [ initialRayBundlePositions ] = computeInitialRayBundlePositions(commonRayDirectionCosine,pupilSamplingPoints,entrancePupilLocationZ,objThick)">computeInitialRayBundlePositions</a>	computeInitialRayBundlePositions: computes and returns positions of a</li><li><a href="../../../AODParentDir/Analysis_Module/Scalar_Ray_Trace_Analysis/computePupilSamplingPoints.html" class="code" title="function [ pupilSamplingPoints,pupilGridIndices ] = computePupilSamplingPoints(nRay,pupilZLocation,pupilRadius,pupilSampling,objThick)">computePupilSamplingPoints</a>	computePupilSamplingPoints:  Returns coordinates of pupil sampling points</li><li><a href="../../../AODParentDir/Class_Definition/@Ray/Ray.html" class="code" title="">Ray</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="computeRayPathMatrix.html" class="code" title="function rayPathMatrix = computeRayPathMatrix(currentOpticalSystem,wavLen,fieldPointXY,PupSamplingType,nRay)">computeRayPathMatrix</a>	computeRayPathMatrix: computes the ray path coordinates for all field</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [multipleRayTracerResult,pupilCoordinates,pupilGridIndices] = </a><span class="keyword">...</span>
+0002         multipleRayTracer(optSystem,wavLen,<span class="keyword">...</span>
+0003         fieldPointXY,nRay,PupSamplingType,JonesVec,considerSurfAperture) <span class="comment">%</span>
+0004     <span class="comment">% Trace bundle of rays through an optical system based on the pupil</span>
+0005     <span class="comment">% sampling specified. Multiple rays can be defined with wavLen (1XnWav),</span>
+0006     <span class="comment">% fieldPointXY (2XnField) and the total number of ray will be nRay*nWav*nField</span>
+0007     <span class="comment">% That is all rays from each field point with each of wavelegths will be</span>
+0008     <span class="comment">% traced. And the result will be 4 dimensional matrix (nSurf X nRay X nField X nWav).</span>
+0009 
+0010     
+0011     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0012     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0013     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0014     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0015     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0016     <span class="comment">%   Institute of Applied Physics</span>
+0017     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0018                              
+0019     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0020     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0021     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0022     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized version</span>
+0023     
+0024     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0025     
+0026     <span class="comment">% Deafault inputs</span>
+0027     <span class="keyword">if</span> nargin &lt; 1
+0028         disp(<span class="string">'Error: The function multipleRayTracer needs atleast optical system'</span>);
+0029         <span class="keyword">return</span>;
+0030     <span class="keyword">elseif</span> nargin == 1
+0031         <span class="comment">% Take all field points and primary wavelength</span>
+0032         nField = optSystem.NumberOfFieldPoints;
+0033         fieldPointMatrix = optSystem.FieldPointMatrix;
+0034         fieldPointXY = (fieldPointMatrix(:,1:2))';
+0035         wavLen = repmat(optSystem.getPrimaryWavelength,[1,nField]);
+0036 
+0037         nRay = 3;
+0038         PupSamplingType = 1;
+0039         JonesVec = [NaN;NaN];
+0040         considerSurfAperture = 1;        
+0041     <span class="keyword">elseif</span> nargin == 2 
+0042         <span class="comment">% Take all field points and given wavelength</span>
+0043         nField = optSystem.NumberOfFieldPoints;
+0044         fieldPointMatrix = optSystem.FieldPointMatrix;
+0045         fieldPointXY = (fieldPointMatrix(:,1:2))';
+0046         wavLen = repmat(wavLen(1),[1,nField]);
+0047         
+0048         nRay = 3;
+0049         PupSamplingType = 1;
+0050         JonesVec = [NaN;NaN];
+0051         considerSurfAperture = 1;  
+0052     <span class="keyword">elseif</span> nargin == 3
+0053         nRay = 3;
+0054         PupSamplingType = 1;
+0055         JonesVec = [NaN;NaN];
+0056         considerSurfAperture = 1;   
+0057     <span class="keyword">elseif</span> nargin == 4
+0058         PupSamplingType = 1;
+0059         JonesVec = [NaN;NaN];
+0060         considerSurfAperture = 1;  
+0061     <span class="keyword">elseif</span> nargin == 5
+0062         JonesVec = [NaN;NaN];
+0063         considerSurfAperture = 1; 
+0064     <span class="keyword">elseif</span> nargin == 6
+0065         considerSurfAperture = 1; 
+0066     <span class="keyword">elseif</span> nargin == 7
+0067         
+0068     <span class="keyword">end</span>
+0069     
+0070     tic
+0071     pupilRadius = (optSystem.getEntrancePupilDiameter)/2;
+0072     pupilZLocation = (optSystem.getEntrancePupilLocation);
+0073     PupSampling = PupSamplingType; 
+0074     
+0075     nSurf = optSystem.NumberOfSurfaces;
+0076     nField = size(fieldPointXY,2);
+0077     nWav  = size(wavLen,2);
+0078     <span class="keyword">if</span> abs(optSystem.SurfaceArray(1).Thickness) &gt; 10^10 <span class="comment">% object at infinity</span>
+0079         objThick = 0;
+0080     <span class="keyword">else</span>
+0081         objThick  = optSystem.SurfaceArray(1).Thickness;
+0082     <span class="keyword">end</span>
+0083 
+0084     <span class="comment">% Global reference is the 1st surface of the lens</span>
+0085     fieldPoint = [fieldPointXY; repmat(-objThick,[1,nField])];
+0086     [ pupilSamplingPoints,pupilGridIndices ] = <span class="keyword">...</span>
+0087         <a href="../../../AODParentDir/Analysis_Module/Scalar_Ray_Trace_Analysis/computePupilSamplingPoints.html" class="code" title="function [ pupilSamplingPoints,pupilGridIndices ] = computePupilSamplingPoints(nRay,pupilZLocation,pupilRadius,pupilSampling,objThick)">computePupilSamplingPoints</a>(nRay,<span class="keyword">...</span>
+0088         pupilZLocation,pupilRadius,PupSampling,objThick);
+0089     
+0090     <span class="comment">% Effective number of rays to be traced through</span>
+0091     nRay = size(pupilSamplingPoints,2);
+0092 
+0093     <span class="comment">% Determine the direction of Cheif ray - for object height field and</span>
+0094     <span class="comment">% position of Cheif ray - for field angle input</span>
+0095     <span class="comment">% Compute initial ray bundle directions or positions (for afocal) for</span>
+0096     <span class="comment">% each field points. The result will be 3 X (nRay*nField) matrices</span>
+0097     <span class="keyword">switch</span> lower(optSystem.FieldType) 
+0098         <span class="keyword">case</span> lower(<span class="string">'ObjectHeight'</span>)
+0099             <span class="keyword">if</span> abs(optSystem.SurfaceArray(1).Thickness) &gt; 10^10 
+0100                 <span class="comment">% Invalid specification</span>
+0101                 disp(<span class="string">'Error: Object Height can not be used for objects at infinity'</span>);
+0102                 <span class="keyword">return</span>;
+0103             <span class="keyword">else</span>
+0104                 [ initialRayBundleDirections ] = <a href="../../../AODParentDir/Analysis_Module/Scalar_Ray_Trace_Analysis/computeInitialRayBundleDirections.html" class="code" title="function [ initialRayBundleDirections ] = computeInitialRayBundleDirections(fieldPointPosition,pupilSamplingPoints)">computeInitialRayBundleDirections</a><span class="keyword">...</span>
+0105                 (fieldPoint,pupilSamplingPoints);   
+0106                 <span class="comment">% repeat each row in fieldPoint nRay times</span>
+0107                 allFieldPositions = cellfun(@(x) repmat(x,[1,nRay]),<span class="keyword">...</span>
+0108                     num2cell(fieldPoint,[1]),<span class="string">'UniformOutput'</span>,false);
+0109                 initialRayBundlePositions = cell2mat(allFieldPositions);                
+0110             <span class="keyword">end</span>
+0111         <span class="keyword">case</span> lower(<span class="string">'Angle'</span>)
+0112                 <span class="comment">% The angle given indicates the direction of the cheif ray</span>
+0113                 <span class="comment">% the field point is angle in degree</span>
+0114                 <span class="comment">% Feild points are given by angles</span>
+0115                 angX = fieldPoint(1,:)*pi/180;
+0116                 angY = fieldPoint(2,:)*pi/180;                
+0117 
+0118                 <span class="comment">%convert field angle to ray direction as in Zemax</span>
+0119                 dz = sqrt(1./((tan (angX)).^2+(tan (angY)).^2+1));
+0120                 dx = dz.*tan (angX);
+0121                 dy = dz.*tan (angY); 
+0122                 
+0123                 cheifRayDirection = [dx;dy;dz];
+0124             <span class="keyword">if</span> abs(optSystem.SurfaceArray(1).Thickness) &gt; 10^10 
+0125                 <span class="comment">% object at infinity and</span>
+0126                 <span class="comment">% The rays are collimated and the Cheif ray direction</span>
+0127                 <span class="comment">% becomes the common ray direction</span>
+0128                 commonRayDirectionCosine = cheifRayDirection;
+0129                 [ initialRayBundlePositions ] = <a href="../../../AODParentDir/Analysis_Module/Scalar_Ray_Trace_Analysis/computeInitialRayBundlePositions.html" class="code" title="function [ initialRayBundlePositions ] = computeInitialRayBundlePositions(commonRayDirectionCosine,pupilSamplingPoints,entrancePupilLocationZ,objThick)">computeInitialRayBundlePositions</a>(<span class="keyword">...</span>
+0130                     commonRayDirectionCosine,pupilSamplingPoints,pupilZLocation,objThick);
+0131 
+0132                 <span class="comment">% repeat each row in commonRayDirectionCosine nRay times</span>
+0133                 allFieldDirectionCosine = cellfun(@(x) repmat(x,[1,nRay]),<span class="keyword">...</span>
+0134                     num2cell(commonRayDirectionCosine,[1]),<span class="string">'UniformOutput'</span>,false);
+0135                 initialRayBundleDirections = [allFieldDirectionCosine{:}];                    
+0136             <span class="keyword">else</span>
+0137                 <span class="comment">% Rays are not collimated</span>
+0138                 <span class="comment">% The field position can be computed from the cheif ray</span>
+0139                 <span class="comment">% direction.</span>
+0140                 
+0141                 <span class="comment">% Field point to the center of entrance pupil</span>
+0142                 radFieldToEnP = (objThick + pupilZLocation)./cheifRayDirection(3,:);
+0143                 
+0144                 cheifRayFieldPoint = <span class="keyword">...</span>
+0145                     [-radFieldToEnP.*cheifRayDirection(1,:);<span class="keyword">...</span>
+0146                     -radFieldToEnP.*cheifRayDirection(2,:);<span class="keyword">...</span>
+0147                     repmat(-objThick,[1,nField])];
+0148                 
+0149                 [ initialRayBundleDirections ] = <a href="../../../AODParentDir/Analysis_Module/Scalar_Ray_Trace_Analysis/computeInitialRayBundleDirections.html" class="code" title="function [ initialRayBundleDirections ] = computeInitialRayBundleDirections(fieldPointPosition,pupilSamplingPoints)">computeInitialRayBundleDirections</a><span class="keyword">...</span>
+0150                 (cheifRayFieldPoint,pupilSamplingPoints);   
+0151                 <span class="comment">% repeat each row in fieldPoint nRay times</span>
+0152                 allFieldPositions = cellfun(@(x) repmat(x,[1,nRay]),<span class="keyword">...</span>
+0153                     num2cell(cheifRayFieldPoint,[1]),<span class="string">'UniformOutput'</span>,false);
+0154                 initialRayBundlePositions = cell2mat(allFieldPositions);                 
+0155             <span class="keyword">end</span>            
+0156     <span class="keyword">end</span>
+0157     
+0158     <span class="keyword">if</span> isnan(JonesVec(1))
+0159         pol = 0;
+0160     <span class="keyword">else</span>
+0161         pol = 1;
+0162     <span class="keyword">end</span>
+0163     
+0164     <span class="comment">% Now replicate the initial ray bundle position (direction) matrices</span>
+0165     <span class="comment">% in the 2nd dimension for all wavelengths.</span>
+0166     initialRayBundlePositions = repmat(initialRayBundlePositions,[1,nWav]);
+0167     initialRayBundleDirections = repmat(initialRayBundleDirections,[1,nWav]);
+0168     
+0169     
+0170     <span class="comment">% Initialize initial ray bundle using constructor.</span>
+0171     pos = initialRayBundlePositions;
+0172     dir = initialRayBundleDirections;
+0173     wav = arrayfun(@(x) repmat(x,[1,nRay*nField]),wavLen*optSystem.getWavelengthUnitFactor,<span class="string">'UniformOutput'</span>,false);
+0174     wav = [wav{:}];
+0175     pol = pol;
+0176     jonesVect = JonesVec;    
+0177     <span class="comment">% construct array of Ray objects</span>
+0178     initialRayBundle = <a href="../../../AODParentDir/Class_Definition/@Ray/Ray.html" class="code" title="">Ray</a>(pos,dir,wav,pol,jonesVect);
+0179     
+0180     <span class="comment">%===============RAYTRACE For Bundle of Ray========================</span>
+0181     rayTraceResult = optSystem.tracePolarizedRay(initialRayBundle,considerSurfAperture); 
+0182     
+0183     multipleRayTracerResult = reshape(rayTraceResult,[nSurf,nRay,nField,nWav]); <span class="comment">%(nSurf X nRay X nField X nWav)</span>
+0184     pupilCoordinates = pupilSamplingPoints;
+0185     pupilGridIndices = pupilGridIndices;
+0186     timeElapsed =  toc;
+0187     disp([<span class="string">'Ray Bundle Trace Completed. Polarized  = '</span>,num2str(pol), <span class="keyword">...</span>
+0188         <span class="string">', Total Number  = '</span>, num2str(nRay), <span class="string">', Time Elapsed = '</span>, <span class="keyword">...</span>
+0189         num2str(timeElapsed)]); 
+0190 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,28 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  addObjectToAODObjectCatalogue -> addObjectToAODObjectCatalogue;
+  addObjectToAODObjectCatalogue -> isValidAODObjectCatalogue;
+  clearAODObjectCatalogue -> createNewAODObjectCatalogue;
+  clearAODObjectCatalogue -> isValidAODObjectCatalogue;
+  createNewAODObjectCatalogue -> createNewAODObjectCatalogue;
+  extractObjectFromAODObjectCatalogue -> isValidAODObjectCatalogue;
+  getAllAODObjectCatalogues -> createNewAODObjectCatalogue;
+  getAllAODObjectCatalogues -> getAllFiles;
+  getAllAODObjectCatalogues -> isValidAODObjectCatalogue;
+  getAllFiles -> getAllFiles;
+  mergeTwoAODObjectCatalogues -> addObjectToAODObjectCatalogue;
+  mergeTwoAODObjectCatalogues -> createNewAODObjectCatalogue;
+  mergeTwoAODObjectCatalogues -> isValidAODObjectCatalogue;
+  removeObjectFromAODObjectCatalogue -> isValidAODObjectCatalogue;
+
+  addObjectToAODObjectCatalogue [URL="addObjectToAODObjectCatalogue.html"];
+  clearAODObjectCatalogue [URL="clearAODObjectCatalogue.html"];
+  createNewAODObjectCatalogue [URL="createNewAODObjectCatalogue.html"];
+  extractObjectFromAODObjectCatalogue [URL="extractObjectFromAODObjectCatalogue.html"];
+  getAllAODObjectCatalogues [URL="getAllAODObjectCatalogues.html"];
+  getAllFiles [URL="getAllFiles.html"];
+  isValidAODObjectCatalogue [URL="isValidAODObjectCatalogue.html"];
+  mergeTwoAODObjectCatalogues [URL="mergeTwoAODObjectCatalogues.html"];
+  objectDataInputDialog [URL="objectDataInputDialog.html"];
+  removeObjectFromAODObjectCatalogue [URL="removeObjectFromAODObjectCatalogue.html"];
+}

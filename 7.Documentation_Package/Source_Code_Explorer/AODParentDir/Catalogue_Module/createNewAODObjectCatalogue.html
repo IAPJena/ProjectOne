@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of createNewAODObjectCatalogue</title>
+  <meta name="keywords" content="createNewAODObjectCatalogue">
+  <meta name="description" content="CREATENEWCOATINGCATALOGUE Create anew AOD object catalogue and intialize">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Catalogue_Module -->
+<h1>createNewAODObjectCatalogue
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>CREATENEWCOATINGCATALOGUE Create anew AOD object catalogue and intialize</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">CREATENEWCOATINGCATALOGUE Create anew AOD object catalogue and intialize
+empty array of the corresponding object.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>	CREATENEWCOATINGCATALOGUE Create anew AOD object catalogue and intialize</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="clearAODObjectCatalogue.html" class="code" title="function [ cleared ] = clearAODObjectCatalogue(objectType, objectCatalogueFullName )">clearAODObjectCatalogue</a>	CLEARCOATINGCATALOGUE Remove all AODobject from the catalogue</li><li><a href="createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>	CREATENEWCOATINGCATALOGUE Create anew AOD object catalogue and intialize</li><li><a href="getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>	FINDALLCOATINGCATALOGUES Searches for all aodObject catalogue files in the</li><li><a href="mergeTwoAODObjectCatalogues.html" class="code" title="function [ merged ] = mergeTwoAODObjectCatalogues(objectType, objCatFullName1,objCatFullName2,objCatFullNameMergedFullName )">mergeTwoAODObjectCatalogues</a>	mergeTwoAODObjectCatalogues Merge two AOD object catalogues and save in a</li><li><a href="../../AODParentDir/Class_Definition/@AODParentWindow/InitializeMenuAndToolbarItems.html" class="code" title="function InitializeMenuAndToolbarItems(parentWindow)">InitializeMenuAndToolbarItems</a>	Defines all menu items and toolbar commands and all callbacks related</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )</a>
+0002 <span class="comment">%CREATENEWCOATINGCATALOGUE Create anew AOD object catalogue and intialize</span>
+0003 <span class="comment">%empty array of the corresponding object.</span>
+0004 
+0005 
+0006 <span class="comment">%Default values</span>
+0007 <span class="keyword">if</span> nargin &lt; 1
+0008     disp(<span class="string">'Error: The function needs atleast objectType as argumet'</span>);
+0009 <span class="keyword">elseif</span> nargin == 1
+0010     objectCatalogueFullName = [pwd,<span class="string">'\Catalogue_Files'</span>,<span class="string">'\New_'</span>,objectType,<span class="string">'.mat'</span>];
+0011     ask_replace = <span class="string">'ask'</span>;
+0012 <span class="keyword">elseif</span> nargin == 2
+0013     ask_replace = <span class="string">'ask'</span>;
+0014 <span class="keyword">end</span>
+0015 <span class="keyword">switch</span> lower(ask_replace)
+0016     <span class="keyword">case</span> lower(<span class="string">'ask'</span>)
+0017         Ask = 1;
+0018         Replace = 0;
+0019     <span class="keyword">case</span> lower(<span class="string">'replace'</span>)
+0020         Ask = 0;
+0021         Replace = 1;        
+0022 <span class="keyword">end</span>
+0023 
+0024 <span class="comment">%check if the catalogue already exsit</span>
+0025 <span class="keyword">if</span> exist(objectCatalogueFullName,<span class="string">'file'</span>)
+0026     [pathstr,name,ext] = fileparts(objectCatalogueFullName);
+0027     alternativeName = fullfile(pathstr,[name,<span class="string">'1'</span>,ext]);
+0028     <span class="keyword">if</span> Ask
+0029     button = questdlg(strcat(<span class="string">'There already exists an AODObject catalogue named '</span>, <span class="keyword">...</span>
+0030         name, <span class="string">'. Do you want to create the catalogue with new name: '</span>,name, <span class="string">'1 ?'</span>),<span class="string">'New Catalogue Name'</span>,<span class="string">'Yes Save'</span>,<span class="string">'No Replace'</span>,<span class="string">'Yes Save'</span>);
+0031     <span class="keyword">switch</span> button
+0032         <span class="keyword">case</span> <span class="string">'Yes Save'</span>
+0033             newAODObjectCatalogueFullName = alternativeName;
+0034             fullName = <a href="createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>(objectType, newAODObjectCatalogueFullName );
+0035         <span class="keyword">case</span> <span class="string">'No Replace'</span>
+0036             <span class="comment">% delete the exsisting and create anew one</span>
+0037             delete(objectCatalogueFullName);
+0038             fullName = <a href="createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>(objectType, objectCatalogueFullName );
+0039     <span class="keyword">end</span>
+0040     <span class="keyword">else</span>
+0041         <span class="comment">% delete the exsisting and create anew one</span>
+0042         delete(objectCatalogueFullName);
+0043         fullName = <a href="createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>(objectType, objectCatalogueFullName );
+0044     <span class="keyword">end</span>
+0045 <span class="keyword">else</span>
+0046     FileInfoStruct =  struct();
+0047     <span class="keyword">switch</span> lower(objectType)
+0048         <span class="keyword">case</span> <span class="string">'coating'</span>
+0049             AODObjectArray = Coating.empty;
+0050             FileInfoStruct.Type = <span class="string">'Coating'</span>;
+0051         <span class="keyword">case</span> <span class="string">'glass'</span>
+0052             AODObjectArray = Glass.empty;
+0053             FileInfoStruct.Type = <span class="string">'Glass'</span>;
+0054     <span class="keyword">end</span>
+0055     FileInfoStruct.Date = fix(clock); <span class="comment">% Clock = [YYYY MM DD HH MM SS]</span>
+0056     save(objectCatalogueFullName,<span class="string">'AODObjectArray'</span>,<span class="string">'FileInfoStruct'</span>);
+0057     save(objectCatalogueFullName,<span class="string">'AODObjectArray'</span>,<span class="string">'FileInfoStruct'</span>,<span class="string">'-append'</span>);
+0058     fullName = objectCatalogueFullName;
+0059 <span class="keyword">end</span>
+0060 <span class="keyword">end</span>
+0061</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

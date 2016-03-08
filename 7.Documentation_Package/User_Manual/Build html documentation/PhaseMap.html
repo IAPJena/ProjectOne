@@ -1,0 +1,133 @@
+﻿<html>
+	
+<head>
+	<title>Phase Map</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "User Manual MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("PhaseMap");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Phase Map</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="OpticalSystemAnalysis.html">Optical System Analysis</a> &rsaquo;&rsaquo; <a href="PolarizationAberration.html">Polarization Aberration:</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="PolarizationAberration.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="AmplitudeTransmissionMap.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="WavefrontDiattenuationMap.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps2"><span class="rvts34">Phase Map</span></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem109.png"/><img alt="" style="padding : 1px;" src="lib/NewItem145.png"/></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts33">Purpose:</span></p>
+<p class="rvps2"><span class="rvts28">Plot of the phase part of the total polarization ray tracing matrix at different pupil locations. It can show the phase variation in range of one wave limit. It is a 3X3 matrix of color plots and it has setting parameters similar to amplitude transmission map.</span></p>
+<p class="rvps2"><span class="rvts37"><br/></span></p>
+<p class="rvps2"><span class="rvts33">Setting:</span></p>
+<p class="rvps2"><span class="rvts33"><br/></span></p>
+<div class="rvps2"><table border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps3"><span class="rvts33">Settings</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps3"><span class="rvts33">Description</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps3"><span class="rvts33">Remarks</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Surface Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">The surface index used to view the footprint diagram.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35"><br/></span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Field Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Index of the field value &nbsp;for the rays to be displayed in the layout.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">A single index should be selected.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Wavelength Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Index of the wavelength value &nbsp;for the rays to be displayed in the layout.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">A single index should be selected.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Pupil Grid Size</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">The sampling grid size of the entrance pupil.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35"><br/></span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Jones Vector</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps19"><span class="rvts38">Defines the initial &nbsp;polarization vector of the ray. &nbsp;It is given in s-p-k coordinate system which is not the same as the global x-y-z coordinate in many cases.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts38">The phase values of Jones vector are always given in degrees. </span></p>
+</td>
+</tr>
+</table>
+</div>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/feature-tour">Easily create Help documents</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

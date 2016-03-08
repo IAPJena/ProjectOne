@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of resetSurfaceEditorPanel</title>
+  <meta name="keywords" content="resetSurfaceEditorPanel">
+  <meta name="description" content="resetSurfaceEditorPanel: reset all surface editor tables">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>resetSurfaceEditorPanel
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>resetSurfaceEditorPanel: reset all surface editor tables</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function parentWindow = resetSurfaceEditorPanel(parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> resetSurfaceEditorPanel: reset all surface editor tables
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="InitializeSurfaceEditorPanel.html" class="code" title="function InitializeSurfaceEditorPanel(parentWindow)">InitializeSurfaceEditorPanel</a>	InitializeSurfaceEditorPanel: Define and initialized the uicontrols of the</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function parentWindow = resetSurfaceEditorPanel(parentWindow) </a>
+0002 <span class="comment">% resetSurfaceEditorPanel: reset all surface editor tables</span>
+0003 <span class="comment">% Member of AODParentWindow class</span>
+0004 
+0005     aodHandles = parentWindow.AODParentHandles;
+0006     <span class="comment">% Initialize the panel and table for standard data</span>
+0007     columnName1 =   {<span class="string">'Surface'</span>, <span class="string">'Name/Note'</span>, <span class="string">'Surface Type'</span>, <span class="string">''</span>, <span class="string">'Radius'</span>,<span class="keyword">...</span>
+0008         <span class="string">''</span>, <span class="string">'Thickness'</span>, <span class="string">''</span>, <span class="string">'Glass'</span>, <span class="string">''</span>,<span class="string">'Deviation Mode'</span>, <span class="string">''</span>,<span class="string">'Semi-Diameter'</span>, <span class="string">''</span>,<span class="string">'Coating'</span>,<span class="string">''</span>};
+0009     columnWidth1 = {80, 100, 120, 15, 120, 15, 120, 15, 120, 15, 120, 15, <span class="keyword">...</span>
+0010         120, 15,120, 15};
+0011     columnEditable1 =  [false true true false true false true false true <span class="keyword">...</span>
+0012         false true false true false true false];
+0013     initialTable1 = {<span class="string">'OBJECT'</span>,<span class="string">''</span>,<span class="string">'Plane'</span>,<span class="string">''</span>,<span class="string">'Inf'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>;<span class="keyword">...</span>
+0014         <span class="string">'STOP'</span>,  <span class="string">''</span>,<span class="string">'Plane'</span>,<span class="string">''</span>,<span class="string">'Inf'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">'+1 Refractive'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>;<span class="keyword">...</span>
+0015         <span class="string">'IMAGE'</span>, <span class="string">''</span>,<span class="string">'Plane'</span>,<span class="string">''</span>,<span class="string">'Inf'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span>};
+0016     set(aodHandles.tblStandardData, <span class="string">'ColumnFormat'</span>, <span class="keyword">...</span>
+0017         {<span class="string">'char'</span>, <span class="string">'char'</span>,{<span class="string">'Plane'</span> <span class="string">'Spherical'</span> <span class="string">'Conic Aspherical'</span> <span class="string">'Even Aspherical'</span> <span class="keyword">...</span>
+0018         <span class="string">'Odd Aspherical'</span>},<span class="string">'char'</span>,<span class="string">'char'</span>, <span class="string">'char'</span>,<span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>,<span class="keyword">...</span>
+0019         <span class="string">'char'</span>, {<span class="string">'+1 Refractive'</span> <span class="string">'-1 Reflective'</span>}, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>,<span class="string">'char'</span>, <span class="string">'char'</span>});
+0020     set(aodHandles.tblStandardData, <span class="string">'Data'</span>, initialTable1,<span class="string">'ColumnEditable'</span>, <span class="keyword">...</span>
+0021         columnEditable1,<span class="string">'ColumnName'</span>, columnName1,<span class="string">'ColumnWidth'</span>,columnWidth1);
+0022     
+0023      
+0024     <span class="comment">% Initialize the panel and table for aperture data</span>
+0025     columnName2 =   <span class="keyword">...</span>
+0026         {<span class="string">'Surface'</span>, <span class="string">'Surface Type'</span>, <span class="string">'Aperture Type'</span>, <span class="string">''</span>, <span class="string">'Aper Param1'</span>, <span class="string">''</span>,<span class="keyword">...</span>
+0027         <span class="string">'Aper Param2'</span>, <span class="string">''</span>, <span class="string">'Aper Decent X'</span>, <span class="string">''</span>, <span class="string">'Aper Decent Y'</span>, <span class="string">''</span>};
+0028     columnWidth2 = <span class="keyword">...</span>
+0029         {80, 120, 120, 15, 100, 15, 100, 15, 100, 15, 100, 15, 100, 15};
+0030     columnEditable2 =  <span class="keyword">...</span>
+0031         [false false true false true false true false true false true false ];
+0032     initialTable2 = <span class="keyword">...</span>
+0033         {<span class="string">'OBJECT'</span>,<span class="string">'Plane'</span>,<span class="string">'Floating'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>;<span class="keyword">...</span>
+0034         <span class="string">'STOP'</span>,  <span class="string">'Plane'</span>,<span class="string">'Floating'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>;<span class="keyword">...</span>
+0035         <span class="string">'IMAGE'</span>, <span class="string">'Plane'</span>,<span class="string">'Floating'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>};
+0036     set(aodHandles.tblApertureData , <span class="string">'ColumnFormat'</span>, <span class="keyword">...</span>
+0037         {<span class="string">'char'</span>, <span class="string">'char'</span>, {<span class="string">'Floating'</span> <span class="string">'Circular'</span> <span class="string">'Rectangular'</span> <span class="string">'Elliptical'</span>},<span class="keyword">...</span>
+0038         <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>,<span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>});
+0039     set(aodHandles.tblApertureData, <span class="string">'Data'</span>, initialTable2,<span class="string">'ColumnEditable'</span>, columnEditable2,<span class="keyword">...</span>
+0040         <span class="string">'ColumnName'</span>, columnName2,<span class="string">'ColumnWidth'</span>,columnWidth2);
+0041 
+0042     <span class="comment">% Initialize the panel and table for aspheric data</span>
+0043     columnName4 =   <span class="keyword">...</span>
+0044         {<span class="string">'Surface'</span>, <span class="string">'Surface Type'</span>, <span class="string">'Conic'</span>, <span class="string">''</span>, <span class="string">'A1'</span>, <span class="string">''</span>, <span class="string">'A2'</span>, <span class="string">''</span>, <span class="string">'A3'</span>, <span class="keyword">...</span>
+0045         <span class="string">''</span>, <span class="string">'A4'</span>, <span class="string">''</span>, <span class="string">'A5'</span>, <span class="string">''</span>,<span class="string">'A6'</span>, <span class="string">''</span>,<span class="string">'A7'</span>, <span class="string">''</span>, <span class="string">'A8'</span>, <span class="string">''</span>, <span class="string">'A9'</span>, <span class="string">''</span>, <span class="string">'A10'</span>, <span class="keyword">...</span>
+0046         <span class="string">''</span>, <span class="string">'A11'</span>, <span class="string">''</span>,<span class="string">'A12'</span>, <span class="string">''</span>};
+0047     columnWidth4 = <span class="keyword">...</span>
+0048         {80, 120, 50,15,50,15,50,15,50,15,50,15,50,15,50,15,50,15,50,15,<span class="keyword">...</span>
+0049         50,15,50,15,50,15,50,15};
+0050 
+0051     columnEditable4 =  <span class="keyword">...</span>
+0052         [false false true false true false true false true <span class="keyword">...</span>
+0053         false true false true false true false true false true false true false true<span class="keyword">...</span>
+0054         false true false true false];
+0055     initialTable4 = <span class="keyword">...</span>
+0056         {<span class="string">'OBJECT'</span>,<span class="string">'Plane'</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="keyword">...</span>
+0057         <span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>;<span class="keyword">...</span>
+0058         <span class="string">'STOP'</span>,  <span class="string">'Plane'</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="keyword">...</span>
+0059         <span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>;<span class="keyword">...</span>
+0060         <span class="string">'IMAGE'</span>, <span class="string">'Plane'</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="keyword">...</span>
+0061         <span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>};
+0062     set(aodHandles.tblAsphericData, <span class="string">'Data'</span>, initialTable4,<span class="string">'ColumnEditable'</span>, columnEditable4,<span class="keyword">...</span>
+0063         <span class="string">'ColumnName'</span>, columnName4,<span class="string">'ColumnWidth'</span>,columnWidth4);
+0064 
+0065     <span class="comment">% Initialize the panel and table for tilt decenter data</span>
+0066     <span class="comment">% Tilt and Decenter order = index of [dx,dy,tx,ty,tz]</span>
+0067     columnName5 =   <span class="keyword">...</span>
+0068         {<span class="string">'  Surface  '</span>, <span class="string">'Surface Type'</span>, <span class="string">'    Order    '</span>, <span class="string">''</span>, <span class="keyword">...</span>
+0069         <span class="string">'Decenter X'</span>, <span class="string">''</span>, <span class="string">'Decenter Y'</span>, <span class="string">''</span>, <span class="string">'Tilt X'</span>, <span class="string">''</span>,<span class="keyword">...</span>
+0070         <span class="string">'Tilt Y'</span>, <span class="string">''</span>, <span class="string">'Tilt Z'</span>, <span class="string">''</span>, <span class="string">'Tilt Mode'</span>, <span class="string">''</span>};
+0071     columnWidth5 =   {80, 120, 120, 15, 80, 15, 80, 15, 80, 15,<span class="keyword">...</span>
+0072         80,15, 80, 15, 80, 15};
+0073     columnEditable5 =  <span class="keyword">...</span>
+0074         [false false true false true false true false true false <span class="keyword">...</span>
+0075         true false true false true false];
+0076     initialTable5 = <span class="keyword">...</span>
+0077         {<span class="string">'OBJECT'</span>,<span class="string">'Plane'</span>,<span class="string">'DxDyDzTxTyTz'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'DAR'</span>,<span class="string">''</span>;<span class="keyword">...</span>
+0078         <span class="string">'STOP'</span>,  <span class="string">'Plane'</span>,<span class="string">'DxDyDzTxTyTz'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'DAR'</span>,<span class="string">''</span>;<span class="keyword">...</span>
+0079         <span class="string">'IMAGE'</span>, <span class="string">'Plane'</span>,<span class="string">'DxDyDzTxTyTz'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'0'</span>,<span class="string">''</span>,<span class="string">'DAR'</span>,<span class="string">''</span>};
+0080     set(aodHandles.tblTiltDecenterData , <span class="string">'ColumnFormat'</span>, {<span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>,<span class="string">'char'</span>, <span class="string">'char'</span>,<span class="keyword">...</span>
+0081         <span class="string">'char'</span>,<span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="string">'char'</span>, <span class="keyword">...</span>
+0082         {<span class="string">'DAR'</span> <span class="string">'NAX'</span> <span class="string">'BEN'</span>},<span class="string">'char'</span>});
+0083     set(aodHandles.tblTiltDecenterData, <span class="string">'Data'</span>, initialTable5,<span class="string">'ColumnEditable'</span>, <span class="keyword">...</span>
+0084         columnEditable5,<span class="string">'ColumnName'</span>, columnName5,<span class="string">'ColumnWidth'</span>,columnWidth5);
+0085        
+0086    parentWindow.AODParentHandles = aodHandles;
+0087 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

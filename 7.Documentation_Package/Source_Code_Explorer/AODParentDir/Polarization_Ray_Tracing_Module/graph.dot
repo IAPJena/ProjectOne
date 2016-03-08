@@ -1,0 +1,21 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  computeEllipseParameters -> convertJonesVectorToPolarizationEllipse;
+  computeMultilayerFresnelsCoefficients -> computeMultilayerTransfermatrix;
+
+  computeAccumulatedPhase [URL="computeAccumulatedPhase.html"];
+  computeDiattenuation [URL="computeDiattenuation.html"];
+  computeEllipseParameters [URL="computeEllipseParameters.html"];
+  computeExitRayAngle [URL="computeExitRayAngle.html"];
+  computeIntensity [URL="computeIntensity.html"];
+  computeMultilayerFresnelsCoefficients [URL="computeMultilayerFresnelsCoefficients.html"];
+  computeMultilayerTransfermatrix [URL="computeMultilayerTransfermatrix.html"];
+  computePhaseDifference [URL="computePhaseDifference.html"];
+  computePhasePropagationFactors [URL="computePhasePropagationFactors.html"];
+  computeProperRetardance [URL="computeProperRetardance.html"];
+  convertJVToPolVector [URL="convertJVToPolVector.html"];
+  convertJonesMatrixToPolarizationMatrix [URL="convertJonesMatrixToPolarizationMatrix.html"];
+  convertJonesVectorToPolarizationEllipse [URL="convertJonesVectorToPolarizationEllipse.html"];
+  convertJonesVectorToPolarizationVectorNew [URL="convertJonesVectorToPolarizationVectorNew.html"];
+  normalizeJonesVector [URL="normalizeJonesVector.html"];
+}

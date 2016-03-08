@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getStopIndex</title>
+  <meta name="keywords" content="getStopIndex">
+  <meta name="description" content="getStopIndex: gives the stop index surface set by user">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>getStopIndex
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getStopIndex: gives the stop index surface set by user</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function stopIndex = getStopIndex(OS) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getStopIndex: gives the stop index surface set by user</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Paraxial_Optics_Module/computeSystemStopIndex.html" class="code" title="function [ stopIndex] = computeSystemStopIndex(givenStopIndex,refIndex,thick,curv,clearAperture,obj_img)">computeSystemStopIndex</a>	computeSystemStopIndex: calculate the stop index</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function stopIndex = getStopIndex(OS)</a>
+0002     <span class="comment">% getStopIndex: gives the stop index surface set by user</span>
+0003     stopIndex = 0;
+0004     <span class="keyword">for</span> kk=1:1:OS.NumberOfSurfaces
+0005         <span class="keyword">if</span> OS.SurfaceArray(kk).Stop
+0006             stopIndex = kk;
+0007             <span class="keyword">break</span>;
+0008         <span class="keyword">end</span>
+0009     <span class="keyword">end</span>
+0010     <span class="keyword">if</span> stopIndex == 0 
+0011         <span class="comment">% If stop index not given by user then compute it</span>
+0012         refIndex = zeros(1,OS.NumberOfSurfaces);
+0013         thick = zeros(1,OS.NumberOfSurfaces);
+0014         curv = zeros(1,OS.NumberOfSurfaces);
+0015         clearAperture = zeros(1,OS.NumberOfSurfaces);
+0016 
+0017          <span class="keyword">for</span> kk=1:1:OS.NumberOfSurfaces
+0018             refIndex(kk) = OS.SurfaceArray(kk).Glass<span class="keyword">...</span>
+0019                 .getRefractiveIndex(OS.PrimaryWavelengthIndex);
+0020             thick(kk) = OS.SurfaceArray(kk).Thickness;
+0021             curv(kk) = 1/(OS.SurfaceArray(kk).Radius);
+0022             <span class="keyword">switch</span> OS.SurfaceArray(kk).ApertureType
+0023                 <span class="keyword">case</span> <span class="string">'Circular'</span>
+0024                     clearAperture(kk) = <span class="keyword">...</span>
+0025                         OS.SurfaceArray(kk).ApertureParameter(1);
+0026                 <span class="keyword">case</span> <span class="string">'Rectangular'</span> 
+0027                     clearAperture(kk) = <span class="keyword">...</span>
+0028                         sqrt(sum((OS.SurfaceArray(kk).ApertureParameter(1:2)).^2));
+0029                 <span class="keyword">case</span> <span class="string">'Elliptical'</span>
+0030                     clearAperture(kk) = <span class="keyword">...</span>
+0031                         sqrt(sum((OS.SurfaceArray(kk).ApertureParameter(1:2)).^2));
+0032             <span class="keyword">end</span>
+0033             
+0034          <span class="keyword">end</span>  
+0035          
+0036      <span class="comment">% For -ve thickness refindex should also be negative</span>
+0037      refIndex = refIndex.*sign(thick);
+0038      <span class="comment">% Replace zero index with 1 to avoid division by zero</span>
+0039      refIndex(refIndex==0) = 1;
+0040      
+0041         <span class="keyword">if</span> abs(thick(1))&gt;10^10 
+0042           thick(1)=10^10;
+0043           obj = <span class="string">'I'</span>;
+0044         <span class="keyword">else</span>
+0045            obj = <span class="string">'F'</span>;
+0046         <span class="keyword">end</span>
+0047         <span class="keyword">if</span> OS.Afocal
+0048            img = <span class="string">'I'</span>;
+0049         <span class="keyword">else</span>
+0050            img = <span class="string">'F'</span>;
+0051         <span class="keyword">end</span>
+0052         obj_img = [obj,img];        
+0053 
+0054         [ stopIndex] = <a href="../../../AODParentDir/Paraxial_Optics_Module/computeSystemStopIndex.html" class="code" title="function [ stopIndex] = computeSystemStopIndex(givenStopIndex,refIndex,thick,curv,clearAperture,obj_img)">computeSystemStopIndex</a><span class="keyword">...</span>
+0055         (stopIndex,refIndex,thick,curv,clearAperture,obj_img);
+0056     <span class="keyword">end</span>
+0057 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

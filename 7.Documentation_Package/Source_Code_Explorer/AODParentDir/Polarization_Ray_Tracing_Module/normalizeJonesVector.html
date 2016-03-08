@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of normalizeJonesVector</title>
+  <meta name="keywords" content="normalizeJonesVector">
+  <meta name="description" content="normalizeJonesVector normalizes a given jones vector">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Polarization_Ray_Tracing_Module -->
+<h1>normalizeJonesVector
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>normalizeJonesVector normalizes a given jones vector</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ normalizedJonesVector ] = normalizeJonesVector( jonesVector ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> normalizeJonesVector normalizes a given jones vector
+ The function is vectorized so it can work on multiple sets of 
+ inputs once at the same time.
+ Inputs:
+   jonesVector = 2XN matrix([JsMag&amp;JsPhase;JpMag&amp;JpPhase])
+ Output:
+   normalizedJonesVector: 3XN matrix Normalized jones vector</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/tracePolarizedRay.html" class="code" title="function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture)">tracePolarizedRay</a>	tracePolarizedRay: main function of polarized ray tracer</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ normalizedJonesVector ] = normalizeJonesVector( jonesVector )</a>
+0002     <span class="comment">% normalizeJonesVector normalizes a given jones vector</span>
+0003     <span class="comment">% The function is vectorized so it can work on multiple sets of</span>
+0004     <span class="comment">% inputs once at the same time.</span>
+0005     <span class="comment">% Inputs:</span>
+0006     <span class="comment">%   jonesVector = 2XN matrix([JsMag&amp;JsPhase;JpMag&amp;JpPhase])</span>
+0007     <span class="comment">% Output:</span>
+0008     <span class="comment">%   normalizedJonesVector: 3XN matrix Normalized jones vector</span>
+0009 
+0010     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0011     <span class="comment">%</span>
+0012 
+0013     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0014     <span class="comment">%</span>
+0015 
+0016     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0017     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0018     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0019     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0020     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0021     <span class="comment">%   Institute of Applied Physics</span>
+0022     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0023                              
+0024     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0025     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0026     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0027     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0028 
+0029     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0030     
+0031     nRay = size(jonesVector,2);
+0032     <span class="comment">% Divide the jones vector to magnitude and phase</span>
+0033     magSP = abs(jonesVector);
+0034     phaseSP = angle(jonesVector);
+0035     <span class="comment">% Compute the resultant maginute</span>
+0036     magE = sqrt(sum((magSP).^2,1)); 
+0037     <span class="comment">% Finally compute the normalizedJonesVector</span>
+0038     normalizedJonesVector = jonesVector./repmat(magE,[2,1]);
+0039 <span class="keyword">end</span>
+0040</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

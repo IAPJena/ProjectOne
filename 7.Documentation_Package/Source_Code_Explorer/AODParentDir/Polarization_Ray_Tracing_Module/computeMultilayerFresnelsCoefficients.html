@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeMultilayerFresnelsCoefficients</title>
+  <meta name="keywords" content="computeMultilayerFresnelsCoefficients">
+  <meta name="description" content="computeMultilayerFresnelsCoefficients: Computes the reflection and">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Polarization_Ray_Tracing_Module -->
+<h1>computeMultilayerFresnelsCoefficients
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>computeMultilayerFresnelsCoefficients: Computes the reflection and</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [T,R,tau,rho] = computeMultilayerFresnelsCoefficients(refIndex,thickness,polarisation,lambda,incAngle,n_s,n_c,primaryWaveLenInUm) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeMultilayerFresnelsCoefficients: Computes the reflection and 
+ transmission of a stratified media depending on the wavelength .
+ All dimensions are in µm
+ The function is vectorized so it can work on multiple sets of 
+ inputs once at the same time.
+ Inputs:
+   refIndex: refractive index of the layers (complex vector) or 2D
+             matrix if it is different for each wavelength
+   thickness: Thicknesses of the layers (Vector)or 2D matrix if it 
+              is different for each wavelength
+   polarisation: Polarisation of the field to be computed (String: 'TE' or 'TM')
+   lambda: Wavelength for which the computation shall be conducted (can be Vector)
+   incAngle: Angle of incidendence in degree (can be Vector)
+   n_s,n_c: Refractive indices of the substrate and cladding Substrat/Cladding;
+ Outputs:
+   T: Transmitted amplitude (komplex vector) 
+   R: Reflected amplitude (komplex vector) 
+   tau: Transmitted energy (reel vector) 
+   rho: Reflected energy (reel vector)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="computeMultilayerTransfermatrix.html" class="code" title="function transMatrix = computeMultilayerTransfermatrix(refIndex, thickness, polarisation, lambda, kx)">computeMultilayerTransfermatrix</a>	computeMultilayerTransfermatrix: Computes the transfer matrix</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@Coating/getReflectionCoefficients.html" class="code" title="function  [ampRs,ampRp,powRs,powRp,JonesRefMatrix] = getReflectionCoefficients(Coating,wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm)">getReflectionCoefficients</a>	Computes the amplitude and power coefficients of reflection using</li><li><a href="../../AODParentDir/Class_Definition/@Coating/getTransmissionCoefficients.html" class="code" title="function [ampTs,ampTp,powTs,powTp,JonesTransMatrix] = getTransmissionCoefficients(coating,wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm)">getTransmissionCoefficients</a>	Computes the amplitude and power coefficients of</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [T,R,tau,rho] = computeMultilayerFresnelsCoefficients</a><span class="keyword">...</span>
+0002     (refIndex,thickness,polarisation,lambda,incAngle,n_s,n_c,primaryWaveLenInUm)
+0003     <span class="comment">% computeMultilayerFresnelsCoefficients: Computes the reflection and</span>
+0004     <span class="comment">% transmission of a stratified media depending on the wavelength .</span>
+0005     <span class="comment">% All dimensions are in µm</span>
+0006     <span class="comment">% The function is vectorized so it can work on multiple sets of</span>
+0007     <span class="comment">% inputs once at the same time.</span>
+0008     <span class="comment">% Inputs:</span>
+0009     <span class="comment">%   refIndex: refractive index of the layers (complex vector) or 2D</span>
+0010     <span class="comment">%             matrix if it is different for each wavelength</span>
+0011     <span class="comment">%   thickness: Thicknesses of the layers (Vector)or 2D matrix if it</span>
+0012     <span class="comment">%              is different for each wavelength</span>
+0013     <span class="comment">%   polarisation: Polarisation of the field to be computed (String: 'TE' or 'TM')</span>
+0014     <span class="comment">%   lambda: Wavelength for which the computation shall be conducted (can be Vector)</span>
+0015     <span class="comment">%   incAngle: Angle of incidendence in degree (can be Vector)</span>
+0016     <span class="comment">%   n_s,n_c: Refractive indices of the substrate and cladding Substrat/Cladding;</span>
+0017     <span class="comment">% Outputs:</span>
+0018     <span class="comment">%   T: Transmitted amplitude (komplex vector)</span>
+0019     <span class="comment">%   R: Reflected amplitude (komplex vector)</span>
+0020     <span class="comment">%   tau: Transmitted energy (reel vector)</span>
+0021     <span class="comment">%   rho: Reflected energy (reel vector)</span>
+0022 
+0023     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0024     <span class="comment">% This function calculates the transfer matrix of a given system of layer.</span>
+0025     <span class="comment">% Basically it works as follows:</span>
+0026 
+0027     <span class="comment">% 1. Compute epsilon vector from refractive index vector and Compares the length of thickness vector and epsilon vector. If they are not</span>
+0028     <span class="comment">% equal, display error message and exits the function.</span>
+0029 
+0030     <span class="comment">% 2. Make sure valid polarisation is defined. Otherwise prompt error</span>
+0031     <span class="comment">% message to the user and exit.</span>
+0032 
+0033     <span class="comment">% 3. Calculate the permitivity of cladding and substrate from the refractive</span>
+0034     <span class="comment">% index</span>
+0035 
+0036     <span class="comment">% 4. Finally claculate the transmission and reflection coefficients for each</span>
+0037     <span class="comment">% waveelenth in the given wave legth array.</span>
+0038     
+0039     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0040     <span class="comment">% Call [T,R,tau,rho]=computeMultilayerFresnelsCoefficients...</span>
+0041     <span class="comment">%     (epsilon,thickness,polarisation,lambda,incAngle,n_s,n_c);</span>
+0042 
+0043 
+0044     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0045     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0046     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0047     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0048     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0049     <span class="comment">%   Institute of Applied Physics</span>
+0050     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0051                              
+0052     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0053     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0054     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0055     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0056 
+0057     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0058 
+0059     <span class="comment">% compute permitivity vector</span>
+0060     epsilon = (refIndex).^2;
+0061     <span class="comment">% make sure epsilon and thickness vectors are of equal size</span>
+0062     <span class="keyword">if</span> size(epsilon,1) == size(thickness,1)
+0063         nLayer = size(epsilon,1);
+0064     <span class="keyword">else</span>
+0065         msgbox([<span class="string">'The length of epsilon vector should be equal '</span>,<span class="keyword">...</span>
+0066             <span class="string">'to that of thickness vector.'</span>] ,<span class="string">'Error'</span>);
+0067         M = NaN;
+0068         <span class="keyword">return</span>
+0069     <span class="keyword">end</span>
+0070 
+0071     <span class="comment">%Validate polarisation</span>
+0072     <span class="keyword">if</span> ~(strcmpi(polarisation,<span class="string">'TE'</span>) || strcmpi(polarisation,<span class="string">'TM'</span>))
+0073         msgbox(<span class="string">'Polarisation should be either TE or TM'</span>,<span class="string">'Error'</span>);
+0074         M = NaN;
+0075         <span class="keyword">return</span>
+0076     <span class="keyword">end</span>
+0077 
+0078     <span class="comment">% calculate the permitivity of cladding and substrate from the</span>
+0079     <span class="comment">% refractive index</span>
+0080 
+0081     epsilon_c = (n_c).^2;
+0082     epsilon_s = (n_s).^2;
+0083 
+0084     <span class="comment">% Wavelength and incidence angles for multiple ray inputs</span>
+0085     <span class="comment">% lambda,incAngle</span>
+0086     nLambda = size(lambda,2);
+0087     nIncAngle = size(incAngle,2);
+0088     <span class="keyword">if</span> nLambda == 1
+0089         nRay = nIncAngle; 
+0090         lambda = repmat(lambda,[1,nRay]);
+0091     <span class="keyword">elseif</span> nIncAngle == 1
+0092         nRay = nLambda;
+0093         incAngle = repmat(incAngle,[1,nRay]);
+0094     <span class="keyword">elseif</span> nIncAngle == nLambda <span class="comment">% Both kx and lambda for all rays given</span>
+0095          nRay = nLambda;
+0096     <span class="keyword">else</span>
+0097         disp([<span class="string">'Error: The size of lambda and incAngle should '</span><span class="keyword">...</span>
+0098             <span class="string">'be equal or one of them should be 1.'</span>]);
+0099         <span class="keyword">return</span>;
+0100     <span class="keyword">end</span>
+0101     
+0102     <span class="comment">% claculate the transmission and reflection coefficients for each</span>
+0103     <span class="comment">% ray with given wavelength array or incident angle array.</span>
+0104     
+0105     <span class="comment">% K vector in substrate</span>
+0106     ks = (2*pi./lambda).*n_s; 
+0107     ksx = ks.*sin((incAngle));
+0108 
+0109     <span class="comment">% x component of K vector is the same for all layer</span>
+0110     kx=ksx;       
+0111 
+0112     <span class="comment">% Z components of K vector in substrate and cladding</span>
+0113     ksz = sqrt((2*pi./lambda).^2.*epsilon_s - (kx).^2);
+0114     kcz = sqrt((2*pi./lambda).^2.*epsilon_c - (kx).^2);
+0115 
+0116     <span class="comment">%Transfer matrix</span>
+0117     M = <a href="computeMultilayerTransfermatrix.html" class="code" title="function transMatrix = computeMultilayerTransfermatrix(refIndex, thickness, polarisation, lambda, kx)">computeMultilayerTransfermatrix</a>(refIndex,thickness,polarisation,lambda,kx);
+0118 
+0119     <span class="keyword">switch</span> upper(polarisation)
+0120         <span class="keyword">case</span> <span class="string">'TE'</span>
+0121         DEN = ksz.*(squeeze(M(2,2,:)))' + kcz.*(squeeze(M(1,1,:)))' + <span class="keyword">...</span>
+0122             1i*((squeeze(M(2,1,:)))' - ksz.*kcz.*(squeeze(M(1,2,:)))');
+0123         R = (ksz.*(squeeze(M(2,2,:)))' - kcz.*(squeeze(M(1,1,:)))' - <span class="keyword">...</span>
+0124             1i*((squeeze(M(2,1,:)))' + ksz.*kcz.*(squeeze(M(1,2,:)))'))./DEN;
+0125         T = (2*ksz)./DEN;
+0126 
+0127         rho =(abs(R)).^2;
+0128         tau = (real(kcz).*(abs(T)).^2)./(real(ksz));    
+0129 
+0130         <span class="keyword">case</span> <span class="string">'TM'</span>
+0131         DEN = epsilon_c.*ksz.*(squeeze(M(2,2,:)))' + <span class="keyword">...</span>
+0132             epsilon_s.*kcz.*(squeeze(M(1,1,:)))' + <span class="keyword">...</span>
+0133             1i*(epsilon_c.*epsilon_s.*(squeeze(M(2,1,:)))' - <span class="keyword">...</span>
+0134             ksz.*kcz.*(squeeze(M(1,2,:)))');
+0135         R = (epsilon_c.*ksz.*(squeeze(M(2,2,:)))' - <span class="keyword">...</span>
+0136             epsilon_s.*kcz.*(squeeze(M(1,1,:)))' - <span class="keyword">...</span>
+0137             1i*(epsilon_c.*epsilon_s.*(squeeze(M(2,1,:)))' + <span class="keyword">...</span>
+0138             ksz.*kcz.*(squeeze(M(1,2,:)))'))./DEN;
+0139         T = (2*sqrt(epsilon_c.*epsilon_s).*ksz)./DEN;
+0140 
+0141         rho =(abs(R)).^2;
+0142         tau = (real(kcz).*(abs(T)).^2)./(real(ksz));
+0143         absorb = ones([1,size(rho,2)])-(rho+tau);
+0144     <span class="keyword">end</span>    
+0145 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

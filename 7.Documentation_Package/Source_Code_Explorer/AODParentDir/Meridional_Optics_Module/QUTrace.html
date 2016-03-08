@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of QUTrace</title>
+  <meta name="keywords" content="QUTrace">
+  <meta name="description" content="QUTrace: Performs QU trace for meridional rays of conventional optical system (spherical and rotationally symetric)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Meridional_Optics_Module -->
+<h1>QUTrace
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>QUTrace: Performs QU trace for meridional rays of conventional optical system (spherical and rotationally symetric)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [Qf Uf] = QUTrace(Qi,Ui,initialSurf,finalSurf, refIndex,thick,curv) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">QUTrace: Performs QU trace for meridional rays of conventional optical system (spherical and rotationally symetric)
+   Inputs
+ Qi,Ui,: perpendicular heght of the ray from the surface vertex, Q, and its slope (tangent of angle), U
+ initialSurf,finalSurf,: initial and final surface indices NB. in MATLAB indeces start from 1
+ refIndex,thick,curv : arrays of n,t of medium following and C of each surface from object to image direction
+   Output
+ Qf,Uf,: height from the optical axis, y, and its slope (tangent of angle), u</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="traceMeridionalRay.html" class="code" title="function [ Zpoints,Ypoints ] = traceMeridionalRay( y0,U0,refIndex,thick,curv)">traceMeridionalRay</a>	UNTITLED Summary of this function goes here</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [Qf Uf] = QUTrace(Qi,Ui,initialSurf,finalSurf, refIndex,thick,curv)</a>
+0002 <span class="comment">%QUTrace: Performs QU trace for meridional rays of conventional optical system (spherical and rotationally symetric)</span>
+0003 <span class="comment">%   Inputs</span>
+0004 <span class="comment">% Qi,Ui,: perpendicular heght of the ray from the surface vertex, Q, and its slope (tangent of angle), U</span>
+0005 <span class="comment">% initialSurf,finalSurf,: initial and final surface indices NB. in MATLAB indeces start from 1</span>
+0006 <span class="comment">% refIndex,thick,curv : arrays of n,t of medium following and C of each surface from object to image direction</span>
+0007 <span class="comment">%   Output</span>
+0008 <span class="comment">% Qf,Uf,: height from the optical axis, y, and its slope (tangent of angle), u</span>
+0009 
+0010 <span class="comment">% Example Call</span>
+0011 <span class="comment">% QUTrace(0.56,0,2,[1 1.4 1.4],[4 2 5],[Inf 3 -3])</span>
+0012 <span class="keyword">if</span> initialSurf==finalSurf
+0013     Qf=Qi;
+0014     Uf=Ui;
+0015 <span class="keyword">elseif</span> initialSurf &lt; finalSurf
+0016 <span class="comment">%forward trace</span>
+0017 <span class="comment">%ray parametrs just after the initial ray</span>
+0018     Q=Qi;
+0019     U=Ui;
+0020     <span class="keyword">for</span> k=initialSurf:1:finalSurf-1
+0021         t=thick(k);
+0022         c=curv(k+1);
+0023         n=refIndex(k);
+0024         nPrime=refIndex(k+1); 
+0025         <span class="keyword">if</span> t~=Inf
+0026           Q = Q + t*sin(U);
+0027         <span class="keyword">end</span>
+0028 
+0029         I = asin(Q*c + sin (U));
+0030         <span class="keyword">if</span> any(imag(I))
+0031           disp (<span class="string">'The ray does not intersect the surface'</span>);
+0032           exit
+0033         <span class="keyword">end</span>
+0034         IPrime = asin((n/nPrime) * sin (I));
+0035         UPrime = U - I + IPrime ;
+0036         <span class="comment">% QPrime = (sin(IPrime)-sin(UPrime))/c;</span>
+0037         <span class="comment">%more general formula</span>
+0038         QPrime = Q*(cos(UPrime)+cos(IPrime))/(cos(U)+cos(I));
+0039         Q = QPrime;
+0040         U = UPrime;
+0041     <span class="keyword">end</span>
+0042     Qf=Q;
+0043     Uf=U;
+0044 <span class="keyword">elseif</span> initialSurf &gt; finalSurf
+0045     <span class="comment">%reverse trace</span>
+0046     Q = Qi;
+0047     U = -Ui;    
+0048     <span class="keyword">for</span> k=initialSurf:-1:finalSurf+1
+0049         t=thick(k-1);
+0050         c=-curv(k);
+0051         n=refIndex(k);
+0052         nPrime=refIndex(k-1);        
+0053         I = asin(Q*c + sin (U));       
+0054         <span class="keyword">if</span> any(imag(I))
+0055             disp (<span class="string">'The ray does not intersect the surface'</span>)
+0056             exit
+0057         <span class="keyword">end</span>
+0058         IPrime = asin((n/nPrime) * sin (I));
+0059         UPrime = U - I + IPrime; 
+0060         <span class="comment">%QPrime = (Sin(IPrime)-sin(UPrime))/c;</span>
+0061         <span class="comment">%more general formula</span>
+0062         QPrime = Q*(cos(UPrime)+cos(IPrime))/(cos(U)+cos(I));
+0063         <span class="keyword">if</span> t~=Inf
+0064            Q = QPrime + t*sin(UPrime);
+0065         <span class="keyword">end</span>
+0066 
+0067         U = UPrime;
+0068      <span class="keyword">end</span>      
+0069     Qf = Q;
+0070     Uf = -U;
+0071 <span class="keyword">else</span>   
+0072 <span class="keyword">end</span>     
+0073 <span class="keyword">end</span>
+0074 
+0075 
+0076 
+0077 
+0078</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

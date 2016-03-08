@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of extractNoneUnityDiagonal</title>
+  <meta name="keywords" content="extractNoneUnityDiagonal">
+  <meta name="description" content="extractNoneUnityDiagonal: Extracts and returns diagonal elements of">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Mathematical_Functions -->
+<h1>extractNoneUnityDiagonal
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>extractNoneUnityDiagonal: Extracts and returns diagonal elements of</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function noneUnityDiag = extractNoneUnityDiagonal(S) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">extractNoneUnityDiagonal: Extracts and returns diagonal elements of 
+                     matrix S which are different from 1</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Polarization_Ray_Tracing_Module/computeDiattenuation.html" class="code" title="function diattenuation = computeDiattenuation( PorJ )">computeDiattenuation</a>	computeDiatteunation: computes the diatteunation related to the</li><li><a href="../../AODParentDir/Polarization_Ray_Tracing_Module/computeProperRetardance.html" class="code" title="function allRetardance = computeProperRetardance( PorJ,QorR )">computeProperRetardance</a>	computeProperRetardance:  computes proper retardance associated with a</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function noneUnityDiag = extractNoneUnityDiagonal(S)</a>
+0002 <span class="comment">%extractNoneUnityDiagonal: Extracts and returns diagonal elements of</span>
+0003 <span class="comment">%                     matrix S which are different from 1</span>
+0004 
+0005 <span class="comment">% Extract all diagonal elements</span>
+0006 allDiag = diag(S);
+0007 noneUnityDiag = allDiag(~((allDiag &gt; 1-10^-8) &amp; (allDiag &lt; 1+10^-8)));
+0008 
+0009 noneUnityDiag = [noneUnityDiag',ones(1,length(allDiag)-length(noneUnityDiag)-1)];
+0010 <span class="keyword">end</span>
+0011</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

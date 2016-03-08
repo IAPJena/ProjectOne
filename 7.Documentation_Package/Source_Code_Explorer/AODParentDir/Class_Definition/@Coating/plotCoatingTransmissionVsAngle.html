@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotCoatingTransmissionVsAngle</title>
+  <meta name="keywords" content="plotCoatingTransmissionVsAngle">
+  <meta name="description" content="Plot  transmission coefficient for the coating versus">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Coating -->
+<h1>plotCoatingTransmissionVsAngle
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Plot  transmission coefficient for the coating versus</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function plotCoatingTransmissionVsAngle(Coating,wavLenInUm,minAngle,maxAngle,angleStep,primWavLenInUm,indexBefore,indexAfter,axesHandle,tableHandle,textHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Plot  transmission coefficient for the coating versus 
+ angle for fixed wavelength (s, p - polarizations, average)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plotCoatingTransmissionVsAngle(Coating,wavLenInUm,minAngle,maxAngle,</a><span class="keyword">...</span>
+0002     angleStep,primWavLenInUm,indexBefore,indexAfter,axesHandle,tableHandle,textHandle)
+0003     <span class="comment">% Plot  transmission coefficient for the coating versus</span>
+0004     <span class="comment">% angle for fixed wavelength (s, p - polarizations, average)</span>
+0005     
+0006     <span class="comment">% Code Modification</span>
+0007     <span class="comment">% Mar 07,2014 : By Norman G.</span>
+0008     
+0009     <span class="comment">% Check for inputs</span>
+0010     <span class="comment">% deafualt inputs</span>
+0011     <span class="keyword">if</span> nargin &lt; 7
+0012         disp([<span class="string">'Error: The function needs atleast 7 inputs: '</span><span class="keyword">...</span>
+0013         <span class="string">'Coating,wavLen,angleStep,minAngle,maxAngle,indexBefore and indexAfter.'</span>]);
+0014         <span class="keyword">return</span>;
+0015     <span class="keyword">elseif</span> nargin == 7
+0016         axesHandle = axes(<span class="string">'Parent'</span>,figure,<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+0017             <span class="string">'Position'</span>,[0.1,0.1,0.8,0.8]);
+0018     <span class="keyword">elseif</span> nargin &gt; 7
+0019     <span class="keyword">end</span>
+0020     
+0021     localIncidenceAngle = minAngle:angleStep:maxAngle;
+0022     [ampTs,ampTp,powTs,powTp] = <span class="keyword">...</span>
+0023             Coating.getTransmissionCoefficients(wavLenInUm,<span class="keyword">...</span>
+0024             localIncidenceAngle*pi/180,indexBefore,indexAfter,primWavLenInUm); 
+0025         
+0026     <span class="comment">% decide which of three fresnels coefficients to plot</span>
+0027     <span class="comment">% Case 1: amplitude coefficients not additive but may be complex.</span>
+0028 
+0029     <span class="comment">% Case 2: intensity coefficients not additive the abs of amp coeff.</span>
+0030 
+0031     <span class="comment">% Case 3: power coefficients additive to 1</span>
+0032       trans_s = powTs;
+0033       trans_p = powTp;
+0034     
+0035     aver = 0.5 *(trans_s+trans_p);
+0036     ang = minAngle:angleStep:maxAngle;
+0037     plot(axesHandle,ang,trans_s,ang,trans_p,ang,aver);
+0038     hleg1 = legend(axesHandle,<span class="string">'S Transmittance'</span>,<span class="string">'P Transmittance'</span>,<span class="string">'Average Transmittance'</span>);
+0039     set(hleg1,<span class="string">'Location'</span>,<span class="string">'NorthWest'</span>) 
+0040 
+0041     xlabel(axesHandle,<span class="string">'Incidence Angle (deg)'</span>,<span class="string">'FontSize'</span>,12)
+0042     ylabel(axesHandle,<span class="string">'Power Transmission Coefficient'</span>,<span class="string">'FontSize'</span>,12)
+0043     title(axesHandle,[Coating.Name,<span class="string">': Transmission Vs Incidence Angle'</span>],<span class="string">'FontSize'</span>,12) 
+0044     <span class="keyword">if</span> nargin &gt;= 9
+0045         <span class="comment">% Display tabular data on the tableHandle</span>
+0046         newTable1 = [ang',trans_s',trans_p',aver'];
+0047         newTable1 = mat2cell(newTable1,[ones(1,size(newTable1,1))],[ones(1,size(newTable1,2))]);
+0048         columnName1 = {<span class="string">'Angle (deg)'</span>,<span class="string">'S Transmittance'</span>,<span class="string">'P Transmittance'</span>,<span class="string">'Average Transmittance'</span>};
+0049         columnWidth1 = {<span class="string">'auto'</span>,<span class="string">'auto'</span>,<span class="string">'auto'</span>,<span class="string">'auto'</span>};
+0050         set(tableHandle, <span class="string">'Data'</span>, newTable1,<span class="keyword">...</span>
+0051             <span class="string">'ColumnName'</span>, columnName1,<span class="string">'ColumnWidth'</span>,columnWidth1);
+0052     <span class="keyword">end</span>
+0053     <span class="keyword">if</span> nargin &gt;= 10
+0054         <span class="comment">% Write some note on the text window</span>
+0055         set(textHandle,<span class="string">'String'</span>,<span class="string">'No text to display ...'</span>);
+0056     <span class="keyword">end</span>
+0057 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

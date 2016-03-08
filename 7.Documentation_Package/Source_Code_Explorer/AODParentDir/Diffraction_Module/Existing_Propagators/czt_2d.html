@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of czt_2d</title>
+  <meta name="keywords" content="czt_2d">
+  <meta name="description" content="___________________________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- menu.html Existing_Propagators -->
+<h1>czt_2d
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>___________________________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function xout = czt_2d( xin , scalx , scaly , idir ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">___________________________________________________________________________________
+
+  Aufruf:
+  xout = czt_two(xin,scalx,scaly,idir);
+
+  Beschreibung:
+  Berechnung der zweidimensionalen Chirp-z-Transformation mittels Faltung
+  mit Skalierungsfaktoren scalx bzw. scaly für ein zweidimensionales Feld
+  xin. Beide Koordinatenschnitte werden unabhängig behandelt. 
+  Das Feld kann rechteckig sein mit Dimensionen npx / npy.
+  Basis ist die Routine czt aus der Signal-Toolbox von Matlab.
+  Für scalx/scaly = 1 entsteht die FFT. Die Frequenzachsen werden um die Faktoren
+  scalx/scaly gespreizt.
+  Es muß scalx/scaly =&gt; 1 gelten.
+  Die Index-Shiftfunktion ist bereits enthalten, die Frequenz s = 0 liegt beim Index np/2+1.
+  Es gilt für die Frequenzrasterweite :    ds = 1 / ( npx * dx * scalx )  (y analog)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Debye_Vectorial_Far_Field/prop_farfield_vect.html" class="code" title="function [efdxs,efdys,efdzs,xs,ys,ierr,sterr] = prop_farfield_vect(efdx,efdy,wl,xp,yp,rcurv,dz,scalx,scaly,varargin)">prop_farfield_vect</a>	_________________________________________________________________</li><li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fraunhofer_Scalar/prop_fraun_fft.html" class="code" title="function efelds = prop_fraun_fft(xp,yp,efeld,xs,ys,z,wl)">prop_fraun_fft</a>	_________________________________________________________________</li><li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fresnel_Paraxial/prop_field_abcd_2d.html" class="code" title="function [efds,xs,ys,rxsg,rysg,iprox,iproy,famp,Nfx,Nfy,Nfsx,Nfsy,ierr,sterr]=prop_field_abcd_2d(efd,wl,xp,yp,abcdx,abcdy,varargin)">prop_field_abcd_2d</a>	_________________________________________________________________</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function xout = czt_2d( xin , scalx , scaly , idir )</a>
+0002 <span class="comment">%___________________________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  Aufruf:</span>
+0005 <span class="comment">%  xout = czt_two(xin,scalx,scaly,idir);</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">%  Beschreibung:</span>
+0008 <span class="comment">%  Berechnung der zweidimensionalen Chirp-z-Transformation mittels Faltung</span>
+0009 <span class="comment">%  mit Skalierungsfaktoren scalx bzw. scaly für ein zweidimensionales Feld</span>
+0010 <span class="comment">%  xin. Beide Koordinatenschnitte werden unabhängig behandelt.</span>
+0011 <span class="comment">%  Das Feld kann rechteckig sein mit Dimensionen npx / npy.</span>
+0012 <span class="comment">%  Basis ist die Routine czt aus der Signal-Toolbox von Matlab.</span>
+0013 <span class="comment">%  Für scalx/scaly = 1 entsteht die FFT. Die Frequenzachsen werden um die Faktoren</span>
+0014 <span class="comment">%  scalx/scaly gespreizt.</span>
+0015 <span class="comment">%  Es muß scalx/scaly =&gt; 1 gelten.</span>
+0016 <span class="comment">%  Die Index-Shiftfunktion ist bereits enthalten, die Frequenz s = 0 liegt beim Index np/2+1.</span>
+0017 <span class="comment">%  Es gilt für die Frequenzrasterweite :    ds = 1 / ( npx * dx * scalx )  (y analog)</span>
+0018 <span class="comment">%</span>
+0019 
+0020 <span class="comment">%% English</span>
+0021 <span class="comment">% Calculation of two-dimensional chirp z-transform means convolution</span>
+0022 <span class="comment">% With scaling factors scalx or scaly for a two-dimensional field</span>
+0023 <span class="comment">% Xin. Both coordinates cuts are treated independently.</span>
+0024 <span class="comment">% The field can be rectangular with dimensions npx / NPY.</span>
+0025 <span class="comment">% Base is the routine czt from the signal toolbox of Matlab.</span>
+0026 <span class="comment">% For scalx / scaly = 1 arises the FFT. The frequency axes are the factors</span>
+0027 <span class="comment">% Scalx / spread scaly.</span>
+0028 <span class="comment">% It must scalx / scaly apply =&gt; 1.</span>
+0029 <span class="comment">% The index shift function is included, the frequency of s = 0 is the index np / 2 +1.</span>
+0030 <span class="comment">% It applies to the frequency screen width: ds = 1 / (dx * scalx npx *) (y analog)</span>
+0031 <span class="comment">%%</span>
+0032 
+0033 <span class="comment">%  Version:</span>
+0034 <span class="comment">%  23.06.06   Herbert Gross  7.0  Überarbeitete Version</span>
+0035 <span class="comment">%</span>
+0036 <span class="comment">%  Input:   xin(npx,npy)  : Inputfeld, zweidimensional</span>
+0037 <span class="comment">%           scalx         : Lupenfaktor in x-Richtung</span>
+0038 <span class="comment">%           scaly         : Lupenfaktor in y-Richtung</span>
+0039 <span class="comment">%           idir          : Steuerparameter</span>
+0040 <span class="comment">%                           idir = 0 : Transformation in x und y</span>
+0041 <span class="comment">%                           idir = 1 : Transformation nur in x-Richtung</span>
+0042 <span class="comment">%                           idir = 2 : Transformation nur in y-Richtung</span>
+0043 <span class="comment">%</span>
+0044 <span class="comment">%  Output:  xout(npx,npy) : Outputfeld, zweidimensional</span>
+0045 <span class="comment">%</span>
+0046 <span class="comment">%  Abhängigkeiten : keine</span>
+0047 <span class="comment">%</span>
+0048 <span class="comment">%  Referenzen:</span>
+0049 <span class="comment">%  Rabiner, Schafer, Rader, The Chirp z-Transform Algorithm, IEEE Trans AU 17(1969) p. 86</span>
+0050 <span class="comment">%</span>
+0051 <span class="comment">%  Beispiel: Transformation eines Gaussprofils, verschiedene Punktzahlen und</span>
+0052 <span class="comment">%  Spreizungsfaktoren</span>
+0053 <span class="comment">%</span>
+0054 <span class="comment">%  npx = 256  ; npy = 128 ;</span>
+0055 <span class="comment">%  scalx = 8 ;  scaly = 4 ; idir = 0 ;</span>
+0056 <span class="comment">%  a = 1; xmax = 2.;xmin = -xmax;</span>
+0057 <span class="comment">%  dx = ( xmax-xmin ) / (npx-1); dy = ( xmax-xmin ) / (npy-1);</span>
+0058 <span class="comment">%  for j=1:npx ;   x(j) = xmin + (j-1)*dx; end</span>
+0059 <span class="comment">%  for k=1:npy ;   y(k) = xmin + (k-1)*dy ; end</span>
+0060 <span class="comment">%  [yp xp] = meshgrid(y,x); rp = sqrt(xp.^2+yp.^2);indin = find( rp &lt; a );</span>
+0061 <span class="comment">%  xin = zeros(npx,npy,1); xin(indin) = 1 ;</span>
+0062 <span class="comment">%  xout = czt_2d( xin , scalx , scaly , idir );</span>
+0063 <span class="comment">%  figure(1);</span>
+0064 <span class="comment">%  pcolor(abs(xout));shading flat</span>
+0065 <span class="comment">%___________________________________________________________________________________</span>
+0066 <span class="comment">%</span>
+0067 [ npx , npy ] = size( xin );
+0068 xout = zeros(npx,npy,1);
+0069 <span class="comment">%</span>
+0070 <span class="comment">%  x-Richtung, 1. Index</span>
+0071 <span class="comment">%</span>
+0072 <span class="keyword">if</span> idir == 0 | idir == 1
+0073 <span class="comment">%</span>
+0074    fak = zeros(1,npx);
+0075    n2 = npx/2+1;
+0076    nn = (0:(npx-1))';
+0077    kk = ( (-npx+1):(npx-1) ).';
+0078    kk2 = (kk .^ 2) ./ 2;
+0079 <span class="comment">%</span>
+0080    w = exp( -i*2*pi/(npx*scalx));
+0081    a = exp( -i*pi/scalx );
+0082    ww = w .^ (kk2);   
+0083    aa = a .^ ( -nn );
+0084    aa = aa .* ww(npx+nn);
+0085    fv = fft( 1 ./ ww(1:(2*npx-1)), 2*npx );   
+0086    <span class="keyword">for</span> j=1:npx ; fak(j) =  exp(pi*i*(j-n2)/scalx );<span class="keyword">end</span>
+0087    fak = ww( npx:(2*npx-1) ) .* fak.' ;
+0088 <span class="comment">%</span>
+0089    <span class="keyword">for</span> k=1:npy
+0090       y = xin(:,k) .* aa;
+0091       g = ifft( fft(  y , 2*npx ) .* fv );
+0092       xout(:,k) = ( g( npx:(2*npx-1) ) .* fak ) ;
+0093    <span class="keyword">end</span>
+0094 <span class="comment">%</span>
+0095 <span class="keyword">else</span>
+0096     xout = xin ;
+0097 <span class="comment">%</span>
+0098 <span class="keyword">end</span>
+0099 <span class="comment">%</span>
+0100 <span class="comment">%  y-Richtung, 2. Index</span>
+0101 <span class="comment">%</span>
+0102 <span class="keyword">if</span> idir == 0 | idir == 2
+0103 <span class="comment">%</span>
+0104    clear fak ;
+0105    fak = zeros(1,npy);
+0106    n2 = npy/2+1;
+0107    nn = (0:(npy-1))';
+0108    kk = ( (-npy+1):(npy-1) ).';
+0109    kk2 = (kk .^ 2) ./ 2;
+0110    w = exp( -i*2*pi/(npy*scaly));
+0111    a = exp( -i*pi/scaly );
+0112    ww = w .^ (kk2);   
+0113    aa = a .^ ( -nn );
+0114    aa = aa .* ww(npy+nn);
+0115    fv = fft( 1 ./ ww(1:(2*npy-1)), 2*npy );   
+0116    <span class="keyword">for</span> j=1:npy ; fak(j) =  exp(pi*i*(j-n2)/scaly );<span class="keyword">end</span>
+0117    fak = ww( npy:(2*npy-1) ) .* fak.' ;
+0118 <span class="comment">%</span>
+0119    <span class="keyword">for</span> j=1:npx
+0120       y = xout(j,:).' .* aa;
+0121       g = ifft( fft(  y , 2*npy ) .* fv );
+0122       xout(j,:) = ( g( npy:(2*npy-1) ) .* fak ).' ;
+0123    <span class="keyword">end</span>
+0124 <span class="comment">%</span>
+0125 <span class="keyword">end</span>
+0126 <span class="comment">%</span>
+0127 xout = conj(xout);
+0128 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

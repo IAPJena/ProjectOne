@@ -1,0 +1,9 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  draw2DLens -> draw2DSurface;
+  draw2DMirror -> draw2DLens;
+
+  draw2DLens [URL="draw2DLens.html"];
+  draw2DMirror [URL="draw2DMirror.html"];
+  draw2DSurface [URL="draw2DSurface.html"];
+}

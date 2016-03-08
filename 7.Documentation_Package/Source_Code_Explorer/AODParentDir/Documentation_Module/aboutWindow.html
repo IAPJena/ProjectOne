@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of aboutWindow</title>
+  <meta name="keywords" content="aboutWindow">
+  <meta name="description" content="About Window">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Documentation_Module -->
+<h1>aboutWindow
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>About Window</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function figureHandle = aboutWindow(fontName) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> About Window</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@AODParentWindow/InitializeMenuAndToolbarItems.html" class="code" title="function InitializeMenuAndToolbarItems(parentWindow)">InitializeMenuAndToolbarItems</a>	Defines all menu items and toolbar commands and all callbacks related</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function build_gui()</a></li><li><a href="#_sub2" class="code">function btnOk_Callback(hObject,evendata)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function figureHandle = aboutWindow(fontName)</a>
+0002 <span class="comment">% About Window</span>
+0003 
+0004 <span class="comment">% Default Input</span>
+0005 <span class="keyword">if</span> nargin &lt; 1
+0006     fontName = <span class="string">'FixedWidth'</span>;      
+0007 <span class="keyword">end</span>
+0008 
+0009 <span class="comment">% Initialize handles structure</span>
+0010 handles = struct();
+0011 
+0012 <span class="comment">% Create all UI controls</span>
+0013 <a href="#_sub1" class="code" title="subfunction build_gui()">build_gui</a>();
+0014 
+0015 <span class="comment">% Assign function output</span>
+0016 figureHandle = handles.About;
+0017 
+0018 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0019     <a name="_sub1" href="#_subfunctions" class="code">function build_gui()</a>
+0020 <span class="comment">% Creation of all uicontrols</span>
+0021 
+0022         <span class="comment">% --- FIGURE -------------------------------------</span>
+0023         handles.About = figure( <span class="keyword">...</span>
+0024             <span class="string">'Tag'</span>, <span class="string">'About'</span>, <span class="keyword">...</span>
+0025             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0026             <span class="string">'Position'</span>, [0.3 0.3 0.4 0.4], <span class="keyword">...</span>
+0027             <span class="string">'Name'</span>, <span class="string">'About'</span>, <span class="keyword">...</span>
+0028             <span class="string">'MenuBar'</span>, <span class="string">'none'</span>, <span class="keyword">...</span>
+0029             <span class="string">'NumberTitle'</span>, <span class="string">'off'</span>, <span class="keyword">...</span>
+0030             <span class="string">'Color'</span>, get(0,<span class="string">'DefaultUicontrolBackgroundColor'</span>));
+0031 
+0032         <span class="comment">% --- STATIC TEXTS -------------------------------------</span>
+0033         handles.text1 = uicontrol( <span class="keyword">...</span>
+0034             <span class="string">'Parent'</span>, handles.About, <span class="keyword">...</span>
+0035             <span class="string">'Tag'</span>, <span class="string">'text1'</span>, <span class="keyword">...</span>
+0036             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0037             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0038             <span class="string">'Position'</span>, [0.1 0.8 0.8 0.1], <span class="keyword">...</span>
+0039             <span class="string">'FontSize'</span>, 14,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0040             <span class="string">'String'</span>, <span class="string">'Optical System Analyzer'</span>);
+0041         handles.text4 = uicontrol( <span class="keyword">...</span>
+0042             <span class="string">'Parent'</span>, handles.About, <span class="keyword">...</span>
+0043             <span class="string">'Tag'</span>, <span class="string">'text4'</span>, <span class="keyword">...</span>
+0044             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0045             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0046             <span class="string">'Position'</span>, [0.1 0.7 0.8 0.1], <span class="keyword">...</span>
+0047             <span class="string">'FontSize'</span>, 13,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0048             <span class="string">'String'</span>, <span class="string">'Friedrich Schiller University of Jena'</span>);
+0049         handles.text3 = uicontrol( <span class="keyword">...</span>
+0050             <span class="string">'Parent'</span>, handles.About, <span class="keyword">...</span>
+0051             <span class="string">'Tag'</span>, <span class="string">'text3'</span>, <span class="keyword">...</span>
+0052             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0053             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0054             <span class="string">'Position'</span>, [0.1 0.6 0.8 0.1], <span class="keyword">...</span>
+0055             <span class="string">'FontSize'</span>, 12,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0056             <span class="string">'String'</span>, <span class="string">'Institute of Applied Physics'</span>); 
+0057         
+0058         handles.text2 = uicontrol( <span class="keyword">...</span>
+0059             <span class="string">'Parent'</span>, handles.About, <span class="keyword">...</span>
+0060             <span class="string">'Tag'</span>, <span class="string">'text2'</span>, <span class="keyword">...</span>
+0061             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0062             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0063             <span class="string">'Position'</span>, [0.1 0.5 0.8 0.1], <span class="keyword">...</span>
+0064             <span class="string">'FontSize'</span>, 12,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0065             <span class="string">'String'</span>, <span class="string">'Optical System Design Research Group'</span>);
+0066 
+0067         handles.text5 = uicontrol( <span class="keyword">...</span>
+0068             <span class="string">'Parent'</span>, handles.About, <span class="keyword">...</span>
+0069             <span class="string">'Tag'</span>, <span class="string">'text5'</span>, <span class="keyword">...</span>
+0070             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0071             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0072             <span class="string">'Position'</span>, [0.1 0.4 0.8 0.1], <span class="keyword">...</span>
+0073             <span class="string">'FontSize'</span>, 11,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0074             <span class="string">'String'</span>, <span class="string">'Version 3.0 (OOP Version)'</span>);
+0075 
+0076         handles.text6 = uicontrol( <span class="keyword">...</span>
+0077             <span class="string">'Parent'</span>, handles.About, <span class="keyword">...</span>
+0078             <span class="string">'Tag'</span>, <span class="string">'text6'</span>, <span class="keyword">...</span>
+0079             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0080             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0081             <span class="string">'Position'</span>, [0.1 0.3 0.8 0.1], <span class="keyword">...</span>
+0082             <span class="string">'FontSize'</span>, 11,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0083             <span class="string">'String'</span>, <span class="string">'Contact: '</span>);
+0084 
+0085         handles.text7 = uicontrol( <span class="keyword">...</span>
+0086             <span class="string">'Parent'</span>, handles.About, <span class="keyword">...</span>
+0087             <span class="string">'Tag'</span>, <span class="string">'text7'</span>, <span class="keyword">...</span>
+0088             <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0089             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0090             <span class="string">'Position'</span>, [0.1 0.2 0.8 0.1], <span class="keyword">...</span>
+0091             <span class="string">'FontSize'</span>, 11,<span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0092             <span class="string">'String'</span>, <span class="string">'Date: Oct 25, 2013'</span>);
+0093 
+0094 
+0095 
+0096         <span class="comment">% --- PUSHBUTTONS -------------------------------------</span>
+0097         handles.btnOk = uicontrol( <span class="keyword">...</span>
+0098             <span class="string">'Parent'</span>, handles.About, <span class="keyword">...</span>
+0099             <span class="string">'Tag'</span>, <span class="string">'btnOk'</span>, <span class="keyword">...</span>
+0100             <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>, <span class="keyword">...</span>
+0101             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0102             <span class="string">'Position'</span>, [0.4 0.05 0.2 0.1], <span class="keyword">...</span>
+0103             <span class="string">'String'</span>, <span class="string">'Ok'</span>, <span class="keyword">...</span>
+0104             <span class="string">'FontName'</span>,fontName,<span class="keyword">...</span>
+0105             <span class="string">'Callback'</span>, @<a href="#_sub2" class="code" title="subfunction btnOk_Callback(hObject,evendata) ">btnOk_Callback</a>);
+0106     <span class="keyword">end</span>
+0107 
+0108 <span class="comment">%% ---------------------------------------------------------------------------</span>
+0109     <a name="_sub2" href="#_subfunctions" class="code">function btnOk_Callback(hObject,evendata) </a><span class="comment">%#ok&lt;INUSD&gt;</span>
+0110        close(figureHandle);
+0111     <span class="keyword">end</span>
+0112 
+0113 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

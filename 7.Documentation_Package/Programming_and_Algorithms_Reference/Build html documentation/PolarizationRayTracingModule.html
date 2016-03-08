@@ -1,0 +1,130 @@
+﻿<html>
+	
+<head>
+	<title>Polarization Ray Tracing Module</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("PolarizationRayTracingModule");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Polarization Ray Tracing Module</h1>
+				
+				</div>
+			<div id="topic_header_nav">
+				<a href="MeridionalRayTracingModule.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="JonesMatrixtoPolarizationRayTrac.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts59">Polarization Ray Tracing Module</span></span></h1>
+<p class="rvps10"><span class="rvts38">It is a module which contains functions which are used for polarization ray tracing. The general flow of polarization ray tracing is described in the documention section of OpticalSystem class. Here the specific algorithms and mathematical formulations used in the polarized ray tracing are described.</span></p>
+<h2 class="rvps50"><a name="_Toc370907103"></a>
+<span class="rvts0"><span class="rvts72">Light and Polarization</span></span></h2>
+<p class="rvps13"><span class="rvts66">Classically, light can be defined as an electromagnetic field which consists of oscillations of photons which occur in the direction perpendicular to that of the energy flow. Hence light is called transverse electromagnetic wave. The oscillation of a single photon can be described by equation shown below.</span></p>
+<p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem141.png"/></p>
+<p class="rvps13"><span class="rvts66">Where</span></p>
+<p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem140.png"/><img alt="" style="padding : 1px;" src="lib/NewItem139.png"/><img alt="" style="padding : 1px;" src="lib/NewItem138.png"/><img alt="" style="padding : 1px;" src="lib/NewItem137.png"/><img alt="" style="padding : 1px;" src="lib/NewItem136.png"/><img alt="" style="padding : 1px;" src="lib/NewItem135.png"/></p>
+<p class="rvps13"><span class="rvts66"><br/></span></p>
+<p class="rvps13"><span class="rvts66">Depending on the magnitudes of its components, the wave vector has certain orientation in space. Such orientation of wave vector in space is known as the polarization of the wave vector[2] .</span></p>
+<h2 class="rvps50"><a name="_Toc370907104"></a>
+<span class="rvts0"><span class="rvts72">Polarization States</span></span></h2>
+<p class="rvps13"><span class="rvts66">The polarization state of a plane electromagnetic wave is given by the curve which the tip of the electric field vector </span><img alt="" style="padding : 1px;" src="lib/NewItem134.png"/><span class="rvts66"> follows in a plane which is transverse to the direction of propagation. Polarization state can be determined from the phase difference and magnitude of different components of the electromagnetic wave. </span></p>
+<p class="rvps13"><span class="rvts66">There are several mathematical formalisms to describe the polarization state of a given electromagnetic wave at a given frequency. Some of these include :</span></p>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps42" style="text-indent: 0px"><span class="rvts66">Jones Vector</span></li>
+<li class="rvps42" style="text-indent: 0px"><span class="rvts66">Ellipse of Polarization</span></li>
+</ul>
+<p class="rvps12"><span class="rvts37"><br/></span></p>
+<p class="rvps12"><span class="rvts37">Jones Vector</span></p>
+<p class="rvps48"><span class="rvts66">Due to transversal nature of fields (no component along the direction of propagation), any field can be represented by a complex two component vector known as Jones Vector. The polarization state of a polarized field propagating along z–axis is represented by</span></p>
+<p class="rvps48"><img alt="" style="padding : 1px;" src="lib/NewItem133.png"/></p>
+<p class="rvps48"><span class="rvts66">If the field is not propagating along the z-axis, then the x-y coordinates are referred to as “local coordinates” associated with a particular transverse plane . The Jones vector contains the phase, magnitude and polarization of the electric field. But it can be used to describe polarization states of the fully polarized electric fields. </span></p>
+<p class="rvps12"><span class="rvts37">Ellipse of Polarization</span></p>
+<p class="rvps48"><span class="rvts66">In this method polarization state of a polarized electric field is represented by the trajectory followed by the tip of field vector in the transversal plane, which is elliptical, for general case. &nbsp;</span></p>
+<p class="rvps49"><img alt="" style="padding : 1px;" src="lib/NewItem142.png"/></p>
+<p class="rvps48"><span class="rvts66">The ellipse of polarization is characterized by its orientation angle (</span><img alt="" style="padding : 1px;" src="lib/NewItem130.png"/><span class="rvts66">), ellipticity (e) determined by semi-major (a) and semi-minor (b) axes of the ellipse, and the direction of rotation.</span></p>
+<p class="rvps48"><span class="rvts66">Those ellipse parameters can be derived from the Jones vector by the following relations. </span></p>
+<p class="rvps48"><img alt="" style="padding : 1px;" src="lib/NewItem129.png"/></p>
+<p class="rvps48"><span class="rvts66">NB. For </span><img alt="" style="padding : 1px;" src="lib/NewItem128.png"/><span class="rvts66"> the result will be negative and so 90 should be added to get the correct positive angle.</span></p>
+<p class="rvps48"><img alt="" style="padding : 1px;" src="lib/NewItem127.png"/></p>
+<p class="rvps48"><span class="rvts66">With </span></p>
+<p class="rvps48"><img alt="" style="padding : 1px;" src="lib/NewItem126.png"/></p>
+<h2 class="rvps50"><a name="_Toc370907108"></a>
+<span class="rvts0"><span class="rvts72">Methods of Polarization Ray Tracing</span></span></h2>
+<h1 class="rvps11"><a name="_Toc370907109"></a>
+<span class="rvts0"><span class="rvts59">1. Two Dimensional Jones Calculus</span></span></h1>
+<p class="rvps13"><span class="rvts66">In Jones calculus the polarization states are represented by Jones Vectors and the effect such optical elements on the polarization state is modeled by multiplication of the Jones vectors with a complex 2x2 matrices called the Jones matrices. </span></p>
+<p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem124.png"/></p>
+<p class="rvps13"><span class="rvts66">The Jones vector after the optical component is given by</span></p>
+<p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem123.png"/></p>
+<p class="rvps13"><span class="rvts66">For a sequence of multiple optical elements, the effective Jones matrix can be determined by multiplying individual Jones matrices in reverse order as given in the following equation:</span></p>
+<p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem122.png"/></p>
+<h1 class="rvps11"><a name="_Toc370907109"></a>
+<span class="rvts0"><span class="rvts59">2. Three Dimensional Ray Tracing Calculus</span></span></h1>
+<p class="rvps17"><span class="rvts67">In three dimensional ray tracing calculus, the polarization states of a field are represented as three element electric field vectors. They are simply vectors containing the components of the electric field in the global coordinate system. &nbsp;</span></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem121.png"/></p>
+<p class="rvps17"><span class="rvts67"><br/></span></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem120.png"/></p>
+<p class="rvps17"><a name="_Toc370907111"></a>
+<span class="rvts67"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span></p>
+<p class="rvps17"><span class="rvts67">Polarization ray tracing matrix P is a 3x3 matrix which transforms the three element electric fields vector as it propagates through an optical element or a sequence of optical elements or even the entire optical system </span><span class="rvts68">. </span></p>
+<p class="rvps17"><span class="rvts67">If E</span><span class="rvts69">q-1</span><span class="rvts67"> and E</span><span class="rvts69">q</span><span class="rvts67"> represent the electric field vector entering and leaving a q</span><span class="rvts70">th </span><span class="rvts67">optical element, and P</span><span class="rvts69">q</span><span class="rvts67"> represents the polarization ray tracing matrix of the element, then</span></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem119.png"/></p>
+<p class="rvps17"><span class="rvts67">Note that the polarization ray tracing matrix P</span><span class="rvts69">q</span><span class="rvts67"> &nbsp;is associated with specific incident and exciting propagation vectors, k</span><span class="rvts69">q-1</span><span class="rvts67"> and k</span><span class="rvts69">q.</span><span class="rvts67"> &nbsp;</span></p>
+<p class="rvps17"><span class="rvts67">As in the case of Jones calculus, sequence of optical elements, assuming isotropic media between elements, is represented by multiplying the P matrices in the reverse order to get the net polarization ray tracing matrix P</span><span class="rvts69">Total</span><span class="rvts67"> as follows [4]:</span></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem118.png"/></p>
+<p class="rvps17"><span class="rvts67">Propagation through an isotropic media can be represented by identity matrices, as it involves multiplication of constant phase factor. &nbsp;But for anisotropic and birefringent media, the polarization ray tracing matrix will take the form of retarder matrices and/or diattenuation matrices.</span></p>
+<p class="rvps17"><span class="rvts67">The polarization ray tracing matrix is equivalent to Jones matrix except that the former is formulated in global coordinates whereas the later requires local coordinates. And so it is possible to compute one from the other.</span></p>
+<h2 class="rvps50"><span class="rvts0"><span class="rvts65"><br/></span></span></h2>
+<h2 class="rvps50"><span class="rvts0"><span class="rvts71"><br/></span></span></h2>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com">Free HTML Help documentation generator</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotCoatingRefractiveIndexProfile</title>
+  <meta name="keywords" content="plotCoatingRefractiveIndexProfile">
+  <meta name="description" content="Plot refractive index profile of a user defined coating">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Coating -->
+<h1>plotCoatingRefractiveIndexProfile
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Plot refractive index profile of a user defined coating</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function plotCoatingRefractiveIndexProfile(Coating,axesHandle,tableHandle,textHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Plot refractive index profile of a user defined coating</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plotCoatingRefractiveIndexProfile(Coating,axesHandle,tableHandle,textHandle)</a>
+0002     <span class="comment">% Plot refractive index profile of a user defined coating</span>
+0003     
+0004     <span class="comment">% Code Modification</span>
+0005     <span class="comment">% Mar 07,2014 : By Norman G.</span>
+0006     
+0007     <span class="comment">% deafualt inputs</span>
+0008     <span class="keyword">if</span> nargin &lt; 1
+0009         disp(<span class="string">'Error: The function needs atleast a coating object as argument.'</span>);
+0010         <span class="keyword">return</span>;
+0011     <span class="keyword">elseif</span> nargin == 1
+0012         axesHandle = axes(<span class="string">'Parent'</span>,figure,<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+0013             <span class="string">'Position'</span>,[0.1,0.1,0.8,0.8]);
+0014     <span class="keyword">else</span>
+0015     <span class="keyword">end</span>
+0016     
+0017     <span class="comment">% Plot the graph on axesHandle</span>
+0018     <span class="keyword">if</span> strcmpi(Coating.Type,<span class="string">'Multilayer'</span>)
+0019         
+0020         refIndex = Coating.CoatingParameters.RefractiveIndexProfile(:,1);
+0021         <span class="comment">% Separate the real and imaginary part of the refractive indixes</span>
+0022         refIndexReal = real(refIndex);
+0023         refIndexImag = imag(refIndex);
+0024         
+0025         thickness = Coating.CoatingParameters.RefractiveIndexProfile(:,2);
+0026         refractiveIndexR = refIndexReal;
+0027         refractiveIndexI = refIndexImag;
+0028         
+0029         <span class="keyword">for</span> kk=1:1:length(thickness)
+0030             x(kk) = sum(thickness(1:kk));
+0031         <span class="keyword">end</span>
+0032         stairs(axesHandle,[0 x],[refractiveIndexR;refractiveIndexR(kk)],<span class="string">'k'</span>);
+0033         hold on;
+0034         stairs(axesHandle,[0 x],[refractiveIndexI;refractiveIndexI(kk)],<span class="string">'r'</span>);
+0035         
+0036         hleg1 = legend(<span class="string">'Refractive Index (Real)'</span>,<span class="string">'Refractive Index (Imaginary)'</span>);
+0037         set(hleg1,<span class="string">'Location'</span>,<span class="string">'SouthEast'</span>) 
+0038         xlabel(<span class="string">'Thickness'</span>,<span class="string">'FontSize'</span>,12)
+0039         ylabel(<span class="string">'Refractive Index'</span>,<span class="string">'FontSize'</span>,12)
+0040         title([Coating.Name,<span class="string">': Refractive Index Profile'</span>],<span class="string">'FontSize'</span>,12) 
+0041     <span class="keyword">else</span>
+0042         msgbox <span class="string">'The coating is not defined by its refractive index profile.'</span>;
+0043 <span class="comment">%         return;</span>
+0044     <span class="keyword">end</span>  
+0045     
+0046     <span class="keyword">if</span> nargin == 3
+0047         <span class="comment">% Display tabular data on the tableHandle</span>
+0048         newTable1 = Coating.CoatingParameters.RefractiveIndexProfile;
+0049         newTable1 = mat2cell(newTable1,[ones(1,size(newTable1,1))],[ones(1,size(newTable1,2))]);
+0050         columnName1 = {<span class="string">'Refractive Index'</span>,<span class="string">'Thickness (Lens Unit)'</span>};
+0051         columnWidth1 = {<span class="string">'auto'</span>,<span class="string">'auto'</span>};
+0052         set(tableHandle, <span class="string">'Data'</span>, newTable1,<span class="keyword">...</span>
+0053             <span class="string">'ColumnName'</span>, columnName1,<span class="string">'ColumnWidth'</span>,columnWidth1);
+0054     <span class="keyword">end</span>
+0055     <span class="keyword">if</span> nargin == 4
+0056         <span class="comment">% Write some note on the text window</span>
+0057         set(textHandle,<span class="string">'String'</span>,<span class="string">'No text to display ...'</span>);
+0058     <span class="keyword">end</span>
+0059 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

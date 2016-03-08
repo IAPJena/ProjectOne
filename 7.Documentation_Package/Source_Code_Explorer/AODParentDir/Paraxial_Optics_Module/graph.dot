@@ -1,0 +1,22 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  computeBackFocalLength -> yniTrace;
+  computeEffectiveFocalLength -> yniTrace;
+  computeEntrancePupilLocation -> yniTrace;
+  computeExitPupilLocation -> yniTrace;
+  computeParaxialAngularMagnification -> yniTrace;
+  computeParaxialImageLocation -> yniTrace;
+  computeSystemStopIndex -> yniTrace;
+
+  computeBackFocalLength [URL="computeBackFocalLength.html"];
+  computeEffectiveFocalLength [URL="computeEffectiveFocalLength.html"];
+  computeEntrancePupilDiameter [URL="computeEntrancePupilDiameter.html"];
+  computeEntrancePupilLocation [URL="computeEntrancePupilLocation.html"];
+  computeExitPupilLocation [URL="computeExitPupilLocation.html"];
+  computeImageNA [URL="computeImageNA.html"];
+  computeObjectNA [URL="computeObjectNA.html"];
+  computeParaxialAngularMagnification [URL="computeParaxialAngularMagnification.html"];
+  computeParaxialImageLocation [URL="computeParaxialImageLocation.html"];
+  computeSystemStopIndex [URL="computeSystemStopIndex.html"];
+  yniTrace [URL="yniTrace.html"];
+}

@@ -1,0 +1,508 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of InitializeSurfaceEditorPanel</title>
+  <meta name="keywords" content="InitializeSurfaceEditorPanel">
+  <meta name="description" content="InitializeSurfaceEditorPanel: Define and initialized the uicontrols of the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>InitializeSurfaceEditorPanel
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>InitializeSurfaceEditorPanel: Define and initialized the uicontrols of the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function InitializeSurfaceEditorPanel(parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> InitializeSurfaceEditorPanel: Define and initialized the uicontrols of the 
+ Surface Editor Panel
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a>	EXTRACTCOATINGFROMCOATINGCATALOGUE extracts a AOD object from the catalogue</li><li><a href="resetSurfaceEditorPanel.html" class="code" title="function parentWindow = resetSurfaceEditorPanel(parentWindow)">resetSurfaceEditorPanel</a>	resetSurfaceEditorPanel: reset all surface editor tables</li><li><a href="../../../AODParentDir/Coating_Catalogue_Module/coatingDataInputDialog.html" class="code" title="function [ figureHandle ] = coatingDataInputDialog(coatingCatalogueListFullNames,fontName,fontSize)">coatingDataInputDialog</a>	COATINGDATAINPUTDIALOG Defines a dilog box which is used to input coating</li><li><a href="../../../AODParentDir/Glass_Catalogue_Module/glassDataInputDialog.html" class="code" title="function [ figureHandle ] = glassDataInputDialog(glassCatalogueListFullNames,fontName,fontSize)">glassDataInputDialog</a>	GLASSDATAINPUTDIALOG Defines a dilog box which is used to input glass</li><li><a href="../../../AODParentDir/Unclassified_Tools_Module/System_Validation/isValidGeneralInput.html" class="code" title="function [ valid,reason ] = isValidGeneralInput( varargin )">isValidGeneralInput</a>	validInput: Validates user input to the toolbox depending on the type</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function tblStandardData_CellEditCallback(~, eventdata,aodHandles)</a></li><li><a href="#_sub2" class="code">function tblAsphericData_CellEditCallback(~, eventdata,aodHandles)</a></li><li><a href="#_sub3" class="code">function tblApertureData_CellEditCallback(~, ~,~)</a></li><li><a href="#_sub4" class="code">function tblTiltDecenterData_CellEditCallback(~, eventdata,aodHandles)</a></li><li><a href="#_sub5" class="code">function tblStandardData_CellSelectionCallback(~, eventdata,aodHandles)</a></li><li><a href="#_sub6" class="code">function tblAsphericData_CellSelectionCallback(~, ~,~)</a></li><li><a href="#_sub7" class="code">function tblApertureData_CellSelectionCallback(~, ~,~)</a></li><li><a href="#_sub8" class="code">function tblTiltDecenterData_CellSelectionCallback(~, ~,~)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function InitializeSurfaceEditorPanel(parentWindow)</a>
+0002 <span class="comment">% InitializeSurfaceEditorPanel: Define and initialized the uicontrols of the</span>
+0003 <span class="comment">% Surface Editor Panel</span>
+0004 <span class="comment">% Member of AODParentWindow class</span>
+0005 
+0006 aodHandles = parentWindow.AODParentHandles;
+0007     fontSize = aodHandles.FontSize;
+0008     fontName = aodHandles.FontName;
+0009     
+0010     nMainTab = aodHandles.nMainTab;
+0011     aodHandles.surfEditorTabGroup = uitabgroup(<span class="keyword">...</span>
+0012         <span class="string">'Parent'</span>, aodHandles.panelMainTab(2), <span class="keyword">...</span>
+0013         <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0014         <span class="string">'Position'</span>, [0, 0, 1.0, 1.0]); 
+0015     aodHandles.surfStandardDataTab = <span class="keyword">...</span>
+0016         uitab(aodHandles.surfEditorTabGroup, <span class="string">'title'</span>,<span class="string">'Standard Data'</span>);
+0017     aodHandles.surfApertureDataTab = <span class="keyword">...</span>
+0018         uitab(aodHandles.surfEditorTabGroup, <span class="string">'title'</span>,<span class="string">'Aperture Data'</span>);
+0019     aodHandles.surfAsphericDataTab = <span class="keyword">...</span>
+0020         uitab(aodHandles.surfEditorTabGroup, <span class="string">'title'</span>,<span class="string">'Aspheric Data'</span>);
+0021     aodHandles.surfTiltDecenterDataTab = <span class="keyword">...</span>
+0022         uitab(aodHandles.surfEditorTabGroup, <span class="string">'title'</span>,<span class="string">'Tilt Decenter Data'</span>);
+0023 
+0024     <span class="comment">% Initialize the panel and table for standard data</span>
+0025     aodHandles.tblStandardData = uitable(<span class="string">'Parent'</span>,aodHandles.surfStandardDataTab,<span class="keyword">...</span>
+0026         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="string">'units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0 0 1 1]);                    
+0027     <span class="comment">% Initialize the panel and table for aperture data</span>
+0028     aodHandles.tblApertureData = <span class="keyword">...</span>
+0029         uitable(<span class="string">'Parent'</span>,aodHandles.surfApertureDataTab,<span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0030                   <span class="string">'units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0 0 1 1]); 
+0031     <span class="comment">% Initialize the panel and table for aspheric data</span>
+0032     aodHandles.tblAsphericData = <span class="keyword">...</span>
+0033         uitable(<span class="string">'Parent'</span>,aodHandles.surfAsphericDataTab,<span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0034                   <span class="string">'units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0 0 1 1]); 
+0035     <span class="comment">% Initialize the panel and table for tilt decenter data</span>
+0036     aodHandles.tblTiltDecenterData = <span class="keyword">...</span>
+0037         uitable(<span class="string">'Parent'</span>,aodHandles.surfTiltDecenterDataTab,<span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0038                   <span class="string">'units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0 0 1 1]); 
+0039               
+0040 
+0041     <span class="comment">% Give all tables initial data</span>
+0042     parentWindow.AODParentHandles = aodHandles;
+0043     parentWindow = <a href="resetSurfaceEditorPanel.html" class="code" title="function parentWindow = resetSurfaceEditorPanel(parentWindow)">resetSurfaceEditorPanel</a>(parentWindow);
+0044     aodHandles = parentWindow.AODParentHandles;
+0045     <span class="comment">% Set all celledit and cellselection callbacks</span>
+0046     set(aodHandles.tblStandardData,<span class="keyword">...</span>
+0047         <span class="string">'CellEditCallback'</span>,{@<a href="#_sub1" class="code" title="subfunction tblStandardData_CellEditCallback(~, eventdata,aodHandles)">tblStandardData_CellEditCallback</a>,aodHandles},<span class="keyword">...</span>
+0048         <span class="string">'CellSelectionCallback'</span>,{@<a href="#_sub5" class="code" title="subfunction tblStandardData_CellSelectionCallback(~, eventdata,aodHandles)">tblStandardData_CellSelectionCallback</a>,aodHandles});    
+0049     
+0050     set(aodHandles.tblApertureData,<span class="keyword">...</span>
+0051         <span class="string">'CellEditCallback'</span>,{@<a href="#_sub3" class="code" title="subfunction tblApertureData_CellEditCallback(~, ~,~)">tblApertureData_CellEditCallback</a>,aodHandles},<span class="keyword">...</span>
+0052         <span class="string">'CellSelectionCallback'</span>,{@<a href="#_sub7" class="code" title="subfunction tblApertureData_CellSelectionCallback(~, ~,~)">tblApertureData_CellSelectionCallback</a>,aodHandles});    
+0053     set(aodHandles.tblAsphericData,<span class="keyword">...</span>
+0054         <span class="string">'CellEditCallback'</span>,{@<a href="#_sub2" class="code" title="subfunction tblAsphericData_CellEditCallback(~, eventdata,aodHandles)">tblAsphericData_CellEditCallback</a>,aodHandles},<span class="keyword">...</span>
+0055         <span class="string">'CellSelectionCallback'</span>,{@<a href="#_sub6" class="code" title="subfunction tblAsphericData_CellSelectionCallback(~, ~,~)">tblAsphericData_CellSelectionCallback</a>,aodHandles});
+0056     set(aodHandles.tblTiltDecenterData,<span class="keyword">...</span>
+0057         <span class="string">'CellEditCallback'</span>,{@<a href="#_sub4" class="code" title="subfunction tblTiltDecenterData_CellEditCallback(~, eventdata,aodHandles)">tblTiltDecenterData_CellEditCallback</a>,aodHandles},<span class="keyword">...</span>
+0058         <span class="string">'CellSelectionCallback'</span>,{@<a href="#_sub8" class="code" title="subfunction tblTiltDecenterData_CellSelectionCallback(~, ~,~)">tblTiltDecenterData_CellSelectionCallback</a>,aodHandles});
+0059     parentWindow.AODParentHandles = aodHandles;
+0060 <span class="keyword">end</span>
+0061 
+0062 <span class="comment">%% Callback Function Definitions</span>
+0063 
+0064 <span class="comment">% CellEditCallback</span>
+0065 <span class="comment">% --- Executes when entered data in editable cell(s) in aodHandles.tblStandardData.</span>
+0066 <a name="_sub1" href="#_subfunctions" class="code">function tblStandardData_CellEditCallback(~, eventdata,aodHandles)</a>
+0067 <span class="comment">% hObject    handle to aodHandles.tblStandardData (see GCBO)</span>
+0068 <span class="comment">% eventdata  structure with the following fields (see UITABLE)</span>
+0069 <span class="comment">%    Indices: row and column indices of the cell(s) edited</span>
+0070 <span class="comment">%    PreviousData: previous data for the cell(s) edited</span>
+0071 <span class="comment">%    EditData: string(s) entered by the user</span>
+0072 <span class="comment">%    NewData: EditData or its converted form set on the Data property. Empty if Data was not changed</span>
+0073 <span class="comment">%    Error: error string when failed to convert EditData to appropriate value for Data</span>
+0074 <span class="comment">% aodHandles    structure with aodHandles and user data (see GUIDATA)</span>
+0075 
+0076 <span class="keyword">if</span> eventdata.Indices(2) == 1    <span class="comment">%if surface tag  is changed update all tables in the editor</span>
+0077     <span class="keyword">if</span> (strcmpi(eventdata.PreviousData,<span class="string">'OBJECT'</span>))||(strcmpi(eventdata.PreviousData,<span class="string">'IMAGE'</span>))||(strcmpi(eventdata.PreviousData,<span class="string">'STOP'</span>))
+0078          tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0079          tblData1{eventdata.Indices(1),1} = eventdata.PreviousData;
+0080          set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);
+0081 
+0082     <span class="keyword">elseif</span> (strcmpi(eventdata.NewData,<span class="string">'STOP'</span>)) ||(strcmpi(eventdata.NewData,<span class="string">'STO'</span>))||(strcmpi(eventdata.NewData,<span class="string">'ST'</span>))||(strcmpi(eventdata.NewData,<span class="string">'S'</span>))
+0083          tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0084          tblData2 = get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+0085          tblData4 = get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+0086          tblData5 = get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+0087          
+0088          kk = 2;
+0089          <span class="keyword">while</span> ~strcmpi(tblData1{kk,1},<span class="string">'Image'</span>)
+0090              
+0091              <span class="keyword">if</span> kk == eventdata.Indices(1)
+0092                  surfTag = <span class="string">'STOP'</span>;
+0093              <span class="keyword">else</span>
+0094                  surfTag = <span class="string">'Surf'</span>;
+0095              <span class="keyword">end</span>
+0096              tblData1{kk,1} = surfTag;         
+0097              set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);  
+0098 
+0099              tblData2{kk,1} = surfTag;
+0100              set(aodHandles.tblApertureData, <span class="string">'Data'</span>, tblData2);
+0101              
+0102              tblData4{kk,1} = surfTag;
+0103              set(aodHandles.tblAsphericData, <span class="string">'Data'</span>, tblData4);
+0104 
+0105              tblData5{kk,1} = surfTag;
+0106              set(aodHandles.tblTiltDecenterData, <span class="string">'Data'</span>, tblData5); 
+0107              
+0108              kk = kk+1;
+0109          <span class="keyword">end</span>
+0110     <span class="keyword">else</span>
+0111          tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0112          tblData1{eventdata.Indices(1),1} = eventdata.PreviousData;
+0113          set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);
+0114     <span class="keyword">end</span>
+0115              
+0116     columnEditable1 =  [false true true false true false true false true <span class="keyword">...</span>
+0117         false true false true false true false];                     
+0118     sysTable1 = aodHandles.tblStandardData;
+0119     set(sysTable1,<span class="string">'ColumnEditable'</span>, columnEditable1);  
+0120 <span class="keyword">elseif</span> eventdata.Indices(2) == 3 &amp;&amp; ~(strcmpi(eventdata.NewData,<span class="string">''</span>))   <span class="comment">%if surface type is changed update all tables in the editor</span>
+0121      <span class="keyword">if</span> strcmpi(strtrim(eventdata.NewData),<span class="string">'Plane'</span>)
+0122          tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0123          tblData1{eventdata.Indices(1),5} = <span class="string">'Inf'</span>;
+0124          set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);         
+0125      <span class="keyword">end</span>
+0126      
+0127      tblData2 = get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+0128      tblData2{eventdata.Indices(1),eventdata.Indices(2)-1} = eventdata.NewData;
+0129      set(aodHandles.tblApertureData, <span class="string">'Data'</span>, tblData2);     
+0130      
+0131      tblData4 = get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+0132      tblData4{eventdata.Indices(1),eventdata.Indices(2)-1} = eventdata.NewData;
+0133      set(aodHandles.tblAsphericData, <span class="string">'Data'</span>, tblData4);
+0134      
+0135      tblData5 = get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+0136      tblData5{eventdata.Indices(1),eventdata.Indices(2)-1} = eventdata.NewData;
+0137      set(aodHandles.tblTiltDecenterData, <span class="string">'Data'</span>, tblData5);
+0138  <span class="keyword">elseif</span> eventdata.Indices(2) == 5 <span class="comment">% if radius field changes</span>
+0139      <span class="keyword">if</span> isempty(str2num(eventdata.NewData))||any(imag(str2num(eventdata.NewData)))<span class="comment">%if the radius field is not a number</span>
+0140          tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0141          tblData1{eventdata.Indices(1),5} = <span class="string">'Inf'</span>;
+0142          tblData1{eventdata.Indices(1),3} = <span class="string">'Plane'</span>;
+0143          set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);
+0144          
+0145          <span class="comment">%update other tables</span>
+0146          tblData2 = get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+0147          tblData2{eventdata.Indices(1),2} = <span class="string">'Plane'</span>;
+0148          set(aodHandles.tblApertureData, <span class="string">'Data'</span>, tblData2);
+0149 
+0150          tblData4 = get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+0151          tblData4{eventdata.Indices(1),2} = <span class="string">'Plane'</span>;
+0152          set(aodHandles.tblAsphericData, <span class="string">'Data'</span>, tblData4);
+0153 
+0154          tblData5 = get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+0155          tblData5{eventdata.Indices(1),2} = <span class="string">'Plane'</span>;
+0156          set(aodHandles.tblTiltDecenterData, <span class="string">'Data'</span>, tblData5);
+0157      
+0158      <span class="keyword">elseif</span> strcmpi(strtrim(eventdata.NewData),<span class="string">'inf'</span>) <span class="comment">% if radius is infinity</span>
+0159          tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0160          tblData1{eventdata.Indices(1),3} = <span class="string">'Plane'</span>;
+0161          set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);
+0162          
+0163          <span class="comment">%update other tables</span>
+0164          tblData2 = get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+0165          tblData2{eventdata.Indices(1),2} = <span class="string">'Plane'</span>;
+0166          set(aodHandles.tblApertureData, <span class="string">'Data'</span>, tblData2);
+0167 
+0168          tblData4 = get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+0169          tblData4{eventdata.Indices(1),2} = <span class="string">'Plane'</span>;
+0170          set(aodHandles.tblAsphericData, <span class="string">'Data'</span>, tblData4);
+0171 
+0172          tblData5 = get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+0173          tblData5{eventdata.Indices(1),2} = <span class="string">'Plane'</span>;
+0174          set(aodHandles.tblTiltDecenterData, <span class="string">'Data'</span>, tblData5);         
+0175          
+0176      <span class="keyword">else</span>
+0177          tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0178          <span class="keyword">if</span> strcmpi(strtrim(tblData1{eventdata.Indices(1),3}),<span class="string">'Plane'</span>) 
+0179              tblData1{eventdata.Indices(1),3} = <span class="string">'Spherical'</span>;
+0180              set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);
+0181              
+0182          <span class="comment">%update other tables</span>
+0183          tblData2 = get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+0184          tblData2{eventdata.Indices(1),2} = <span class="string">'Spherical'</span>;
+0185          set(aodHandles.tblApertureData, <span class="string">'Data'</span>, tblData2);
+0186 
+0187          tblData4 = get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+0188          tblData4{eventdata.Indices(1),2} = <span class="string">'Spherical'</span>;
+0189          set(aodHandles.tblAsphericData, <span class="string">'Data'</span>, tblData4);
+0190 
+0191          tblData5 = get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+0192          tblData5{eventdata.Indices(1),2} = <span class="string">'Spherical'</span>;
+0193          set(aodHandles.tblTiltDecenterData, <span class="string">'Data'</span>, tblData5);                                      
+0194          <span class="keyword">end</span>       
+0195      <span class="keyword">end</span>
+0196 <span class="keyword">elseif</span> eventdata.Indices(1) == 1 &amp;&amp; eventdata.Indices(2) == 7 <span class="comment">% if first thickness is changed</span>
+0197     <span class="keyword">if</span> <a href="../../../AODParentDir/Unclassified_Tools_Module/System_Validation/isValidGeneralInput.html" class="code" title="function [ valid,reason ] = isValidGeneralInput( varargin )">isValidGeneralInput</a>() <span class="comment">% This returns 1 by default, but in the future</span>
+0198         <span class="comment">% input validation code shall be defined</span>
+0199     <span class="keyword">else</span>
+0200          button = questdlg(<span class="string">'Invalid input detected. Do you want to restore previous valid object thickness value?'</span>,<span class="string">'Restore Object Thickness'</span>);
+0201          <span class="keyword">if</span> strcmpi(button,<span class="string">'Yes'</span>)
+0202              tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0203              tblData1{eventdata.Indices(1),7} = eventdata.PreviousData;
+0204              set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);
+0205          <span class="keyword">end</span>
+0206     <span class="keyword">end</span>  
+0207 <span class="keyword">elseif</span> eventdata.Indices(2) == 9 <span class="comment">% if glass is changed</span>
+0208     glassName = eventdata.NewData;
+0209     <span class="comment">% Check if the glass name is just the refractive index of the glass</span>
+0210     <span class="keyword">if</span> ~isnan(str2double(glassName))
+0211         tblData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0212         tblData{eventdata.Indices(1),9} = num2str(str2double(glassName),<span class="string">'%.4f '</span>);
+0213         set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData);        
+0214         <span class="keyword">return</span>;        
+0215     <span class="keyword">end</span>
+0216     
+0217     <span class="comment">% check for its existance among selected catalogues</span>
+0218     <span class="keyword">if</span> ~isempty(glassName)
+0219         objectType = <span class="string">'glass'</span>;
+0220         objectName = glassName;
+0221         <span class="comment">% Glass Catalogue</span>
+0222         tableData1 = get(aodHandles.tblGlassCatalogues,<span class="string">'data'</span>);
+0223         <span class="keyword">if</span> ~isempty(tableData1)
+0224             <span class="comment">% Take only the selected ones</span>
+0225             selectedRows1 = find(cell2mat(tableData1(:,1)));
+0226             <span class="keyword">if</span> ~isempty(selectedRows1)
+0227                 glassCatalogueListFullNames = tableData1(selectedRows1,3);
+0228             <span class="keyword">else</span>
+0229                 glassCatalogueListFullNames = <span class="string">''</span>;
+0230             <span class="keyword">end</span>
+0231         <span class="keyword">else</span>
+0232             glassCatalogueListFullNames = <span class="string">''</span>;
+0233         <span class="keyword">end</span>
+0234         objectCatalogueListFullNames = glassCatalogueListFullNames;
+0235         objectIndex = 0;
+0236         <span class="keyword">for</span> kk = 1:size(objectCatalogueListFullNames,1)
+0237             objectCatalogueFullName = objectCatalogueListFullNames{kk};
+0238             [ aodObject,objectIndex ] = <a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0239                 (objectType,objectName,objectCatalogueFullName );
+0240             <span class="keyword">if</span> objectIndex ~= 0
+0241                 <span class="keyword">break</span>;
+0242             <span class="keyword">end</span>
+0243         <span class="keyword">end</span>
+0244         <span class="comment">% if exists capitalize its name else ask for new coating definition</span>
+0245         <span class="keyword">if</span> objectIndex ~= 0
+0246             tblData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0247             tblData{eventdata.Indices(1),9} = upper(tblData{eventdata.Indices(1),9});
+0248             set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData);
+0249         <span class="keyword">else</span>
+0250             button = questdlg(<span class="string">'The glass is not found in the catalogues. Do you want to add or choose another?'</span>,<span class="string">'Glass Not Found'</span>);
+0251             <span class="keyword">switch</span> button
+0252                 <span class="keyword">case</span> <span class="string">'Yes'</span>
+0253                     glassEnteryFig = <a href="../../../AODParentDir/Glass_Catalogue_Module/glassDataInputDialog.html" class="code" title="function [ figureHandle ] = glassDataInputDialog(glassCatalogueListFullNames,fontName,fontSize)">glassDataInputDialog</a>(glassCatalogueListFullNames);
+0254                     set(glassEnteryFig,<span class="string">'WindowStyle'</span>,<span class="string">'Modal'</span>);
+0255                     uiwait(glassEnteryFig);
+0256                     <span class="keyword">try</span>
+0257                         load(<span class="string">'tempglass.mat'</span>,<span class="string">'glassObj'</span>);
+0258                         selectedGlassName = glassObj.Name;
+0259                         delete(<span class="string">'tempglass.mat'</span>)                        
+0260                     <span class="keyword">catch</span>
+0261                         selectedGlassName = <span class="string">''</span>;                        
+0262                     <span class="keyword">end</span>                    
+0263                     tblData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0264                     tblData{eventdata.Indices(1),9} = upper(selectedGlassName);
+0265                     set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData);
+0266                 <span class="keyword">case</span> <span class="string">'No'</span>
+0267                     <span class="comment">% Do nothing</span>
+0268                     disp(<span class="string">'Warning: Undefined glass used. It may cause problem in the analysis.'</span>);
+0269                 <span class="keyword">case</span> <span class="string">'Cancel'</span>
+0270                     tblData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0271                     tblData{eventdata.Indices(1),9} = <span class="string">''</span>;
+0272                     set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData);
+0273             <span class="keyword">end</span>
+0274         <span class="keyword">end</span>
+0275     <span class="keyword">end</span>
+0276 
+0277 <span class="keyword">elseif</span> eventdata.Indices(2) == 13 <span class="comment">%if semi diameter is changed update aperture</span>
+0278      <span class="comment">% update aperture table if it is Floating Aperture</span>
+0279      tblData2 = get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+0280      <span class="keyword">if</span> strcmpi(tblData2{eventdata.Indices(1),3},<span class="string">'Floating'</span>)
+0281         tblData2{eventdata.Indices(1),5} = eventdata.NewData; 
+0282         tblData2{eventdata.Indices(1),7} = eventdata.NewData;
+0283      <span class="keyword">end</span>    
+0284      set(aodHandles.tblApertureData, <span class="string">'Data'</span>, tblData2);
+0285 <span class="keyword">elseif</span> eventdata.Indices(2) == 15 <span class="comment">% if coating is changed</span>
+0286     <span class="comment">% check for its existance among selected catalogues</span>
+0287     coatName = eventdata.NewData;
+0288 
+0289     objectType = <span class="string">'coating'</span>;
+0290     objectName = coatName;
+0291     <span class="comment">% Coating Catalogue</span>
+0292     tableData1 = get(aodHandles.tblCoatingCatalogues,<span class="string">'data'</span>);
+0293     <span class="keyword">if</span> ~isempty(tableData1)
+0294         <span class="comment">% Take only the selected ones</span>
+0295         selectedRows1 = find(cell2mat(tableData1(:,1)));
+0296         <span class="keyword">if</span> ~isempty(selectedRows1)
+0297             coatingCatalogueListFullNames = tableData1(selectedRows1,3);
+0298         <span class="keyword">else</span>
+0299             coatingCatalogueListFullNames = <span class="string">''</span>;
+0300         <span class="keyword">end</span>
+0301     <span class="keyword">else</span>
+0302         coatingCatalogueListFullNames = <span class="string">''</span>;
+0303     <span class="keyword">end</span>
+0304     objectCatalogueListFullNames = coatingCatalogueListFullNames;
+0305     objectIndex = 0;
+0306     <span class="keyword">for</span> kk = 1:size(objectCatalogueListFullNames,1)
+0307         objectCatalogueFullName = objectCatalogueListFullNames{kk};
+0308         [ aodObject,objectIndex ] = <a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0309             (objectType,objectName,objectCatalogueFullName );
+0310         <span class="keyword">if</span> objectIndex ~= 0
+0311             <span class="keyword">break</span>;
+0312         <span class="keyword">end</span>
+0313     <span class="keyword">end</span>
+0314     
+0315     <span class="comment">% if empty, replace with None. If it exists in the catal capitalize its</span>
+0316     <span class="comment">% name else ask for new coating definition</span>
+0317     <span class="keyword">if</span> isempty(coatName)
+0318         coatName = <span class="string">'None'</span>;
+0319         tblData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0320         tblData{eventdata.Indices(1),15} = upper(coatName);
+0321         set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData);    
+0322     <span class="keyword">elseif</span> objectIndex ~= 0
+0323         tblData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0324         tblData{eventdata.Indices(1),15} = upper(tblData{eventdata.Indices(1),15});
+0325         set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData);
+0326     <span class="keyword">else</span>
+0327         button = questdlg(<span class="string">'The coating is not found in the catalogues. Do you want to add or choose another?'</span>,<span class="string">'Coating Not Found'</span>);
+0328         <span class="keyword">switch</span> button
+0329             <span class="keyword">case</span> <span class="string">'Yes'</span>
+0330                 coatingEnteryFig = <a href="../../../AODParentDir/Coating_Catalogue_Module/coatingDataInputDialog.html" class="code" title="function [ figureHandle ] = coatingDataInputDialog(coatingCatalogueListFullNames,fontName,fontSize)">coatingDataInputDialog</a>(coatingCatalogueListFullNames);
+0331                 set(coatingEnteryFig,<span class="string">'WindowStyle'</span>,<span class="string">'Modal'</span>);
+0332                 uiwait(coatingEnteryFig);
+0333                 <span class="keyword">try</span>
+0334                     load(<span class="string">'tempcoating.mat'</span>,<span class="string">'coatingObj'</span>);
+0335                     selectedCoatingName = coatingObj.Name;
+0336                     delete(<span class="string">'tempcoating.mat'</span>)
+0337                 <span class="keyword">catch</span>
+0338                     selectedCoatingName = <span class="string">'None'</span>;
+0339                 <span class="keyword">end</span>
+0340                 tblData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0341                 tblData{eventdata.Indices(1),15} = upper(selectedCoatingName);
+0342                 set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData);
+0343             <span class="keyword">case</span> <span class="string">'No'</span>
+0344                 <span class="comment">% Do nothing Just leave it</span>
+0345                 disp(<span class="string">'Warning: Undefined caoting used. It may cause problem in the analysis.'</span>);
+0346             <span class="keyword">case</span> <span class="string">'Cancel'</span>
+0347                 tblData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0348                 tblData{eventdata.Indices(1),15} = <span class="string">'NONE'</span>;
+0349                 set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData);
+0350         <span class="keyword">end</span>
+0351     <span class="keyword">end</span>
+0352 <span class="keyword">end</span>
+0353 <span class="keyword">end</span>
+0354 
+0355 <span class="comment">% --- Executes when entered data in editable cell(s) in aodHandles.tblAsphericData.</span>
+0356 <a name="_sub2" href="#_subfunctions" class="code">function tblAsphericData_CellEditCallback(~, eventdata,aodHandles)</a>
+0357 <span class="keyword">if</span> eventdata.Indices(2) == 3 <span class="comment">% if conic constant is changed</span>
+0358      tblData4 = get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+0359      <span class="keyword">if</span> strcmpi(tblData4{eventdata.Indices(1),2},<span class="string">'Plane'</span>)||<span class="keyword">...</span>
+0360          strcmpi(tblData4{eventdata.Indices(1),2},<span class="string">'Spherical'</span>)
+0361      
+0362      <span class="keyword">if</span> str2double(strtrim(eventdata.NewData)) ~= 0
+0363          msgbox([<span class="string">'Conic constant is not defined for Plane and Spherical '</span>,<span class="keyword">...</span>
+0364              <span class="string">'surfaces. Please change the surface type first.'</span>],<span class="keyword">...</span>
+0365              <span class="string">'Change Surface Type'</span>);
+0366          tblData4{eventdata.Indices(1),3} = <span class="string">'0'</span>;
+0367          set(aodHandles.tblAsphericData, <span class="string">'Data'</span>, tblData4);         
+0368      <span class="keyword">end</span>
+0369      
+0370      <span class="keyword">end</span>
+0371 <span class="keyword">elseif</span> eventdata.Indices(2) &gt; 3 <span class="comment">% if polynomial coefficnets are changed</span>
+0372      tblData4 = get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+0373      <span class="keyword">if</span> strcmpi(tblData4{eventdata.Indices(1),2},<span class="string">'Plane'</span>)||<span class="keyword">...</span>
+0374          strcmpi(tblData4{eventdata.Indices(1),2},<span class="string">'Spherical'</span>)||<span class="keyword">...</span>
+0375          strcmpi(tblData4{eventdata.Indices(1),2},<span class="string">'Conic Aspherical'</span>)
+0376      
+0377      <span class="keyword">if</span> str2double(strtrim(eventdata.NewData)) ~= 0
+0378          msgbox([<span class="string">'Polynomial coefficients are not defined for Plane, Spherical '</span>,<span class="keyword">...</span>
+0379              <span class="string">'and Conic Aspherical surfaces. Please change the surface type first.'</span>],<span class="keyword">...</span>
+0380              <span class="string">'Change Surface Type'</span>);
+0381          tblData4{eventdata.Indices(1),eventdata.Indices(2)} = <span class="string">'0'</span>;
+0382          set(aodHandles.tblAsphericData, <span class="string">'Data'</span>, tblData4);         
+0383      <span class="keyword">end</span>
+0384      
+0385      <span class="keyword">end</span>
+0386 <span class="keyword">end</span>
+0387 <span class="keyword">end</span>
+0388 
+0389 <span class="comment">% --- Executes when entered data in editable cell(s) in aodHandles.tblApertureData.</span>
+0390 <a name="_sub3" href="#_subfunctions" class="code">function tblApertureData_CellEditCallback(~, ~,~)</a>
+0391 <span class="keyword">end</span>
+0392 <span class="comment">% --- Executes when entered data in editable cell(s) in aodHandles.tblTiltDecenterData.</span>
+0393 <a name="_sub4" href="#_subfunctions" class="code">function tblTiltDecenterData_CellEditCallback(~, eventdata,aodHandles)</a>
+0394 <span class="keyword">if</span> eventdata.Indices(2) == 3  <span class="comment">% 3rd row / tiltanddecenter data</span>
+0395     <span class="keyword">if</span> isempty(eventdata.NewData) || <span class="keyword">...</span>
+0396             ~<a href="../../../AODParentDir/Unclassified_Tools_Module/System_Validation/isValidGeneralInput.html" class="code" title="function [ valid,reason ] = isValidGeneralInput( varargin )">isValidGeneralInput</a>(eventdata.NewData,<span class="string">'TiltDecenterOrder'</span>)
+0397         <span class="comment">% restore previous data</span>
+0398         tblData = get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+0399         tblData{eventdata.Indices(1),3} = eventdata.PreviousData;
+0400         set(aodHandles.tblTiltDecenterData, <span class="string">'Data'</span>, tblData);
+0401     <span class="keyword">else</span>
+0402         <span class="comment">% valid input so format the text</span>
+0403         orderStr = upper(eventdata.NewData);
+0404         formatedOrder(1:2:11) = upper(orderStr(1:2:11));
+0405         formatedOrder(2:2:12) = lower(orderStr(2:2:12));
+0406         tblData = get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+0407         tblData{eventdata.Indices(1),3} = formatedOrder;
+0408         set(aodHandles.tblTiltDecenterData, <span class="string">'Data'</span>, tblData);
+0409     <span class="keyword">end</span>
+0410 <span class="keyword">end</span>
+0411 <span class="keyword">end</span>
+0412 
+0413 <span class="comment">% --- Executes when selected cell(s) is changed in aodHandles.tblStandardData.</span>
+0414 <a name="_sub5" href="#_subfunctions" class="code">function tblStandardData_CellSelectionCallback(~, eventdata,aodHandles)</a>
+0415 <span class="keyword">global</span> SELECTED_CELL
+0416 <span class="keyword">global</span> CAN_ADD
+0417 <span class="keyword">global</span> CAN_REMOVE
+0418 
+0419 SELECTED_CELL = cell2mat(struct2cell(eventdata)); <span class="comment">%struct to matrix</span>
+0420 <span class="keyword">if</span> isempty(SELECTED_CELL)
+0421     <span class="keyword">return</span>
+0422 <span class="keyword">end</span>
+0423 
+0424 tblData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0425 sizeTblData = size(tblData);
+0426 
+0427 <span class="keyword">if</span> SELECTED_CELL(2)==1 <span class="comment">% only when the first column selected</span>
+0428     <span class="keyword">if</span> SELECTED_CELL(1)==1 
+0429         CAN_ADD = 0; 
+0430         CAN_REMOVE = 0;
+0431         columnEditable1 =  [false true true false true false true false true false true false true false true false];                     
+0432         sysTable1 = aodHandles.tblStandardData;
+0433         set(sysTable1,<span class="string">'ColumnEditable'</span>, columnEditable1);         
+0434     <span class="keyword">elseif</span> SELECTED_CELL(1)== sizeTblData(1)
+0435         CAN_ADD = 1; 
+0436         CAN_REMOVE = 0;
+0437         columnEditable1 =  [false true true false true false true false true false true false true false true false];                     
+0438         sysTable1 = aodHandles.tblStandardData;
+0439         set(sysTable1,<span class="string">'ColumnEditable'</span>, columnEditable1);         
+0440     <span class="keyword">else</span>
+0441         CAN_ADD = 1; 
+0442         CAN_REMOVE = 1;  
+0443         columnEditable1 =  [true true true false true false true false true false true false true false true false];                     
+0444         sysTable1 = aodHandles.tblStandardData;
+0445         set(sysTable1,<span class="string">'ColumnEditable'</span>, columnEditable1);  
+0446     <span class="keyword">end</span>
+0447 <span class="keyword">end</span>
+0448 <span class="keyword">end</span>
+0449 
+0450 <span class="comment">% --- Executes when selected cell(s) is changed in aodHandles.tblAsphericData.</span>
+0451 <a name="_sub6" href="#_subfunctions" class="code">function tblAsphericData_CellSelectionCallback(~, ~,~)</a>
+0452 <span class="keyword">end</span>
+0453 <span class="comment">% --- Executes when selected cell(s) is changed in aodHandles.tblApertureData.</span>
+0454 <a name="_sub7" href="#_subfunctions" class="code">function tblApertureData_CellSelectionCallback(~, ~,~)</a>
+0455 <span class="keyword">end</span>
+0456 <span class="comment">% --- Executes when selected cell(s) is changed in aodHandles.tblTiltDecenterData.</span>
+0457 <a name="_sub8" href="#_subfunctions" class="code">function tblTiltDecenterData_CellSelectionCallback(~, ~,~)</a>
+0458 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeSystemStopIndex</title>
+  <meta name="keywords" content="computeSystemStopIndex">
+  <meta name="description" content="computeSystemStopIndex: calculate the stop index">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Paraxial_Optics_Module -->
+<h1>computeSystemStopIndex
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>computeSystemStopIndex: calculate the stop index</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ stopIndex] = computeSystemStopIndex(givenStopIndex,refIndex,thick,curv,clearAperture,obj_img) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeSystemStopIndex: calculate the stop index 
+ the stop index may be given directly by the user
+ Inputs
+     givenStopIndex: Stop index if specified by user otherwise = 0
+     refIndex,thick,curv,clearAperture : arrays of n,t of medium following, C and 
+       effective apperture radius of each surface from object to image direction
+   obj_img: 'FF','FI','IF','II' showing location of object and
+   image Finite and infinite
+ Output
+     stopIndex: surface index of stop surface. 
+ &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="yniTrace.html" class="code" title="function [yf uf] = yniTrace(yi,ui,initialSurf,finalSurf, refIndex,thick,curv)">yniTrace</a>	ynuTrace: Performs ynu trace for paraxial fileds</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/getStopIndex.html" class="code" title="function stopIndex = getStopIndex(OS)">getStopIndex</a>	getStopIndex: gives the stop index surface set by user</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ stopIndex] = computeSystemStopIndex(givenStopIndex,refIndex,thick,curv,clearAperture,obj_img)</a>
+0002     <span class="comment">% computeSystemStopIndex: calculate the stop index</span>
+0003     <span class="comment">% the stop index may be given directly by the user</span>
+0004     <span class="comment">% Inputs</span>
+0005     <span class="comment">%     givenStopIndex: Stop index if specified by user otherwise = 0</span>
+0006     <span class="comment">%     refIndex,thick,curv,clearAperture : arrays of n,t of medium following, C and</span>
+0007     <span class="comment">%       effective apperture radius of each surface from object to image direction</span>
+0008     <span class="comment">%   obj_img: 'FF','FI','IF','II' showing location of object and</span>
+0009     <span class="comment">%   image Finite and infinite</span>
+0010     <span class="comment">% Output</span>
+0011     <span class="comment">%     stopIndex: surface index of stop surface.</span>
+0012     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0013     <span class="comment">%</span>
+0014 
+0015     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0016     <span class="comment">%</span>
+0017 
+0018     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0019     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0020     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0021     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0022     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0023     <span class="comment">%   Institute of Applied Physics</span>
+0024     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0025                              
+0026     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0027     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0028     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0029 
+0030     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0031 
+0032     <span class="comment">% send pseudo mariginal ray from oxial point at object</span>
+0033     
+0034     <span class="comment">% if the stop surface is fixed by the user</span>
+0035     <span class="keyword">if</span> givenStopIndex
+0036       stopIndex = givenStopIndex;
+0037     <span class="keyword">else</span>
+0038       <span class="keyword">if</span> strcmpi(obj_img,<span class="string">'IF'</span>) || strcmpi(obj_img,<span class="string">'II'</span>)
+0039         <span class="comment">% for object side afocal systems (object from infinity)</span>
+0040         ytm = 0.01;
+0041         utm = 0;  
+0042       <span class="keyword">else</span>  
+0043         <span class="comment">% assume object surface at origin of the coordinate system</span>
+0044         ytm = 0;
+0045         utm = 0.01; 
+0046       <span class="keyword">end</span>  
+0047      <span class="comment">% compute clear aperture to height ratio for each surface</span>
+0048       CAy(1) = abs((clearAperture(1))/(ytm));
+0049       nsurf = length(curv); <span class="comment">% number of surfaces including object and image</span>
+0050       <span class="keyword">for</span> kk=1:1:nsurf-1 
+0051           [ytm,utm]=<a href="yniTrace.html" class="code" title="function [yf uf] = yniTrace(yi,ui,initialSurf,finalSurf, refIndex,thick,curv)">yniTrace</a>(ytm,utm,kk,kk+1, refIndex,thick,curv);
+0052           CAy(kk+1) = abs((clearAperture(kk+1))/(ytm));
+0053       <span class="keyword">end</span>
+0054       <span class="comment">% the surface with minimum value of clear aperture to height ratio is the stop</span>
+0055       [C,I] = min(CAy);
+0056       stopIndex = I;
+0057     <span class="keyword">end</span>    
+0058 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

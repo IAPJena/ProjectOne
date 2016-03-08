@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of thresh_diam_1d</title>
+  <meta name="keywords" content="thresh_diam_1d">
+  <meta name="description" content="_________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- menu.html Existing_Propagators -->
+<h1>thresh_diam_1d
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>_________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [dia,ierr,sterr,xl,xr] = thresh_diam_1d(xp,yp,thresh) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">_________________________________________________________________
+
+ Copyright by Carl Zeiss AG    
+ Confidence: OD internal
+
+ Aufruf:
+ du = thresh_diam_1d(xp,zp,thresh)
+ 
+ Schlagworte:
+ Durchmesser, Schwellwert
+
+ Kurzbeschreibung:  
+ Berechnung des Schwellwert-Durchmessers einer eindimensionalen Verteilung.  
+
+ Beschreibung: 
+ Berechnung des Schwellwert-Durchmessers einer eindimensionalen Verteilung.  
+ Die Verteilung wird von beiden Seiten angetastet und bzgl. der gewünschten 
+ relativen Höhe ausgewertet und linear interpoliert.
+ 
+ Version:  20.07.2008  Herbert Gross  Matlab 7.4      first version
+           06.08.2008  Korrektur
+ Owner: Herbert Gross
+
+ Input :    xp(np)        : Koordinatenmvektor
+            yp(np)        : Profilwerte, auch komplex möglich
+            thresh        : Relativer Schwellwerte 0...1
+
+ Output:    dia           : Durchmesser           
+            ierr          : Fehlerflag 
+                            ierr=0  Kein Fehler
+                            ierr=1  Thresh nicht zwischen 0 und 1
+                            ierr=2  Schwelle liegt am Rand vor
+                            ierr=3  Feld ist konstant
+            sterr         : Fehlertext               
+
+ Abhängigkeiten in 1. Ordnung: 
+ -
+
+ Referenzen:  - 
+
+ Testfile: thresh_diam_1d_test
+_________________________________________________________________</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fresnel_Paraxial/prop_field_abcd_2d_test.html" class="code" title="">prop_field_abcd_2d_test</a>	Test Fresnel-Propagator nach Collins in zwei Dimensionen</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [dia,ierr,sterr,xl,xr] = thresh_diam_1d(xp,yp,thresh)</a>
+0002 <span class="comment">%_________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Copyright by Carl Zeiss AG</span>
+0005 <span class="comment">% Confidence: OD internal</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% Aufruf:</span>
+0008 <span class="comment">% du = thresh_diam_1d(xp,zp,thresh)</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">% Schlagworte:</span>
+0011 <span class="comment">% Durchmesser, Schwellwert</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">% Kurzbeschreibung:</span>
+0014 <span class="comment">% Berechnung des Schwellwert-Durchmessers einer eindimensionalen Verteilung.</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">% Beschreibung:</span>
+0017 <span class="comment">% Berechnung des Schwellwert-Durchmessers einer eindimensionalen Verteilung.</span>
+0018 <span class="comment">% Die Verteilung wird von beiden Seiten angetastet und bzgl. der gewünschten</span>
+0019 <span class="comment">% relativen Höhe ausgewertet und linear interpoliert.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% Version:  20.07.2008  Herbert Gross  Matlab 7.4      first version</span>
+0022 <span class="comment">%           06.08.2008  Korrektur</span>
+0023 <span class="comment">% Owner: Herbert Gross</span>
+0024 <span class="comment">%</span>
+0025 <span class="comment">% Input :    xp(np)        : Koordinatenmvektor</span>
+0026 <span class="comment">%            yp(np)        : Profilwerte, auch komplex möglich</span>
+0027 <span class="comment">%            thresh        : Relativer Schwellwerte 0...1</span>
+0028 <span class="comment">%</span>
+0029 <span class="comment">% Output:    dia           : Durchmesser</span>
+0030 <span class="comment">%            ierr          : Fehlerflag</span>
+0031 <span class="comment">%                            ierr=0  Kein Fehler</span>
+0032 <span class="comment">%                            ierr=1  Thresh nicht zwischen 0 und 1</span>
+0033 <span class="comment">%                            ierr=2  Schwelle liegt am Rand vor</span>
+0034 <span class="comment">%                            ierr=3  Feld ist konstant</span>
+0035 <span class="comment">%            sterr         : Fehlertext</span>
+0036 <span class="comment">%</span>
+0037 <span class="comment">% Abhängigkeiten in 1. Ordnung:</span>
+0038 <span class="comment">% -</span>
+0039 <span class="comment">%</span>
+0040 <span class="comment">% Referenzen:  -</span>
+0041 <span class="comment">%</span>
+0042 <span class="comment">% Testfile: thresh_diam_1d_test</span>
+0043 <span class="comment">%_________________________________________________________________</span>
+0044 <span class="comment">%</span>
+0045 np = length(xp); xl = 0 ; xr = 0 ;
+0046 dia = 0 ; ierr = 0 ; sterr = <span class="string">' '</span>;
+0047 <span class="keyword">if</span> thresh &lt;=0 || thresh &gt;=1 ; ierr = 1 ; sterr=<span class="string">'Falscher Wert für thresh'</span>;<span class="keyword">end</span>
+0048 <span class="comment">%</span>
+0049 <span class="comment">%  Umspeicherung auf normiertes 1-D-Feld im ersten Index</span>
+0050 <span class="comment">%</span>
+0051 y = abs( squeeze(yp) );
+0052 ymax = max(y); 
+0053 ymin = min(y);
+0054 y = y / ymax;
+0055 klinks = 0 ; krechts = 0 ;
+0056 <span class="keyword">if</span> ymax-ymin &lt; 1.e-8 ; ierr = 3 ; sterr=<span class="string">'y-Werte sind konstant'</span>;<span class="keyword">end</span>
+0057 <span class="keyword">if</span> y(1)&gt;thresh ;  
+0058    klinks = 1 ;  ierr = 2 ; sterr=<span class="string">'Schwellwert liegt am linken Rand vor'</span>;<span class="keyword">end</span>
+0059 <span class="keyword">if</span> y(np)&gt;thresh ; 
+0060    krechts = np-1  ; ierr = 2 ; sterr=<span class="string">'Schwellwert liegt am rechten Rand vor'</span>;<span class="keyword">end</span>
+0061 imax = find( y == 1 );
+0062 <span class="comment">%</span>
+0063 <span class="comment">%  Linke Schwelle</span>
+0064 <span class="comment">%  klinks ist der Index davor</span>
+0065 <span class="comment">%</span>
+0066 <span class="keyword">if</span> klinks == 0
+0067    ind = find( y(1:imax(1)) &lt;= thresh );
+0068    klinks = max(ind);
+0069 <span class="keyword">end</span>
+0070 <span class="comment">%</span>
+0071 <span class="comment">%  Rechte Schwelle</span>
+0072 <span class="comment">%  krechts ist der Index davor</span>
+0073 <span class="comment">%</span>
+0074 <span class="keyword">if</span> krechts == 0
+0075    ind = find( y(imax(1):np) &lt;= thresh );
+0076    krechts = imax(1) - 2 + min(ind);
+0077 <span class="keyword">end</span>
+0078 <span class="comment">%</span>
+0079 <span class="comment">%  Genaue Breite linearinterpoliert</span>
+0080 <span class="comment">%</span>
+0081 <span class="keyword">if</span> krechts-klinks==0
+0082     dia = 0 ;
+0083 <span class="keyword">elseif</span> y(krechts+1)-y(krechts)==0
+0084     dia = 0 ;
+0085 <span class="keyword">elseif</span> y(klinks+1)-y(klinks)==0
+0086     dia = 0 ;
+0087 <span class="keyword">else</span>
+0088 <span class="comment">%</span>
+0089    k=klinks;
+0090    zl = xp(k)+(xp(k+1)-xp(k))*(thresh-y(k))/(y(k+1)-y(k));
+0091    k=krechts;
+0092    zr = xp(k)+(xp(k+1)-xp(k))*(thresh-y(k))/(y(k+1)-y(k));
+0093    dia = abs( zr - zl );
+0094 <span class="comment">%</span>
+0095 <span class="keyword">end</span>
+0096 <span class="comment">%</span>
+0097 
+0098</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

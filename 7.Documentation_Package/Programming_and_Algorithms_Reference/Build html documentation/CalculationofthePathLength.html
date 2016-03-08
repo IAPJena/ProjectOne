@@ -1,0 +1,118 @@
+﻿<html>
+	
+<head>
+	<title>Calculation of the Path Length</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("CalculationofthePathLength");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Calculation of the Path Length</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ScalarRayTracingModule.html">Scalar Ray Tracing Module</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="ScalarRayTracingModule.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="CoordinateTransformations.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="ComputationoftheIntersectionPoin.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts59">Calculation of the Path Length</span></span></h1>
+<p class="rvps10"><span class="rvts38">After the coordinate system is transferred into the local coordinate, it is convenient to determine first the intersection of the ray with the z = 0 &nbsp;plane. </span></p>
+<p class="rvps32"><span class="rvts38">At first, s</span><span class="rvts60">0</span><span class="rvts38"> is calculated by using:</span></p>
+<p class="rvps32"><img alt="" style="padding : 1px;" src="lib/NewItem198.png"/></p>
+<p class="rvps32"><span class="rvts38">Then, the intersection point with the Z = 0 plane could be calculated as:</span></p>
+<p class="rvps32"><img alt="" style="padding : 1px;" src="lib/NewItem197.png"/></p>
+<p class="rvps32"><img alt="" style="padding : 1px;" src="lib/NewItem196.png"/></p>
+<p class="rvps32"><img alt="" style="padding : 1px;" src="lib/NewItem195.png"/></p>
+<p class="rvps32"><span class="rvts38">Thus, the parameter p of the distance along the ray measured from (X</span><span class="rvts60">0</span><span class="rvts38">, Y</span><span class="rvts60">0</span><span class="rvts38">, Z</span><span class="rvts60">0</span><span class="rvts38">) &nbsp;is now replaced by s</span><span class="rvts60">0</span><span class="rvts38"> and s</span><span class="rvts60">f </span><span class="rvts38">.</span></p>
+<p class="rvps32"><img alt="" style="padding : 1px;" src="lib/NewItem191.png"/></p>
+<p class="rvps32"><span class="rvts38">s</span><span class="rvts60">f &nbsp;</span><span class="rvts38">is measured from the point (X</span><span class="rvts60">1</span><span class="rvts38">, Y</span><span class="rvts60">1</span><span class="rvts38">, 0) &nbsp; to the intersection point on the surface.</span></p>
+<p class="rvps32"><span class="rvts38">When the surface is a plane, &nbsp;s</span><span class="rvts60">0</span><span class="rvts38"> = 0; thus p= &nbsp;s</span><span class="rvts60">0</span><span class="rvts38"> .</span></p>
+<p class="rvps32"><span class="rvts38">But when the surface is not a plane and the routine of the surface is expressed as:</span></p>
+<p class="rvps32"><img alt="" style="padding : 1px;" src="lib/NewItem186.png"/></p>
+<p class="rvps32"><span class="rvts37">Spherical surface: </span></p>
+<p class="rvps33"><img alt="" style="padding : 1px;" src="lib/NewItem185.png"/></p>
+<p class="rvps34"><span class="rvts36">And if we try to solve the equation of the surface to get the coordinate z given as a function of c, x, and y. The solution would be:</span></p>
+<p class="rvps33"><img alt="" style="padding : 1px;" src="lib/NewItem184.png"/></p>
+<p class="rvps34"><span class="rvts36">And we find that the solution that we need is as follows and only the negative sign is taken into consideration:</span></p>
+<p class="rvps33"><img alt="" style="padding : 1px;" src="lib/NewItem183.png"/></p>
+<p class="rvps34"><span class="rvts36">Therefore let the coordinates of P be (X, Y, Z) &nbsp;and the length of the segment from (X</span><span class="rvts61">1</span><span class="rvts36">, Y</span><span class="rvts61">1</span><span class="rvts36">, 0) &nbsp;to (X, Y, Z) &nbsp;is </span><img alt="" style="padding : 1px;" src="lib/NewItem179.png"/><span class="rvts36">, we have</span></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem178.png"/></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem177.png"/></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem176.png"/></p>
+<p class="rvps34"><span class="rvts36">P lies on the surface, and therefore the equations could be put in the form</span></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem175.png"/></p>
+<p class="rvps34"><span class="rvts36">And we obtain a quadratic equation for </span><img alt="" style="padding : 1px;" src="lib/NewItem174.png"/><span class="rvts36"> as:</span></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem173.png"/></p>
+<p class="rvps34"><span class="rvts36">Or</span></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem172.png"/></p>
+<p class="rvps34"><span class="rvts36">Thus, the solution of the quadratic is:</span></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem171.png"/></p>
+<p class="rvps34"><span class="rvts36">In which</span></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem170.png"/></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem169.png"/></p>
+<p class="rvps34"><span class="rvts36">Considering the special case that the ray goes through the vertex of the surface, we can see that the negative sign is taken into consideration just like the solution we need of the general surface equation. Also in general </span><img alt="" style="padding : 1px;" src="lib/NewItem168.png"/><span class="rvts36"> is much less than</span><img alt="" style="padding : 1px;" src="lib/NewItem167.png"/><span class="rvts36">. The result is </span></p>
+<p class="rvps33"><img alt="" style="padding : 1px;" src="lib/NewItem166.png"/></p>
+<p class="rvps34"><span class="rvts36">No loss of significant figures when the form is used numerically.</span></p>
+<p class="rvps34"><span class="rvts36">In this form, the value of </span><img alt="" style="padding : 1px;" src="lib/NewItem165.png"/><span class="rvts36"> can be substituted to give </span><img alt="" style="padding : 1px;" src="lib/NewItem164.png"/><span class="rvts36">, the intersection point of the incidence; this completes the transfer process.</span></p>
+<p class="rvps35"><span class="rvts37">Conic section:</span></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem163.png"/></p>
+<p class="rvps34"><span class="rvts36">And similar with the solution of the spherical surface, the conic surface that we need only takes the negative sign into consideration:</span></p>
+<p class="rvps36"><img alt="" style="padding : 1px;" src="lib/NewItem162.png"/></p>
+<p class="rvps34"><span class="rvts36">The result will be:</span></p>
+<p class="rvps34"><img alt="" style="padding : 1px;" src="lib/NewItem161.png"/></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com">Free EBook and documentation generator</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

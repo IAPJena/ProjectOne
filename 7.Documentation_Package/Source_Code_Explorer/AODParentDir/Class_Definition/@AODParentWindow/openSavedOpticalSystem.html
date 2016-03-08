@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of openSavedOpticalSystem</title>
+  <meta name="keywords" content="openSavedOpticalSystem">
+  <meta name="description" content="extract all data from a given OpticalSystem object &quot;SavedOpticalSystem&quot;">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>openSavedOpticalSystem
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>extract all data from a given OpticalSystem object &quot;SavedOpticalSystem&quot;</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function opened = openSavedOpticalSystem(parentWindow,savedOpticalSystem,pathName, fileName) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> extract all data from a given OpticalSystem object &quot;SavedOpticalSystem&quot;  
+ and load it to surface data editor and configuration window.
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>	FINDALLCOATINGCATALOGUES Searches for all aodObject catalogue files in the</li><li><a href="../../../AODParentDir/Unclassified_Tools_Module/System_Validation/isValidGeneralInput.html" class="code" title="function [ valid,reason ] = isValidGeneralInput( varargin )">isValidGeneralInput</a>	validInput: Validates user input to the toolbox depending on the type</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function opened = openSavedOpticalSystem(parentWindow,savedOpticalSystem,pathName, fileName)        </a>
+0002 <span class="comment">% extract all data from a given OpticalSystem object &quot;SavedOpticalSystem&quot;</span>
+0003 <span class="comment">% and load it to surface data editor and configuration window.</span>
+0004 <span class="comment">% Member of AODParentWindow class</span>
+0005 
+0006     aodHandles = parentWindow.AODParentHandles;
+0007     <span class="keyword">try</span>
+0008         aodHandles.Saved = savedOpticalSystem.Saved;
+0009         aodHandles.PathName = pathName;
+0010         aodHandles.FileName = fileName;
+0011     <span class="keyword">catch</span>
+0012     <span class="keyword">end</span>
+0013     
+0014     <span class="comment">% Close all child windows</span>
+0015     parentWindow.closeAllChildWindows;
+0016 
+0017     <span class="comment">% Change the title bar to optical system name</span>
+0018     set(aodHandles.FigureHandle,<span class="string">'Name'</span>,[savedOpticalSystem.PathName,savedOpticalSystem.FileName]);
+0019         
+0020     <span class="comment">%aperture data</span>
+0021     set(aodHandles.popApertureType,<span class="string">'Value'</span>,savedOpticalSystem.SystemApertureType);
+0022     set(aodHandles.txtApertureValue,<span class="string">'String'</span>,savedOpticalSystem.SystemApertureValue);
+0023 
+0024     <span class="comment">%general data</span>
+0025     set(aodHandles.txtLensName,<span class="string">'String'</span>,savedOpticalSystem.LensName);
+0026     set(aodHandles.txtLensNote,<span class="string">'String'</span>,savedOpticalSystem.LensNote);
+0027     set(aodHandles.popLensUnit,<span class="string">'Value'</span>,savedOpticalSystem.LensUnit);
+0028     set(aodHandles.popWavelengthUnit,<span class="string">'Value'</span>,savedOpticalSystem.WavelengthUnit);
+0029 
+0030     <span class="comment">%wavelength data</span>
+0031     set(aodHandles.txtTotalWavelengthsSelected,<span class="string">'String'</span>,savedOpticalSystem.NumberOfWavelengths)
+0032     set(aodHandles.popPrimaryWavlenIndex,<span class="string">'String'</span>,num2cell(1:savedOpticalSystem.NumberOfWavelengths));
+0033     set(aodHandles.popPrimaryWavlenIndex,<span class="string">'Value'</span>,savedOpticalSystem.PrimaryWavelengthIndex);
+0034 
+0035     newTable1 = savedOpticalSystem.WavelengthMatrix;
+0036     <span class="comment">% add a column for 'selected' and last row which is not selected (if</span>
+0037     <span class="comment">% not already there in the WavelengthMatrix)</span>
+0038     <span class="keyword">if</span> size(newTable1,2) &lt; 3
+0039         newTable1 =  [ones(size(newTable1,1),1),newTable1];
+0040     <span class="keyword">end</span>
+0041     <span class="keyword">if</span> newTable1(<span class="keyword">end</span>,1) == 1
+0042         newTable1 = [newTable1;0,0.55,1];
+0043     <span class="keyword">end</span>
+0044     newTable1 = mat2cell(newTable1,[ones(1,size(newTable1,1))],[ones(1,size(newTable1,2))]);
+0045     <span class="keyword">for</span> p = 1:size(newTable1,1)
+0046         newTable1{p,1} = logical(newTable1{p,1});
+0047     <span class="keyword">end</span>
+0048     set(aodHandles.tblWavelengths, <span class="string">'Data'</span>, newTable1);  
+0049 
+0050     <span class="comment">% field data</span>
+0051     set(aodHandles.txtTotalFieldPointsSelected,<span class="string">'String'</span>,savedOpticalSystem.NumberOfFieldPoints);
+0052     set(aodHandles.radioAngle,<span class="string">'Value'</span>,strcmpi(char(savedOpticalSystem.FieldType),<span class="string">'Angle'</span>));
+0053     set(aodHandles.radioObjectHeight,<span class="string">'Value'</span>,strcmpi(char(savedOpticalSystem.FieldType),<span class="string">'ObjectHeight'</span>));
+0054     set(aodHandles.radioImageHeight,<span class="string">'Value'</span>,strcmpi(char(savedOpticalSystem.FieldType),<span class="string">'ImageHeight'</span>));
+0055     <span class="comment">%</span>
+0056     <span class="keyword">if</span> isempty(savedOpticalSystem.FieldNormalization)
+0057         savedOpticalSystem.FieldNormalization = <span class="string">'Rectangular'</span>;
+0058         fieldNormalizationIndex = 1;
+0059     <span class="keyword">else</span>
+0060         fieldNormalizationIndex = find(ismember(get(aodHandles.popFieldNormalization,<span class="string">'String'</span>),<span class="keyword">...</span>
+0061             savedOpticalSystem.FieldNormalization));
+0062     <span class="keyword">end</span>
+0063     <span class="keyword">if</span> ~isempty(fieldNormalizationIndex)
+0064         set(aodHandles.popFieldNormalization,<span class="string">'Value'</span>,fieldNormalizationIndex);
+0065     <span class="keyword">else</span>
+0066         disp([<span class="string">'Error: Apodization type '</span>,<span class="keyword">...</span>
+0067             savedOpticalSystem.popFieldNormalization,<span class="string">' is not defined.'</span>]);
+0068         <span class="keyword">return</span>;
+0069     <span class="keyword">end</span> 
+0070         
+0071         
+0072     newTable2 = savedOpticalSystem.FieldPointMatrix;
+0073     <span class="comment">% add a column for 'selected' and last row which is not selected (if</span>
+0074     <span class="comment">% not already there in the WavelengthMatrix)</span>
+0075     <span class="keyword">if</span> size(newTable2,2) &lt; 4
+0076         newTable2 =  [ones(size(newTable2,1),1),newTable2];
+0077     <span class="keyword">end</span>
+0078     <span class="keyword">if</span> newTable2(<span class="keyword">end</span>,1) == 1
+0079         newTable2 = [newTable2;0,0,0,1];
+0080     <span class="keyword">end</span>
+0081     newTable2 = mat2cell(newTable2,[ones(1,size(newTable2,1))],[ones(1,size(newTable2,2))]);
+0082     <span class="keyword">for</span> p = 1:size(newTable2,1)
+0083         newTable2{p,1} = logical(newTable2{p,1});
+0084     <span class="keyword">end</span>
+0085     set(aodHandles.tblFieldPoints, <span class="string">'Data'</span>, newTable2);
+0086 
+0087     <span class="keyword">if</span> isprop(savedOpticalSystem,<span class="string">'CoatingCataloguesList'</span>)
+0088         <span class="comment">% Coating Catalogue</span>
+0089         newTable3 = savedOpticalSystem.CoatingCataloguesList;
+0090         <span class="keyword">if</span> isempty(newTable3)
+0091             newTable3 = <a href="../../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>(<span class="string">'coating'</span>);
+0092         <span class="keyword">end</span>        
+0093         <span class="comment">% update the path name of each catalogues</span>
+0094         <span class="keyword">for</span> k = 1: size(newTable3,1)
+0095             filename = newTable3{k,:};
+0096             [pathstr,name,ext] = fileparts(filename);
+0097             <span class="comment">% check if it exists in the current working folder. if so update its path</span>
+0098             newFullFileName = which([name,ext]);
+0099             <span class="keyword">if</span> ~isempty(newFullFileName)                
+0100                 <span class="keyword">if</span> strcmpi([pwd,<span class="string">'\Catalogue_Files\'</span>,name,ext],newFullFileName)
+0101                     newTable3{k,:} = newFullFileName;
+0102                 <span class="keyword">else</span>
+0103                     <span class="comment">% Add the catlaogue to ...\Catalogue_Files folder</span>
+0104                     copyfile(newFullFileName,[pwd,<span class="string">'\Catalogue_Files\'</span>,name,ext])
+0105                     newTable3{k,:} = [pwd,<span class="string">'\Catalogue_Files\'</span>,name,ext];
+0106                 <span class="keyword">end</span>
+0107             <span class="keyword">else</span>
+0108                 aodCoatingCatalogueFileList = <a href="../../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>(<span class="string">'coating'</span>, [pwd,<span class="string">'\Catalogue_Files\'</span>]);
+0109                 newTable3{k,:} = aodCoatingCatalogueFileList{1};
+0110                 disp([<span class="string">'Error: The coating catalogue named '</span>,name,<span class="keyword">...</span>
+0111                     <span class="string">' is not in the current folder. So default catalogue is used instead.'</span>])
+0112             <span class="keyword">end</span>
+0113         <span class="keyword">end</span>
+0114     <span class="comment">% append ones in the 1st column for selected and add catalogue name in</span>
+0115     <span class="comment">% the second column</span>
+0116     <span class="keyword">for</span> p = 1:size(newTable3,1)
+0117         fullName = newTable3{p,1};
+0118         [pathstr,name,ext] = fileparts(fullName);
+0119         newTable3{p,1} = true;
+0120         newTable3{p,2} = name;
+0121         newTable3{p,3} = fullName;
+0122     <span class="keyword">end</span>
+0123     set(aodHandles.tblCoatingCatalogues, <span class="keyword">...</span>
+0124         <span class="string">'Data'</span>, newTable3);
+0125     set(aodHandles.txtTotalCoatingCataloguesSelected,<span class="keyword">...</span>
+0126         <span class="string">'String'</span>,num2str(size(newTable3,1)))
+0127     <span class="keyword">end</span>
+0128 
+0129     <span class="keyword">if</span> isprop(savedOpticalSystem,<span class="string">'GlassCataloguesList'</span>)
+0130         <span class="comment">% glass Catalogue</span>
+0131         newTable3 = savedOpticalSystem.GlassCataloguesList;
+0132         <span class="keyword">if</span> isempty(newTable3)
+0133             newTable3 = <a href="../../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>(<span class="string">'glass'</span>);
+0134         <span class="keyword">end</span>
+0135         <span class="comment">% update the path name of each catalogues</span>
+0136         <span class="keyword">for</span> k = 1: size(newTable3,1)
+0137             filename = newTable3{k,:};
+0138             [pathstr,name,ext] = fileparts(filename);
+0139             <span class="comment">% check if it exists in the current working folder. if so update its path</span>
+0140             newFullFileName = which([name,ext]);
+0141             <span class="keyword">if</span> ~isempty(newFullFileName)                
+0142                 <span class="keyword">if</span> strcmpi([pwd,<span class="string">'\Catalogue_Files\'</span>,name,ext],newFullFileName)
+0143                     newTable3{k,:} = newFullFileName;
+0144                 <span class="keyword">else</span>
+0145                     <span class="comment">% Add the catlaogue to ...\Catalogue_Files folder</span>
+0146                     copyfile(newFullFileName,[pwd,<span class="string">'\Catalogue_Files\'</span>,name,ext])
+0147                     newTable3{k,:} = [pwd,<span class="string">'\Catalogue_Files\'</span>,name,ext];
+0148                 <span class="keyword">end</span>
+0149             <span class="keyword">else</span>
+0150                 aodGlasssCatalogueFileList = <a href="../../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>(<span class="string">'glass'</span>, [pwd,<span class="string">'\Catalogue_Files\'</span>]);
+0151                 newTable3{k,:} = aodGlasssCatalogueFileList{1};
+0152                 disp([<span class="string">'Error: The glass catalogue named '</span>,name,<span class="keyword">...</span>
+0153                     <span class="string">' is not in the current folder. So default catalogue is used instead.'</span>])                
+0154             <span class="keyword">end</span>           
+0155         <span class="keyword">end</span>
+0156     <span class="comment">% append ones in the 1st column for selected and add catalogue name in</span>
+0157     <span class="comment">% the second column</span>
+0158     <span class="keyword">for</span> p = 1:size(newTable3,1)
+0159         fullName = newTable3{p,1};
+0160         [pathstr,name,ext] = fileparts(fullName);
+0161         newTable3{p,1} = true;
+0162         newTable3{p,2} = name;
+0163         newTable3{p,3} = fullName;
+0164     <span class="keyword">end</span>
+0165     set(aodHandles.tblGlassCatalogues, <span class="keyword">...</span>
+0166         <span class="string">'Data'</span>, newTable3);
+0167     set(aodHandles.txtTotalGlassCataloguesSelected,<span class="keyword">...</span>
+0168         <span class="string">'String'</span>,num2str(size(newTable3,1)))
+0169     <span class="keyword">end</span>    
+0170     
+0171     
+0172     <span class="keyword">if</span> isprop(savedOpticalSystem,<span class="string">'ApodizationType'</span>)
+0173         <span class="comment">% Pupil Apodization data</span>
+0174         <span class="keyword">if</span> isempty(savedOpticalSystem.ApodizationType)
+0175             savedOpticalSystem.ApodizationType = <span class="string">'None'</span>;
+0176             apodTypeIndex = 1;
+0177         <span class="keyword">else</span>
+0178             apodTypeIndex = find(ismember(get(aodHandles.popApodizationType,<span class="string">'String'</span>),<span class="keyword">...</span>
+0179                 savedOpticalSystem.ApodizationType));
+0180         <span class="keyword">end</span>
+0181         <span class="keyword">if</span> ~isempty(apodTypeIndex)
+0182             set(aodHandles.popApodizationType,<span class="string">'Value'</span>,apodTypeIndex);
+0183         <span class="keyword">else</span>
+0184             disp([<span class="string">'Error: Apodization type '</span>,<span class="keyword">...</span>
+0185                 savedOpticalSystem.ApodizationType,<span class="string">' is not defined.'</span>]);
+0186             <span class="keyword">return</span>;
+0187         <span class="keyword">end</span> 
+0188         <span class="keyword">switch</span> lower(savedOpticalSystem.ApodizationType)
+0189             <span class="keyword">case</span> lower(<span class="string">'None'</span>)
+0190                 set(aodHandles.panelSuperGaussParameters,<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0191                 set(get(aodHandles.panelSuperGaussParameters,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0192                 set(aodHandles.popApodizationType,<span class="string">'Value'</span>,1);
+0193             <span class="keyword">case</span> lower(<span class="string">'Super Gaussian'</span>)
+0194                 set(aodHandles.panelSuperGaussParameters,<span class="string">'Visible'</span>,<span class="string">'on'</span>);
+0195                 set(get(aodHandles.panelSuperGaussParameters,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'on'</span>);
+0196                 set(aodHandles.popApodizationType,<span class="string">'Value'</span>,2);
+0197                 
+0198                 apodParam = savedOpticalSystem.ApodizationParameters;
+0199                 set(aodHandles.txtApodMaximumIntensity,<span class="string">'String'</span>,<span class="keyword">...</span>
+0200                     num2str(apodParam.MaximumIntensity));
+0201                 set(aodHandles.txtApodOrder,<span class="string">'String'</span>,num2str(apodParam.Order));
+0202                 set(aodHandles.txtApodBeamRadius,<span class="string">'String'</span>,num2str(apodParam.BeamRadius));
+0203         <span class="keyword">end</span>
+0204     <span class="keyword">end</span>  
+0205     
+0206     <span class="comment">% surface data</span>
+0207     nSurface = savedOpticalSystem.NumberOfSurfaces;
+0208     <span class="comment">% initializ</span>
+0209     savedStandardData = cell(nSurface,14);
+0210     savedApertureData = cell(nSurface,12);
+0211     savedAsphericData = cell(nSurface,28);
+0212     savedTiltDecenterData = cell(nSurface,16);
+0213 
+0214     <span class="keyword">for</span> k = 1:1:nSurface
+0215         <span class="comment">%standard data</span>
+0216         <span class="keyword">if</span> savedOpticalSystem.SurfaceArray(k).ObjectSurface
+0217             savedStandardData{k,1} = <span class="string">'OBJECT'</span>;
+0218 
+0219         <span class="keyword">elseif</span> savedOpticalSystem.SurfaceArray(k).ImageSurface
+0220             savedStandardData{k,1} = <span class="string">'IMAGE'</span>;
+0221 
+0222         <span class="keyword">elseif</span> savedOpticalSystem.SurfaceArray(k).Stop 
+0223             savedStandardData{k,1} = <span class="string">'STOP'</span>;
+0224 
+0225         <span class="keyword">else</span> 
+0226             savedStandardData{k,1} = <span class="string">'Surf'</span>;
+0227         <span class="keyword">end</span>    
+0228         savedStandardData{k,2} = char(savedOpticalSystem.SurfaceArray(k).Comment);
+0229         savedStandardData{k,3} = char(savedOpticalSystem.SurfaceArray(k).Type); 
+0230         savedStandardData{k,4} = <span class="string">''</span>;
+0231         savedStandardData{k,5} = num2str(savedOpticalSystem.SurfaceArray(k).Radius);  
+0232         savedStandardData{k,6} = <span class="string">''</span>;
+0233         savedStandardData{k,7} = num2str(savedOpticalSystem.SurfaceArray(k).Thickness);
+0234         savedStandardData{k,8} = <span class="string">''</span>;
+0235 
+0236         <span class="keyword">switch</span> char(savedOpticalSystem.SurfaceArray(k).Glass.Name)
+0237             <span class="keyword">case</span> <span class="string">'None'</span>
+0238                 glassDisplayName = <span class="string">''</span>;
+0239             <span class="keyword">case</span> <span class="string">'FixedIndexGlass'</span>
+0240                 glassDisplayName = num2str(savedOpticalSystem.SurfaceArray(k).Glass.GlassParameters(1));
+0241             <span class="keyword">otherwise</span>
+0242                 glassDisplayName = upper(char(savedOpticalSystem.SurfaceArray(k).Glass.Name));
+0243         <span class="keyword">end</span>
+0244         savedStandardData{k,9} = glassDisplayName;
+0245         savedStandardData{k,10} = <span class="string">''</span>;
+0246 
+0247         savedStandardData{k,11} = char(savedOpticalSystem.SurfaceArray(k).DeviationMode);
+0248         savedStandardData{k,12} = <span class="string">''</span>;
+0249         savedStandardData{k,13} = num2str(savedOpticalSystem.SurfaceArray(k).SemiDiameter);  
+0250         savedStandardData{k,14} = <span class="string">''</span>;
+0251         savedStandardData{k,15} = upper(num2str(savedOpticalSystem.SurfaceArray(k).Coating.Name));  
+0252         savedStandardData{k,16} = <span class="string">''</span>;
+0253         
+0254         <span class="comment">% aperture data</span>
+0255         savedApertureData{k,1} = savedStandardData{k,1};
+0256         savedApertureData{k,2} = savedStandardData{k,3};
+0257         savedApertureData{k,3} = char(savedOpticalSystem.SurfaceArray(k).ApertureType);
+0258         savedApertureData{k,4} = <span class="string">''</span>;
+0259         savedApertureData{k,5} = num2str(savedOpticalSystem.SurfaceArray(k).ApertureParameter(1));
+0260         savedApertureData{k,6} = <span class="string">''</span>;
+0261         savedApertureData{k,7} = num2str(savedOpticalSystem.SurfaceArray(k).ApertureParameter(2));
+0262         savedApertureData{k,8} = <span class="string">''</span>;
+0263         savedApertureData{k,9} = num2str(savedOpticalSystem.SurfaceArray(k).ApertureParameter(3));
+0264         savedApertureData{k,10} = <span class="string">''</span>;
+0265         savedApertureData{k,11} = num2str(savedOpticalSystem.SurfaceArray(k).ApertureParameter(4));
+0266         savedApertureData{k,12} = <span class="string">''</span>;
+0267 
+0268         <span class="comment">%aspheric data</span>
+0269         savedAsphericData{k,1} = savedStandardData{k,1};
+0270         savedAsphericData{k,2} = savedStandardData{k,3};
+0271         savedAsphericData{k,3} = num2str(savedOpticalSystem.SurfaceArray(k).ConicConstant);
+0272         savedAsphericData{k,4} = <span class="string">''</span>;
+0273         savedAsphericData{k,5} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(1));
+0274         savedAsphericData{k,6} = <span class="string">''</span>;
+0275         savedAsphericData{k,7} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(2));
+0276         savedAsphericData{k,8} = <span class="string">''</span>;
+0277         savedAsphericData{k,9} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(3));
+0278         savedAsphericData{k,10} = <span class="string">''</span>;
+0279         savedAsphericData{k,11} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(4));
+0280         savedAsphericData{k,12} = <span class="string">''</span>;
+0281         savedAsphericData{k,13} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(5));
+0282         savedAsphericData{k,14} = <span class="string">''</span>;
+0283         savedAsphericData{k,15} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(6));
+0284         savedAsphericData{k,16} = <span class="string">''</span>;
+0285         savedAsphericData{k,17} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(7));
+0286         savedAsphericData{k,18} = <span class="string">''</span>;
+0287         savedAsphericData{k,19} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(8));
+0288         savedAsphericData{k,20} = <span class="string">''</span>;
+0289         savedAsphericData{k,21} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(9));
+0290         savedAsphericData{k,22} = <span class="string">''</span>;
+0291         savedAsphericData{k,23} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(10));
+0292         savedAsphericData{k,24} = <span class="string">''</span>;
+0293         savedAsphericData{k,25} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(11));
+0294         savedAsphericData{k,26} = <span class="string">''</span>;
+0295         savedAsphericData{k,27} = num2str(savedOpticalSystem.SurfaceArray(k).PloynomialCoefficients(12));
+0296         savedAsphericData{k,28} = <span class="string">''</span>;
+0297 
+0298 
+0299         <span class="comment">%tilt decenter data</span>
+0300         savedTiltDecenterData{k,1} = savedStandardData{k,1};
+0301         savedTiltDecenterData{k,2} = savedStandardData{k,3};
+0302         <span class="comment">% Validate Data</span>
+0303         order = char(savedOpticalSystem.SurfaceArray(k).TiltDecenterOrder);
+0304         <span class="keyword">if</span> <a href="../../../AODParentDir/Unclassified_Tools_Module/System_Validation/isValidGeneralInput.html" class="code" title="function [ valid,reason ] = isValidGeneralInput( varargin )">isValidGeneralInput</a>(order,<span class="string">'TiltDecenterOrder'</span>)
+0305             savedTiltDecenterData{k,3} = order;
+0306         <span class="keyword">else</span>
+0307             <span class="comment">% set default</span>
+0308             savedTiltDecenterData{k,3} = <span class="string">'DxDyDzTxTyTz'</span>;
+0309         <span class="keyword">end</span>
+0310         savedTiltDecenterData{k,4} = <span class="string">''</span>;
+0311         savedTiltDecenterData{k,5} = num2str(savedOpticalSystem.SurfaceArray(k).DecenterParameter(1));
+0312         savedTiltDecenterData{k,6} = <span class="string">''</span>;
+0313         savedTiltDecenterData{k,7} = num2str(savedOpticalSystem.SurfaceArray(k).DecenterParameter(2));
+0314         savedTiltDecenterData{k,8} = <span class="string">''</span>;
+0315         savedTiltDecenterData{k,9} = num2str(savedOpticalSystem.SurfaceArray(k).TiltParameter(1));
+0316         savedTiltDecenterData{k,10} = <span class="string">''</span>;
+0317         savedTiltDecenterData{k,11} = num2str(savedOpticalSystem.SurfaceArray(k).TiltParameter(2));
+0318         savedTiltDecenterData{k,12} = <span class="string">''</span>;
+0319         savedTiltDecenterData{k,13} = num2str(savedOpticalSystem.SurfaceArray(k).TiltParameter(3));
+0320         savedTiltDecenterData{k,14} = <span class="string">''</span>;
+0321         savedTiltDecenterData{k,15} = char(savedOpticalSystem.SurfaceArray(k).TiltMode);
+0322         savedTiltDecenterData{k,16} = <span class="string">''</span>;
+0323 
+0324     <span class="keyword">end</span>
+0325     sysTable1 = aodHandles.tblStandardData;
+0326     set(sysTable1, <span class="string">'Data'</span>, savedStandardData);
+0327 
+0328     sysTable2 = aodHandles.tblApertureData;
+0329     set(sysTable2, <span class="string">'Data'</span>, savedApertureData);
+0330 
+0331     sysTable4 = aodHandles.tblAsphericData;
+0332     set(sysTable4, <span class="string">'Data'</span>, savedAsphericData);
+0333 
+0334     sysTable5 = aodHandles.tblTiltDecenterData;
+0335     set(sysTable5, <span class="string">'Data'</span>, savedTiltDecenterData);
+0336     
+0337     <span class="comment">% Make surface editor tab visible and all others invisible</span>
+0338     nMainTab = aodHandles.nMainTab;
+0339     <span class="keyword">for</span> k = 1:nMainTab
+0340         set(get(aodHandles.panelMainTab(k),<span class="string">'Children'</span>),<span class="string">'Visible'</span>, <span class="string">'off'</span>);
+0341         set(aodHandles.btnMainTab(k),<span class="string">'BackgroundColor'</span>,[200,200,200]./256);
+0342     <span class="keyword">end</span>
+0343     set(get(aodHandles.panelMainTab(2),<span class="string">'Children'</span>),<span class="string">'Visible'</span>, <span class="string">'on'</span>);
+0344     set(aodHandles.btnMainTab(2),<span class="string">'BackgroundColor'</span>,[240,240,240]./256);
+0345     
+0346     parentWindow.AODParentHandles = aodHandles;
+0347     opened = 1;
+0348 <span class="keyword">end</span>
+0349</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

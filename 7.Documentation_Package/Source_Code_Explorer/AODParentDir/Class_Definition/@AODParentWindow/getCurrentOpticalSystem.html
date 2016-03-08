@@ -1,0 +1,392 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getCurrentOpticalSystem</title>
+  <meta name="keywords" content="getCurrentOpticalSystem">
+  <meta name="description" content="getCurrentOpticalSystem: Constructs an optical system object from the AOD">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>getCurrentOpticalSystem
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getCurrentOpticalSystem: Constructs an optical system object from the AOD</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ SavedOpticalSystem,saved] = getCurrentOpticalSystem (parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getCurrentOpticalSystem: Constructs an optical system object from the AOD
+ Main Window
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a>	EXTRACTCOATINGFROMCOATINGCATALOGUE extracts a AOD object from the catalogue</li><li><a href="../../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>	</li><li><a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>	</li><li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/OpticalSystem.html" class="code" title="">OpticalSystem</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ SavedOpticalSystem,saved] = getCurrentOpticalSystem (parentWindow)</a>
+0002 <span class="comment">% getCurrentOpticalSystem: Constructs an optical system object from the AOD</span>
+0003 <span class="comment">% Main Window</span>
+0004 <span class="comment">% Member of AODParentWindow class</span>
+0005 
+0006 aodHandles = parentWindow.AODParentHandles;
+0007 button=<span class="string">'Yes'</span>;
+0008 <span class="keyword">if</span> ~ parentWindow.validateOpticalSystem
+0009      button = questdlg(<span class="string">'Invalid input detected. Do you want to continue saving?'</span>,<span class="keyword">...</span>
+0010          <span class="string">'Invalid Input'</span>);
+0011 <span class="keyword">end</span> 
+0012 <span class="keyword">if</span> strcmpi(button,<span class="string">'Yes'</span>)
+0013     saved = aodHandles.Saved;
+0014     pathName = aodHandles.PathName;
+0015     fileName = aodHandles.FileName;
+0016 
+0017     <span class="comment">%System Configuration</span>
+0018     <span class="comment">%aperture</span>
+0019     tempSystemApertureType=get(aodHandles.popApertureType,<span class="string">'Value'</span>);
+0020     tempSystemApertureValue=str2double(get(aodHandles.txtApertureValue,<span class="string">'String'</span>));
+0021 
+0022     <span class="comment">%general</span>
+0023     tempLensName=get(aodHandles.txtLensName,<span class="string">'String'</span>);
+0024     tempLensNote=get(aodHandles.txtLensNote,<span class="string">'String'</span>);
+0025     tempLensUnit=get(aodHandles.popLensUnit,<span class="string">'Value'</span>);
+0026     tempWavelengthUnit=get(aodHandles.popWavelengthUnit,<span class="string">'Value'</span>);
+0027     
+0028     <span class="comment">%wavelength</span>
+0029     nWavelength = str2double(get(aodHandles.txtTotalWavelengthsSelected,<span class="string">'String'</span>));
+0030     tempPrimaryWavelengthIndex = get(aodHandles.popPrimaryWavlenIndex,<span class="string">'Value'</span>);
+0031     tempPredefinedWavlens      = get(aodHandles.popPredefinedWavlens,<span class="string">'Value'</span>);
+0032 
+0033     tblData = get(aodHandles.tblWavelengths,<span class="string">'data'</span>);
+0034     tempWavelengthMatrix = reshape([tblData{:,:}],length([tblData{:,:}])/3,3);
+0035     <span class="comment">% Remove the 1st col (Selected Chekbox) and last row (just empty row)</span>
+0036     <span class="keyword">if</span> tempWavelengthMatrix(<span class="keyword">end</span>,1)== 0 <span class="comment">% checks condn</span>
+0037        tempWavelengthMatrix = tempWavelengthMatrix(1:end-1,2:end);
+0038     <span class="keyword">end</span>
+0039 
+0040     <span class="comment">%fields</span>
+0041     nFieldPoint = str2double(get(aodHandles.txtTotalFieldPointsSelected,<span class="string">'String'</span>));
+0042     tempAngle = get(aodHandles.radioAngle,<span class="string">'Value'</span>);
+0043     tempObjectHeight = get(aodHandles.radioObjectHeight,<span class="string">'Value'</span>);
+0044     tempImageHeight = get(aodHandles.radioImageHeight,<span class="string">'Value'</span>);
+0045     <span class="keyword">if</span> tempAngle
+0046         tempFieldType = <span class="string">'Angle'</span>;
+0047     <span class="keyword">elseif</span> tempObjectHeight
+0048         tempFieldType = <span class="string">'ObjectHeight'</span>;
+0049     <span class="keyword">elseif</span> tempImageHeight
+0050         <span class="comment">% Currently Imageheight is not supported so take as object heigth.</span>
+0051        tempFieldType = <span class="string">'ObjectHeight'</span>; 
+0052     <span class="keyword">end</span>
+0053     
+0054     tempFieldNormalizationList = cellstr (get(aodHandles.popFieldNormalization,<span class="string">'String'</span>));
+0055     tempFieldNormalization = (tempFieldNormalizationList{get(aodHandles.popFieldNormalization,<span class="string">'Value'</span>)});
+0056     
+0057     tblData2 = get(aodHandles.tblFieldPoints,<span class="string">'data'</span>);
+0058     tempFieldPointMatrix = reshape([tblData2{:,:}],length([tblData2{:,:}])/4,4);
+0059     <span class="comment">% Remove the 1st col (Selected Chekbox) and last row (just empty row)</span>
+0060     <span class="keyword">if</span> tempFieldPointMatrix(<span class="keyword">end</span>,1)==0 <span class="comment">% checks condn</span>
+0061        tempFieldPointMatrix = tempFieldPointMatrix(1:end-1,2:end);
+0062     <span class="keyword">end</span>
+0063 
+0064  <span class="comment">% Coating Catalogue</span>
+0065  tableData1 = get(aodHandles.tblCoatingCatalogues,<span class="string">'data'</span>);
+0066  <span class="keyword">if</span> ~isempty(tableData1)
+0067      <span class="comment">% Take only the selected ones</span>
+0068      selectedRows1 = find(cell2mat(tableData1(:,1)));
+0069      <span class="keyword">if</span> ~isempty(selectedRows1)
+0070          tempCoatingCataloguesList = tableData1(selectedRows1,3);
+0071      <span class="keyword">else</span>
+0072          tempCoatingCataloguesList = [];
+0073      <span class="keyword">end</span>
+0074  <span class="keyword">else</span>
+0075      tempCoatingCataloguesList = [];
+0076  <span class="keyword">end</span>
+0077  
+0078  <span class="comment">% Glass Catalogue</span>
+0079  tableData2 = get(aodHandles.tblGlassCatalogues,<span class="string">'data'</span>);
+0080  <span class="keyword">if</span> ~isempty(tableData2)
+0081      <span class="comment">% Take only the selected ones</span>
+0082      selectedRows2 = find(cell2mat(tableData2(:,1)));
+0083      <span class="keyword">if</span> ~isempty(selectedRows2)
+0084          tempGlassCataloguesList = tableData2(selectedRows2,3);
+0085      <span class="keyword">else</span>
+0086          tempGlassCataloguesList = [];
+0087      <span class="keyword">end</span>
+0088  <span class="keyword">else</span>
+0089      tempGlassCataloguesList = [];
+0090  <span class="keyword">end</span>
+0091  
+0092  <span class="comment">% Pupil Apodization</span>
+0093  tempApodizationTypeList = cellstr (get(aodHandles.popApodizationType,<span class="string">'String'</span>));
+0094  tempApodizationType = (tempApodizationTypeList{get(aodHandles.popApodizationType,<span class="string">'Value'</span>)});
+0095  tempApodizationParameters = struct();
+0096  <span class="keyword">switch</span> lower(tempApodizationType)
+0097      <span class="keyword">case</span> lower(<span class="string">'None'</span>)
+0098          tempApodizationParameters = <span class="string">''</span>;
+0099      <span class="keyword">case</span> lower(<span class="string">'Super Gaussian'</span>)
+0100          tempApodizationParameters.MaximumIntensity = str2double(get(aodHandles.txtApodMaximumIntensity,<span class="string">'String'</span>));
+0101          tempApodizationParameters.Order = str2double(get(aodHandles.txtApodOrder,<span class="string">'String'</span>));
+0102          tempApodizationParameters.BeamRadius = str2double(get(aodHandles.txtApodBeamRadius,<span class="string">'String'</span>));
+0103  <span class="keyword">end</span>
+0104 
+0105  
+0106  
+0107     <span class="comment">%Surface Data</span>
+0108     tempStandardData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0109     tempAsphericData= get(aodHandles.tblAsphericData,<span class="string">'data'</span>);
+0110     tempApertureData= get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+0111     tempTiltDecenterData= get(aodHandles.tblTiltDecenterData,<span class="string">'data'</span>);
+0112 
+0113     sizeTblData = size(tempStandardData);
+0114     nSurface = sizeTblData(1);
+0115 
+0116     <span class="comment">% New optical system</span>
+0117     NewOpticalSystem = <a href="../../../AODParentDir/Class_Definition/@OpticalSystem/OpticalSystem.html" class="code" title="">OpticalSystem</a>;
+0118 
+0119     NewOpticalSystem.Saved = saved;
+0120     NewOpticalSystem.PathName = pathName;
+0121     NewOpticalSystem.FileName = fileName;    
+0122         
+0123     <span class="comment">%Set optical systems properties</span>
+0124     NewOpticalSystem.NumberOfSurfaces = nSurface;
+0125     <span class="comment">%set aperture</span>
+0126     NewOpticalSystem.SystemApertureType=tempSystemApertureType;
+0127     NewOpticalSystem.SystemApertureValue=tempSystemApertureValue;
+0128     <span class="comment">%set general</span>
+0129     NewOpticalSystem.LensName=tempLensName;
+0130     NewOpticalSystem.LensNote=tempLensNote;
+0131     NewOpticalSystem.WavelengthUnit=tempWavelengthUnit;
+0132     NewOpticalSystem.LensUnit=tempLensUnit;
+0133     
+0134     NewOpticalSystem.ObjectAfocal = 0;
+0135     NewOpticalSystem.ImageAfocal = 0;
+0136     NewOpticalSystem.ObjectTelecenteric = 0;
+0137     NewOpticalSystem.ObjectTelecenteric = 0;
+0138 
+0139     <span class="comment">%set wavelength</span>
+0140     NewOpticalSystem.NumberOfWavelengths=nWavelength;
+0141     NewOpticalSystem.WavelengthMatrix=tempWavelengthMatrix;
+0142     NewOpticalSystem.PrimaryWavelengthIndex=tempPrimaryWavelengthIndex;
+0143     <span class="comment">%set field</span>
+0144     <span class="comment">% NewOpticalSystem.FieldType = tempAngle*1+tempObjectHeight*2+tempImageHeight*3; %1 angle, 2 obj height, 3 image height</span>
+0145     NewOpticalSystem.FieldType = tempFieldType;
+0146     NewOpticalSystem.NumberOfFieldPoints = nFieldPoint;
+0147     NewOpticalSystem.FieldPointMatrix = tempFieldPointMatrix;
+0148     NewOpticalSystem.CoatingCataloguesList = tempCoatingCataloguesList;
+0149     NewOpticalSystem.GlassCataloguesList = tempGlassCataloguesList;
+0150     
+0151     NewOpticalSystem.ApodizationType = tempApodizationType;
+0152     NewOpticalSystem.ApodizationParameters = tempApodizationParameters;
+0153    
+0154     NewOpticalSystem.FieldNormalization = tempFieldNormalization;
+0155     
+0156     <span class="comment">%create empty surface array</span>
+0157     Surface.empty(nSurface,0);
+0158 
+0159     <span class="comment">%Set optical system surfaces.</span>
+0160     <span class="comment">% Assume global ref is 1st surface of the lens</span>
+0161     NewOpticalSystem.SurfaceArray(1).DecenterParameter = [0 0];
+0162     NewOpticalSystem.SurfaceArray(1).TiltParameter = [0 0 0];
+0163 
+0164     <span class="comment">%NewOpticalSystem.SurfaceArray(1).Position = [0,0,0];</span>
+0165     objLocation = -1*str2double(char(tempStandardData(1,7)));
+0166     <span class="keyword">if</span> abs(objLocation) &gt; 10^10 <span class="comment">% Infinite object distance replaced with 0</span>
+0167         objLocation = 0;
+0168     <span class="keyword">end</span>
+0169     
+0170     <span class="keyword">for</span> k = 1:1:nSurface
+0171         <span class="comment">%standard data</span>
+0172         surface = tempStandardData(k,1);
+0173         <span class="keyword">if</span> isequaln(char(surface),<span class="string">'OBJECT'</span>)
+0174             NewOpticalSystem.SurfaceArray(k).ObjectSurface = 1;
+0175         <span class="keyword">elseif</span> isequaln(char(surface),<span class="string">'IMAGE'</span>)
+0176             NewOpticalSystem.SurfaceArray(k).ImageSurface = 1;
+0177         <span class="keyword">elseif</span> isequaln(char(surface),<span class="string">'STOP'</span>)
+0178             NewOpticalSystem.SurfaceArray(k).Stop = 1;
+0179             NewOpticalSystem.StopIndex = k;
+0180         <span class="keyword">else</span>
+0181             NewOpticalSystem.SurfaceArray(k).Stop = 0;
+0182             NewOpticalSystem.SurfaceArray(k).ImageSurface = 0;
+0183             NewOpticalSystem.SurfaceArray(k).ObjectSurface = 0;
+0184         <span class="keyword">end</span>
+0185         NewOpticalSystem.SurfaceArray(k).Comment       = char(tempStandardData(k,2));<span class="comment">%text</span>
+0186         NewOpticalSystem.SurfaceArray(k).Type          = char(tempStandardData(k,3));<span class="comment">%text</span>
+0187         NewOpticalSystem.SurfaceArray(k).Radius        = str2double(char(tempStandardData(k,5)));
+0188         
+0189         NewOpticalSystem.SurfaceArray(k).Thickness     = str2double(char(tempStandardData(k,7)));
+0190         
+0191         <span class="comment">% get glass name and then SellmeierCoefficients from file</span>
+0192         glassName = strtrim(char(tempStandardData(k,9)));<span class="comment">% text</span>
+0193         <span class="keyword">if</span> ~isempty(glassName)
+0194             <span class="comment">% check for its existance and extract the glass among selected catalogues</span>
+0195             objectType = <span class="string">'glass'</span>;
+0196             objectName = glassName;
+0197             <span class="keyword">if</span> isnan(str2double(glassName)) <span class="comment">% If the glass name is specified</span>
+0198                 <span class="comment">% Glass Catalogue</span>
+0199                 tableData1 = get(aodHandles.tblGlassCatalogues,<span class="string">'data'</span>);
+0200                 <span class="keyword">if</span> ~isempty(tableData1)
+0201                     <span class="comment">% Take only the selected ones</span>
+0202                     selectedRows1 = find(cell2mat(tableData1(:,1)));
+0203                     <span class="keyword">if</span> ~isempty(selectedRows1)
+0204                         glassCatalogueListFullNames = tableData1(selectedRows1,3);
+0205                     <span class="keyword">else</span>
+0206                         glassCatalogueListFullNames = <span class="string">''</span>;
+0207                     <span class="keyword">end</span>
+0208                 <span class="keyword">else</span>
+0209                     glassCatalogueListFullNames = <span class="string">''</span>;
+0210                 <span class="keyword">end</span>
+0211                 objectCatalogueListFullNames = glassCatalogueListFullNames;
+0212                 objectIndex = 0;
+0213                 <span class="keyword">for</span> pp = 1:size(objectCatalogueListFullNames,1)
+0214                     objectCatalogueFullName = objectCatalogueListFullNames{pp};
+0215                     [ aodObject,objectIndex ] = <a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0216                         (objectType,objectName,objectCatalogueFullName );
+0217                     <span class="keyword">if</span> objectIndex ~= 0
+0218                         <span class="keyword">break</span>;
+0219                     <span class="keyword">end</span>
+0220                 <span class="keyword">end</span>
+0221                 
+0222                 <span class="keyword">if</span>  objectIndex ~= 0
+0223                     NewOpticalSystem.SurfaceArray(k).Glass = aodObject;
+0224                 <span class="keyword">else</span>
+0225                     disp([<span class="string">'Error: The glass after surface '</span>,num2str(k),<span class="string">' is not found so it is ignored.'</span>]);
+0226                     NewOpticalSystem.SurfaceArray(k).Glass = <a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>;
+0227                 <span class="keyword">end</span>                
+0228             <span class="keyword">else</span>
+0229                 aodObject = <a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>(glassName);
+0230                 NewOpticalSystem.SurfaceArray(k).Glass = aodObject;
+0231             <span class="keyword">end</span>
+0232         <span class="keyword">else</span>
+0233             NewOpticalSystem.SurfaceArray(k).Glass = <a href="../../../AODParentDir/Class_Definition/@Glass/Glass.html" class="code" title="">Glass</a>;
+0234         <span class="keyword">end</span>
+0235               
+0236         NewOpticalSystem.SurfaceArray(k).DeviationMode = (char(tempStandardData(k,11)));
+0237         NewOpticalSystem.SurfaceArray(k).SemiDiameter  = str2double(char(tempStandardData(k,13)));    
+0238 
+0239         <span class="comment">% aperture data</span>
+0240         NewOpticalSystem.SurfaceArray(k).ApertureType      = char(tempApertureData(k,3));
+0241         NewOpticalSystem.SurfaceArray(k).ApertureParameter = <span class="keyword">...</span>
+0242             [str2double(char(tempApertureData(k,5))),str2double(char(tempApertureData(k,7))),<span class="keyword">...</span>
+0243             str2double(char(tempApertureData(k,9))),str2double(char(tempApertureData(k,11)))];
+0244 
+0245         
+0246         <span class="comment">% coating data</span>
+0247         coatName = (char(tempStandardData(k,15)));
+0248         <span class="keyword">if</span> ~isempty(coatName)
+0249             <span class="comment">% check for its existance and extract the coating among selected catalogues</span>
+0250             objectType = <span class="string">'coating'</span>;
+0251             objectName = coatName;
+0252             <span class="comment">% Coating Catalogue</span>
+0253             tableData1 = get(aodHandles.tblCoatingCatalogues,<span class="string">'data'</span>);
+0254             <span class="keyword">if</span> ~isempty(tableData1)
+0255                 <span class="comment">% Take only the selected ones</span>
+0256                 selectedRows1 = find(cell2mat(tableData1(:,1)));
+0257                 <span class="keyword">if</span> ~isempty(selectedRows1)
+0258                     coatingCatalogueListFullNames = tableData1(selectedRows1,3);
+0259                 <span class="keyword">else</span>
+0260                     coatingCatalogueListFullNames = <span class="string">''</span>;
+0261                 <span class="keyword">end</span>
+0262             <span class="keyword">else</span>
+0263                 coatingCatalogueListFullNames = <span class="string">''</span>;
+0264             <span class="keyword">end</span>
+0265             objectCatalogueListFullNames = coatingCatalogueListFullNames;
+0266             objectIndex = 0;
+0267             <span class="keyword">for</span> pp = 1:size(objectCatalogueListFullNames,1)
+0268                 objectCatalogueFullName = objectCatalogueListFullNames{pp};
+0269                 [ aodObject,objectIndex ] = <a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0270                     (objectType,objectName,objectCatalogueFullName );
+0271                 <span class="keyword">if</span> objectIndex ~= 0
+0272                     <span class="keyword">break</span>;
+0273                 <span class="keyword">end</span>
+0274             <span class="keyword">end</span>
+0275             
+0276             <span class="keyword">if</span>  objectIndex ~= 0
+0277                 NewOpticalSystem.SurfaceArray(k).Coating = aodObject;
+0278             <span class="keyword">else</span>
+0279                 disp([<span class="string">'Error: The coating of surface '</span>,num2str(k),<span class="string">' is not found so it is ignored.'</span>]);
+0280                 NewOpticalSystem.SurfaceArray(k).Coating = <a href="../../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>;
+0281             <span class="keyword">end</span>
+0282         <span class="keyword">else</span>
+0283             NewOpticalSystem.SurfaceArray(k).Coating = <a href="../../../AODParentDir/Class_Definition/@Coating/Coating.html" class="code" title="">Coating</a>;
+0284         <span class="keyword">end</span>
+0285                
+0286 
+0287         <span class="comment">% aspheric data</span>
+0288         NewOpticalSystem.SurfaceArray(k).ConicConstant          = str2double(char(tempAsphericData(k,3)));
+0289         NewOpticalSystem.SurfaceArray(k).PloynomialCoefficients = <span class="keyword">...</span>
+0290             [str2double(char(tempAsphericData(k,5))),str2double(char(tempAsphericData(k,7))),str2double(char(tempAsphericData(k,9))),<span class="keyword">...</span>
+0291             str2double(char(tempAsphericData(k,11))),str2double(char(tempAsphericData(k,13))),str2double(char(tempAsphericData(k,15))),<span class="keyword">...</span>
+0292             str2double(char(tempAsphericData(k,17))),str2double(char(tempAsphericData(k,19))),str2double(char(tempAsphericData(k,21))),<span class="keyword">...</span>
+0293             str2double(char(tempAsphericData(k,23))),str2double(char(tempAsphericData(k,25))),str2double(char(tempAsphericData(k,27)))];
+0294 
+0295         <span class="comment">% tilt decenter data</span>
+0296         NewOpticalSystem.SurfaceArray(k).TiltDecenterOrder = char(tempTiltDecenterData(k,3));
+0297         NewOpticalSystem.SurfaceArray(k).DecenterParameter = <span class="keyword">...</span>
+0298             [str2double(char(tempTiltDecenterData(k,5))),str2double(char(tempTiltDecenterData(k,7)))];    
+0299         NewOpticalSystem.SurfaceArray(k).TiltParameter     = <span class="keyword">...</span>
+0300             [str2double(char(tempTiltDecenterData(k,9))),str2double(char(tempTiltDecenterData(k,11))),str2double(char(tempTiltDecenterData(k,13)))];
+0301         NewOpticalSystem.SurfaceArray(k).TiltMode          = char(tempTiltDecenterData(k,15));
+0302 
+0303         <span class="comment">% compute position from decenter and thickness</span>
+0304         <span class="keyword">if</span> k==1 <span class="comment">% Object surface</span>
+0305             objThickness = abs(NewOpticalSystem.SurfaceArray(k).Thickness);
+0306             <span class="keyword">if</span> objThickness &gt; 10^10 <span class="comment">% Replace Inf with INF_OBJ_Z = 0 for graphing</span>
+0307                 objThickness = 0;
+0308             <span class="keyword">end</span>
+0309             <span class="comment">% since global coord but shifted by objThickness</span>
+0310             refCoordinateTM = [1,0,0,0;0,1,0,0;0,0,1,-objThickness;0,0,0,1]; 
+0311             
+0312             surfaceCoordinateTM = refCoordinateTM;
+0313             referenceCoordinateTM = refCoordinateTM;
+0314             <span class="comment">% set surface property</span>
+0315             NewOpticalSystem.SurfaceArray(k).SurfaceCoordinateTM = <span class="keyword">...</span>
+0316                 surfaceCoordinateTM;
+0317             NewOpticalSystem.SurfaceArray(k).ReferenceCoordinateTM = <span class="keyword">...</span>
+0318                 referenceCoordinateTM;           
+0319        <span class="keyword">else</span>
+0320             prevRefCoordinateTM = referenceCoordinateTM;
+0321             prevSurfCoordinateTM = surfaceCoordinateTM;
+0322             prevThickness = NewOpticalSystem.SurfaceArray(k-1).Thickness; 
+0323             <span class="keyword">if</span> prevThickness &gt; 10^10 <span class="comment">% Replace Inf with INF_OBJ_Z = 0 for object distance</span>
+0324                 prevThickness = 0;
+0325             <span class="keyword">end</span>
+0326             [surfaceCoordinateTM,referenceCoordinateTM] = NewOpticalSystem. <span class="keyword">...</span>
+0327                     SurfaceArray(k).TiltAndDecenter(prevRefCoordinateTM,<span class="keyword">...</span>
+0328                     prevSurfCoordinateTM,prevThickness);
+0329             <span class="comment">% set surface property</span>
+0330             NewOpticalSystem.SurfaceArray(k).SurfaceCoordinateTM = surfaceCoordinateTM;
+0331             NewOpticalSystem.SurfaceArray(k).ReferenceCoordinateTM = referenceCoordinateTM;
+0332         
+0333         <span class="keyword">end</span>
+0334         NewOpticalSystem.SurfaceArray(k).Position = (surfaceCoordinateTM (1:3,4))';  
+0335     <span class="keyword">end</span>
+0336     
+0337     SavedOpticalSystem = NewOpticalSystem;
+0338     saved = 1;
+0339 <span class="keyword">else</span>
+0340     SavedOpticalSystem = [];
+0341     saved = 0;
+0342 <span class="keyword">end</span>
+0343 <span class="keyword">end</span>
+0344</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,7 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  prop_farfield_vect_test -> prop_farfield_vect;
+
+  prop_farfield_vect [URL="prop_farfield_vect.html"];
+  prop_farfield_vect_test [URL="prop_farfield_vect_test.html"];
+}

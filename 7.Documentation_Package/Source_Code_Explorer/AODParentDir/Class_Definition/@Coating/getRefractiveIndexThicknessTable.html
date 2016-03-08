@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getRefractiveIndexThicknessTable</title>
+  <meta name="keywords" content="getRefractiveIndexThicknessTable">
+  <meta name="description" content="getRefractiveIndexThicknessTable: Returns a 2D matrix corresponding to the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Coating -->
+<h1>getRefractiveIndexThicknessTable
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getRefractiveIndexThicknessTable: Returns a 2D matrix corresponding to the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ refIndexAll,thicknessAll ] = getRefractiveIndexThicknessTable( coating,wavLenInUm, primaryWaveLenInUm ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">getRefractiveIndexThicknessTable: Returns a 2D matrix corresponding to the
+ refractive index vs thickness (absolute in um) table of the coating.
+ It also performs repeating the coating layers and reversing the
+ order of the coating layers.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ refIndexAll,thicknessAll ] = getRefractiveIndexThicknessTable( coating,wavLenInUm, primaryWaveLenInUm )</a>
+0002 <span class="comment">%getRefractiveIndexThicknessTable: Returns a 2D matrix corresponding to the</span>
+0003 <span class="comment">% refractive index vs thickness (absolute in um) table of the coating.</span>
+0004 <span class="comment">% It also performs repeating the coating layers and reversing the</span>
+0005 <span class="comment">% order of the coating layers.</span>
+0006 
+0007 refIndexAll = [];
+0008 thicknessAll = [];
+0009 <span class="comment">% Change the thickness from relative value to absloute</span>
+0010 <span class="comment">% The actual thickness of the coating is determined by:</span>
+0011 <span class="comment">% d = (wavLen0/n0)*T</span>
+0012 <span class="comment">% where wavLen0 is the primary wavelength in micrometers ,</span>
+0013 <span class="comment">% n0 is the real part of the index of refraction of the coating at the</span>
+0014 <span class="comment">% primary wavelength, and T is the &quot;optical thickness&quot; of the coating</span>
+0015 <span class="comment">% specified in the coating definition.</span>
+0016 refIndexProfile = coating.CoatingParameters.RefractiveIndexProfile;
+0017 refIndex = (refIndexProfile(:,1));
+0018 thickness = (refIndexProfile(:,2));
+0019 relativeThick = (refIndexProfile(:,3));
+0020 
+0021 nRay = size(wavLenInUm,2);
+0022 <span class="comment">% Compute Refractive index for all rays (may have d/t wavelegnth).</span>
+0023 <span class="comment">% Currently this is ignored</span>
+0024 refIndexAll = repmat(refIndex,[1,nRay]);
+0025 thicknessAll = repmat(thickness,[1,nRay]);
+0026 
+0027 relativeThickness = find(relativeThick);
+0028 nRelativeThick = length(relativeThickness);
+0029 T = thicknessAll(relativeThickness,:);
+0030 wavLen0 = primaryWaveLenInUm;
+0031 <span class="comment">% refractive index at primary wavelength. just take that for the 1st</span>
+0032 <span class="comment">% wavelength.</span>
+0033 n0 = real(refIndexAll(relativeThickness,1));
+0034 thicknessAll(relativeThickness,:) = (wavLen0/n0).*T;
+0035 
+0036 <span class="comment">% NB: At the moment all coating layers are assumed to have the same</span>
+0037 <span class="comment">% refractive index at all wavelengths (i.e. disperssion of caoting layers</span>
+0038 <span class="comment">% is ignored).</span>
+0039 
+0040 <span class="comment">% Replicate the profile by given repetition number</span>
+0041 refIndexAll = repmat(refIndexAll,<span class="keyword">...</span>
+0042     [coating.CoatingParameters.RepetetionNumber,1]);
+0043 thicknessAll = repmat(thicknessAll,<span class="keyword">...</span>
+0044     [coating.CoatingParameters.RepetetionNumber,1]);
+0045 <span class="comment">% Flip the refIndex - thickness for inverted coating</span>
+0046 <span class="keyword">if</span> coating.UseInReverse
+0047     refIndexAll = flipud(refIndexAll);
+0048     thicknessAll = flipud(thicknessAll);
+0049 <span class="keyword">end</span>
+0050 
+0051 <span class="keyword">end</span>
+0052</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

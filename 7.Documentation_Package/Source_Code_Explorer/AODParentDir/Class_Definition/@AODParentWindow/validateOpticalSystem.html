@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of validateOpticalSystem</title>
+  <meta name="keywords" content="validateOpticalSystem">
+  <meta name="description" content="validateOpticalSystem: Validates all input parameters of the optical system">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>validateOpticalSystem
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>validateOpticalSystem: Validates all input parameters of the optical system</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ validSystem ] = validateOpticalSystem(parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> validateOpticalSystem: Validates all input parameters of the optical system
+ Retuns invalid flag and displays the error on the command window if the inputs
+ of the system are not valid.
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Catalogue_Module/isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>	ISVALIDCOATINGCATALOGUE Retruns whether the object catalogue is vlaid or</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ validSystem ] = validateOpticalSystem(parentWindow)</a>
+0002     <span class="comment">% validateOpticalSystem: Validates all input parameters of the optical system</span>
+0003     <span class="comment">% Retuns invalid flag and displays the error on the command window if the inputs</span>
+0004     <span class="comment">% of the system are not valid.</span>
+0005     <span class="comment">% Member of AODParentWindow class</span>
+0006 
+0007 
+0008     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0009     <span class="comment">%</span>
+0010 
+0011     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0012     <span class="comment">%</span>
+0013 
+0014     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0015     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0016     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0017     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0018     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0019     <span class="comment">%   Institute of Applied Physics</span>
+0020     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0021                              
+0022     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0023     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0024     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0025 
+0026     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0027     aodHandles = parentWindow.AODParentHandles;
+0028 
+0029     valid = 1;
+0030     tempStandardData = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0031     objThickness = str2num(tempStandardData{1,7});
+0032 
+0033     tempAngle = get(aodHandles.radioAngle,<span class="string">'Value'</span>);
+0034     tempObjectHeight = get(aodHandles.radioObjectHeight,<span class="string">'Value'</span>);
+0035     tempImageHeight = get(aodHandles.radioImageHeight,<span class="string">'Value'</span>);
+0036 
+0037     tempSystemApertureType = get(aodHandles.popApertureType,<span class="string">'Value'</span>);
+0038     tempSystemApertureValue = str2num(get(aodHandles.txtApertureValue,<span class="string">'String'</span>));
+0039 
+0040     <span class="comment">% check for validity of input</span>
+0041     <span class="comment">% if object is at infinity, object NA is not defined and object height can</span>
+0042     <span class="comment">% not be used for field</span>
+0043     <span class="keyword">if</span> abs(objThickness) &gt; 1000000
+0044         <span class="keyword">if</span> tempObjectHeight
+0045             msgbox(<span class="string">'For objects at infinity, object height can not be used as field lease correct.'</span>, <span class="string">'Invalid Field Point'</span>);
+0046             valid = 0;
+0047         <span class="keyword">elseif</span> tempSystemApertureType==2
+0048             msgbox(<span class="string">'For objects at infinity, object space NA can not be used as system aperture. Please correct.'</span>, <span class="string">'Invalid Aperture'</span>);
+0049             valid = 0;
+0050         <span class="keyword">else</span>
+0051             
+0052         <span class="keyword">end</span>
+0053     <span class="keyword">else</span>
+0054         
+0055     <span class="keyword">end</span>
+0056     
+0057     <span class="comment">% Check for existance and validity of catalogue files. Remove all</span>
+0058     <span class="comment">% invalid catalogues from the catalogue list table</span>
+0059     
+0060     <span class="comment">% Coating Catalogue</span>
+0061     tableDataCoatingCat = get(aodHandles.tblCoatingCatalogues,<span class="string">'data'</span>);
+0062     validCoatingCat = [];
+0063     <span class="keyword">for</span> cc = 1:size(tableDataCoatingCat,1)
+0064         coatingCatName = tableDataCoatingCat{cc,3};
+0065         <span class="keyword">if</span> <a href="../../../AODParentDir/Catalogue_Module/isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>(<span class="string">'coating'</span>, coatingCatName)
+0066             validCoatingCat = [validCoatingCat,cc];
+0067         <span class="keyword">end</span>
+0068     <span class="keyword">end</span>
+0069     validTableDataCoatingCat = tableDataCoatingCat(validCoatingCat,:);
+0070     set(aodHandles.tblCoatingCatalogues,<span class="string">'data'</span>,validTableDataCoatingCat);
+0071     totalCoatingCatalogueSelected = sum([validTableDataCoatingCat{:,1}]);
+0072     set(aodHandles.txtTotalCoatingCataloguesSelected, <span class="string">'String'</span>,<span class="keyword">...</span>
+0073                 totalCoatingCatalogueSelected); 
+0074     <span class="comment">% Glass Catalogue</span>
+0075     tableDataGlassCat = get(aodHandles.tblGlassCatalogues,<span class="string">'data'</span>);
+0076     validGlassCat = [];
+0077     <span class="keyword">for</span> gg = 1:size(tableDataGlassCat,1)
+0078         glassCatName = tableDataGlassCat{gg,3};
+0079         <span class="keyword">if</span> <a href="../../../AODParentDir/Catalogue_Module/isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>(<span class="string">'glass'</span>, glassCatName)
+0080             validGlassCat = [validGlassCat,gg];
+0081         <span class="keyword">end</span>
+0082     <span class="keyword">end</span>
+0083     validTableDataGlassCat = tableDataGlassCat(validGlassCat,:);
+0084     set(aodHandles.tblGlassCatalogues,<span class="string">'data'</span>,validTableDataGlassCat);
+0085     totalGlassCatalogueSelected = sum([validTableDataGlassCat{:,1}]);
+0086     set(aodHandles.txtTotalGlassCataloguesSelected, <span class="string">'String'</span>,<span class="keyword">...</span>
+0087                 totalGlassCatalogueSelected); 
+0088             
+0089     validSystem = valid;
+0090 <span class="keyword">end</span>
+0091</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

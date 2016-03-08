@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of resetSystemConfigurationPanel</title>
+  <meta name="keywords" content="resetSystemConfigurationPanel">
+  <meta name="description" content="resetSystemConfigurationPanel: reset all system configuration data">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>resetSystemConfigurationPanel
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>resetSystemConfigurationPanel: reset all system configuration data</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function parentWindow = resetSystemConfigurationPanel(parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> resetSystemConfigurationPanel: reset all system configuration data
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>	FINDALLCOATINGCATALOGUES Searches for all aodObject catalogue files in the</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function parentWindow = resetSystemConfigurationPanel(parentWindow)</a>
+0002 <span class="comment">% resetSystemConfigurationPanel: reset all system configuration data</span>
+0003 <span class="comment">% Member of AODParentWindow class</span>
+0004 
+0005     aodHandles = parentWindow.AODParentHandles;
+0006     
+0007     set(aodHandles.popApertureType,<span class="string">'Value'</span>,1);
+0008     set(aodHandles.txtApertureValue,<span class="string">'String'</span>, <span class="string">'0'</span>);
+0009     set(aodHandles.txtLensName,<span class="string">'String'</span>, <span class="string">'Lens 1'</span>);
+0010     set(aodHandles.txtLensNote,<span class="string">'String'</span>, <span class="string">'Note 1'</span>);
+0011     set(aodHandles.popLensUnit,<span class="string">'Value'</span>,1);
+0012     set(aodHandles.popWavelengthUnit,<span class="string">'Value'</span>,2);
+0013     <span class="comment">% field table</span>
+0014     set(aodHandles.radioObjectHeight,<span class="string">'Value'</span>,1);
+0015     set(aodHandles.txtTotalFieldPointsSelected, <span class="string">'String'</span>, <span class="string">'1'</span>);
+0016     columnName1 =   {<span class="string">''</span>,<span class="string">' X Field '</span>,<span class="string">' Y Field '</span>,<span class="string">' Weight '</span>};
+0017     ColumnFormat1 = {<span class="string">'logical'</span>,<span class="string">'numeric'</span>,<span class="string">'numeric'</span>,<span class="string">'numeric'</span>};
+0018     columnWidth1 = {<span class="string">'auto'</span>,<span class="string">'auto'</span>,<span class="string">'auto'</span>,<span class="string">'auto'</span>};
+0019     rowName1 = {<span class="string">'numbered'</span>};
+0020     columnEditable1 =  [true,true,true,true];
+0021     initialTable1 = {true,0,0,1;false,0,0,1};
+0022     set(aodHandles.tblFieldPoints, <span class="keyword">...</span>
+0023         <span class="string">'Data'</span>, initialTable1,<span class="keyword">...</span>
+0024         <span class="string">'ColumnEditable'</span>, columnEditable1,<span class="keyword">...</span>
+0025         <span class="string">'ColumnName'</span>, columnName1,<span class="keyword">...</span>
+0026         <span class="string">'ColumnFormat'</span>,ColumnFormat1,<span class="keyword">...</span>
+0027         <span class="string">'ColumnWidth'</span>,columnWidth1,<span class="keyword">...</span>
+0028         <span class="string">'RowName'</span>,rowName1); 
+0029    set(aodHandles.popFieldNormalization,<span class="string">'Value'</span>,1); 
+0030     
+0031     <span class="comment">% wavelength table</span>
+0032     set(aodHandles.popPredefinedWavlens,<span class="string">'Value'</span>,1);      
+0033     set(aodHandles.popPrimaryWavlenIndex, <span class="string">'String'</span>, 1,<span class="string">'Value'</span>,1);    
+0034     set(aodHandles.txtTotalWavelengthsSelected, <span class="string">'String'</span>, <span class="string">'1'</span>);
+0035     
+0036     columnName1 =   {<span class="string">''</span>,<span class="string">' Wavelength'</span>,<span class="string">' Weight '</span>};
+0037     ColumnFormat1 = {<span class="string">'logical'</span>,<span class="string">'numeric'</span>,<span class="string">'numeric'</span>};
+0038     columnWidth1 = {<span class="string">'auto'</span>,<span class="string">'auto'</span>,<span class="string">'auto'</span>};
+0039     rowName1 = {<span class="string">'numbered'</span>};
+0040     columnEditable1 =  [true,true,true];
+0041     initialTable1 = {true,0.55,1;false,0.55,1};
+0042     set(aodHandles.tblWavelengths, <span class="keyword">...</span>
+0043         <span class="string">'Data'</span>, initialTable1,<span class="keyword">...</span>
+0044         <span class="string">'ColumnEditable'</span>, columnEditable1,<span class="keyword">...</span>
+0045         <span class="string">'ColumnName'</span>, columnName1,<span class="keyword">...</span>
+0046         <span class="string">'ColumnFormat'</span>,ColumnFormat1,<span class="keyword">...</span>
+0047         <span class="string">'ColumnWidth'</span>,columnWidth1,<span class="keyword">...</span>
+0048         <span class="string">'RowName'</span>,rowName1);     
+0049     
+0050    <span class="comment">% coating catalogue</span>
+0051    allCoatingCatalogueFullNames = <a href="../../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>(<span class="string">'coating'</span>);
+0052    <span class="keyword">if</span> ~isempty(allCoatingCatalogueFullNames{1})
+0053        [~,allCoatingCatalogueNames,~] = cellfun(@(x) fileparts(x),<span class="keyword">...</span>
+0054            allCoatingCatalogueFullNames,<span class="string">'UniformOutput'</span>,false);
+0055        <span class="comment">% append ones in the 1st column for selected</span>
+0056        initialTable1 = [num2cell(ones(size(allCoatingCatalogueFullNames,1),1)),<span class="keyword">...</span>
+0057            allCoatingCatalogueNames,allCoatingCatalogueFullNames];
+0058        <span class="keyword">for</span> p = 1:size(initialTable1,1)
+0059            initialTable1{p,1} = logical(initialTable1{p,1});
+0060        <span class="keyword">end</span>
+0061    <span class="keyword">else</span>
+0062        initialTable1 = <span class="string">''</span>;
+0063    <span class="keyword">end</span>
+0064    columnName1 = {<span class="string">'Select'</span>,<span class="string">'Catalogue Name'</span>,<span class="string">'Catalogue Full Path'</span>};
+0065    columnWidth1 = {70,150,450};
+0066    columnFormat1 = {<span class="string">'logical'</span>,<span class="string">'char'</span>,<span class="string">'char'</span>};
+0067    rowName1 = {<span class="string">'numbered'</span>};
+0068    columnEditable1 =  [true,false,false];
+0069    set(aodHandles.tblCoatingCatalogues, <span class="keyword">...</span>
+0070        <span class="string">'Data'</span>, initialTable1,<span class="keyword">...</span>
+0071        <span class="string">'ColumnEditable'</span>, columnEditable1,<span class="keyword">...</span>
+0072        <span class="string">'ColumnName'</span>, columnName1,<span class="keyword">...</span>
+0073        <span class="string">'ColumnFormat'</span>,columnFormat1,<span class="keyword">...</span>
+0074        <span class="string">'ColumnWidth'</span>,columnWidth1,<span class="keyword">...</span>
+0075        <span class="string">'RowName'</span>,rowName1);  
+0076     set(aodHandles.txtTotalCoatingCataloguesSelected,<span class="keyword">...</span>
+0077         <span class="string">'String'</span>,num2str(size(allCoatingCatalogueFullNames,1),1));
+0078     
+0079    <span class="comment">% glass catalogue</span>
+0080    allGlassCatalogueFullNames = <a href="../../../AODParentDir/Catalogue_Module/getAllAODObjectCatalogues.html" class="code" title="function [ aodObjectCatalogueFileList ] = getAllAODObjectCatalogues(objectType, dirName)">getAllAODObjectCatalogues</a>(<span class="string">'glass'</span>);
+0081    <span class="keyword">if</span> ~isempty(allGlassCatalogueFullNames{1})
+0082        [~,allGlassCatalogueNames,~] = cellfun(@(x) fileparts(x),<span class="keyword">...</span>
+0083            allGlassCatalogueFullNames,<span class="string">'UniformOutput'</span>,false);
+0084        <span class="comment">% append ones in the 1st column for selected</span>
+0085        initialTable1 = [num2cell(ones(size(allGlassCatalogueFullNames,1),1)),<span class="keyword">...</span>
+0086            allGlassCatalogueNames,allGlassCatalogueFullNames];
+0087        <span class="keyword">for</span> p = 1:size(initialTable1,1)
+0088            initialTable1{p,1} = logical(initialTable1{p,1});
+0089        <span class="keyword">end</span>
+0090    <span class="keyword">else</span>
+0091        initialTable1 = <span class="string">''</span>;
+0092    <span class="keyword">end</span>
+0093 
+0094    columnName1 = {<span class="string">'Select'</span>,<span class="string">'Catalogue Name'</span>,<span class="string">'Catalogue Full Path'</span>};
+0095    columnWidth1 = {70,150,450};
+0096    columnFormat1 = {<span class="string">'logical'</span>,<span class="string">'char'</span>,<span class="string">'char'</span>};
+0097    rowName1 = {<span class="string">'numbered'</span>};
+0098    columnEditable1 =  [true,false,false];
+0099    set(aodHandles.tblGlassCatalogues, <span class="keyword">...</span>
+0100        <span class="string">'Data'</span>, initialTable1,<span class="keyword">...</span>
+0101        <span class="string">'ColumnEditable'</span>, columnEditable1,<span class="keyword">...</span>
+0102        <span class="string">'ColumnName'</span>, columnName1,<span class="keyword">...</span>
+0103        <span class="string">'ColumnFormat'</span>,columnFormat1,<span class="keyword">...</span>
+0104        <span class="string">'ColumnWidth'</span>,columnWidth1,<span class="keyword">...</span>
+0105        <span class="string">'RowName'</span>,rowName1);      
+0106     set(aodHandles.txtTotalGlassCataloguesSelected,<span class="keyword">...</span>
+0107         <span class="string">'String'</span>,num2str(size(allGlassCatalogueFullNames,1),1));
+0108     
+0109    <span class="comment">% Apodization tab</span>
+0110     set(aodHandles.popApodizationType,<span class="string">'value'</span>,1);
+0111     set(aodHandles.panelSuperGaussParameters,<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0112     set(get(aodHandles.panelSuperGaussParameters,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0113     
+0114     
+0115    parentWindow.AODParentHandles = aodHandles;
+0116 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

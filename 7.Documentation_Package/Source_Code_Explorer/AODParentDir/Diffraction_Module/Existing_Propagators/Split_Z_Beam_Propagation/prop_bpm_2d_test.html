@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of prop_bpm_2d_test</title>
+  <meta name="keywords" content="prop_bpm_2d_test">
+  <meta name="description" content="___________________________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- ../menu.html Existing_Propagators --><!-- menu.html Split_Z_Beam_Propagation -->
+<h1>prop_bpm_2d_test
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>___________________________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">___________________________________________________________________________________
+
+   prop_bpm_2d_test
+
+   Test Beam Propagation in 3D with Fourier method.
+   There are three example cases prepared, which can be used alternatively by
+   out-commenting two of them.
+
+   Version      :  27.07.08    H.Gross
+___________________________________________________________________________________</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="prop_bpm_2d.html" class="code" title="function [eout,zs,ener] = prop_bpm_2d_new(efd,wl,xp,yp,z,nz,nza,varargin)">prop_bpm_2d</a>	_________________________________________________________________</li><li><a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/matrix_plot.html" class="code" title="function matrix_plot(nzeil,nspalt,izeil,ispalt)">matrix_plot</a>	___________________________________________________________________________________</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%___________________________________________________________________________________</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">%   prop_bpm_2d_test</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%   Test Beam Propagation in 3D with Fourier method.</span>
+0006 <span class="comment">%   There are three example cases prepared, which can be used alternatively by</span>
+0007 <span class="comment">%   out-commenting two of them.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%   Version      :  27.07.08    H.Gross</span>
+0010 <span class="comment">%___________________________________________________________________________________</span>
+0011 <span class="comment">%</span>
+0012 clear; close all hidden ;
+0013 <span class="comment">%___________________________________________________________________________________</span>
+0014 <span class="comment">%</span>
+0015 <span class="comment">%  Case 1 : Divergentes astigmatisches Gaussbündel, Start in Taille</span>
+0016 <span class="comment">%</span>
+0017 npx =  128 ;   npy = 128 ;
+0018 wx = 0.050 ;   wy = 0.034 ; msg = 2 ;
+0019 z = 30.0  ;    bro = 1.0 ;  dux = 0.5 ;  duy = 0.5 ;
+0020 nz = 251 ;     nza = 51 ;   ibro = 0 ;
+0021 rcurvx = 0 ;   rcurvy = 0 ;  
+0022 <span class="comment">%</span>
+0023 <span class="comment">%  Case 2 : Konvergentes Gaussbündel</span>
+0024 <span class="comment">%</span>
+0025 <span class="comment">% npx =  512 ;   npy = 512 ;</span>
+0026 <span class="comment">% wx = 0.600 ;   wy = 0.60  ; msg = 2 ;</span>
+0027 <span class="comment">% z = 40.0  ;    bro = 1.0 ;  dux = 8.0 ; duy = 6.0 ;</span>
+0028 <span class="comment">% nz = 401 ;     nza = 41 ;   ibro = 0 ;</span>
+0029 <span class="comment">% rcurvx = 50 ;   rcurvy = 50 ;  % Krümmung, fokussierend</span>
+0030 <span class="comment">%___________________________________________________________________________________</span>
+0031 <span class="comment">%</span>
+0032 ibdc = 1 ;  param = 5 ;
+0033 dbro = -0.020 ; dzbro = 0.0 ; 
+0034 <span class="comment">%</span>
+0035 iplo1 = 1 ;                 <span class="comment">% Plot-Optionen 1</span>
+0036 iplo2 = 0 ;                 <span class="comment">% Plot-Optionen 2 : H-Linien Isophoten</span>
+0037 ibar = 1 ;                    <span class="comment">%  Waitbar 0/1</span>
+0038 <span class="comment">%</span>
+0039 <span class="comment">%  Vorrechnungen</span>
+0040 <span class="comment">%</span>
+0041 xp = [ -dux/2-dux/(npx-2) : dux/(npx-2) : dux/2 ]' ;
+0042 yp = [ -duy/2-duy/(npy-2) : duy/(npy-2) : duy/2 ]' ;
+0043 efd = zeros(npy,npx,1);
+0044 [xpm,ypm] = meshgrid(xp,yp);
+0045 wl = 0.0005 ;
+0046 efd = exp( -(xpm/wx).^msg -(ypm/wy).^msg );
+0047 <span class="keyword">if</span> rcurvx &gt; 0 ; efd = efd .* exp( i*pi/(wl*rcurvx)*xpm.^2 ); <span class="keyword">end</span>
+0048 <span class="keyword">if</span> rcurvy &gt; 0 ; efd = efd .* exp( i*pi/(wl*rcurvy)*ypm.^2 ); <span class="keyword">end</span>
+0049 <span class="comment">%</span>
+0050 <span class="comment">% Inhomogeneous refractive index</span>
+0051 <span class="comment">%</span>
+0052 nzb = 51 ;
+0053 brv = zeros(npy,npx,nzb,1) ;
+0054 <span class="keyword">if</span> ibro == 1
+0055    rpq = xpm.^2+ypm.^2 ;
+0056    dzb = z / (nzb-1) ; zb = zeros(nzb,1);
+0057    <span class="keyword">for</span> j=1:nzb ; zb(j) = (j-1)*dzb ; <span class="keyword">end</span>
+0058    <span class="keyword">for</span> jz=1:nzb
+0059    brv(:,:,jz) = bro + dbro * 4 * rpq / (dux^2) .* ( 1 + dzbro * zb(jz)/z ) ;
+0060    <span class="keyword">end</span>
+0061 <span class="keyword">end</span>
+0062 tic
+0063 <span class="comment">%</span>
+0064 <span class="comment">%  Propagation</span>
+0065 <span class="comment">%</span>
+0066 [exyz,zp,ener] = <a href="prop_bpm_2d.html" class="code" title="function [eout,zs,ener] = prop_bpm_2d_new(efd,wl,xp,yp,z,nz,nza,varargin)">prop_bpm_2d</a>(efd,wl,xp,yp,z,nz,nza,ibar,ibro,bro,brv,ibdc,param);
+0067 <span class="comment">%</span>
+0068 <span class="comment">%  Normierung in jeder z-Ebene</span>
+0069 <span class="comment">%</span>
+0070 toc
+0071 ixyz = abs(exyz).^2 ;
+0072 <span class="keyword">for</span> j=1:nza
+0073  ima = max(max(ixyz(:,:,j)));
+0074  ixyz(:,:,j) = ixyz(:,:,j) / ima ;
+0075 <span class="keyword">end</span>
+0076 npy2 = round((npy+1)/2);
+0077 npx2 = round((npx+1)/2);
+0078 <span class="comment">%</span>
+0079 <span class="comment">%  Profil in x am Ende</span>
+0080 <span class="comment">%</span>
+0081 figure
+0082 set(gcf,<span class="string">'NumberTitle'</span>,<span class="string">'off'</span>,<span class="string">'Name'</span>,<span class="string">'Distribution I(x), I(y) at final plane '</span>);
+0083 set( gcf, <span class="string">'Units'</span> , <span class="string">'Normalized'</span>);
+0084 set( gcf, <span class="string">'Position'</span>, [ 0.1 , 0.53 , 0.4 , 0.4 ] );
+0085 plot(yp,ixyz(:,npx2,nza),<span class="string">'r-'</span>)
+0086 set(gca,<span class="string">'XLim'</span>,[xp(2) xp(npx) ]);
+0087 grid on
+0088 set( gca, <span class="string">'FontSize'</span> , 14 );
+0089 hold on
+0090 plot(xp,squeeze(ixyz(npy/2+1,:,nza)),<span class="string">'b-'</span>)
+0091 set(gcf,<span class="string">'Color'</span>,[1,1,1])
+0092 <span class="comment">%</span>
+0093 <span class="comment">%  Graphik im x-z Schnitt</span>
+0094 <span class="comment">%</span>
+0095 in = squeeze( ixyz( npy2 , 2:npx , : ) ) ;
+0096 [zpm,xpm] = meshgrid( zp,xp(2:npx) );
+0097 figure; 
+0098 set(gcf,<span class="string">'NumberTitle'</span>,<span class="string">'off'</span>,<span class="string">'Name'</span>,<span class="string">'Distributions I(x,z) I(y,z) '</span>);
+0099 set( gcf, <span class="string">'Units'</span> , <span class="string">'Normalized'</span>);
+0100 set( gcf, <span class="string">'Position'</span>, [ 0.52 , 0.03 , 0.47 , 0.9 ] );
+0101 <a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/matrix_plot.html" class="code" title="function matrix_plot(nzeil,nspalt,izeil,ispalt)">matrix_plot</a>(2,1,1,1);
+0102 contour(zpm,xpm,in,20); 
+0103 colormap(jet);
+0104 grid on ;
+0105 set( gca, <span class="string">'FontSize'</span> , 14 );
+0106 set(gca,<span class="string">'YLim'</span>,[ xp(2) xp(npx) ]);
+0107 set(gca,<span class="string">'XLim'</span>,[zp(1) zp(nza) ]);
+0108 set(gca,<span class="string">'ZLim'</span>,[ 0 1.03 ]);
+0109 <span class="comment">%</span>
+0110 <span class="comment">%  Graphik im y-z Schnitt</span>
+0111 <span class="comment">%</span>
+0112 in = squeeze( ixyz( 2:npy, npx2 , : ) ) ;
+0113 [zpm,ypm] = meshgrid( zp,yp(2:npy) );
+0114 <a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/matrix_plot.html" class="code" title="function matrix_plot(nzeil,nspalt,izeil,ispalt)">matrix_plot</a>(2,1,2,1);
+0115 contour(zpm,ypm,in,20); 
+0116 colormap(jet);
+0117 grid on ;
+0118 set( gca, <span class="string">'FontSize'</span> , 14 );
+0119 set(gca,<span class="string">'YLim'</span>,[ yp(2) yp(npy) ]);
+0120 set(gca,<span class="string">'XLim'</span>,[zp(1) zp(nza) ]);
+0121 set(gca,<span class="string">'ZLim'</span>,[ 0 1.03 ]);
+0122 
+0123 
+0124 
+0125 
+0126 
+0127 
+0128 
+0129 
+0130 
+0131 
+0132 
+0133 
+0134 
+0135 
+0136 
+0137 
+0138 
+0139 
+0140 
+0141</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

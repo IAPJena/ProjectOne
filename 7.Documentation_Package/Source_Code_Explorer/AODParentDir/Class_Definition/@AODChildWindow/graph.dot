@@ -1,0 +1,12 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  AODChildWindow -> AODChildWindow;
+
+  AODChildWindow [URL="AODChildWindow.html"];
+  BuildChildWindowSettingPanel [URL="BuildChildWindowSettingPanel.html"];
+  btnOkCallback [URL="btnOkCallback.html"];
+  closeChild [URL="closeChild.html"];
+  hideChild [URL="hideChild.html"];
+  selectMainTab [URL="selectMainTab.html"];
+  showChild [URL="showChild.html"];
+}

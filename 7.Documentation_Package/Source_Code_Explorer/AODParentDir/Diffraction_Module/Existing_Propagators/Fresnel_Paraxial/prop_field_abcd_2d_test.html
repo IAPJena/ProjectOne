@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of prop_field_abcd_2d_test</title>
+  <meta name="keywords" content="prop_field_abcd_2d_test">
+  <meta name="description" content="Test Fresnel-Propagator nach Collins in zwei Dimensionen">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- ../menu.html Existing_Propagators --><!-- menu.html Fresnel_Paraxial -->
+<h1>prop_field_abcd_2d_test
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>Test Fresnel-Propagator nach Collins in zwei Dimensionen</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">
+  Test Fresnel-Propagator nach Collins in zwei Dimensionen
+  Das System wird mittels der ABCD-Matrizen zusammengestellt
+
+  Version: 06.06.08 / H. Gross
+           21.07.08   R-Vorzeichen umgedreht, CZT-FFT, Vorzeichen bei Kippung
+                      korrigiert
+           07.02.10   Verschiedene Korrekturen
+_________________________________________________________________________________________
+% 
+ Test Fresnel propagator according to Collins in two dimensions
+ The system is assembled by means of the ABCD matrices
+
+ Version: 6:06:08 / H. Gross
+ 21:07:08 R-sign reversed, CZT FFT, sign in tilt corrected %
+ 07:02:10 Various corrections</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/ABCD.html" class="code" title="function M = ABCD(varargin)">ABCD</a>	______________________________________________________________________________________________________________________</li><li><a href="prop_field_abcd_2d.html" class="code" title="function [efds,xs,ys,rxsg,rysg,iprox,iproy,famp,Nfx,Nfy,Nfsx,Nfsy,ierr,sterr]=prop_field_abcd_2d(efd,wl,xp,yp,abcdx,abcdy,varargin)">prop_field_abcd_2d</a>	_________________________________________________________________</li><li><a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/thresh_diam_1d.html" class="code" title="function [dia,ierr,sterr,xl,xr] = thresh_diam_1d(xp,yp,thresh)">thresh_diam_1d</a>	_________________________________________________________________</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%</span>
+0002 <span class="comment">%  Test Fresnel-Propagator nach Collins in zwei Dimensionen</span>
+0003 <span class="comment">%  Das System wird mittels der ABCD-Matrizen zusammengestellt</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">%  Version: 06.06.08 / H. Gross</span>
+0006 <span class="comment">%           21.07.08   R-Vorzeichen umgedreht, CZT-FFT, Vorzeichen bei Kippung</span>
+0007 <span class="comment">%                      korrigiert</span>
+0008 <span class="comment">%           07.02.10   Verschiedene Korrekturen</span>
+0009 <span class="comment">%_________________________________________________________________________________________</span>
+0010 <span class="comment">%%</span>
+0011 <span class="comment">% Test Fresnel propagator according to Collins in two dimensions</span>
+0012 <span class="comment">% The system is assembled by means of the ABCD matrices</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">% Version: 6:06:08 / H. Gross</span>
+0015 <span class="comment">% 21:07:08 R-sign reversed, CZT FFT, sign in tilt corrected %</span>
+0016 <span class="comment">% 07:02:10 Various corrections</span>
+0017 
+0018 <span class="comment">%%</span>
+0019 clear ;  close all hidden; 
+0020 <span class="comment">%</span>
+0021 npx  = 256 ;   npy = npx ;             <span class="comment">% Punktzahlen</span>
+0022 wl  = 0.005;                          <span class="comment">% Wellenlänge in mm</span>
+0023 m = 2 ;                                <span class="comment">% Exponent Startprofil Supergauss</span>
+0024 dus = 1 ;                              <span class="comment">% Durchmessergröße Zielraster</span>
+0025 rx = 200 ; ry = 200 ;                    <span class="comment">% Krümmungsradien Start, R&gt;0 konvergent</span>
+0026 xof = 0 ; yof = 0 ;                    <span class="comment">% Offset</span>
+0027 <span class="comment">%</span>
+0028 scalx = 4.00 ; scaly = scalx ;                <span class="comment">% Skalenfaktoren</span>
+0029 idampx = 0 ;  idampy = 0 ;             <span class="comment">% Schalter Dämpfung Frequenzspektrum des Propagators</span>
+0030 naxmax = 0.0 ; naymax = 0 ;              <span class="comment">% Maximal aperturen in x/y für conjugierte Ebenen</span>
+0031 xs = 0 ; ys = 0 ;                      <span class="comment">% vorgegebene Zielraster</span>
+0032 iptyp = 0 ;                            <span class="comment">% Typ Propagator 0=Fresnel, 1=PWS 2=Sommerfeld</span>
+0033 ipfix = 0 ;                            <span class="comment">% vorgegebener Propagator 1=Ix-Ix , 2=Ox-Ix , 3=Ix-Ox , 4=Ox-Ox</span>
+0034 ipfiy = 0 ;                            <span class="comment">% vorgegebener Propagator 1=Iy-Iy , 2=Oy-Iy , 3=Iy-Oy , 4=Oy-Oy</span>
+0035 iropt = 1 ;                           <span class="comment">% Optimierung Krümmungsradien</span>
+0036 iproxi = 0 ; iproyi = iproxi ;             <span class="comment">%  vorgegebene Propagatoren</span>
+0037 <span class="comment">%</span>
+0038 iplcomp = 1 ;                          <span class="comment">% Plot Fehler</span>
+0039 iplo = 2 ;                             <span class="comment">% Plot Ergebnis 0 / 1 / 2</span>
+0040 <span class="comment">%</span>
+0041 <span class="comment">%  Systemmatrix für verschiedene Optionen bzw. Beispiele:</span>
+0042 
+0043 <span class="comment">% % System matrix for various options and examples:</span>
+0044 <span class="comment">%</span>
+0045 <span class="comment">% Case 1 : O-O</span>
+0046 <span class="comment">%  wox = 1.0000 ; woy = wox ;   rx = 200 ; ry = 200 ;     %</span>
+0047 <span class="comment">%  Startradius+Krümmung  == Start radius + curvature</span>
+0048 <span class="comment">%  abcd = ABCD('dist',150);              abcdt=(abcd.'); abcdt=abcdt(:)';</span>
+0049 <span class="comment">%  iproxi = 4 ; iproyi = 4 ;</span>
+0050  
+0051 <span class="comment">% Case 2 : O-I</span>
+0052 wox = 4.0000 ; woy = wox ;   rx = 200 ; ry = 200 ;    <span class="comment">% Startradius+Krümmung</span>
+0053 abcd = <a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/ABCD.html" class="code" title="function M = ABCD(varargin)">ABCD</a>(<span class="string">'dist'</span>,200.0);            abcdt=(abcd.'); abcdt=abcdt(:)';
+0054 
+0055 <span class="comment">% Case 3 : I-I</span>
+0056 <span class="comment">% wox = 1.0000 ; woy = wox ;   rx = 2000 ; ry = 2000 ;   % Startradius+Krümmung</span>
+0057 <span class="comment">% abcd = ABCD('dist',500.0);             abcdt=(abcd.'); abcdt=abcdt(:)';</span>
+0058 
+0059 <span class="comment">% Case 4 : I-O</span>
+0060 <span class="comment">% wox = 0.0050 ; woy = wox ;   rx = 00 ; ry = 00 ;    % Startradius+Krümmung</span>
+0061 <span class="comment">% abcd = ABCD('dist',500.0);            abcdt=(abcd.'); abcdt=abcdt(:)';</span>
+0062 
+0063 <span class="comment">% Case 5 : O-O</span>
+0064 <span class="comment">% wox = 1.0000 ; woy = wox ;   rx = 00 ; ry = 00 ;    % Startradius+Krümmung</span>
+0065 <span class="comment">% abcd = ABCD('dist',20,'lens',100,'dist',50.0); abcdt=(abcd.'); abcdt=abcdt(:)';</span>
+0066 
+0067 <span class="comment">% Case 6 : I-O</span>
+0068 <span class="comment">% wox = 0.00500 ; woy = wox ;   rx = 00 ; ry = 00 ;    % Startradius+Krümmung</span>
+0069 <span class="comment">% abcd = ABCD('dist',50,'lens',100,'dist',50);    abcdt=(abcd.'); abcdt=abcdt(:)';</span>
+0070 <span class="comment">%</span>
+0071 abcdx = abcdt ; abcdy = abcdt ;
+0072 <span class="comment">%</span>
+0073 duox = 8*wox ;                         <span class="comment">% Durchmessergröße Startraster</span>
+0074 duoy = 8*woy ;
+0075 br = 1 ; brs = 1. ;              <span class="comment">% Brechzahlen == refractive indices</span>
+0076 <span class="comment">%</span>
+0077 <span class="comment">%  Startraster   : xp, yp</span>
+0078 <span class="comment">%  Feld erzeugen : efd</span>
+0079 <span class="comment">%</span>
+0080 dx = duox /(npx-2); xp = zeros(npx,1);
+0081 <span class="keyword">for</span> j=1:npx ; xp(j) = -duox/2-dx +(j-1)*dx ; <span class="keyword">end</span>
+0082 dy = duoy /(npy-2); yp = zeros(npy,1);
+0083 <span class="keyword">for</span> j=1:npy ; yp(j) = -duoy/2-dy +(j-1)*dy ; <span class="keyword">end</span>
+0084 <span class="comment">%</span>
+0085 ampx = exp( -((xp-xof)/wox).^2 );ampy = exp( -((yp-yof)/woy).^2 );
+0086 [ampxm,ampym] = meshgrid(ampx,ampy);
+0087 phasx = ones(npx,1); phasy = ones(npy,1);
+0088 <span class="keyword">if</span> abs(rx) &gt; 0 ; phasx = ((xp-xof).^2)/(2*wl*rx)  ; <span class="keyword">end</span>    
+0089 <span class="keyword">if</span> abs(ry) &gt; 0 ; phasy = ((yp-yof).^2)/(2*wl*ry) ;  <span class="keyword">end</span>   
+0090 [phasxm,phasym] = meshgrid(phasx,phasy);
+0091 efd = ampxm.*ampym.*exp(2*i*pi*(phasxm+phasym));
+0092 teox = wl/pi/wox ;teoy = wl/pi/woy ;
+0093 <span class="comment">%</span>
+0094 <span class="comment">%  Propagation</span>
+0095 <span class="comment">%</span>
+0096 tic
+0097 [efds,xs,ys,rxs,rys,iprox,iproy,famp,Nfx,Nfy,Nfsx,Nfsy,ierr,sterr]=<span class="keyword">...</span>
+0098           <a href="prop_field_abcd_2d.html" class="code" title="function [efds,xs,ys,rxsg,rysg,iprox,iproy,famp,Nfx,Nfy,Nfsx,Nfsy,ierr,sterr]=prop_field_abcd_2d(efd,wl,xp,yp,abcdx,abcdy,varargin)">prop_field_abcd_2d</a>(efd,wl,xp,yp,abcdx,abcdy,rx,ry,iropt,scalx,scaly,<span class="keyword">...</span>
+0099           iproxi,iproyi,xs,ys,br,brs,naxmax,naymax,iptyp,idampx,idampy) ;   
+0100       toc
+0101 <span class="comment">%</span>
+0102 <span class="comment">%  Intensität normiert</span>
+0103 <span class="comment">%</span>
+0104 int = abs(efds).^2; 
+0105 int = int./max(max(int)); 
+0106 [xsm,ysm] = meshgrid(xs,ys);
+0107 <span class="comment">%</span>
+0108 <span class="comment">%  Idealer Gauss</span>
+0109 <span class="comment">%</span>
+0110 disp(<span class="string">'---------------------------------------------------'</span>);
+0111 <span class="comment">%</span>
+0112 roxstart = 0 ; <span class="keyword">if</span> abs(rx)&gt;0 ; roxstart = 1/rx ; <span class="keyword">end</span>
+0113 roystart = 0 ; <span class="keyword">if</span> abs(ry)&gt;0 ; roystart = 1/ry ; <span class="keyword">end</span>
+0114 <span class="keyword">if</span> roxstart==0 ; ztx = 0 ; <span class="keyword">else</span> ; ztx = -rx/(1+(wl/pi*rx/wox/wox)^2);<span class="keyword">end</span>
+0115 <span class="keyword">if</span> roystart==0 ; zty = 0 ; <span class="keyword">else</span> ; zty = -ry/(1+(wl/pi*ry/woy/woy)^2);<span class="keyword">end</span>
+0116 zetx = pi * wox* wox / wl ;zety = pi * woy* woy / wl ;
+0117 <span class="comment">%</span>
+0118 wo = wox / sqrt(1+(pi*wox*wox/wl*roxstart)^2); brq = (pi*wox/wl*roxstart)^2 ;
+0119 wxideal = wox*sqrt( (wl*abcdx(2)/(pi*wox^2))^2 + (abcdx(1)-abcdx(2)*roxstart)^2 );
+0120 wo = woy / sqrt(1+(pi*woy*woy/wl*roystart)^2); brq = (pi*woy/wl*roystart)^2 ;
+0121 wyideal = woy*sqrt( (wl*abcdy(2)/(pi*woy^2))^2 + (abcdy(1)-abcdy(2)*roystart)^2 );
+0122 <span class="comment">%</span>
+0123 rxideal= -( (1/zetx*abcdx(2))^2 + ( abcdx(1) - abcdx(2)*roxstart )^2 )<span class="keyword">...</span>
+0124         /( ( abcdx(1) - abcdx(2)*roxstart )*( abcdx(3) - abcdx(4)*roxstart ) + abcdx(4)*abcdx(2)*zetx^(-2) );
+0125 ryideal= -( (1/zety*abcdy(2))^2 + ( abcdy(1) - abcdy(2)*roystart )^2 )<span class="keyword">...</span>
+0126         /( ( abcdy(1) - abcdy(2)*roystart )*( abcdy(3) - abcdy(4)*roystart ) + abcdy(4)*abcdy(2)*zety^(-2) );
+0127 <span class="comment">%</span>
+0128 <span class="comment">%  Analyse des numerischen Ergebnisses:</span>
+0129 <span class="comment">%  Strahlradius und Korrelation</span>
+0130 <span class="comment">%</span>
+0131 dxs = abs(xs(2)-xs(1));dys = abs(ys(2)-ys(1));
+0132 thresh = 0.1353 ;
+0133 intx = int(npy/2+1,:)';
+0134 wxnum = <a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/thresh_diam_1d.html" class="code" title="function [dia,ierr,sterr,xl,xr] = thresh_diam_1d(xp,yp,thresh)">thresh_diam_1d</a>(xs,intx,thresh)/2;
+0135 dwxs = abs( wxnum/wxideal-1);
+0136 inty = int(:,npx/2+1);
+0137 wynum = <a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/thresh_diam_1d.html" class="code" title="function [dia,ierr,sterr,xl,xr] = thresh_diam_1d(xp,yp,thresh)">thresh_diam_1d</a>(ys,inty,thresh)/2;
+0138 dwys = abs( wynum/wyideal-1);
+0139 <span class="comment">%</span>
+0140 intideal = exp( -2*(xsm/wxideal).^2 - 2*(ysm/wyideal).^2 );
+0141 ind = find( intideal &gt; 0.001 ); npeff = numel(ind);
+0142 pnum = sqrt(1/npeff*sum(sum(dxs*dys*(intideal(ind)-int(ind)).^2)));
+0143 pnorm = sqrt(1/npeff*sum(sum(dxs*dys*intideal(ind).^2)));
+0144 rms = pnum/pnorm;
+0145 <span class="comment">%</span>
+0146 Mx = xs(npx)/xp(npx);
+0147 My = ys(npy)/yp(npy);
+0148 <span class="comment">%</span>
+0149 <span class="comment">%  Textausgabe</span>
+0150 <span class="comment">%</span>
+0151 <span class="keyword">if</span> iprox ==1 ; tex = <span class="string">'Ix-Ix (1)'</span>; <span class="keyword">end</span>
+0152 <span class="keyword">if</span> iprox ==2 ; tex = <span class="string">'Ox-Ix (2)'</span>; <span class="keyword">end</span>
+0153 <span class="keyword">if</span> iprox ==3 ; tex = <span class="string">'Ix-Ox (3)'</span>; <span class="keyword">end</span>
+0154 <span class="keyword">if</span> iprox ==4 ; tex = <span class="string">'Ox-Ox (4)'</span>; <span class="keyword">end</span>
+0155 <span class="keyword">if</span> iproy ==1 ; tey = <span class="string">'Iy-Iy (1)'</span>; <span class="keyword">end</span>
+0156 <span class="keyword">if</span> iproy ==2 ; tey = <span class="string">'Oy-Iy (2)'</span>; <span class="keyword">end</span>
+0157 <span class="keyword">if</span> iproy ==3 ; tey = <span class="string">'Iy-Oy (3)'</span>; <span class="keyword">end</span>
+0158 <span class="keyword">if</span> iproy ==4 ; tey = <span class="string">'Oy-Oy (4)'</span>; <span class="keyword">end</span>
+0159 <span class="comment">%</span>
+0160 <span class="comment">%</span>
+0161 disp([<span class="string">'Width-ideal   : wxi    = '</span>,num2str(wxideal,<span class="string">'%10.6f'</span>),<span class="string">'     wyi   = '</span>,num2str(wyideal,<span class="string">'%10.6f'</span>)] ); 
+0162 disp([<span class="string">'Width-numeric : wxr    = '</span>,num2str(wxnum,<span class="string">'%10.6f'</span>),  <span class="string">'     wyr   = '</span>,num2str(wynum,<span class="string">'%10.6f'</span>)] );
+0163 disp([<span class="string">'Width-diff    : dwx    = '</span>,num2str(dwxs,<span class="string">'%10.6f'</span>),   <span class="string">'     dwy   = '</span>,num2str(dwys,<span class="string">'%10.6f'</span>)  ]);
+0164 disp([<span class="string">'Magnification : Mx     = '</span>,num2str(Mx,<span class="string">'%10.6f'</span>),     <span class="string">'     My    = '</span>,num2str(My,<span class="string">'%10.6f'</span>) ]);
+0165 disp([<span class="string">'Curvature     : Rxsi   = '</span>,num2str(rxideal,<span class="string">'%10.3f'</span>),<span class="string">'     Rysi  = '</span>,num2str(ryideal,<span class="string">'%10.6f'</span>) ]);
+0166 disp([<span class="string">'Curvature     : Rxsr   = '</span>,num2str(rxs,<span class="string">'%10.3f'</span>),    <span class="string">'     Rysr  = '</span>,num2str(rys,<span class="string">'%10.6f'</span>)  ]);
+0167 disp([<span class="string">'Abweichung    : RmsPow = '</span>,num2str(rms,<span class="string">'%10.6f'</span>) ])
+0168 disp([<span class="string">'Fresnel       : Nfx    = '</span>,num2str(Nfx,<span class="string">'%10.6f'</span>),    <span class="string">'     Nfy    = '</span>,num2str(Nfy,<span class="string">'%10.6f'</span>) ])
+0169 disp([<span class="string">'Fresnel       : Nfxs   = '</span>,num2str(Nfsx,<span class="string">'%10.6f'</span>),   <span class="string">'     Nfys   = '</span>,num2str(Nfsy,<span class="string">'%10.6f'</span>) ])
+0170 disp([<span class="string">'Propagator    : x      = '</span>,tex,<span class="string">'    Propagator    : y     = '</span>,tey]); 
+0171 disp([<span class="string">'ABCD-matrix   : ABCDx  = '</span>,num2str(abcdx)] );
+0172 disp([<span class="string">'ABCD-matrix   : ABCDy  = '</span>,num2str(abcdy)] );
+0173 <span class="keyword">if</span> ierr &gt; 0 ; disp([<span class="string">'Error : '</span>,num2str(ierr)]);<span class="keyword">end</span>
+0174 <span class="comment">%</span>
+0175 <span class="comment">%  Plot-Darstellung</span>
+0176 <span class="comment">%</span>
+0177 <span class="keyword">if</span> iplo &gt; 0
+0178 <span class="comment">%</span>
+0179    <span class="keyword">if</span> iplo &gt; 1
+0180    figure;
+0181    set( gcf, <span class="string">'Units'</span> , <span class="string">'Normalized'</span>);
+0182    set( gcf, <span class="string">'Position'</span>, [ 0.58 , 0.52 , 0.4 , 0.4 ] );
+0183    plot(xs,int(npy/2+1,:),<span class="string">'r-'</span>); grid on ;
+0184    set(gca,<span class="string">'XLim'</span>,[ -abs(xs(2)) abs(xs(npx)) ])
+0185    hold on; 
+0186    plot(ys,int(:,npx/2+1),<span class="string">'b-'</span>); 
+0187    title(<span class="string">'x'</span>,<span class="string">'color'</span>,<span class="string">'r'</span>)
+0188    set( gca, <span class="string">'FontSize'</span> , 12, <span class="string">'fontweight'</span>,<span class="string">'bold'</span> );
+0189    set(gcf,<span class="string">'Color'</span>,[1,1,1])
+0190    <span class="keyword">end</span>
+0191    <span class="comment">%</span>
+0192    figure
+0193    set( gcf, <span class="string">'Units'</span> , <span class="string">'Normalized'</span>);
+0194    set( gcf, <span class="string">'Position'</span>, [ 0.58 , 0.05 , 0.4 , 0.4 ] );
+0195    pcolor(xsm,ysm,int)
+0196    shading interp
+0197    daspect([1 1 0.8 ])
+0198    set(gcf,<span class="string">'Color'</span>,[1,1,1])
+0199    set( gca, <span class="string">'FontSize'</span> , 12, <span class="string">'fontweight'</span>,<span class="string">'bold'</span> );
+0200 <span class="comment">%</span>
+0201 <span class="keyword">end</span>
+0202 <span class="comment">%</span>
+0203 <span class="keyword">if</span> iplcomp &gt; 0
+0204 figure
+0205 set( gcf, <span class="string">'Units'</span> , <span class="string">'Normalized'</span>);
+0206 set( gcf, <span class="string">'Position'</span>, [ 0.058 , 0.052 , 0.4 , 0.4 ] );
+0207 pcolor(xsm,ysm,(int-intideal))
+0208 colorbar
+0209 shading flat
+0210 daspect([1 1 0.8 ])
+0211 set(gcf,<span class="string">'Color'</span>,[1,1,1])
+0212 set( gca, <span class="string">'FontSize'</span> , 12, <span class="string">'fontweight'</span>,<span class="string">'bold'</span> );
+0213 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

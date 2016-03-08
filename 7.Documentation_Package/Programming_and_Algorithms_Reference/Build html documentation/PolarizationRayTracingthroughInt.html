@@ -1,0 +1,129 @@
+﻿<html>
+	
+<head>
+	<title>Polarization Ray Tracing through Interfaces</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("PolarizationRayTracingthroughInt");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Polarization Ray Tracing through Interfaces</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="PolarizationRayTracingModule.html">Polarization Ray Tracing Module</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="PolarizationRayTracingModule.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="JonesMatrixtoPolarizationRayTrac.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="PolarizationPropertiesofOpticalS.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h2 class="rvps50"><a name="_Toc370907113"></a>
+<span class="rvts0"><span class="rvts72">Polarization Ray Tracing through Interfaces</span></span></h2>
+<p class="rvps17"><span class="rvts38">In Jones calculus the reflection and refraction at dielectric, metal and multilayer coated interfaces are described in terms of {s,p} components. The polarization ray tracing matrix for a refraction (transmission) and reflection can be obtained from the corresponding Jones matrix (J</span><span class="rvts60">t</span><span class="rvts38"> for transmission and J</span><span class="rvts60">r</span><span class="rvts38"> for reflection).</span></p>
+<p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem105.png"/></p>
+<p class="rvps17"><span class="rvts38">Where the </span><img alt="" style="padding : 1px;" src="lib/NewItem104.png"/><span class="rvts38"> are the amplitude transmission (reflection) coefficients for s or p - components of the polarized field. For single plane interfaces, the coefficients can be calculated from the Fresnel’s equations &nbsp;and for layered interfaces matrix method for stratified media, which leads to the general form of Fresnel’s equations can be applied [9][10]. In the following section the general method of field propagation through stratified media is discussed first followed by brief summary of special case of single plane interface.</span></p>
+<h2 class="rvps50"><a name="_Toc370907114"></a>
+<span class="rvts0"><span class="rvts72">Reflection-Transmission Problem for General Layer System</span></span></h2>
+<p class="rvps52"><span class="rvts38">For problems with translational invariance in at least one direction, (like in homogenous infinite media, layers or interfaces), an electric field can be decomposed to two independent components. The field component which is perpendicular to the plane of propagation is called the transverse electric (TE) component and the other one which is parallel to the plane of propagation is called the transverse magnetic (TM) components. </span></p>
+<p class="rvps52"><span class="rvts38">The transmission and reflection coefficients of a multi-layer system shown in the following figure for each component (TE and TM) can be compute independently and &nbsp;are given in the following section.</span></p>
+<p class="rvps53"><img width="377" height="241" alt="" style="padding : 1px;" src="lib/NewItem103.png"/></p>
+<p class="rvps52"><span class="rvts38">As field is propagating in x-z pane, the wave vector has only two components k</span><span class="rvts60">X </span><span class="rvts38">and k</span><span class="rvts60">Z</span><span class="rvts38">, tangential and normal to the interface respectively. The tangential component of the wave vector is conserved throughout the entire structure. &nbsp;The total length of the wave vector on each layer is given by the dispersion relation for dispersive, isotropic, homogeneous media. As a consequence, the normal component (k</span><span class="rvts60">Z</span><span class="rvts38">) varies and depends on the electric permittivity of each layer. </span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem102.png"/></p>
+<p class="rvps52"><span class="rvts38">In substrate and cladding the wave vectors can be related to the refractive indices, incident angle and transmitted angle by the following relations:</span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem101.png"/></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem100.png"/></p>
+<p class="rvps52"><span class="rvts38">To compute the transmission and reflection coefficients of a layered system, a matrix method for fields in layer system can be applied. For the method the system is represented by a transfer matrix. &nbsp;The transfer matrix for a single layer can be computed from its thickness and permittivity, using continuity of transverse component of electric field and wave vectors at the boundary. For multilayer system, the transfer matrix is the product of the transfer matrices of each layers of the system in reverse order. </span></p>
+<p class="rvps52"><img alt="" style="padding : 1px;" src="lib/NewItem99.png"/></p>
+<p class="rvps52"><span class="rvts38"><br/></span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem98.png"/></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem97.png"/></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem96.png"/></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem95.png"/><img alt="" style="padding : 1px;" src="lib/NewItem94.png"/><img alt="" style="padding : 1px;" src="lib/NewItem93.png"/></p>
+<p class="rvps54"><span class="rvts36">Once the transfer matrix for a multilayer system is determined, the coefficients of transmission and reflection can be obtained using the following relations. Only the final result is presented here. </span></p>
+<ol style="text-indent: 0px; margin-left: 47px; list-style-position: outside; list-style-type: upper-alpha;">
+<li class="rvps55" style="margin-left: 0px; text-indent: 0px"><span class="rvts36">TE Polarization (s) Component</span></li>
+</ol>
+<p class="rvps54"><span class="rvts36">Reflection Coefficient</span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem92.png"/></p>
+<p class="rvps54"><span class="rvts36">Transmission Coefficient</span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem91.png"/></p>
+<ol style="text-indent: 0px; margin-left: 47px; list-style-position: outside; list-style-type: upper-alpha;">
+<li class="rvps55" style="margin-left: 0px; text-indent: 0px"><span class="rvts36">TM Polarization (p) Component</span></li>
+</ol>
+<p class="rvps54"><span class="rvts36">Reflection Coefficient</span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem90.png"/></p>
+<p class="rvps54"><span class="rvts36">Transmission Coefficient</span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem89.png"/></p>
+<p class="rvps54"><span class="rvts36"><br/></span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem88.png"/></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem87.png"/><img alt="" style="padding : 1px;" src="lib/NewItem86.png"/></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem85.png"/><img alt="" style="padding : 1px;" src="lib/NewItem84.png"/></p>
+<p class="rvps54"><span class="rvts36"><br/></span></p>
+<p class="rvps54"><span class="rvts36">The coefficients computed above describe the relation between the complex amplitudes of incident, reflected and transmitted plane waves. They are called generalized Fresnel’s coefficients.</span></p>
+<p class="rvps54"><span class="rvts36"><br/></span></p>
+<p class="rvps54"><span class="rvts36">But for physical reasons, it is common to consider the portion of reflected and transmitted energy fluxes instead of the complex amplitudes. Energy flux is defined by the normal component of the Poynting vectors sz.</span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem143.png"/></p>
+<p class="rvps54"><span class="rvts36"><br/></span></p>
+<p class="rvps54"><span class="rvts36">The coefficients relating the incident energy flux with the reflected and transmitted energy fluxes are called the reflectance (r) and transmittance (t) of the system. &nbsp;They can be related to the Fresnel’s coefficients as flows:</span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem82.png"/></p>
+<p class="rvps54"><span class="rvts36"><br/></span></p>
+<p class="rvps54"><img alt="" style="padding : 1px;" src="lib/NewItem81.png"/></p>
+<p class="rvps54"><span class="rvts36"><br/></span></p>
+<p class="rvps54"><span class="rvts36">In addition to reflection and transmission, part of incident energy will also be absorbed in the multilayer structure. &nbsp;Since the energy should be conserved, the equation</span><img alt="" style="padding : 1px;" src="lib/NewItem80.png"/><span class="rvts36"> </span></p>
+<p class="rvps54"><span class="rvts36">is valid for both TM and TE polarizations where ‘a’ is absorption coefficient . </span></p>
+<p class="rvps54"><span class="rvts36"><br/></span></p>
+<p class="rvps54"><span class="rvts36">The matrix method can be used for general case of multi-layer system such as multi-layer coatings. &nbsp;And for bare uncoated glass the multilayer system becomes only a single interface and the general matrix methods simplifies to set of Fresnel’s equations for single interface .</span><span class="rvts74"> </span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/help-authoring-tool">Single source CHM, PDF, DOC and HTML Help creation</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

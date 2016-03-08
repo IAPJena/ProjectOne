@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Bundle_Oriented_Diffraction</title>
+  <meta name="keywords" content="Bundle_Oriented_Diffraction">
+  <meta name="description" content="Clear command window">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Test_Scripts -->
+<h1>Bundle_Oriented_Diffraction
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>Clear command window</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Clear command window</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/OpticalSystem.html" class="code" title="">OpticalSystem</a>	</li><li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/plotFFTPointSpreadFunction.html" class="code" title="function [ XMulti,YMulti,normalizedIntensityMulti,peakIntensityMulti,SrehlRatioMuti1 ] =plotFFTPointSpreadFunction( optSystem,wavLen,fieldPointXY,gridSize,spotPlotRadius,polarized,jonesVec,resultComponent,plotPanelHandle,textHandle)">plotFFTPointSpreadFunction</a>	plotFFTPointSpreadFunction Summary of this function goes here</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% Clear command window</span>
+0002 clc;
+0003 
+0004 <span class="comment">%% Open saved optical system</span>
+0005 <span class="comment">% Get path of the single lens system used for testing</span>
+0006 singleLensFullFileName = which(<span class="string">'SingleLensTest.mat'</span>);
+0007 <span class="comment">% Construct the optical system object from the saved file</span>
+0008 OS = <a href="../../AODParentDir/Class_Definition/@OpticalSystem/OpticalSystem.html" class="code" title="">OpticalSystem</a>(singleLensFullFileName);
+0009 
+0010 <span class="comment">%% Bundle oriented polarization ray trace</span>
+0011 <span class="comment">% surfIndex = OS.NumberOfSurface;</span>
+0012 surfIndex = 4;
+0013 
+0014 wavLen = OS.WavelengthMatrix(OS.PrimaryWavelengthIndex);
+0015 fieldPointXY = [0;0]; <span class="comment">% start from an axis point</span>
+0016 sampleGridSize = 100;
+0017 JonesVec = [1*exp(1i*10*pi/180);2*exp(1i*20*pi/180)];
+0018 <span class="comment">% JonesVec = [5;0];</span>
+0019 
+0020 
+0021 <span class="comment">%% Plot Wavefront at Exit Pupil</span>
+0022 tic
+0023 figure;
+0024 axesHandle2 = axes; 
+0025 [ X,Y,OPDAtExitPupil ] = <span class="keyword">...</span>
+0026     OS.plotWavefrontAtExitPupil(axesHandle2,sampleGridSize,wavLen,<span class="keyword">...</span>
+0027         fieldPointXY,JonesVec);
+0028 toc
+0029 hold off;
+0030 <span class="comment">%% Add Pupil Apodization</span>
+0031 figure;
+0032 axesHandle3 = axes; 
+0033 apodType = 1; <span class="comment">% Supergauss</span>
+0034 I0 = 1; m = 2; w = 7;
+0035 apodParam = [I0,m,w];
+0036 [ X,Y,pupilApodization ] =<span class="keyword">...</span>
+0037         OS.plotPupilApodization(axesHandle3,sampleGridSize,apodType,apodParam);
+0038 
+0039 <span class="comment">%% Plot PSF</span>
+0040 figure;
+0041 axesHandle = axes;
+0042 spotPlotRadius = 0.007;
+0043 apodType = 1; <span class="comment">% Supergauss</span>
+0044 I0 = 1; m = 2; w = 7;
+0045 apodParam = [I0,m,w];
+0046 
+0047 [ X,Y,pupilApodization ] =<span class="keyword">...</span>
+0048         <a href="../../AODParentDir/Class_Definition/@OpticalSystem/plotFFTPointSpreadFunction.html" class="code" title="function [ XMulti,YMulti,normalizedIntensityMulti,peakIntensityMulti,SrehlRatioMuti1 ] =plotFFTPointSpreadFunction( optSystem,wavLen,fieldPointXY,gridSize,spotPlotRadius,polarized,jonesVec,resultComponent,plotPanelHandle,textHandle)">plotFFTPointSpreadFunction</a>( OS,axesHandle,sampleGridSize,<span class="keyword">...</span>
+0049         apodType,apodParam,wavLen,fieldPointXY,JonesVec,spotPlotRadius);
+0050</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

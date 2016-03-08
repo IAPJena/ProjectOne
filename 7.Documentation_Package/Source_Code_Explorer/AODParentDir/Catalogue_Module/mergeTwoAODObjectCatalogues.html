@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of mergeTwoAODObjectCatalogues</title>
+  <meta name="keywords" content="mergeTwoAODObjectCatalogues">
+  <meta name="description" content="mergeTwoAODObjectCatalogues Merge two AOD object catalogues and save in a">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Catalogue_Module -->
+<h1>mergeTwoAODObjectCatalogues
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>mergeTwoAODObjectCatalogues Merge two AOD object catalogues and save in a</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ merged ] = mergeTwoAODObjectCatalogues(objectType, objCatFullName1,objCatFullName2,objCatFullNameMergedFullName ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">mergeTwoAODObjectCatalogues Merge two AOD object catalogues and save in a
+ single file.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>	addObjectToAODObjectCatalogue: Adds the given AOD object to the given</li><li><a href="createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>	CREATENEWCOATINGCATALOGUE Create anew AOD object catalogue and intialize</li><li><a href="isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>	ISVALIDCOATINGCATALOGUE Retruns whether the object catalogue is vlaid or</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ merged ] = mergeTwoAODObjectCatalogues</a><span class="keyword">...</span>
+0002     (objectType, objCatFullName1,objCatFullName2,objCatFullNameMergedFullName )
+0003 <span class="comment">%mergeTwoAODObjectCatalogues Merge two AOD object catalogues and save in a</span>
+0004 <span class="comment">% single file.</span>
+0005 
+0006 <span class="comment">% Default inputs</span>
+0007 <span class="keyword">if</span> nargin &lt; 3
+0008     disp([<span class="string">'Error: The mergeTwoAODObjectCatalogues needs atleast objectType '</span>,<span class="keyword">...</span>
+0009         <span class="string">'objCatFullName1 and objCatFullName2 as argument'</span>]);
+0010     <span class="keyword">return</span>;
+0011 <span class="keyword">elseif</span> nargin == 3
+0012     objCatFullNameMergedFullName = <a href="createNewAODObjectCatalogue.html" class="code" title="function [ fullName ] = createNewAODObjectCatalogue(objectType, objectCatalogueFullName,ask_replace )">createNewAODObjectCatalogue</a>(objectType);
+0013 <span class="keyword">end</span>
+0014 <span class="keyword">if</span> <a href="isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>(objectType, objCatFullName1 ) &amp;&amp; <span class="keyword">...</span>
+0015         <a href="isValidAODObjectCatalogue.html" class="code" title="function [ valid, fileInfoStruct, dispMsg] = isValidAODObjectCatalogue(objectType, objectCatalogueFullName )">isValidAODObjectCatalogue</a>(objectType, objCatFullName2 )
+0016     <span class="comment">%load the 1st object catalogue file</span>
+0017     load(objCatFullName1,<span class="string">'AODObjectArray'</span>,<span class="string">'FileInfoStruct'</span>);
+0018     objectArray1 = AODObjectArray;
+0019     clear AODObjectArray;
+0020     clear FileInfoStruct;
+0021     <span class="comment">%load the 2nd object catalogue file</span>
+0022     load(objCatFullName2,<span class="string">'AODObjectArray'</span>,<span class="string">'FileInfoStruct'</span>);
+0023     objectArray2 = AODObjectArray;
+0024     clear AODObjectArray;
+0025     clear FileInfoStruct;
+0026     <a href="addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>(objectType,objectArray1,objCatFullNameMergedFullName );
+0027     <a href="addObjectToAODObjectCatalogue.html" class="code" title="function [ added ] = addObjectToAODObjectCatalogue(objectType, aodObject,objectCatalogueFullName,ask_replace )">addObjectToAODObjectCatalogue</a>(objectType,objectArray2,objCatFullNameMergedFullName );
+0028     merged = 1;
+0029     
+0030     [~,cat1Name,~]  = fileparts(objCatFullName1);
+0031     [~,cat2Name,~]  = fileparts(objCatFullName2);
+0032     [~,mergedCatName,~] = fileparts(objCatFullNameMergedFullName);
+0033     disp([<span class="string">'Merging successful: '</span>,cat1Name,<span class="string">' + '</span>,cat2Name,<span class="string">' = '</span>, mergedCatName]);
+0034 <span class="keyword">else</span>
+0035     merged = 0;
+0036     delete(objCatFullNameMergedFullName);
+0037     disp(<span class="string">'Error: The catalogue is not valid.'</span>);
+0038 <span class="keyword">end</span>
+0039 <span class="keyword">end</span>
+0040</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

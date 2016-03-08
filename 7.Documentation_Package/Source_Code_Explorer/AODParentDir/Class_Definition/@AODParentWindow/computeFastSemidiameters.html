@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeFastSemidiameters</title>
+  <meta name="keywords" content="computeFastSemidiameters">
+  <meta name="description" content="COMPUTEFASTSEMIDIAMETERS: Computes and sets the semidiameters and apertures">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>computeFastSemidiameters
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>COMPUTEFASTSEMIDIAMETERS: Computes and sets the semidiameters and apertures</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function computeFastSemidiameters( parentWindow ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> COMPUTEFASTSEMIDIAMETERS: Computes and sets the semidiameters and apertures
+ of each surface by tracing cheif ray + top and bottom mariginal rays of each field
+ and each wavelength and taking the maximum radial interesection of 
+ the rays with the surfaces.
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Mathematical_Functions/computeNormOfMatrix.html" class="code" title="function [ normMatrix ] = computeNormOfMatrix( inMatrix, dim )">computeNormOfMatrix</a>	COMPUTENORMOFMATRIX Computes the norm of matrix in a given dimension and</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function computeFastSemidiameters( parentWindow )</a>
+0002 <span class="comment">% COMPUTEFASTSEMIDIAMETERS: Computes and sets the semidiameters and apertures</span>
+0003 <span class="comment">% of each surface by tracing cheif ray + top and bottom mariginal rays of each field</span>
+0004 <span class="comment">% and each wavelength and taking the maximum radial interesection of</span>
+0005 <span class="comment">% the rays with the surfaces.</span>
+0006 <span class="comment">% Member of AODParentWindow class</span>
+0007 
+0008 aodHandles = parentWindow.AODParentHandles;
+0009 currentOpticalSystem = parentWindow.getCurrentOpticalSystem;
+0010 nField = currentOpticalSystem.NumberOfFieldPoints;
+0011 nSurf = currentOpticalSystem.NumberOfSurfaces;
+0012 nWav = currentOpticalSystem.NumberOfWavelengths;
+0013 
+0014 fieldPointMatrix = currentOpticalSystem.FieldPointMatrix;
+0015 fieldPointXY = (fieldPointMatrix(:,1:2))';
+0016 wavelengthMatrix = currentOpticalSystem.WavelengthMatrix;
+0017 wavLen = (wavelengthMatrix(:,1))';
+0018 
+0019 <span class="comment">% Repeat wavelegths for each field point and vice versa</span>
+0020 fieldPointXYAll = repmat(fieldPointXY,[1,nWav]);
+0021 wavLenAll = cell2mat(arrayfun(@(x) repmat(x,[1,nField]),wavLen,<span class="string">'UniformOutput'</span>,false));
+0022 
+0023 <span class="comment">%wavLen = repmat(currentOpticalSystem.getPrimaryWavelength,[1,nField]);</span>
+0024 
+0025 angleFromYinRad1 = 0;
+0026 angleFromYinRad2 = pi;
+0027 <span class="comment">% Ignore current apertures in the computation of semi diameters</span>
+0028 considerSurfAperture = 0;
+0029 topMariginalRayTraceResult = currentOpticalSystem.traceMariginalRay<span class="keyword">...</span>
+0030     (fieldPointXYAll,wavLenAll,angleFromYinRad1,considerSurfAperture);
+0031 bottomMariginalRayTraceResult = currentOpticalSystem.traceMariginalRay<span class="keyword">...</span>
+0032     (fieldPointXYAll,wavLenAll,angleFromYinRad2,considerSurfAperture);
+0033 cheifRayTraceResult = currentOpticalSystem.traceCheifRay<span class="keyword">...</span>
+0034     (fieldPointXYAll,wavLenAll,considerSurfAperture);
+0035 
+0036 <span class="keyword">for</span> kk = 1:nSurf
+0037     topMariginalIntersection = [topMariginalRayTraceResult(kk,:).RayIntersectionPoint];
+0038     bottomMariginalIntersection = [bottomMariginalRayTraceResult(kk,:).RayIntersectionPoint];
+0039     cheifRayIntersection = [cheifRayTraceResult(kk,:).RayIntersectionPoint];
+0040 
+0041     surfaceVertex = currentOpticalSystem.SurfaceArray(kk).SurfaceCoordinateTM(1:3,4);
+0042     
+0043     vertexToTopMariginal = (topMariginalIntersection - repmat(surfaceVertex,[1,nField*nWav]));
+0044     vertexToTopMariginalDist = <a href="../../../AODParentDir/Mathematical_Functions/computeNormOfMatrix.html" class="code" title="function [ normMatrix ] = computeNormOfMatrix( inMatrix, dim )">computeNormOfMatrix</a>(vertexToTopMariginal,1);
+0045     vertexToBottomMariginal = (bottomMariginalIntersection - repmat(surfaceVertex,[1,nField*nWav]));
+0046     vertexToBottomMariginalDist = <a href="../../../AODParentDir/Mathematical_Functions/computeNormOfMatrix.html" class="code" title="function [ normMatrix ] = computeNormOfMatrix( inMatrix, dim )">computeNormOfMatrix</a>(vertexToBottomMariginal,1);
+0047     
+0048     vertexTocheifRay = (cheifRayIntersection - repmat(surfaceVertex,[1,nField*nWav]));
+0049     vertexTocheifRayDist = <a href="../../../AODParentDir/Mathematical_Functions/computeNormOfMatrix.html" class="code" title="function [ normMatrix ] = computeNormOfMatrix( inMatrix, dim )">computeNormOfMatrix</a>(vertexTocheifRay,1);
+0050     
+0051     
+0052     maxRadToTopMariginalRay = max(vertexToTopMariginalDist);
+0053     maxRadToBottomMariginalRay = max(vertexToBottomMariginalDist);
+0054     
+0055     maxRadTocheifRay = max(vertexTocheifRayDist);
+0056     
+0057     maxRadToMariginal_CheifRay(kk) = max([maxRadToTopMariginalRay,<span class="keyword">...</span>
+0058         maxRadToBottomMariginalRay,maxRadTocheifRay]);
+0059     <span class="comment">% Add 5% to the max radius of the furthest mariginal ray</span>
+0060     fastSemiDiameter(kk) = 1.05*maxRadToMariginal_CheifRay(kk);
+0061     
+0062     fastSemiDiameterStr = num2str(fastSemiDiameter(kk));
+0063     <span class="comment">% Set the fast semi diameters in the surface editor window</span>
+0064     <span class="comment">% standard data if semi diameter is not user fixed 'U'</span>
+0065      tblData1 = get(aodHandles.tblStandardData,<span class="string">'data'</span>);
+0066      <span class="keyword">if</span> ~strcmpi(tblData1{kk,14},<span class="string">'U'</span>)
+0067         tblData1{kk,13} = fastSemiDiameterStr;
+0068         set(aodHandles.tblStandardData, <span class="string">'Data'</span>, tblData1);
+0069      <span class="keyword">end</span>
+0070          
+0071      <span class="comment">% update aperture table if it is Floating Aperture</span>
+0072      tblData2 = get(aodHandles.tblApertureData,<span class="string">'data'</span>);
+0073      <span class="keyword">if</span> strcmpi(tblData2{kk,3},<span class="string">'Floating'</span>)
+0074         tblData2{kk,5} = fastSemiDiameterStr; 
+0075         tblData2{kk,7} = fastSemiDiameterStr;
+0076         set(aodHandles.tblApertureData, <span class="string">'Data'</span>, tblData2);
+0077      <span class="keyword">end</span>         
+0078 <span class="keyword">end</span>
+0079 <span class="keyword">end</span>
+0080</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

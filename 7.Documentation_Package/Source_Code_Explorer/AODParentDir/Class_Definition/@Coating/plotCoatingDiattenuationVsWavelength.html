@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotCoatingDiattenuationVsWavelength</title>
+  <meta name="keywords" content="plotCoatingDiattenuationVsWavelength">
+  <meta name="description" content="Plot diattenuation related to the coating for both transmission">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Coating -->
+<h1>plotCoatingDiattenuationVsWavelength
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Plot diattenuation related to the coating for both transmission</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function plotCoatingDiattenuationVsWavelength(Coating,incAngle,minWavelengthInUm, maxWavelengthInUm, wavelengthStepInUm,primWavLenInUm,indexBefore,indexAfter,axesHandle,tableHandle,textHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Plot diattenuation related to the coating for both transmission
+ and reflection versus wavelength for fixed angle 
+ Unit of incAngle = deg, wavelength = um</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeDiattenuation.html" class="code" title="function diattenuation = computeDiattenuation( PorJ )">computeDiattenuation</a>	computeDiatteunation: computes the diatteunation related to the</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plotCoatingDiattenuationVsWavelength(Coating,incAngle,</a><span class="keyword">...</span>
+0002     minWavelengthInUm, maxWavelengthInUm, wavelengthStepInUm,primWavLenInUm,<span class="keyword">...</span>
+0003     indexBefore,indexAfter,axesHandle,tableHandle,textHandle)
+0004     <span class="comment">% Plot diattenuation related to the coating for both transmission</span>
+0005     <span class="comment">% and reflection versus wavelength for fixed angle</span>
+0006     <span class="comment">% Unit of incAngle = deg, wavelength = um</span>
+0007     
+0008     <span class="comment">% Code Modification</span>
+0009     <span class="comment">% Mar 07,2014 : By Norman G.</span>
+0010     
+0011     <span class="comment">% Check for inputs</span>
+0012     <span class="comment">% deafualt inputs</span>
+0013     <span class="keyword">if</span> nargin &lt; 7
+0014         disp([<span class="string">'Error: The function needs atleast 7 inputs: '</span><span class="keyword">...</span>
+0015         <span class="string">'Coating,incAngle, minWavelength, maxWavelength, wavelengthStep, '</span><span class="keyword">...</span>
+0016         <span class="string">'indexBefore and indexAfter.'</span>]);
+0017         <span class="keyword">return</span>;
+0018     <span class="keyword">elseif</span> nargin == 7
+0019         axesHandle = axes(<span class="string">'Parent'</span>,figure,<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+0020             <span class="string">'Position'</span>,[0.1,0.1,0.8,0.8]);
+0021     <span class="keyword">else</span>
+0022     <span class="keyword">end</span>
+0023     
+0024     wavLen =  minWavelengthInUm:wavelengthStepInUm:maxWavelengthInUm;
+0025     [ampRs,ampRp,powRs,powRp] = <span class="keyword">...</span>
+0026             Coating.getReflectionCoefficients(wavLen,<span class="keyword">...</span>
+0027             incAngle*pi/180,indexBefore,indexAfter,primWavLenInUm); 
+0028     [ampTs,ampTp,powTs,powTp] = <span class="keyword">...</span>
+0029             Coating.getTransmissionCoefficients(wavLen,<span class="keyword">...</span>
+0030             incAngle*pi/180,indexBefore,indexAfter,primWavLenInUm); 
+0031 
+0032     <span class="comment">% Reshape the vector to 1x1xN dimensional matrix and merge to get Jones</span>
+0033     <span class="comment">% matrix of 2x2xN size</span>
+0034     ampRs3d = reshape(ampRs,[1,1,length(ampRs)]);
+0035     ampRp3d = reshape(ampRp,[1,1,length(ampRp)]);
+0036     ampTs3d = reshape(ampTs,[1,1,length(ampTs)]);
+0037     ampTp3d = reshape(ampTp,[1,1,length(ampTp)]);
+0038     
+0039     powRs3d = reshape(powRs,[1,1,length(powRs)]);
+0040     powRp3d = reshape(powRp,[1,1,length(powRp)]);
+0041     powTs3d = reshape(powTs,[1,1,length(powTs)]);
+0042     powTp3d = reshape(powTp,[1,1,length(powTp)]);    
+0043     zeros3d = zeros(1,1,length(powRs));        
+0044         
+0045         
+0046     <span class="comment">% decide which of three fresnels coefficients to use for Jones Matrix</span>
+0047     <span class="comment">% Case 1: amplitude coefficients not additive but may be complex.</span>
+0048     <span class="comment">% (I think this one is correct)</span>
+0049     JRM_Amp = cat(1,(cat(2,ampRs3d,zeros3d)),(cat(2,zeros3d,ampRp3d)));
+0050     JTM_Amp = cat(1,(cat(2,ampTs3d,zeros3d)),(cat(2,zeros3d,ampTp3d)));
+0051     
+0052     <span class="comment">% Case 2: intensity coefficients not additive the abs of pow coeff.</span>
+0053 
+0054     <span class="comment">% Case 3: power coefficients additive to 1</span>
+0055     <span class="comment">% (As Used as in Zemax)</span>
+0056     JRM_Pow = cat(1,(cat(2,powRs3d,zeros3d)),(cat(2,zeros3d,powRp3d)));
+0057     JTM_Pow = cat(1,(cat(2,powTs3d,zeros3d)),(cat(2,zeros3d,powTp3d)));        
+0058     
+0059     diattenuationTrans = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeDiattenuation.html" class="code" title="function diattenuation = computeDiattenuation( PorJ )">computeDiattenuation</a>(sqrt(JTM_Pow));
+0060     diattenuationRef =  <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeDiattenuation.html" class="code" title="function diattenuation = computeDiattenuation( PorJ )">computeDiattenuation</a>(sqrt(JRM_Pow));    
+0061     
+0062 
+0063     plot(axesHandle,wavLen,diattenuationTrans,wavLen,diattenuationRef);
+0064     hleg1 = legend(axesHandle,<span class="string">'Transmission Diattenuation'</span>,<span class="string">'Reflection Diattenuation'</span>);
+0065     set(hleg1,<span class="string">'Location'</span>,<span class="string">'NorthWest'</span>)    
+0066 
+0067     xlabel(axesHandle,<span class="string">'Wavelength (um)'</span>,<span class="string">'FontSize'</span>,12)
+0068     ylabel(axesHandle,<span class="string">'Diattenuation'</span>,<span class="string">'FontSize'</span>,12)
+0069     title(axesHandle,[Coating.Name,<span class="string">': Diattenuation Vs Wavelength'</span>],<span class="string">'FontSize'</span>,12)            
+0070     <span class="keyword">if</span> nargin &gt;= 9
+0071         <span class="comment">% Display tabular data on the tableHandle</span>
+0072         newTable1 = [wavLen',diattenuationTrans',diattenuationRef'];
+0073         newTable1 = mat2cell(newTable1,[ones(1,size(newTable1,1))],[ones(1,size(newTable1,2))]);
+0074         columnName1 = {<span class="string">'Wavelength (um)'</span>,<span class="string">'Transmission Diattenuation'</span>,<span class="string">'Reflection Diattenuation'</span>};
+0075         columnWidth1 = {<span class="string">'auto'</span>,<span class="string">'auto'</span>,<span class="string">'auto'</span>};
+0076         set(tableHandle, <span class="string">'Data'</span>, newTable1,<span class="keyword">...</span>
+0077             <span class="string">'ColumnName'</span>, columnName1,<span class="string">'ColumnWidth'</span>,columnWidth1);
+0078     <span class="keyword">end</span>
+0079     <span class="keyword">if</span> nargin &gt;= 10
+0080         <span class="comment">% Write some note on the text window</span>
+0081         set(textHandle,<span class="string">'String'</span>,<span class="string">'No text to display ...'</span>);
+0082     <span class="keyword">end</span>
+0083 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

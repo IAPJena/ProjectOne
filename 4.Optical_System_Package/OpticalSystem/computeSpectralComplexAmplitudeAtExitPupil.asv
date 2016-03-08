@@ -1,0 +1,43 @@
+function [ complexAmplitudeAtExitPupilMulti,XMulti,YMulti ] = ...
+    computeSpectralComplexAmplitudeAtExitPupil(opticalSystem, inputPulsedBeam,useApodization)
+%computeSpectralComplexAmplitudeAtExitPupil Computes the spectral amplitude and 
+% phase of the pulse at exit pupil and returns as single complex amplitude
+% term.
+
+if nargin < 2
+    disp(['Error: The computeSpectralComplexAmplitudeAtExitPupil function needs atleast',...
+        'opticalSystem and inputPulsedBeam as arguments.']);
+    XMulti = [];
+    YMulti = [];
+    complexAmplitudeAtExitPupilMulti = [];
+    return
+elseif nargin == 2
+    useApodization = 0;
+else
+    
+end
+
+if abs(NonDummySurfaceArray(1).Thickness) > 10^10 % object at infinity
+    objThick = 0;
+else
+    objThick  = NonDummySurfaceArray(1).Thickness;
+end
+initialZ = -objThick;
+
+planeWaveArray = inputPulsedBeam.PlaneWaveArray;
+pulseDirection = inputPulsedBeam.Direction;
+
+nSpectralComponents = size(planeWaveArray,2);
+for ss = 1:nSpectralComponents
+    % set direction to the common pulse direction
+    planeWaveArray(ss).Direction = pulseDirection;
+    
+    initialRayArray = getInitialRayArray( planeWaveArray(ss),initialZ );
+    
+end
+
+
+
+
+end
+

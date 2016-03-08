@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of InitializeOpenedWindowsPanel</title>
+  <meta name="keywords" content="InitializeOpenedWindowsPanel">
+  <meta name="description" content="InitializeOpenedWindowsPanel: Define and initialized the uicontrols of the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>InitializeOpenedWindowsPanel
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>InitializeOpenedWindowsPanel: Define and initialized the uicontrols of the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function InitializeOpenedWindowsPanel(parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> InitializeOpenedWindowsPanel: Define and initialized the uicontrols of the 
+ opened window panel
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function tblOpenedWindowsList_ButtonDownFcn(~, ~,~)</a></li><li><a href="#_sub2" class="code">function tblOpenedWindowsList_CellSelectionCallback(~, eventdata,aodHandles)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function InitializeOpenedWindowsPanel(parentWindow)</a>
+0002 <span class="comment">% InitializeOpenedWindowsPanel: Define and initialized the uicontrols of the</span>
+0003 <span class="comment">% opened window panel</span>
+0004 <span class="comment">% Member of AODParentWindow class</span>
+0005 
+0006 aodHandles = parentWindow.AODParentHandles; 
+0007     fontSize = aodHandles.FontSize;
+0008     aodHandles.tblOpenedWindowsList = uitable(<span class="keyword">...</span>
+0009         <span class="string">'Parent'</span>,aodHandles.panelOpenedWindows,<span class="keyword">...</span>
+0010         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0011         <span class="string">'units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+0012         <span class="string">'Position'</span>,[0 0 1 1]);    
+0013     columnName1 =   {<span class="string">'------ Windows Name  ------'</span>,<span class="string">'Unique Id'</span>};
+0014     ColumnFormat1 = {<span class="string">'char'</span>,<span class="string">'numeric'</span>};
+0015     columnWidth1 = {<span class="string">'auto'</span>,0};
+0016     rowName1 = {<span class="string">'numbered'</span>};
+0017     columnEditable1 =  [false,false];
+0018 
+0019     set(aodHandles.tblOpenedWindowsList, <span class="keyword">...</span><span class="comment">% 'Data', initialTable1,...</span>
+0020         <span class="string">'ColumnEditable'</span>, columnEditable1,<span class="keyword">...</span>
+0021         <span class="string">'ColumnName'</span>, columnName1,<span class="keyword">...</span>
+0022         <span class="string">'ColumnWidth'</span>,columnWidth1,<span class="keyword">...</span>
+0023         <span class="string">'RowName'</span>,rowName1,<span class="keyword">...</span>
+0024         <span class="string">'ButtonDownFcn'</span>,{@<a href="#_sub1" class="code" title="subfunction tblOpenedWindowsList_ButtonDownFcn(~, ~,~)">tblOpenedWindowsList_ButtonDownFcn</a>,aodHandles},<span class="keyword">...</span>
+0025         <span class="string">'CellSelectionCallback'</span>,{@<a href="#_sub2" class="code" title="subfunction tblOpenedWindowsList_CellSelectionCallback(~, eventdata,aodHandles)">tblOpenedWindowsList_CellSelectionCallback</a>,aodHandles});
+0026     
+0027     <span class="comment">% --- Executes when entered data in editable cell(s) in aodHandles.tblOpenedWindowsList.</span>
+0028     <a name="_sub1" href="#_subfunctions" class="code">function tblOpenedWindowsList_ButtonDownFcn(~, ~,~)</a>
+0029 
+0030     <span class="keyword">end</span>
+0031     <span class="comment">% --- Executes when selected cell(s) is changed in aodHandles.tblOpenedWindowsList.</span>
+0032     <a name="_sub2" href="#_subfunctions" class="code">function tblOpenedWindowsList_CellSelectionCallback(~, eventdata,aodHandles)</a>
+0033           selCell = eventdata.Indices;
+0034           <span class="keyword">if</span> ~isempty(selCell) 
+0035              selRow = selCell(1,1);
+0036              selCol = selCell(1,2);
+0037              <span class="keyword">if</span> selCol == 1 <span class="comment">% Window name column clicked</span>
+0038                  tblData1 = get(aodHandles.tblOpenedWindowsList,<span class="string">'data'</span>);
+0039                  childIndex = tblData1{selRow,2};
+0040                  childWin = parentWindow.findChild(childIndex);
+0041                  <span class="keyword">if</span> strcmpi(get(childWin.AODChildHandles.FigureHandle,<span class="string">'Visible'</span>),<span class="string">'on'</span>)
+0042                       figure(childWin.AODChildHandles.FigureHandle);
+0043                  <span class="keyword">end</span>
+0044               <span class="keyword">end</span>
+0045 
+0046           <span class="keyword">end</span>
+0047     <span class="keyword">end</span>
+0048 parentWindow.AODParentHandles = aodHandles;
+0049 <span class="keyword">end</span>
+0050</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getEntrancePupilLocation</title>
+  <meta name="keywords" content="getEntrancePupilLocation">
+  <meta name="description" content="getEntrancePupilLocation: returns EP location from 1st surf">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>getEntrancePupilLocation
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getEntrancePupilLocation: returns EP location from 1st surf</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function EntrancePupilLocation = getEntrancePupilLocation(OS,wavLen) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getEntrancePupilLocation: returns EP location from 1st surf</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Paraxial_Optics_Module/computeEntrancePupilLocation.html" class="code" title="function [ pupilPosition ] = computeEntrancePupilLocation(stopIndex,refIndex,thick,curv)">computeEntrancePupilLocation</a>	computeEntrancePupilLocation: compute the paraxial entrance pupil</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function EntrancePupilLocation = getEntrancePupilLocation(OS,wavLen)</a>
+0002     <span class="comment">% getEntrancePupilLocation: returns EP location from 1st surf</span>
+0003     
+0004     <span class="keyword">if</span> nargin &lt; 2
+0005         wavLen = OS.getPrimaryWavelength;      
+0006     <span class="keyword">end</span>
+0007     stopIndex = OS.getStopIndex;
+0008 
+0009     refIndex = zeros(1,OS.NumberOfSurfaces);
+0010     thick = zeros(1,OS.NumberOfSurfaces);
+0011     curv = zeros(1,OS.NumberOfSurfaces);
+0012 
+0013    <span class="keyword">for</span> kk=1:1:OS.NumberOfSurfaces
+0014         refIndex(kk) = OS.SurfaceArray(kk).Glass<span class="keyword">...</span>
+0015             .getRefractiveIndex(wavLen);
+0016         thick(kk) = OS.SurfaceArray(kk).Thickness;
+0017         curv(kk) = 1/(OS.SurfaceArray(kk).Radius);                      
+0018    <span class="keyword">end</span>
+0019    <span class="keyword">if</span> abs(thick(1))&gt;10^10 
+0020       thick(1) = 10^10;
+0021    <span class="keyword">end</span>
+0022      <span class="comment">% For -ve thickness refindex should also be negative</span>
+0023      refIndex = refIndex.*sign(thick);
+0024      <span class="comment">% Replace zero index with 1 to avoid division by zero</span>
+0025      refIndex(refIndex==0) = 1;   
+0026    EntrancePupilLocation = <a href="../../../AODParentDir/Paraxial_Optics_Module/computeEntrancePupilLocation.html" class="code" title="function [ pupilPosition ] = computeEntrancePupilLocation(stopIndex,refIndex,thick,curv)">computeEntrancePupilLocation</a><span class="keyword">...</span>
+0027         (stopIndex,refIndex,thick,curv);
+0028 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

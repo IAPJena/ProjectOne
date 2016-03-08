@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computePathLength</title>
+  <meta name="keywords" content="computePathLength">
+  <meta name="description" content="COMPUTEPATHLENGTH to calculate the path length of the ray from the start">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- ../menu.html Scalar_Ray_Tracing_Module --><!-- menu.html homo_trace -->
+<h1>computePathLength
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>COMPUTEPATHLENGTH to calculate the path length of the ray from the start</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [geometricalPathLength, opticalPathLength,NoIntersectioPoint] = computePathLength(rayInitialPosition,rayDirection,surfaceType,surfaceRadius,surfaceConic,refractiveIndexBefore) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> COMPUTEPATHLENGTH to calculate the path length of the ray from the start 
+ point to the intersection point
+    REF: G.H.Spencer and M.V.R.K.Murty, GENERAL RAY-TRACING PROCEDURE
+ The function is vectorized so it can work on
+ multiple sets of inputs once at the same time.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/tracePolarizedRay.html" class="code" title="function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture)">tracePolarizedRay</a>	tracePolarizedRay: main function of polarized ray tracer</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [geometricalPathLength, opticalPathLength,NoIntersectioPoint] = computePathLength </a><span class="keyword">...</span>
+0002 (rayInitialPosition,rayDirection,surfaceType,surfaceRadius,surfaceConic,refractiveIndexBefore)
+0003     <span class="comment">% COMPUTEPATHLENGTH to calculate the path length of the ray from the start</span>
+0004     <span class="comment">% point to the intersection point</span>
+0005     <span class="comment">%    REF: G.H.Spencer and M.V.R.K.Murty, GENERAL RAY-TRACING PROCEDURE</span>
+0006     <span class="comment">% The function is vectorized so it can work on</span>
+0007     <span class="comment">% multiple sets of inputs once at the same time.</span>
+0008 
+0009     <span class="comment">% Inputs:</span>
+0010     <span class="comment">%   rayInitialPosition: position of the start ray point 1-by-3 vector</span>
+0011     <span class="comment">%   rayDirection: unit vector for the direction of the start ray, 1-by-3 vector</span>
+0012     <span class="comment">%   surfaceType: type of the surface, scalar, 0(plane), 1(spherical), 2(conic).....</span>
+0013     <span class="comment">%   surfaceRadius: radius for the surface, scalar</span>
+0014     <span class="comment">%   surfaceConic: the parameter of 'shape' of the surface, scalar</span>
+0015     <span class="comment">%   refractiveIndexBefore: refractive index of the medium, vector as it</span>
+0016     <span class="comment">%   depends on th wavelength.</span>
+0017     <span class="comment">% Outputs</span>
+0018     <span class="comment">%     geometricalPathLength: scalar, which is the total length from the start point to</span>
+0019     <span class="comment">%                          the intersection point</span>
+0020     <span class="comment">%    opticalPathLength: scalar, which is the optical path corresponding to the</span>
+0021     <span class="comment">%                      geometrical path length</span>
+0022 
+0023 
+0024    <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0025     <span class="comment">%</span>
+0026 
+0027     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0028     <span class="comment">%</span>
+0029 
+0030     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0031     <span class="comment">%   Part of the RAYTRACE toolbox</span>
+0032     <span class="comment">%   Written by: Yi Zhong 05.03.2013</span>
+0033     <span class="comment">%   Institute of Applied Physics</span>
+0034     <span class="comment">%   Friedrich-Schiller-University</span>
+0035     
+0036     <span class="comment">%   Modified By: Worku, Norman Girma</span>
+0037     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0038     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0039     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0040     <span class="comment">%   Institute of Applied Physics</span>
+0041     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0042                              
+0043     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0044     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0045     <span class="comment">% 04.09.2012    Yi Zhong             Original Version         Version 2.1</span>
+0046     <span class="comment">% 05.03.2013    Yi Zhong             Modification              Version 2.1</span>
+0047     <span class="comment">% Oct 14,2013   Worku, Norman G.     OOP Version              Version 3.0</span>
+0048     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0049 
+0050     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0051 
+0052 <span class="keyword">try</span>
+0053     nRay = size(rayInitialPosition,2);
+0054     initialPoint = rayInitialPosition; <span class="comment">% define the start point</span>
+0055     k = rayDirection(1,:);
+0056     l = rayDirection(2,:);
+0057     m = rayDirection(3,:);
+0058 
+0059     distanceToXY = -initialPoint(3,:)./m;
+0060     intersectionPointXY  = <span class="keyword">...</span>
+0061         [initialPoint(1,:) +  distanceToXY.*k;<span class="keyword">...</span>
+0062         initialPoint(2,:) +  distanceToXY.*l;<span class="keyword">...</span>
+0063         zeros([1,nRay])];
+0064 
+0065     X = intersectionPointXY(1,:);
+0066     Y = intersectionPointXY(2,:);
+0067     Z = intersectionPointXY(3,:);
+0068 
+0069     <span class="keyword">switch</span> surfaceType
+0070         <span class="keyword">case</span> <span class="string">'Plane'</span> <span class="comment">% when the surface is plane, the intersection point is on the z=0 plane</span>
+0071             additionalPath = zeros([1,nRay]);
+0072             NoIntersectioPoint = zeros([1,nRay]);
+0073         <span class="keyword">case</span> <span class="string">'Spherical'</span> <span class="comment">% spherical</span>
+0074             curv = 1/(surfaceRadius);       
+0075             F = curv * ((X).^2+(Y).^2);
+0076             G = m - curv .*(k.*X + l.*Y);
+0077             additionalPath = F./(G+(sign(m)).*sqrt(G.^2-curv*F));
+0078             NoIntersectioPoint = zeros([1,nRay]);
+0079             
+0080              NoIntersectioPoint(~(isreal(additionalPath))) = 1;
+0081              geometricalPathLength(~(isreal(additionalPath))) = NaN;
+0082              opticalPathLength(~(isreal(additionalPath))) = NaN; 
+0083  
+0084         <span class="keyword">case</span> <span class="string">'Conic Aspherical'</span> <span class="comment">% conic aspherical</span>
+0085             curv = 1/(surfaceRadius);       
+0086             F = curv .* ((X).^2+(Y).^2);
+0087             G = m - curv .*(k.*X + l.*Y);
+0088             additionalPath = F./(G+(sign(m)).*sqrt(G.^2-curv.*F.*(1+surfaceConic.*(m.^2))));
+0089             NoIntersectioPoint = zeros([1,nRay]);
+0090 
+0091              NoIntersectioPoint(~(isreal(additionalPath))) = 1;
+0092              geometricalPathLength(~(isreal(additionalPath))) = NaN;
+0093              opticalPathLength(~(isreal(additionalPath))) = NaN;
+0094                  
+0095         <span class="keyword">case</span> <span class="string">'Even Aspherical'</span> <span class="comment">%aspherical</span>
+0096 
+0097         <span class="keyword">case</span> <span class="string">'Odd Aspherical'</span> <span class="comment">%aspherical</span>
+0098 
+0099 
+0100     <span class="keyword">end</span>
+0101     geometricalPathLength = distanceToXY + additionalPath;
+0102     opticalPathLength = refractiveIndexBefore .* geometricalPathLength;
+0103 <span class="keyword">catch</span> err
+0104      <span class="comment">%open file</span>
+0105      fid = fopen(<span class="string">'logFile'</span>,<span class="string">'a+'</span>);
+0106      <span class="comment">% write the error to file</span>
+0107      <span class="comment">% first line: message</span>
+0108      fprintf(fid,<span class="string">'%s\n'</span>,err.message);
+0109      <span class="comment">% following lines: stack</span>
+0110      <span class="keyword">for</span> e=1:length(err.stack)
+0111         fprintf(fid,<span class="string">'%sin %s at %i\n'</span>,txt,err.stack(e).name,err.stack(e).line);
+0112      <span class="keyword">end</span>
+0113      <span class="comment">% close file</span>
+0114      fclose(fid)
+0115    
+0116      msgbox(strcat(err.message,<span class="string">' So the function &quot;computePathLength&quot; will return NaN'</span>), <span class="string">'Program Error'</span>,<span class="string">'error'</span>);
+0117      
+0118      NoIntersectioPoint = 1;
+0119      geometricalPathLength = NaN;
+0120      opticalPathLength = NaN;    
+0121 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeRayPathMatrix</title>
+  <meta name="keywords" content="computeRayPathMatrix">
+  <meta name="description" content="computeRayPathMatrix: computes the ray path coordinates for all field">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>computeRayPathMatrix
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>computeRayPathMatrix: computes the ray path coordinates for all field</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function rayPathMatrix = computeRayPathMatrix(currentOpticalSystem,wavLen,fieldPointXY,PupSamplingType,nRay) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeRayPathMatrix: computes the ray path coordinates for all field
+ points and wavelengths by performing multiple ray trace. The
+ wavInd,fldInd can be vectors. Then the output rayPathMatrix will be
+ of 3D dimension. (3 X nSurf X nTotalRay)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="multipleRayTracer.html" class="code" title="function [multipleRayTracerResult,pupilCoordinates,pupilGridIndices] =multipleRayTracer(optSystem,wavLen,fieldPointXY,nRay,PupSamplingType,JonesVec,considerSurfAperture) %">multipleRayTracer</a>	Trace bundle of rays through an optical system based on the pupil</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function rayPathMatrix = computeRayPathMatrix</a><span class="keyword">...</span>
+0002         (currentOpticalSystem,wavLen,fieldPointXY,PupSamplingType,nRay)
+0003     <span class="comment">% computeRayPathMatrix: computes the ray path coordinates for all field</span>
+0004     <span class="comment">% points and wavelengths by performing multiple ray trace. The</span>
+0005     <span class="comment">% wavInd,fldInd can be vectors. Then the output rayPathMatrix will be</span>
+0006     <span class="comment">% of 3D dimension. (3 X nSurf X nTotalRay)</span>
+0007     
+0008     JonesVec = [NaN;NaN];
+0009     <span class="comment">% The polarizedRayTraceResult will be a 4D matrix of RayTraceResult</span>
+0010     <span class="comment">% object (nSurf X nRay x nField  x nWav).</span>
+0011     [polarizedRayTracerResult,pupilCoordinates] = currentOpticalSystem. <span class="keyword">...</span>
+0012         <a href="multipleRayTracer.html" class="code" title="function [multipleRayTracerResult,pupilCoordinates,pupilGridIndices] =multipleRayTracer(optSystem,wavLen,fieldPointXY,nRay,PupSamplingType,JonesVec,considerSurfAperture) %">multipleRayTracer</a>(wavLen,fieldPointXY,nRay,PupSamplingType,JonesVec);
+0013     
+0014     nSurface = size(polarizedRayTracerResult,1);
+0015     nRay = size(polarizedRayTracerResult,2);
+0016     nField = size(polarizedRayTracerResult,3);
+0017     nWav = size(polarizedRayTracerResult,4);
+0018     <span class="comment">% The intersection points are extracted and reshaped to a 3D matrix of</span>
+0019     <span class="comment">% 3 X nSurf X nRay x nField x nWav</span>
+0020     rayIntersectionPoints = [polarizedRayTracerResult.RayIntersectionPoint];
+0021     rayPathMatrix = reshape(rayIntersectionPoints,3,nSurface,nRay,nField,nWav);
+0022     
+0023     <span class="comment">% NB: To access ray trace result for indWave and indField, the following</span>
+0024     <span class="comment">% formula can be used:</span>
+0025     <span class="comment">% Index of 1st ray @ indWave and indField =</span>
+0026     <span class="comment">% (indWave-1)*(nField*nRay) + (indField-1)*nRay + 1</span>
+0027 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,7 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  prop_bpm_2d_test -> prop_bpm_2d;
+
+  prop_bpm_2d [URL="prop_bpm_2d.html"];
+  prop_bpm_2d_test [URL="prop_bpm_2d_test.html"];
+}

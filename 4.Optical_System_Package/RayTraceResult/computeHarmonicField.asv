@@ -1,0 +1,10 @@
+function [ harmonicField ] = convert( rayTraceResult,...
+        effectsToInclude )
+%computeHarmonicField Converts ray data to harmonic field 
+
+% 
+sizeOfRayTraceResult = size(rayTraceResult);
+
+
+end
+

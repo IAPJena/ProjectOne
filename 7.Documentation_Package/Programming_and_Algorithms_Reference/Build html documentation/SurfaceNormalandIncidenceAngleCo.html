@@ -1,0 +1,102 @@
+﻿<html>
+	
+<head>
+	<title>Surface Normal and Incidence Angle Computation</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("SurfaceNormalandIncidenceAngleCo");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Surface Normal and Incidence Angle Computation</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ScalarRayTracingModule.html">Scalar Ray Tracing Module</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="ScalarRayTracingModule.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="ComputationoftheIntersectionPoin.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="RefractionorReflection.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts59">Surface Normal and Incidence Angle Computation</span></span></h1>
+<p class="rvps37"><span class="rvts38">Before calculating the refraction, the</span><span class="rvts37"> normal vector at the surface</span><span class="rvts38"> should be calculated according to the type of the surface, the curvature of the surface, the shape of the surface, and the position of the intersection point.</span></p>
+<ol style="text-indent: 0px; margin-left: 28px; list-style-position: outside; list-style-type: decimal;">
+<li class="rvps38" style="margin-left: 0px; text-indent: 0px"><span class="rvts36">When the surface is sphere, </span></li>
+</ol>
+<p class="rvps12"><span class="rvts38">The normal vector of spherical surface:</span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem210.png"/></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li class="rvps37"><img alt="" style="padding : 1px;" src="lib/NewItem209.png"/><span class="rvts38"> is the radius of this spherical surface, which means we could use </span></li>
+<li class="rvps37"><img alt="" style="padding : 1px;" src="lib/NewItem208.png"/><span class="rvts38"> the radius curvature instead of </span><img alt="" style="padding : 1px;" src="lib/NewItem207.png"/><span class="rvts38"> in this function.</span></li>
+</ul></ul>
+<ol style="text-indent: 0px; margin-left: 28px; list-style-position: outside; list-style-type: decimal;">
+<li class="rvps38" style="margin-left: 0px; text-indent: 0px"><span class="rvts36">When the surface is conic,</span></li>
+</ol>
+<p class="rvps12"><span class="rvts38">The unit normal vector of the aspherical surface:</span></p>
+<p class="rvps12"><span class="rvts38">Here we only use the expression of the conic section: </span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem214.png"/></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li class="rvps12"><span class="rvts38">c is the curvature</span></li>
+<li class="rvps37"><img alt="" style="padding : 1px;" src="lib/NewItem212.png"/><span class="rvts38"> is the parameter which defines the shape of the surface.</span></li>
+</ul></ul>
+<p class="rvps37"><span class="rvts38">This is concluded according to the normal vector of spherical surface:</span></p>
+<p class="rvps39"><img alt="" style="padding : 1px;" src="lib/NewItem211.png"/></p>
+<p class="rvps39"><span class="rvts36"><br/></span></p>
+<p class="rvps12"><span class="rvts38">The</span><span class="rvts37"> incident angle </span><span class="rvts38">should also be calculated before refraction. Local incident angle between the ray and the normal vector of the surface of given direction cosines is calculated. Since the coordinates are rotational symmetrical, the angle is always positive.</span></p>
+<p class="rvps12"><span class="rvts38">Direction cosines of the incident ray at the surface j &nbsp;</span><img alt="" style="padding : 1px;" src="lib/NewItem217.png"/><span class="rvts38"> </span></p>
+<p class="rvps12"><span class="rvts38">Local unit normal vector at the surface j &nbsp; &nbsp;</span><img alt="" style="padding : 1px;" src="lib/NewItem216.png"/><span class="rvts38"> </span></p>
+<p class="rvps12"><span class="rvts38">The incident angle is</span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem215.png"/></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/feature-tour">Easily create EBooks</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

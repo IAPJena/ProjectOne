@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of supergauss_amp</title>
+  <meta name="keywords" content="supergauss_amp">
+  <meta name="description" content="___________________________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- menu.html Existing_Propagators -->
+<h1>supergauss_amp
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>___________________________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function modamp = supergauss_amp(xp,m,w) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">___________________________________________________________________________________
+
+  Aufruf :  modamp = supergauss_amp(xp,m,w)
+
+  Berechnung einer eindimensionalen Super-Gauss-Amplitude.
+
+ Calculation of a one-dimensional super-Gaussian amplitude.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fraunhofer_Scalar/prop_fraun_fft_test.html" class="code" title="">prop_fraun_fft_test</a>	Test Fraunhofer-Propagator</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function modamp = supergauss_amp(xp,m,w)</a>
+0002 <span class="comment">%___________________________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  Aufruf :  modamp = supergauss_amp(xp,m,w)</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%  Berechnung einer eindimensionalen Super-Gauss-Amplitude.</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% Calculation of a one-dimensional super-Gaussian amplitude.</span>
+0009 
+0010 <span class="comment">%  Version :   06.03.03   H. Gross</span>
+0011 <span class="comment">%___________________________________________________________________________________</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">%  Input :  xp(np)     : Koordinatenraster</span>
+0014 <span class="comment">%           m          : Ordnung im Exponent, für m = 2 entsteht das Gaussprofil</span>
+0015 <span class="comment">%                        im Sonderfall m = 0 wird ein Rechteckprofil erzuegt</span>
+0016 <span class="comment">%           w          : Strahlradius</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">% Input: xp (np): coordinate grid</span>
+0020 <span class="comment">% M: order in the exponent, for m = 2 arises the Gaussian profile</span>
+0021 <span class="comment">% In the special case m = 0 is a rectangular profile erzuegt</span>
+0022 <span class="comment">% W: beam radius</span>
+0023 
+0024 <span class="comment">%  Output : modamp(np) : Amplitude der Modenfunktion</span>
+0025 <span class="comment">%___________________________________________________________________________________</span>
+0026 <span class="comment">%</span>
+0027 [ np ji ] = size( xp );
+0028 modamp = zeros(np,1);
+0029 <span class="comment">%</span>
+0030 ex = zeros(np,1);
+0031 <span class="keyword">if</span> m == 0
+0032     <span class="keyword">for</span> j=1:np
+0033         <span class="keyword">if</span> abs(xp(j))&lt; w ; modamp(j) = 1 ; <span class="keyword">end</span> 
+0034     <span class="keyword">end</span>
+0035 <span class="keyword">else</span>
+0036 <span class="comment">%</span>
+0037    <span class="keyword">for</span> j = 1 : np
+0038       test = abs((xp(j)/w))^m ;
+0039       <span class="keyword">if</span> test &gt; 40 ; 
+0040           <span class="comment">% ?????? why 40??</span>
+0041          modamp(j) = 0 ;
+0042       <span class="keyword">else</span>
+0043          modamp(j) = exp( -test );
+0044       <span class="keyword">end</span>
+0045    <span class="keyword">end</span>
+0046 <span class="keyword">end</span>
+0047 <span class="comment">%</span>
+0048</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

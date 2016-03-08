@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of convertJVToPolVector</title>
+  <meta name="keywords" content="convertJVToPolVector">
+  <meta name="description" content="convertJonesVectToPolVect Converts a given jones vector to polarization">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Polarization_Ray_Tracing_Module -->
+<h1>convertJVToPolVector
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>convertJonesVectToPolVect Converts a given jones vector to polarization</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function polarizationVector = convertJVToPolVector(JV,dirK) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> convertJonesVectToPolVect Converts a given jones vector to polarization
+ vector. The function is vectorized so if the inputs are vectors then 
+ the output will also be vector of the same size.
+ 
+ Inputs:
+   JV: % 2xN matrix : complex valued jones vector in s-p axis 
+                      [Jsmag*exp(i*Jsphase);Jpmag*exp(i*Jpphase)]
+   dirK: 3XN matrix : direction cosines of the ray
+ Outputs:
+   polarizationVector: 3XN matrix : The electric field vector</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Mathematical_Functions/changeCoordinate.html" class="code" title="function [ px, py, pz] = changeCoordinate( ps,pp,pk,dirS,dirP,dirK )">changeCoordinate</a>	changeCoordinate: Returns the point (ps,pp,pk) in spk in the new</li><li><a href="../../AODParentDir/Mathematical_Functions/directionSP.html" class="code" title="function [ dirS,dirP] = directionSP( dirK )">directionSP</a>	directionSP returns direction cosines of local s and p vectors given k</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/tracePolarizedRay.html" class="code" title="function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture)">tracePolarizedRay</a>	tracePolarizedRay: main function of polarized ray tracer</li><li><a href="../../AODParentDir/Class_Definition/@Ray/Ray.html" class="code" title="">Ray</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function polarizationVector = convertJVToPolVector(JV,dirK)</a>
+0002     <span class="comment">% convertJonesVectToPolVect Converts a given jones vector to polarization</span>
+0003     <span class="comment">% vector. The function is vectorized so if the inputs are vectors then</span>
+0004     <span class="comment">% the output will also be vector of the same size.</span>
+0005     <span class="comment">%</span>
+0006     <span class="comment">% Inputs:</span>
+0007     <span class="comment">%   JV: % 2xN matrix : complex valued jones vector in s-p axis</span>
+0008     <span class="comment">%                      [Jsmag*exp(i*Jsphase);Jpmag*exp(i*Jpphase)]</span>
+0009     <span class="comment">%   dirK: 3XN matrix : direction cosines of the ray</span>
+0010     <span class="comment">% Outputs:</span>
+0011     <span class="comment">%   polarizationVector: 3XN matrix : The electric field vector</span>
+0012 
+0013     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0014     <span class="comment">%</span>
+0015 
+0016     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0017     <span class="comment">%</span>
+0018 
+0019     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0020     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0021     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0022     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0023     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0024     <span class="comment">%   Institute of Applied Physics</span>
+0025     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0026                              
+0027     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0028     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0029     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0030     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0031 
+0032     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0033 
+0034     <span class="comment">% Extract the S and P component from the jones vector</span>
+0035     fieldS = JV(1,:);
+0036     fieldP = JV(2,:);
+0037     [dirS,dirP] = <a href="../../AODParentDir/Mathematical_Functions/directionSP.html" class="code" title="function [ dirS,dirP] = directionSP( dirK )">directionSP</a>(dirK);
+0038     [Fx,Fy,Fz] = <a href="../../AODParentDir/Mathematical_Functions/changeCoordinate.html" class="code" title="function [ px, py, pz] = changeCoordinate( ps,pp,pk,dirS,dirP,dirK )">changeCoordinate</a>(fieldS,fieldP,0,dirS,dirP,dirK);
+0039 
+0040     polarizationVector = [Fx;Fy;Fz];
+0041 
+0042 <span class="keyword">end</span>
+0043</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

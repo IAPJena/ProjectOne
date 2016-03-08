@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of selectMainTab</title>
+  <meta name="keywords" content="selectMainTab">
+  <meta name="description" content="Programatically clicks the main tab with the given index">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>selectMainTab
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Programatically clicks the main tab with the given index</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function selectMainTab(parentWindow,ind) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Programatically clicks the main tab with the given index
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function selectMainTab(parentWindow,ind)</a>
+0002 <span class="comment">% Programatically clicks the main tab with the given index</span>
+0003 <span class="comment">% Member of AODParentWindow class</span>
+0004 
+0005     selectedTabBtnHeight = 0.045;
+0006     selectedTabBtnWidth = 0.18;
+0007     selectedTabBtnColor = [240,240,240]./256;
+0008     tabBtnHeight = 0.04;
+0009     tabBtnWidth = 0.18;
+0010     tabBtnColor = [200,200,200]./256;
+0011     
+0012     <span class="keyword">for</span> k = 1:parentWindow.AODParentHandles.nMainTab
+0013       set(get(parentWindow.AODParentHandles.panelMainTab(k),<span class="string">'Children'</span>),<span class="string">'Visible'</span>, <span class="string">'off'</span>);
+0014       set(parentWindow.AODParentHandles.btnMainTab(k),<span class="keyword">...</span>
+0015           <span class="string">'BackgroundColor'</span>,tabBtnColor,<span class="keyword">...</span>
+0016           <span class="string">'Position'</span>, [(k-1)*tabBtnWidth, 0.955, tabBtnWidth, tabBtnHeight]);    
+0017     <span class="keyword">end</span>
+0018     set(get(parentWindow.AODParentHandles.panelMainTab(ind),<span class="string">'Children'</span>),<span class="string">'Visible'</span>, <span class="string">'on'</span>);
+0019     set(parentWindow.AODParentHandles.btnMainTab(ind),<span class="keyword">...</span>
+0020         <span class="string">'BackgroundColor'</span>,selectedTabBtnColor,<span class="keyword">...</span>
+0021         <span class="string">'Position'</span>, [(ind-1)*selectedTabBtnWidth, 0.955, selectedTabBtnWidth, selectedTabBtnHeight]); 
+0022 <span class="keyword">end</span> 
+0023</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of prop_farfield_vect_test</title>
+  <meta name="keywords" content="prop_farfield_vect_test">
+  <meta name="description" content="Test Mansuripur's implmentation">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- ../menu.html Existing_Propagators --><!-- menu.html Debye_Vectorial_Far_Field -->
+<h1>prop_farfield_vect_test
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>Test Mansuripur's implmentation</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">
+  Test Mansuripur's implmentation
+
+   27.07.08  H.Gross
+   15.07.13  G.Fente</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="prop_farfield_vect.html" class="code" title="function [efdxs,efdys,efdzs,xs,ys,ierr,sterr] = prop_farfield_vect(efdx,efdy,wl,xp,yp,rcurv,dz,scalx,scaly,varargin)">prop_farfield_vect</a>	_________________________________________________________________</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%</span>
+0002 <span class="comment">%  Test Mansuripur's implmentation</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%   27.07.08  H.Gross</span>
+0005 <span class="comment">%   15.07.13  G.Fente</span>
+0006 <span class="comment">%</span>
+0007 clear ; 
+0008 <span class="comment">% close all hidden ;</span>
+0009 <span class="comment">%</span>
+0010 npx   = 128; npy = 128 ;             <span class="comment">% sampling points</span>
+0011 wl = 405e-9 ;
+0012 na = 0.95;                           <span class="comment">% Numerical Aperture</span>
+0013 scalx = 20 ; scaly = scalx ;
+0014 a = 1.0 ;
+0015 rcurv = a / na ; 
+0016 RE = wl /na/na;
+0017 dz = .0*RE ;                        <span class="comment">% Defocus</span>
+0018 ipol = 1 ;                          <span class="comment">% 1=lin x, 2=lin y, 3=rad, 4=azi, 5=circ</span>
+0019 <span class="comment">%</span>
+0020 z = rcurv + dz;
+0021 <span class="comment">%</span>
+0022 efd = ones(npy,npx,1);
+0023 dx = 2*a/(npx-2); xp = zeros(npx,1);
+0024 <span class="keyword">for</span> j=1:npx ; xp(j) = -a-dx+dx*(j-1); <span class="keyword">end</span>
+0025 dy = 2*a/(npy-2); yp = zeros(npy,1);
+0026 <span class="keyword">for</span> j=1:npy ; yp(j) = -a-dy+dy*(j-1); <span class="keyword">end</span>
+0027 [xpm,ypm] = meshgrid(xp,yp);
+0028 rpm = sqrt(xpm.^2+ypm.^2);
+0029 <span class="comment">% if rcurv &gt; 0 ;</span>
+0030 <span class="comment">% efd = efd .* exp( 2*1i*pi/wl*(rcurv-sqrt(rcurv^2-rpm.^2)) ); end</span>
+0031 <span class="comment">% //The if statement isn't nececessary for an aplanatic system.</span>
+0032 <span class="comment">%</span>
+0033 ind = find( rpm &gt; a) ; efd(ind) = 0 ;
+0034 phi = atan2(ypm,xpm);
+0035 cophi = cos(phi);   siphi = sin(phi);
+0036 <span class="comment">%_____________________________________________________________________________</span>
+0037 <span class="comment">%</span>
+0038 <span class="comment">% Polarization definition</span>
+0039 <span class="comment">% Different polarization can be realized by varying the polarization number.</span>
+0040 <span class="comment">%</span>
+0041 ipol =2 ;                     
+0042 <span class="keyword">if</span> ipol ==1                              <span class="comment">%x-polarization</span>
+0043    efdx = efd; efdy = zeros(npy,npx,1);
+0044 <span class="keyword">elseif</span> ipol == 2                         <span class="comment">%y-polarization</span>
+0045    efdy = efd; efdx = zeros(npy,npx,1);
+0046 <span class="keyword">elseif</span> ipol == 3                         <span class="comment">% radial polarization</span>
+0047    efdx = efd .* cophi ; efdy = efd .* siphi ;
+0048 <span class="keyword">elseif</span> ipol == 4                         <span class="comment">% azithmutal polarization</span>
+0049    efdx = -efd .* siphi ; efdy = efd .* cophi ;
+0050 <span class="keyword">elseif</span> ipol == 5                         <span class="comment">% circular polarization</span>
+0051    efdx = efd ; efdy = 1i*efd;
+0052 <span class="keyword">end</span>
+0053 <span class="comment">%</span>
+0054 tic
+0055 [efdxs,efdys,efdzs,xs,ys] = <a href="prop_farfield_vect.html" class="code" title="function [efdxs,efdys,efdzs,xs,ys,ierr,sterr] = prop_farfield_vect(efdx,efdy,wl,xp,yp,rcurv,dz,scalx,scaly,varargin)">prop_farfield_vect</a>(efdx,efdy,wl,xp,yp,rcurv,dz,scalx,scaly);
+0056 toc
+0057 <span class="comment">%</span>
+0058 
+0059 Ix=abs(efdxs).^2; Iy=abs(efdys).^2; Iz=abs(efdzs).^2;
+0060 Imax=max(max([Ix Iy Iz]));
+0061 <span class="comment">%</span>
+0062 <span class="comment">% Normalization by the peak intensity</span>
+0063 <span class="comment">%</span>
+0064 Ix=Ix./Imax; Iy=Iy./Imax; Iz=Iz./Imax;
+0065 I=Ix+Iy+Iz; <span class="comment">%incoherent normalized total intensity</span>
+0066 Ixmax=max(max(Ix)); Iymax=max(max(Iy)); Izmax=max(max(Iz));
+0067 <span class="comment">%</span>
+0068 <span class="comment">% Intensity plot</span>
+0069 <span class="comment">%</span>
+0070 figure;
+0071 
+0072 subplot(2,2,1)
+0073 imagesc(xs/wl,ys/wl,Ix);
+0074 axis equal;
+0075 axis xy;
+0076 axis tight;
+0077 title([<span class="string">'Ix '</span>,num2str(Ixmax)])
+0078 set(gcf,<span class="string">'Color'</span>,[1,1,1])
+0079 set( gca, <span class="string">'FontSize'</span> , 12, <span class="string">'fontweight'</span>,<span class="string">'bold'</span> );
+0080 
+0081 subplot(2,2,2)
+0082 imagesc(xs/wl,ys/wl,Iy);
+0083 axis equal;
+0084 axis xy;
+0085 axis tight;
+0086 title([<span class="string">'Iy  '</span>,num2str(Iymax)])
+0087 set(gcf,<span class="string">'Color'</span>,[1,1,1])
+0088 set( gca, <span class="string">'FontSize'</span> , 12, <span class="string">'fontweight'</span>,<span class="string">'bold'</span> );
+0089 
+0090 subplot(2,2,3)
+0091 imagesc(xs/wl,ys/wl,Iz);
+0092 axis equal;
+0093 axis xy;
+0094 axis tight;
+0095 title([<span class="string">'Iz  '</span>,num2str(Izmax)])
+0096 set(gcf,<span class="string">'Color'</span>,[1,1,1])
+0097 set( gca, <span class="string">'FontSize'</span> , 12, <span class="string">'fontweight'</span>,<span class="string">'bold'</span> );
+0098 
+0099 subplot(2,2,4)
+0100 imagesc(xs/wl,ys/wl,I);
+0101 axis equal;
+0102 axis xy;
+0103 axis tight;
+0104 title([<span class="string">'I  '</span>,num2str(max(max(I)))])
+0105 set(gcf,<span class="string">'Color'</span>,[1,1,1])
+0106 set( gca, <span class="string">'FontSize'</span> , 12, <span class="string">'fontweight'</span>,<span class="string">'bold'</span> );
+0107 
+0108</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

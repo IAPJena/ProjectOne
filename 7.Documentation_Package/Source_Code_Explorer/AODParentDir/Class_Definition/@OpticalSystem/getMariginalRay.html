@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getMariginalRay</title>
+  <meta name="keywords" content="getMariginalRay">
+  <meta name="description" content="getMariginalRay Returns the Mariginal ray (as Ray object)  which starts">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>getMariginalRay
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getMariginalRay Returns the Mariginal ray (as Ray object)  which starts</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ mariginalRay ] = getMariginalRay(optSystem,fieldPointXY,wavLen,angleFromYinRad) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getMariginalRay Returns the Mariginal ray (as Ray object)  which starts
+ from a field point  and passes throgh the edge of the entrance pupil at
+ point which makes the given angle from the y axis.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@Ray/Ray.html" class="code" title="">Ray</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ mariginalRay ] = getMariginalRay(optSystem,fieldPointXY,wavLen,angleFromYinRad)</a>
+0002 <span class="comment">% getMariginalRay Returns the Mariginal ray (as Ray object)  which starts</span>
+0003 <span class="comment">% from a field point  and passes throgh the edge of the entrance pupil at</span>
+0004 <span class="comment">% point which makes the given angle from the y axis.</span>
+0005 
+0006 <span class="comment">% angleFromY: determines the angle of the point in the rim of the pupul</span>
+0007 <span class="comment">% from the y axis so that it will be possible to compute Mariginal rays in any</span>
+0008 <span class="comment">% planet(tangential or sagital)</span>
+0009 
+0010 
+0011 pupilRadius = (optSystem.getEntrancePupilDiameter)/2;
+0012 pupilZLocation = (optSystem.getEntrancePupilLocation);
+0013 nField = size(fieldPointXY,2);
+0014 nWav  = size(wavLen,2);
+0015 <span class="keyword">if</span> abs(optSystem.SurfaceArray(1).Thickness) &gt; 10^10 <span class="comment">% object at infinity</span>
+0016     objThick = 0;
+0017 <span class="keyword">else</span>
+0018     objThick  = optSystem.SurfaceArray(1).Thickness;
+0019 <span class="keyword">end</span>
+0020 
+0021 <span class="comment">% Global reference is the 1st surface of the lens</span>
+0022 fieldPoint = [fieldPointXY; repmat(-objThick,[1,nField])];
+0023 pupilSamplingPoint = [pupilRadius*sin(angleFromYinRad);pupilRadius*cos(angleFromYinRad);pupilZLocation];
+0024 
+0025 <span class="keyword">switch</span> lower(optSystem.FieldType)
+0026     <span class="keyword">case</span> lower(<span class="string">'ObjectHeight'</span>)
+0027         <span class="keyword">if</span> abs(optSystem.SurfaceArray(1).Thickness) &gt; 10^10
+0028             <span class="comment">% Invalid specification</span>
+0029             disp(<span class="string">'Error: Object Height can not be used for objects at infinity'</span>);
+0030             <span class="keyword">return</span>;
+0031         <span class="keyword">else</span>
+0032             initialDirection = repmat(pupilSamplingPoint,[1,nField]) - fieldPoint;
+0033             initialDirection = initialDirection./repmat(sqrt(sum(initialDirection.^2)),[3,1]);
+0034             initialPosition = fieldPoint;
+0035         <span class="keyword">end</span>
+0036     <span class="keyword">case</span> lower(<span class="string">'Angle'</span>)
+0037         <span class="comment">% The angle given indicates the direction of the cheif ray</span>
+0038         <span class="comment">% Feild points are given by angles</span>
+0039         angX = fieldPoint(1,:)*pi/180;
+0040         angY = fieldPoint(2,:)*pi/180;
+0041         
+0042         <span class="comment">%convert field angle to ray direction as in Zemax</span>
+0043         dz = sqrt(1./((tan (angX)).^2+(tan (angY)).^2+1));
+0044         dx = dz.*tan (angX);
+0045         dy = dz.*tan (angY);
+0046         cheifRayDirection = [dx;dy;dz];
+0047         <span class="comment">% Field point to the center of entrance pupil</span>
+0048         radFieldToEnP = (objThick + pupilZLocation)./cheifRayDirection(3,:);
+0049         <span class="comment">% Initial position of cheif ray</span>
+0050         cheifRayPosition = <span class="keyword">...</span>
+0051             [-radFieldToEnP.*cheifRayDirection(1,:);<span class="keyword">...</span>
+0052             -radFieldToEnP.*cheifRayDirection(2,:);<span class="keyword">...</span>
+0053             repmat(-objThick,[1,nField])];
+0054         
+0055         <span class="keyword">if</span> abs(optSystem.SurfaceArray(1).Thickness) &gt; 10^10
+0056             <span class="comment">% collimated ray</span>
+0057             initialDirection = cheifRayDirection;
+0058             <span class="comment">% mariginal ray is just shifted ray of the cheif ray.</span>
+0059             initialPosition(1:2,:) = cheifRayPosition(1:2,:) + repmat(pupilSamplingPoint(1:2,:),[1,nField]);
+0060             initialPosition(3,:) = repmat(-objThick,[1,nField]);
+0061         <span class="keyword">else</span>
+0062             <span class="comment">% Initial position of cheif ray = that of mariginal ray</span>
+0063             initialPosition = cheifRayPosition;
+0064             <span class="comment">% Now compute the direction of the mariginal rays</span>
+0065             initialDirection = repmat(pupilSamplingPoint,[1,nField]) - initialPosition;
+0066             initialDirection = initialDirection./repmat(sqrt(sum(initialDirection.^2)),[3,1]);
+0067         <span class="keyword">end</span>
+0068 <span class="keyword">end</span>
+0069 wavLenInM = wavLen*optSystem.getWavelengthUnitFactor;
+0070 mariginalRay = <a href="../../../AODParentDir/Class_Definition/@Ray/Ray.html" class="code" title="">Ray</a>(initialPosition,initialDirection,wavLenInM);
+0071 <span class="keyword">end</span>
+0072</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

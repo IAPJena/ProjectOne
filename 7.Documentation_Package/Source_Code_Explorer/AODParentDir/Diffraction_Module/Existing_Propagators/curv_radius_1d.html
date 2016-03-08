@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of curv_radius_1d</title>
+  <meta name="keywords" content="curv_radius_1d">
+  <meta name="description" content="_________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- menu.html Existing_Propagators -->
+<h1>curv_radius_1d
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>_________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function rcurv = curv_radius_1d(efd,wl,xp,varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">_________________________________________________________________
+
+ Aufruf:
+ rcurv = curv_radius_1d(efd,wl,xp)
+ rcurv = curv_radius_1d(efd,wl,xp,rini)
+ 
+ Schlagworte: 
+ radius, field, curvature, optimization, sampling, flatten, smooth, substract, plane   
+
+ Kurzbeschreibung:  
+ Computation of the radius of curvature of a one-dimensional complex field.
+
+ Beschreibung: 
+ Computation of the radius of curvature of a one-dimensional complex field with
+ optimal match of the phase front to get a minimal extension of the Fourier spectrum.
+ If the initial guess rini is given, it is chosen as a starting point. If not, a brute 
+ force search is performed to get a good starting value for the optimization. The
+ numerical optimization is done with the derivative-free algorithm in fminsearch, because
+ the behaviour of the 2. moment of the Fourier spectrum is not a smooth function due
+ to discretization effects.
+
+ Version:   02.06.2008  Herbert Gross  Matlab 7.4      First version
+            08.10.2008  Beate Böhme    matlab 7.3 
+            24.12.2008  Herbert Gross  Korrektur nach Vorschlag L.Stoppe
+ Owner: Herbert Gross
+
+ Input:
+       efd(npx)      : complex field
+       wl            : wavelength
+       xp(npx)       : x-coordinate at start
+   varargin:
+       rini          : initial guess for the radius. If rini is only known with poor
+                       precision, it is better to omit this parameter
+ Output:
+       rcurv         : radius of curvature 
+
+ Abhängigkeiten in 1. Ordnung: --
+ Referenzen:  --  
+ Beispiel:    --
+ Testfile:    curv_radius_1d_test.m
+ ToDo:        rcurv_** obsolet
+_________________________________________________________________</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="curv_radius.html" class="code" title="function [rxo,ryo] = curv_radius(efd,wl,xp,yp,varargin)">curv_radius</a>	_________________________________________________________________</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function mox = mom2(rox,npx,efd,wl,xp,idamp)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function rcurv = curv_radius_1d(efd,wl,xp,varargin)</a>
+0002 <span class="comment">%_________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Aufruf:</span>
+0005 <span class="comment">% rcurv = curv_radius_1d(efd,wl,xp)</span>
+0006 <span class="comment">% rcurv = curv_radius_1d(efd,wl,xp,rini)</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% Schlagworte:</span>
+0009 <span class="comment">% radius, field, curvature, optimization, sampling, flatten, smooth, substract, plane</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">% Kurzbeschreibung:</span>
+0012 <span class="comment">% Computation of the radius of curvature of a one-dimensional complex field.</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">% Beschreibung:</span>
+0015 <span class="comment">% Computation of the radius of curvature of a one-dimensional complex field with</span>
+0016 <span class="comment">% optimal match of the phase front to get a minimal extension of the Fourier spectrum.</span>
+0017 <span class="comment">% If the initial guess rini is given, it is chosen as a starting point. If not, a brute</span>
+0018 <span class="comment">% force search is performed to get a good starting value for the optimization. The</span>
+0019 <span class="comment">% numerical optimization is done with the derivative-free algorithm in fminsearch, because</span>
+0020 <span class="comment">% the behaviour of the 2. moment of the Fourier spectrum is not a smooth function due</span>
+0021 <span class="comment">% to discretization effects.</span>
+0022 <span class="comment">%</span>
+0023 <span class="comment">% Version:   02.06.2008  Herbert Gross  Matlab 7.4      First version</span>
+0024 <span class="comment">%            08.10.2008  Beate Böhme    matlab 7.3</span>
+0025 <span class="comment">%            24.12.2008  Herbert Gross  Korrektur nach Vorschlag L.Stoppe</span>
+0026 <span class="comment">% Owner: Herbert Gross</span>
+0027 <span class="comment">%</span>
+0028 <span class="comment">% Input:</span>
+0029 <span class="comment">%       efd(npx)      : complex field</span>
+0030 <span class="comment">%       wl            : wavelength</span>
+0031 <span class="comment">%       xp(npx)       : x-coordinate at start</span>
+0032 <span class="comment">%   varargin:</span>
+0033 <span class="comment">%       rini          : initial guess for the radius. If rini is only known with poor</span>
+0034 <span class="comment">%                       precision, it is better to omit this parameter</span>
+0035 <span class="comment">% Output:</span>
+0036 <span class="comment">%       rcurv         : radius of curvature</span>
+0037 <span class="comment">%</span>
+0038 <span class="comment">% Abhängigkeiten in 1. Ordnung: --</span>
+0039 <span class="comment">% Referenzen:  --</span>
+0040 <span class="comment">% Beispiel:    --</span>
+0041 <span class="comment">% Testfile:    curv_radius_1d_test.m</span>
+0042 <span class="comment">% ToDo:        rcurv_** obsolet</span>
+0043 <span class="comment">%_________________________________________________________________</span>
+0044 <span class="comment">%</span>
+0045 se = 0; sx = 0; rcurv = 0 ;
+0046 <span class="comment">%</span>
+0047 <span class="comment">%  Special case of vanishing field</span>
+0048 <span class="comment">%</span>
+0049 <span class="keyword">if</span> sum(abs(efd(:)))== 0;  <span class="keyword">return</span>;     <span class="keyword">end</span>; 
+0050 <span class="keyword">if</span> size(efd,1) == 1; se = 1; efd = efd'; <span class="keyword">end</span>; 
+0051 <span class="keyword">if</span> size(xp,1)  == 1; sx = 1; xp  =  xp'; <span class="keyword">end</span>; 
+0052 <span class="comment">%</span>
+0053 <span class="keyword">if</span> nargin &gt;  3 ; rini = varargin{1} ; <span class="keyword">else</span> ; rini = 0 ; <span class="keyword">end</span>
+0054 <span class="comment">%</span>
+0055 idamp = 1 ;
+0056 npx  = numel( xp ); 
+0057 <span class="keyword">if</span> rini == 0 ; rox = 0 ; <span class="keyword">else</span> ; rox = 1/rini ; <span class="keyword">end</span>
+0058 <span class="comment">%</span>
+0059 <span class="comment">%  numerical evaluation of a good starting value</span>
+0060 <span class="comment">%</span>
+0061 nv = 501 ; roma = 0.5/max(xp) ;
+0062 <span class="keyword">if</span> rini == 0
+0063 <span class="comment">%</span>
+0064   dr = 2*roma/(nv-1);
+0065   mom = zeros(nv,1);
+0066   <span class="keyword">for</span> j=1:nv
+0067      roxa = -roma +(j-1)*dr;
+0068      mom(j) = <a href="#_sub1" class="code" title="subfunction mox = mom2(rox,npx,efd,wl,xp,idamp)">mom2</a>(roxa,npx,efd,wl,xp,idamp);
+0069   <span class="keyword">end</span>
+0070   momi = min(mom); ind = find( mom == momi ); ind = ind(1);
+0071   rox =  -roma + (ind-1)*dr  ;
+0072 <span class="comment">%</span>
+0073 <span class="keyword">end</span>
+0074 <span class="comment">%</span>
+0075 <span class="comment">%  Optimization of the radius</span>
+0076 <span class="comment">%</span>
+0077 roxo = fminsearch( @(rox) <a href="#_sub1" class="code" title="subfunction mox = mom2(rox,npx,efd,wl,xp,idamp)">mom2</a>(rox,npx,efd,wl,xp,idamp),rox);
+0078 <span class="keyword">if</span> roxo == 0 ; rcurv = 0 ; <span class="keyword">else</span> ; rcurv = 1/roxo ; <span class="keyword">end</span> 
+0079 <span class="comment">%</span>
+0080 <span class="comment">%</span>
+0081 <span class="comment">%</span>
+0082 <span class="comment">%</span>
+0083 <a name="_sub1" href="#_subfunctions" class="code">function mox = mom2(rox,npx,efd,wl,xp,idamp)</a>
+0084 <span class="comment">%_________________________________________________________________</span>
+0085 <span class="comment">%</span>
+0086 <span class="comment">%  Routine for the calculation of the second moment of the field efd</span>
+0087 <span class="comment">%  in one dimension with damping in the field and the spectrum.</span>
+0088 <span class="comment">%_________________________________________________________________</span>
+0089 <span class="comment">%</span>
+0090 weps = sqrt(1.e-13); mox = 0 ;
+0091 damp = ones(npx,1); 
+0092 <span class="keyword">if</span> idamp &gt; 0 ; damp = 0.25 * ( 1 + cos([-npx/2:npx/2-1].'/(npx/2-1)*pi ) ).^0.5  ; <span class="keyword">end</span>
+0093 jp = [-npx/2:1:npx/2-1]';  jqm = jp.^2 ; 
+0094 efd  = efd .* exp( -i*pi/wl*rox * xp.^2  );
+0095 pspec = abs( fftshift( fft(damp.*efd) )).^2; 
+0096 pspec =  pspec / max(pspec) ;
+0097 mox = sqrt( sum( jqm .* pspec .* damp ) / npx ) ; 
+0098 <span class="comment">%</span>
+0099 
+0100</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

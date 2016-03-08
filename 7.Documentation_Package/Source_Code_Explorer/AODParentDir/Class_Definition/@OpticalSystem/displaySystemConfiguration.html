@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of displaySystemConfiguration</title>
+  <meta name="keywords" content="displaySystemConfiguration">
+  <meta name="description" content="displays system configuration data to the command window">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>displaySystemConfiguration
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>displays system configuration data to the command window</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function displaySystemConfiguration(optSystem,dispAperture,dispGeneral,dispWavelength,dispField) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> displays system configuration data to the command window
+ Inputs: Flags indicating which data to display</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001  <a name="_sub0" href="#_subfunctions" class="code">function displaySystemConfiguration(optSystem,dispAperture,</a><span class="keyword">...</span>
+0002      dispGeneral,dispWavelength,dispField)
+0003   <span class="comment">% displays system configuration data to the command window</span>
+0004   <span class="comment">% Inputs: Flags indicating which data to display</span>
+0005   <span class="keyword">if</span> nargin == 1
+0006      dispAperture = 1;
+0007      dispGeneral  = 1;
+0008      dispWavelength = 1;
+0009      dispField = 1;
+0010   <span class="keyword">elseif</span> nargin == 2
+0011      dispGeneral  = 1;
+0012      dispWavelength = 1;
+0013      dispField = 1; 
+0014   <span class="keyword">elseif</span> nargin == 3
+0015      dispWavelength = 1;
+0016      dispField = 1; 
+0017   <span class="keyword">elseif</span> nargin == 4
+0018      dispField = 1;
+0019   <span class="keyword">elseif</span> nargin == 5
+0020 
+0021   <span class="keyword">end</span>
+0022  disp(<span class="string">'************************************************************'</span>);
+0023  disp(<span class="string">'Optical System Configuration Data'</span>); 
+0024  disp(<span class="string">'************************************************************'</span>);     
+0025  <span class="keyword">if</span> dispAperture 
+0026      disp(<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Aperture Data &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>);
+0027      disp([<span class="string">'Aperture Type : '</span> optSystem.SystemApertureType]);
+0028      disp([<span class="string">'Aperture Value : '</span> num2str(optSystem.SystemApertureValue)]);
+0029  <span class="keyword">end</span>
+0030  <span class="keyword">if</span> dispGeneral
+0031      disp(<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Genral Data &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>);
+0032      disp([<span class="string">'Lens Name : '</span> optSystem.LensName]);
+0033      disp([<span class="string">'Lens Note : '</span> (optSystem.LensNote)]);  
+0034      disp([<span class="string">'Wavelength Unit : '</span> optSystem.WavelengthUnit]);
+0035      disp([<span class="string">'Lens Unit : '</span> (optSystem.LensUnit)]);         
+0036  <span class="keyword">end</span>
+0037  <span class="keyword">if</span> dispWavelength
+0038      disp(<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Wavelength Data &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>);
+0039      disp([<span class="string">'Total Number of Wavelength : '</span> num2str(optSystem.NumberOfWavelengths)]);
+0040      disp([<span class="string">'Primary Wavelength Index : '</span> num2str(optSystem.PrimaryWavelengthIndex)]);
+0041      Wavelength_Matrix_Wav_Weight = ({optSystem.WavelengthMatrix});
+0042      celldisp(Wavelength_Matrix_Wav_Weight);
+0043  <span class="keyword">end</span>
+0044  <span class="keyword">if</span> dispField 
+0045      disp(<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Feild Point Data &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>);
+0046      disp([<span class="string">'Total Number of Feild Points : '</span> num2str(optSystem.NumberOfFieldPoints)]);
+0047      Feild_Point_Matrix_X_Y_Weight = ({optSystem.FieldPointMatrix});
+0048      celldisp(Feild_Point_Matrix_X_Y_Weight);  
+0049  <span class="keyword">end</span> 
+0050  <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

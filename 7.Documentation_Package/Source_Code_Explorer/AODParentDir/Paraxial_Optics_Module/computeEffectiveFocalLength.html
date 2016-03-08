@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeEffectiveFocalLength</title>
+  <meta name="keywords" content="computeEffectiveFocalLength">
+  <meta name="description" content="computeEffectiveFocalLength: computes the effective focal length of system by">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Paraxial_Optics_Module -->
+<h1>computeEffectiveFocalLength
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>computeEffectiveFocalLength: computes the effective focal length of system by</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ EFL ] = computeEffectiveFocalLength( refIndex,thick,curv,obj_img ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeEffectiveFocalLength: computes the effective focal length of system by 
+                         tracing collimated rays. 
+ Inputs
+     refIndex,thick,curv : arrays of n,t of medium following and C of 
+                         each surface from object to image direction
+   obj_img: 'FF','FI','IF','II' showing location of object and
+   image Finite and infinite. 'FI' and 'II' are afocal image side and
+   usually need special tratment
+ &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="yniTrace.html" class="code" title="function [yf uf] = yniTrace(yi,ui,initialSurf,finalSurf, refIndex,thick,curv)">yniTrace</a>	ynuTrace: Performs ynu trace for paraxial fileds</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/getEffectiveFocalLength.html" class="code" title="function EFL = getEffectiveFocalLength(OS,wavLen)">getEffectiveFocalLength</a>	getEffectiveFocalLength: returns location of paraxial focus</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ EFL ] = computeEffectiveFocalLength( refIndex,thick,curv,obj_img )</a>
+0002     <span class="comment">% computeEffectiveFocalLength: computes the effective focal length of system by</span>
+0003     <span class="comment">%                         tracing collimated rays.</span>
+0004     <span class="comment">% Inputs</span>
+0005     <span class="comment">%     refIndex,thick,curv : arrays of n,t of medium following and C of</span>
+0006     <span class="comment">%                         each surface from object to image direction</span>
+0007     <span class="comment">%   obj_img: 'FF','FI','IF','II' showing location of object and</span>
+0008     <span class="comment">%   image Finite and infinite. 'FI' and 'II' are afocal image side and</span>
+0009     <span class="comment">%   usually need special tratment</span>
+0010     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0011     <span class="comment">%</span>
+0012 
+0013     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0014     <span class="comment">%</span>
+0015 
+0016     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0017     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0018     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0019     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0020     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0021     <span class="comment">%   Institute of Applied Physics</span>
+0022     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0023                              
+0024     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0025     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0026     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0027 
+0028     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0029     
+0030     <span class="keyword">if</span> strcmpi(obj_img,<span class="string">'FF'</span>) || strcmpi(obj_img,<span class="string">'IF'</span>)
+0031         y0 = 0.01;
+0032         u0 = 0;
+0033         [yf,uf] = <a href="yniTrace.html" class="code" title="function [yf uf] = yniTrace(yi,ui,initialSurf,finalSurf, refIndex,thick,curv)">yniTrace</a>(y0,u0,1,length(curv)-1, refIndex,thick,curv); 
+0034         EFL = -y0/uf;
+0035         <span class="comment">% In image space</span>
+0036         EFL = EFL * refIndex(end-1);
+0037     <span class="keyword">elseif</span> strcmpi(obj_img,<span class="string">'FI'</span>) || strcmpi(obj_img,<span class="string">'II'</span>)
+0038         EFL = Inf;
+0039     <span class="keyword">end</span>
+0040 <span class="keyword">end</span>
+0041</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

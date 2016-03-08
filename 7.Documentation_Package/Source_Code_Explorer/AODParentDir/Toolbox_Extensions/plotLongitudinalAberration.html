@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotLongitudinalAberration</title>
+  <meta name="keywords" content="plotLongitudinalAberration">
+  <meta name="description" content="PLOTLONGITUDINALABERRATION Plots the longitudinal aberration of the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Toolbox_Extensions -->
+<h1>plotLongitudinalAberration
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>PLOTLONGITUDINALABERRATION Plots the longitudinal aberration of the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ success ] = plotLongitudinalAberration(opticalSystem) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">PLOTLONGITUDINALABERRATION Plots the longitudinal aberration of the
+optical system.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="testLongitudinalAberration.html" class="code" title="">testLongitudinalAberration</a>	Test script for plotLongitudinalAberration.m function</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ success ] = plotLongitudinalAberration(opticalSystem)</a>
+0002 <span class="comment">%PLOTLONGITUDINALABERRATION Plots the longitudinal aberration of the</span>
+0003 <span class="comment">%optical system.</span>
+0004 
+0005 <span class="comment">% User inputs the wavelength indices and number of ray</span>
+0006 wavIndices_nRay = inputdlg({<span class="string">'Wavelength Index (0 for All)'</span>,<span class="keyword">...</span>
+0007     <span class="string">'Number of Rays'</span>,},<span class="keyword">...</span>
+0008     <span class="string">'Wavelength Index and Number of Rays'</span>,1,{<span class="string">'0'</span>,<span class="string">'100'</span>});
+0009 <span class="keyword">if</span> ~(isempty(wavIndices_nRay)||<span class="keyword">...</span>
+0010         isempty(wavIndices_nRay{1})||<span class="keyword">...</span>
+0011         isempty(wavIndices_nRay{2}))
+0012     
+0013     wavLenIndex = str2double(wavIndices_nRay{1});
+0014     nRay = str2double(wavIndices_nRay{2});
+0015     
+0016     nWavelength = opticalSystem.NumberOfWavelengths;
+0017     <span class="keyword">if</span> isnan(nRay)||isnan(wavLenIndex) || <span class="keyword">...</span>
+0018             nRay &lt; 1 || wavLenIndex &lt; 0 || wavLenIndex &gt; nWavelength
+0019         disp(<span class="string">'Error: All Input should be numeric and valid'</span>);
+0020         success = 0;
+0021         <span class="keyword">return</span>;
+0022     <span class="keyword">end</span>
+0023 <span class="keyword">else</span>
+0024     disp(<span class="string">'Error: Invalid Input.'</span>);
+0025     success = 0;
+0026     <span class="keyword">return</span>;
+0027 <span class="keyword">end</span>
+0028 
+0029 
+0030 fieldPointXY = [0;0];
+0031 wavelengthMatrix = opticalSystem.WavelengthMatrix;
+0032 <span class="keyword">if</span> wavLenIndex == 0
+0033     wavLen = (wavelengthMatrix(:,1))';
+0034 <span class="keyword">else</span>
+0035     wavLen = wavelengthMatrix(wavLenIndex,1);
+0036 <span class="keyword">end</span>
+0037 JonesVec = [NaN;NaN];
+0038 nWav = size(wavLen,2);
+0039 nField = size(fieldPointXY,2);
+0040 <span class="comment">% trace the tangntial rays</span>
+0041 <span class="comment">% polarizedRayTracerResult =  nSurf X nRay X nField X nWav</span>
+0042 <span class="comment">% pupil sampling = 5: Tangential Plane</span>
+0043 PupSamplingTypeTangential = 5;
+0044 [tangentialRayTracerResult] = opticalSystem.multipleRayTracer(wavLen,<span class="keyword">...</span>
+0045     fieldPointXY,nRay,PupSamplingTypeTangential,JonesVec);
+0046 
+0047 <span class="comment">% Assign different symbals and colors for lines of d/t wavelengths</span>
+0048 availablelineColor = repmat([<span class="string">'b'</span>,<span class="string">'k'</span>,<span class="string">'r'</span>,<span class="string">'g'</span>,<span class="string">'c'</span>,<span class="string">'m'</span>,<span class="string">'y'</span>],1,20); <span class="comment">% 7*20 = 140</span>
+0049 lineColorList = availablelineColor(1:nWav*nField);
+0050 
+0051 surfIndex = opticalSystem.NumberOfSurfaces;
+0052 fieldIndex = 1;
+0053 figure;
+0054 <span class="keyword">for</span> wavIndex = 1:nWav
+0055     tangentialFanIntersectionPoints = <span class="keyword">...</span>
+0056         [tangentialRayTracerResult(surfIndex,:,fieldIndex,wavIndex).RayIntersectionPoint];
+0057     tangentialFanFinalDirections = <span class="keyword">...</span>
+0058         [tangentialRayTracerResult(surfIndex,:,fieldIndex,wavIndex).IncidentRayDirection];
+0059     
+0060     opticalAxisIntersectionZ = (tangentialFanIntersectionPoints(2,:))./<span class="keyword">...</span>
+0061         (-tan(acos(tangentialFanFinalDirections(3,:))));
+0062     <span class="comment">% NaN will result for rays alogn the axis so take the value of the</span>
+0063     <span class="comment">% immediate upper field point in this case</span>
+0064     opticalAxisIntersectionZ(find(isnan(opticalAxisIntersectionZ))) = <span class="keyword">...</span>
+0065         opticalAxisIntersectionZ(find(isnan(opticalAxisIntersectionZ))-1);
+0066     
+0067     xAxisPoints = opticalAxisIntersectionZ;
+0068     yAxisPoints = linspace(1,-1,size(opticalAxisIntersectionZ,2));
+0069    
+0070     <span class="comment">% Only take the upper part of the enterance pupil</span>
+0071     xAxisPointsUpper = xAxisPoints(yAxisPoints &gt;= 0);
+0072     yAxisPointsUpper = yAxisPoints(yAxisPoints &gt;= 0);
+0073     legendText{wavIndex} = [<span class="string">' Wav: '</span>,num2str(wavLen(wavIndex))];
+0074         
+0075     currentLineColor = lineColorList(wavIndex);
+0076     plot(xAxisPointsUpper,yAxisPointsUpper,currentLineColor);
+0077     grid on;
+0078     hold on;
+0079 <span class="keyword">end</span>
+0080 axis equal;
+0081 xlabel(<span class="string">'Z'</span>,<span class="string">'FontSize'</span>,12);
+0082 ylabel(<span class="string">'PY (Normalized)'</span>,<span class="string">'FontSize'</span>,12);
+0083 legend(legendText)
+0084 title(<span class="string">'Logitudinal Aberration'</span>);
+0085 success = 1;
+0086 <span class="keyword">end</span>
+0087</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

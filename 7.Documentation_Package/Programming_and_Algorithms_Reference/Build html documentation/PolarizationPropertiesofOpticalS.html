@@ -1,0 +1,122 @@
+﻿<html>
+	
+<head>
+	<title>Polarization Properties of Optical System</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("PolarizationPropertiesofOpticalS");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Polarization Properties of Optical System</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="PolarizationRayTracingModule.html">Polarization Ray Tracing Module</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="PolarizationRayTracingModule.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="PolarizationRayTracingthroughInt.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="ExamplesofExtendingtheToolbox.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps9"><a name="_Toc370907115"></a>
+<span class="rvts0"><span class="rvts59">Analysis of Polarization Properties in Three Dimensional Ray Tracing Calculus</span></span></h1>
+<p class="rvps17"><span class="rvts27">One of the purposes of polarization ray tracing is determination of the diattenuation and retardance associated with ray paths through an optical system. It can also be used to compute the polarization aberration function of an optical system. In this section those polarization properties will be defined and algorithms for their computation using the three dimensional polarization ray tracing calculus will be presented. </span></p>
+<h2 class="rvps56"><a name="_Toc370907116"></a>
+<span class="rvts0"><span class="rvts72">Diattenuation</span></span></h2>
+<p class="rvps57"><span class="rvts27">Diattenuation: is measure of polarization dependent transmittance of a given optical element. Literally diattenuation means "two attenuations", and is used to compare the loss of intensity of the s polarized light compared to the p polarized light. It depends on the maximum and minimum intensity transmittances considered over all incident polarization states as:</span></p>
+<p class="rvps57"><span class="rvts27"><br/></span></p>
+<p class="rvps58"><img alt="" style="padding : 1px;" src="lib/NewItem160.png"/></p>
+<p class="rvps58"><span class="rvts29"><br/></span></p>
+<p class="rvps57"><span class="rvts27">In Jones calculus the eigenvectors of Jones matrix represent the two polarization states for maximum and minimum transmittance and thus the diattenuation can be computed from the corresponding eigenvalues. But for three dimensional polarization ray tracing calculus, eigenvectors &nbsp;of &nbsp;the &nbsp;P &nbsp;matrix &nbsp;do &nbsp;not &nbsp;generally &nbsp;represent &nbsp;polarization &nbsp;states because in general &nbsp;light rays enter and exit in different directions. &nbsp;The diattenuation of the P matrix can be calculated by using the singular value decomposition (SVD) </span><span class="rvts81">.</span></p>
+<p class="rvps58"><img alt="" style="padding : 1px;" src="lib/NewItem159.png"/></p>
+<p class="rvps17"><span class="rvts27">By definition the diagonal elements of D matrix are the singular values of P. The first column of V is incident wave vector K</span><span class="rvts83">0</span><span class="rvts27">. The other two columns of V, v1 and v2, are two special polarization vectors in the incident transverse plane that generate the maximum and minimum transmitted flux. Similarly, the columns of U are the exiting propagation vector K</span><span class="rvts82">Q</span><span class="rvts27"> and two orthogonal polarization vectors u1 and u2 in the exiting transverse plane. Expressing an arbitrary incident polarization as linear combination of these orthogonal polarization states v</span><span class="rvts82">1</span><span class="rvts27"> and v</span><span class="rvts82">2</span><span class="rvts27"> , the following relation can be derived for diattenuation </span><span class="rvts81">.</span></p>
+<p class="rvps17"><span class="rvts81"><br/></span></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem158.png"/></p>
+<p class="rvps17"><span class="rvts81"><br/></span></p>
+<h2 class="rvps56"><a name="_Toc370907117"></a>
+<span class="rvts0"><span class="rvts72">Retardance</span></span></h2>
+<p class="rvps57"><span class="rvts27">Retardance is defined as polarization dependent phase change or optical path difference associated with a ray path through an optical system. &nbsp;In Jones calculus the proper retardance is defined as the actual accumulation of polarization dependent optical path difference due to the optical elements. In addition to that a polarization state analyzer reads additional retardance if the exiting local coordinates are not parallel to the local incident coordinates. This is the retardance due to local coordinate transformation. The following figure&nbsp;</span><span class="rvts80"> </span><span class="rvts27">illustrates this,</span></p>
+<p class="rvps59"><img width="456" height="141" alt="" style="padding : 1px;" src="lib/NewItem157.png"/></p>
+<p class="rvps57"><span class="rvts27">If the retarder is just an empty compartment and has identity jones matrix, the polarization state analyzer in (a) measures the unity matrix (zero retardance). &nbsp;But if the analyzer is roated by some angle, the incident and exiting local coordinates are no longer parallel and so the analyzer will measure the rotation matrix instead of identity matrix.</span></p>
+<p class="rvps57"><span class="rvts27">Therefore, while computing retardance it is necessary to separate the proper retardance from the one which is caused by coordinate transformation. T</span><span class="rvts45">he concept of parallel transport ray tracing matrix Q was introduced to perform such separation in three dimensional calculus. </span></p>
+<p class="rvps57"><span class="rvts45"><br/></span></p>
+<p class="rvps57"><span class="rvts45">A parallel transport ray tracing matrix Qq for q</span><span class="rvts79">th</span><span class="rvts45"> surface (polarizing element) is defined as a 3X3 ray tracing matrix calculated by assuming that the surface/element is non-polarizing. That is, Q</span><span class="rvts77">q &nbsp;</span><span class="rvts45">provides well defined relation between local coordinate before and after the surface/element. Just as for the P matrix, the cumulative parallel ray transport matrix can be defined as the product of all consecutive Q’s. </span></p>
+<p class="rvps57"><img alt="" style="padding : 1px;" src="lib/NewItem156.png"/></p>
+<p class="rvps57"><span class="rvts45">Therefore, &nbsp;Q</span><span class="rvts79">-1</span><span class="rvts77">Total</span><span class="rvts45"> can reverse all the geometric transformation. And the operation</span></p>
+<p class="rvps57"><span class="rvts45"><br/></span></p>
+<p class="rvps57"><img alt="" style="padding : 1px;" src="lib/NewItem155.png"/><span class="rvts77"> </span></p>
+<p class="rvps57"><span class="rvts45"><br/></span></p>
+<p class="rvps57"><span class="rvts45">gives a polarization ray tracing matrix M</span><span class="rvts77">Total</span><span class="rvts45"> with all the effects of coordinate transformation removed (i.e. with the exiting local coordinate made parallel to the incident ray local coordinate). &nbsp;Now the retardance computed from the M matrix will be the proper retardance of the system.</span></p>
+<p class="rvps57"><span class="rvts45">Any &nbsp;element (corresponding M matrix) &nbsp;can be expressed &nbsp;as &nbsp;a &nbsp;product &nbsp;of &nbsp;a &nbsp;pure &nbsp;retarder with a pure diattenuator, and the retardance is well-defined to be that of the pure retarder. This can be achieved by polar decomposition of M matrix.</span></p>
+<p class="rvps57"><span class="rvts45"><br/></span></p>
+<p class="rvps58"><img alt="" style="padding : 1px;" src="lib/NewItem154.png"/></p>
+<p class="rvps58"><span class="rvts78"><br/></span></p>
+<p class="rvps57"><span class="rvts45">Then proper retardance can be calculated as the phase difference of non-unity eigenvalues of M</span><span class="rvts77">Toatl,R</span><span class="rvts45">. </span></p>
+<h2 class="rvps56"><a name="_Toc370907118"></a>
+<span class="rvts0"><span class="rvts72">Polarization Aberration Function</span></span></h2>
+<p class="rvps10"><span class="rvts27">Polarization aberration P(h,r,</span><span class="rvts76">λ</span><span class="rvts27">) of an optical system is variation of polarization properties of an optical system with object coordinates , pupil coordinates and wavelength. &nbsp;It can be determined by performing polarization ray tracing of a ray bundle through an optical system. As ray tracing program can only trace a limited number of rays, the polarization aberration function </span><span class="rvts75">P(h,r,λ) </span><span class="rvts27">determined will be a matrix of sampled values at different locations in the exit pupil, indicated by r. Each element of the matrix &nbsp;indicates the total polarization ray tracing matrices for entire path of the ray passing through that specific location.</span></p>
+<p class="rvps10"><span class="rvts27">Tracing an &nbsp;L X M grid of rays through an optical system results in L X M &nbsp; grid of propagation vectors, L X M &nbsp;grid of positions and L X M &nbsp;grid of optical path lengths.</span></p>
+<p class="rvps60"><img alt="" style="padding : 1px;" src="lib/NewItem149.png"/></p>
+<p class="rvps60"><span class="rvts27"><br/></span></p>
+<p class="rvps60"><img alt="" style="padding : 1px;" src="lib/NewItem148.png"/></p>
+<p class="rvps60"><span class="rvts27"><br/></span></p>
+<p class="rvps60"><img alt="" style="padding : 1px;" src="lib/NewItem147.png"/></p>
+<p class="rvps60"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts27">And the sampled polarization aberration function will be L X M &nbsp;grid of the polarization tracing matrices at each location. &nbsp;If the exit pupil is not rectangular, the entries corresponding to locations outside the pupil will be filled with zeros.</span></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps60"><img alt="" style="padding : 1px;" src="lib/NewItem145.png"/></p>
+<p class="rvps60"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts27">As arguments of the complex matrices of the polarization aberration function are always less than </span><img alt="" style="padding : 1px;" src="lib/NewItem144.png"/><span class="rvts27">, optical path lengths are calculated separately. </span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com">Free EBook and documentation generator</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

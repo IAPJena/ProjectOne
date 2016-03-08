@@ -1,0 +1,1041 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of btnOkCallback</title>
+  <meta name="keywords" content="btnOkCallback">
+  <meta name="description" content="btnOkCallback: Define  the callback actions associated with the button">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODChildWindow -->
+<h1>btnOkCallback
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>btnOkCallback: Define  the callback actions associated with the button</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function btnOkCallback(childWindow,parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> btnOkCallback: Define  the callback actions associated with the button
+ click event of the OK button of the child window.
+ Click event of Ok button of all child windows is defined here in a single
+ function to avoid repeated codes for similar actions in different child
+ windows.
+ Specific actions which are unique for each child window type are
+ placed in switch case statemmtns.
+ Member of AODChildWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a>	EXTRACTCOATINGFROMCOATINGCATALOGUE extracts a AOD object from the catalogue</li><li><a href="../../../AODParentDir/Class_Definition/@Ray/Ray.html" class="code" title="">Ray</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function btnOkCallback(childWindow,parentWindow)</a>
+0002 <span class="comment">% btnOkCallback: Define  the callback actions associated with the button</span>
+0003 <span class="comment">% click event of the OK button of the child window.</span>
+0004 <span class="comment">% Click event of Ok button of all child windows is defined here in a single</span>
+0005 <span class="comment">% function to avoid repeated codes for similar actions in different child</span>
+0006 <span class="comment">% windows.</span>
+0007 <span class="comment">% Specific actions which are unique for each child window type are</span>
+0008 <span class="comment">% placed in switch case statemmtns.</span>
+0009 <span class="comment">% Member of AODChildWindow class</span>
+0010 
+0011 figure(childWindow.AODChildHandles.FigureHandle);
+0012 <span class="comment">% Click graph tab programatically</span>
+0013 ind = 2;
+0014 childWindow.selectMainTab(ind);
+0015 <span class="keyword">try</span>
+0016     cla(childWindow.AODChildHandles.axesHandle);
+0017 <span class="keyword">catch</span>
+0018 <span class="keyword">end</span>
+0019 <span class="comment">% performs d/t actions based on myName</span>
+0020 handles = childWindow.AODChildHandles;
+0021 [ currentOpticalSystem1,saved] = <span class="keyword">...</span>
+0022     parentWindow.getCurrentOpticalSystem ;
+0023 
+0024 
+0025 <span class="comment">% Group Similar windows</span>
+0026 coatingPropertyVsWavelength = <span class="keyword">...</span>
+0027     {  <span class="string">'coatingDiattenuationVsWavelength'</span>,<span class="keyword">...</span>
+0028     <span class="string">'coatingReflectionVsWavelength'</span>,<span class="keyword">...</span>
+0029     <span class="string">'coatingRetardanceVsWavelength'</span>,<span class="keyword">...</span>
+0030     <span class="string">'coatingTransmissionVsWavelength'</span>};
+0031 
+0032 coatingPropertyVsAngle = <span class="keyword">...</span>
+0033     {   <span class="string">'coatingDiattenuationVsAngle'</span>,<span class="keyword">...</span>
+0034     <span class="string">'coatingReflectionVsAngle'</span>,<span class="keyword">...</span>
+0035     <span class="string">'coatingRetardanceVsAngle'</span>,<span class="keyword">...</span>
+0036     <span class="string">'coatingTransmissionVsAngle'</span>};
+0037 gridRaytraceAnalysis = <span class="keyword">...</span>
+0038     {<span class="string">'amplitudeTransmissionMap'</span>,<span class="keyword">...</span>
+0039     <span class="string">'phaseMap'</span>,<span class="keyword">...</span>
+0040     <span class="string">'wavefrontDiattenuationMap'</span>,<span class="keyword">...</span>
+0041     <span class="string">'wavefrontRetardanceMap'</span>,<span class="keyword">...</span>
+0042     <span class="string">'wavefrontAtExitPupil'</span>,<span class="keyword">...</span>
+0043     <span class="string">'polarizationEllipseMap'</span>,<span class="keyword">...</span>
+0044     <span class="string">'FFTPSF'</span>};
+0045 rayTracingAnalysis = <span class="keyword">...</span>
+0046     {<span class="string">'scalarRayTrace'</span>,<span class="keyword">...</span>
+0047     <span class="string">'polarizationRayTrace'</span>};
+0048 others = <span class="keyword">...</span>
+0049     { <span class="string">'coatingRefractiveIndexProfile'</span>,<span class="keyword">...</span>
+0050     <span class="string">'footprintDiagram'</span>,<span class="keyword">...</span>
+0051     <span class="string">'system2DLayoutDiagram'</span>,<span class="keyword">...</span>
+0052     <span class="string">'system3DLayoutDiagram'</span>,<span class="keyword">...</span>
+0053     <span class="string">'paraxialAnalysis'</span>,<span class="keyword">...</span>
+0054     <span class="string">'pupilApodization'</span>,<span class="keyword">...</span>
+0055     <span class="string">'transverseRayAberration'</span>};
+0056 
+0057 <span class="keyword">switch</span> lower(handles.Name)
+0058     <span class="keyword">case</span> lower(coatingPropertyVsWavelength)
+0059         <span class="comment">% Check for inputs whether to take coating from a</span>
+0060         <span class="comment">% given surface or use new coating</span>
+0061         
+0062         surfIndexList = (get(handles.popSurfaceIndex,<span class="string">'String'</span>));
+0063         surfIndexString = surfIndexList(get(handles.popSurfaceIndex,<span class="string">'Value'</span>),:);
+0064         surfIndex = str2double(surfIndexString);
+0065         <span class="keyword">if</span> strcmpi(surfIndexString,<span class="string">'New Coating'</span>)
+0066             <span class="comment">% Read coating object from Coating Catalogue</span>
+0067             name = get(handles.txtCoatingName,<span class="string">'String'</span>);
+0068             catalogueList = currentOpticalSystem1.CoatingCataloguesList;
+0069             caotingFound = 0;
+0070             <span class="keyword">for</span> k = 1:size(catalogueList,1)
+0071                 catalogueName = catalogueList{k};
+0072                 myCoating = <a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0073                     (<span class="string">'coating'</span>, name,catalogueName );
+0074                 <span class="keyword">if</span> strcmpi(class(myCoating),<span class="string">'Coating'</span>)
+0075                     caotingFound = 1;
+0076                     <span class="keyword">break</span>;
+0077                 <span class="keyword">end</span>
+0078             <span class="keyword">end</span>
+0079             <span class="keyword">if</span> ~caotingFound
+0080                 disp(<span class="string">'Coating not found'</span>);
+0081                 <span class="keyword">return</span>;
+0082             <span class="keyword">end</span>
+0083             
+0084             <span class="comment">% User inputs the refractive indices before and</span>
+0085             <span class="comment">% after the coating</span>
+0086             refIndices_primWavLen = inputdlg({<span class="string">'Index before coating'</span>,<span class="keyword">...</span>
+0087                 <span class="string">'Index after coating'</span>,<span class="string">'Primary Wavelength in (um)'</span>},<span class="keyword">...</span>
+0088                 <span class="string">'Refractive Indices And Primary Wavelength'</span>);
+0089             <span class="keyword">if</span> ~(isempty(refIndices_primWavLen)||<span class="keyword">...</span>
+0090                     isempty(refIndices_primWavLen{1})||<span class="keyword">...</span>
+0091                     isempty(refIndices_primWavLen{2})||<span class="keyword">...</span>
+0092                     isempty(refIndices_primWavLen{3}))
+0093                 indexBefore = str2double(refIndices_primWavLen{1});
+0094                 indexAfter = str2double(refIndices_primWavLen{2});
+0095                 primWavLenInUm = str2double(refIndices_primWavLen{3});
+0096                 <span class="keyword">if</span> isnan(indexBefore)||isnan(indexAfter)
+0097                     disp(<span class="string">'Error: Input refractive indices should be numeric.'</span>);
+0098                     <span class="keyword">return</span>;
+0099                 <span class="keyword">end</span>
+0100             <span class="keyword">else</span>
+0101                 disp(<span class="string">'Error: No refractive indices entered.'</span>);
+0102                 <span class="keyword">return</span>;
+0103             <span class="keyword">end</span>
+0104         <span class="keyword">elseif</span> ~isnan(surfIndex)
+0105             <span class="comment">% Read the coating from the surface index</span>
+0106             myCoating = currentOpticalSystem1.SurfaceArray<span class="keyword">...</span>
+0107                 (surfIndex).Coating;
+0108             <span class="comment">% Read the refractive indices for medium before and</span>
+0109             <span class="comment">% after coating using the primary wavelength</span>
+0110             primaryWavelength = currentOpticalSystem1.getPrimaryWavelength;
+0111             primWavLenInUm = primaryWavelength*10^6;
+0112             <span class="keyword">if</span> surfIndex &gt; 1
+0113                 indexBefore = currentOpticalSystem1.SurfaceArray<span class="keyword">...</span>
+0114                     (surfIndex-1).Glass.getRefractiveIndex(primaryWavelength);
+0115             <span class="keyword">else</span>
+0116                 indexBefore = 1;
+0117             <span class="keyword">end</span>
+0118             indexAfter = currentOpticalSystem1.SurfaceArray<span class="keyword">...</span>
+0119                 (surfIndex).Glass.getRefractiveIndex(primaryWavelength);
+0120         <span class="keyword">else</span>
+0121             disp([<span class="string">'Error: The surface index should be either '</span><span class="keyword">...</span>
+0122                 <span class="string">'valid surface number of New Caoting'</span>]);
+0123             <span class="keyword">return</span>;
+0124         <span class="keyword">end</span>
+0125         
+0126         incAngle = str2double(get(handles.txtIncidenceAngle,<span class="string">'String'</span>));
+0127         <span class="comment">% Replace 0 incedence angle with very small value</span>
+0128         <span class="comment">% inorder to avoid numberical error of dividing by</span>
+0129         <span class="comment">% zero in anycase.</span>
+0130         <span class="keyword">if</span> abs(incAngle) &lt; 10^-4
+0131             <span class="keyword">if</span> incAngle &lt; 0
+0132                 incAngle = -10^-4;
+0133             <span class="keyword">else</span>
+0134                 incAngle = 10^-4;
+0135             <span class="keyword">end</span>
+0136         <span class="keyword">end</span>
+0137         minWavelength = str2double(get(handles.txtMinWavelength,<span class="string">'String'</span>));
+0138         maxWavelength = str2double(get(handles.txtMaxWavelength,<span class="string">'String'</span>));
+0139         wavelengthStep = str2double(get(handles.txtWavelengthStep,<span class="string">'String'</span>));
+0140         
+0141         <span class="keyword">switch</span> lower(handles.Name)
+0142             <span class="keyword">case</span> lower(<span class="string">'coatingDiattenuationVsWavelength'</span>)
+0143                 myCoating.plotCoatingDiattenuationVsWavelength(<span class="keyword">...</span>
+0144                     incAngle,minWavelength, maxWavelength, wavelengthStep,<span class="keyword">...</span>
+0145                     primWavLenInUm,indexBefore,indexAfter,<span class="keyword">...</span>
+0146                     handles.axesHandle, handles.tableHandle,handles.textHandle);
+0147                 
+0148             <span class="keyword">case</span> lower(<span class="string">'coatingReflectionVsWavelength'</span>)
+0149                 myCoating.plotCoatingReflectionVsWavelength(<span class="keyword">...</span>
+0150                     incAngle,minWavelength, maxWavelength, wavelengthStep,<span class="keyword">...</span>
+0151                     primWavLenInUm,indexBefore,indexAfter,<span class="keyword">...</span>
+0152                     handles.axesHandle, handles.tableHandle,handles.textHandle);
+0153                 
+0154             <span class="keyword">case</span> lower(<span class="string">'coatingRetardanceVsWavelength'</span>)
+0155                 myCoating.plotCoatingRetardanceVsWavelength(<span class="keyword">...</span>
+0156                     incAngle,minWavelength, maxWavelength, wavelengthStep,<span class="keyword">...</span>
+0157                     primWavLenInUm,indexBefore,indexAfter,<span class="keyword">...</span>
+0158                     handles.axesHandle, handles.tableHandle,handles.textHandle);
+0159                 
+0160             <span class="keyword">case</span> lower(<span class="string">'coatingTransmissionVsWavelength'</span>)
+0161                 myCoating.plotCoatingTransmissionVsWavelength(<span class="keyword">...</span>
+0162                     incAngle,minWavelength, maxWavelength, wavelengthStep,<span class="keyword">...</span>
+0163                     primWavLenInUm,indexBefore,indexAfter,<span class="keyword">...</span>
+0164                     handles.axesHandle, handles.tableHandle,handles.textHandle);
+0165                 
+0166         <span class="keyword">end</span>
+0167     <span class="keyword">case</span> lower(coatingPropertyVsAngle)
+0168         <span class="comment">% Check for inputs whether to take coating from a</span>
+0169         <span class="comment">% given surface or use new coating</span>
+0170         surfIndexList = (get(handles.popSurfaceIndex,<span class="string">'String'</span>));
+0171         surfIndexString = surfIndexList(get(handles.popSurfaceIndex,<span class="string">'Value'</span>),:);
+0172         surfIndex = str2double(surfIndexString);
+0173         <span class="keyword">if</span> strcmpi(surfIndexString,<span class="string">'New Coating'</span>)
+0174             <span class="comment">% Read coating object from Coating Catalogue</span>
+0175             name = get(handles.txtCoatingName,<span class="string">'String'</span>);
+0176             catalogueList = currentOpticalSystem1.CoatingCataloguesList;
+0177             caotingFound = 0;
+0178             <span class="keyword">for</span> k = 1:size(catalogueList,1)
+0179                 catalogueName = catalogueList{k};
+0180                 myCoating = <a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0181                     (<span class="string">'coating'</span>, name,catalogueName );
+0182                 <span class="keyword">if</span> strcmpi(class(myCoating),<span class="string">'Coating'</span>)
+0183                     caotingFound = 1;
+0184                     <span class="keyword">break</span>;
+0185                 <span class="keyword">end</span>
+0186             <span class="keyword">end</span>
+0187             <span class="keyword">if</span> ~caotingFound
+0188                 disp(<span class="string">'Coating not found'</span>);
+0189                 <span class="keyword">return</span>;
+0190             <span class="keyword">end</span>
+0191             <span class="comment">% User inputs the refractive indices before and</span>
+0192             <span class="comment">% after the coating</span>
+0193             refIndices_primWavLen = inputdlg({<span class="string">'Index before coating'</span>,<span class="keyword">...</span>
+0194                 <span class="string">'Index after coating'</span>,<span class="string">'Primary Wavelength in (um)'</span>},<span class="keyword">...</span>
+0195                 <span class="string">'Refractive Indices And Primary Wavelength'</span>);
+0196             <span class="keyword">if</span> ~(isempty(refIndices_primWavLen)||<span class="keyword">...</span>
+0197                     isempty(refIndices_primWavLen{1})||<span class="keyword">...</span>
+0198                     isempty(refIndices_primWavLen{2})||<span class="keyword">...</span>
+0199                     isempty(refIndices_primWavLen{3}))
+0200                 indexBefore = str2double(refIndices_primWavLen{1});
+0201                 indexAfter = str2double(refIndices_primWavLen{2});
+0202                 primWavLenInUm = str2double(refIndices_primWavLen{3});
+0203                 <span class="keyword">if</span> isnan(indexBefore)||isnan(indexAfter)
+0204                     disp(<span class="string">'Error: Input refractive indices should be numeric.'</span>);
+0205                     <span class="keyword">return</span>;
+0206                 <span class="keyword">end</span>
+0207             <span class="keyword">else</span>
+0208                 disp(<span class="string">'Error: No refractive indices entered.'</span>);
+0209                 <span class="keyword">return</span>;
+0210             <span class="keyword">end</span>
+0211         <span class="keyword">elseif</span> ~isnan(surfIndex)
+0212             <span class="comment">% Read the coating from the surface index</span>
+0213             myCoating = currentOpticalSystem1.SurfaceArray<span class="keyword">...</span>
+0214                 (surfIndex).Coating;
+0215             <span class="comment">% Read the refractive indices for medium before and</span>
+0216             <span class="comment">% after coating using the given wavelength</span>
+0217             wavLenInUm = str2double(get(handles.txtWavelength,<span class="string">'String'</span>));
+0218             primaryWavelength = currentOpticalSystem1.getPrimaryWavelength;
+0219             primWavLenInUm = primaryWavelength*10^6;
+0220             <span class="keyword">if</span> surfIndex &gt; 1
+0221                 indexBefore = currentOpticalSystem1.SurfaceArray<span class="keyword">...</span>
+0222                     (surfIndex-1).Glass.getRefractiveIndex(wavLenInUm);
+0223             <span class="keyword">else</span>
+0224                 indexBefore = 1;
+0225             <span class="keyword">end</span>
+0226             indexAfter = currentOpticalSystem1.SurfaceArray<span class="keyword">...</span>
+0227                 (surfIndex).Glass.getRefractiveIndex(wavLenInUm);
+0228         <span class="keyword">else</span>
+0229             disp([<span class="string">'Error: The surface index should be either '</span><span class="keyword">...</span>
+0230                 <span class="string">'valid surface number or New Caoting'</span>]);
+0231             <span class="keyword">return</span>;
+0232         <span class="keyword">end</span>
+0233         
+0234         wavLenInUm = str2double(get(handles.txtWavelength,<span class="string">'String'</span>));
+0235         minAngle = str2double(get(handles.txtMinAngle,<span class="string">'String'</span>));
+0236         maxAngle = str2double(get(handles.txtMaxAngle,<span class="string">'String'</span>));
+0237         angleStep = str2double(get(handles.txtAngleStep,<span class="string">'String'</span>));
+0238         
+0239         <span class="keyword">switch</span> lower(handles.Name)
+0240             <span class="keyword">case</span> lower(<span class="string">'coatingDiattenuationVsAngle'</span>)
+0241                 myCoating.plotCoatingDiattenuationVsAngle(<span class="keyword">...</span>
+0242                     wavLenInUm,minAngle,maxAngle,angleStep,<span class="keyword">...</span>
+0243                     primWavLenInUm,indexBefore,indexAfter,<span class="keyword">...</span>
+0244                     handles.axesHandle, handles.tableHandle,handles.textHandle);
+0245                 
+0246             <span class="keyword">case</span> lower(<span class="string">'coatingReflectionVsAngle'</span>)
+0247                 myCoating.plotCoatingReflectionVsAngle(<span class="keyword">...</span>
+0248                     wavLenInUm,minAngle,maxAngle,angleStep,<span class="keyword">...</span>
+0249                     primWavLenInUm,indexBefore,indexAfter,<span class="keyword">...</span>
+0250                     handles.axesHandle, handles.tableHandle,handles.textHandle);
+0251                 
+0252             <span class="keyword">case</span> lower(<span class="string">'coatingRetardanceVsAngle'</span>)
+0253                 myCoating.plotCoatingRetardanceVsAngle(<span class="keyword">...</span>
+0254                     wavLenInUm,minAngle,maxAngle,angleStep,<span class="keyword">...</span>
+0255                     primWavLenInUm,indexBefore,indexAfter,<span class="keyword">...</span>
+0256                     handles.axesHandle, handles.tableHandle,handles.textHandle);
+0257                 
+0258             <span class="keyword">case</span> lower(<span class="string">'coatingTransmissionVsAngle'</span>)
+0259                 myCoating.plotCoatingTransmissionVsAngle(<span class="keyword">...</span>
+0260                     wavLenInUm,minAngle,maxAngle,angleStep,<span class="keyword">...</span>
+0261                     primWavLenInUm,indexBefore,indexAfter,<span class="keyword">...</span>
+0262                     handles.axesHandle, handles.tableHandle,handles.textHandle);
+0263                 
+0264         <span class="keyword">end</span>
+0265     <span class="keyword">case</span> lower(gridRaytraceAnalysis)
+0266         surfIndexList = (get(handles.popSurfaceIndex,<span class="string">'String'</span>));
+0267         surfIndexString = surfIndexList(get(handles.popSurfaceIndex,<span class="string">'Value'</span>),:);
+0268         surfIndex = str2double(surfIndexString);
+0269         <span class="keyword">if</span> isnan(surfIndex)
+0270             disp(<span class="string">'The surface index should be valid index number'</span>);
+0271             <span class="keyword">return</span>;
+0272         <span class="keyword">end</span>
+0273         
+0274         wavLengthIndexList = (get(handles.popWavelengthIndex,<span class="string">'String'</span>));
+0275         wavLengthIndexString = (wavLengthIndexList(get(handles.popWavelengthIndex,<span class="string">'Value'</span>),:));
+0276         <span class="keyword">if</span> strcmpi(wavLengthIndexString,<span class="string">'New Wavelength'</span>)
+0277         <span class="keyword">elseif</span> strcmpi(wavLengthIndexString,<span class="string">'All'</span>)
+0278             wavIndex = 1:1:currentOpticalSystem1.NumberOfWavelengths;
+0279         <span class="keyword">else</span>
+0280             wavIndex = str2double(wavLengthIndexString);
+0281         <span class="keyword">end</span>
+0282         
+0283         fldIndexList = (get(handles.popFieldIndex,<span class="string">'String'</span>));
+0284         fldIndexString = (fldIndexList(get(handles.popFieldIndex,<span class="string">'Value'</span>),:));
+0285         <span class="keyword">if</span> strcmpi(fldIndexString,<span class="string">'All'</span>)
+0286             fldIndex = 1:1:currentOpticalSystem1.NumberOfFieldPoints;
+0287         <span class="keyword">else</span>
+0288             fldIndex = str2double(fldIndexString);
+0289         <span class="keyword">end</span>
+0290         
+0291         
+0292         <span class="comment">% Extract the wavelength and field point</span>
+0293         wavLen =  [(currentOpticalSystem1.WavelengthMatrix(wavIndex,1))'];
+0294         fieldPointXY =  [(currentOpticalSystem1.FieldPointMatrix(fldIndex,1:2))'];
+0295         <span class="comment">% 1: Cartesian 2: Polar Grid 3: Hexagonal</span>
+0296         <span class="comment">% 4: Isoenergetic Circular 5: Tangential Plane 6: Sagital Plane 7:Random</span>
+0297         
+0298         <span class="comment">% Grid size is seq of odd numbers</span>
+0299         gridSizeList = (get(handles.popPupilGridSize,<span class="string">'String'</span>));
+0300         gridSize = (gridSizeList{get(handles.popPupilGridSize,<span class="string">'Value'</span>),:});
+0301         
+0302         sampleGridSizeX = str2double(gridSize(1:findstr(gridSize,<span class="string">'x'</span>)-1));
+0303         sampleGridSizeY = str2double(gridSize(findstr(gridSize,<span class="string">'x'</span>)+1:end));
+0304         sampleGridSize = max([sampleGridSizeX,sampleGridSizeY]);
+0305         
+0306         <span class="comment">% Read initial polarization state for pupil</span>
+0307         <span class="comment">% polarization map</span>
+0308         
+0309         jonesMagS = str2double(<span class="keyword">...</span>
+0310             get(handles.txtMagJs,<span class="string">'String'</span>));
+0311         jonesMagP = str2double(<span class="keyword">...</span>
+0312             get(handles.txtMagJp,<span class="string">'String'</span>));
+0313         jonesPhaseS = str2double(<span class="keyword">...</span>
+0314             get(handles.txtPhaseJs,<span class="string">'String'</span>))*pi/180;
+0315         jonesPhaseP = str2double(<span class="keyword">...</span>
+0316             get(handles.txtPhaseJp,<span class="string">'String'</span>))*pi/180;
+0317         JonesVec = <span class="keyword">...</span>
+0318             [jonesMagS*exp(1i*jonesPhaseS);<span class="keyword">...</span>
+0319             jonesMagP*exp(1i*jonesPhaseP)];
+0320         
+0321         
+0322         <span class="keyword">switch</span> lower(handles.Name)
+0323             <span class="keyword">case</span> lower(<span class="string">'amplitudeTransmissionMap'</span>)
+0324                 currentOpticalSystem1.plotAmplitudeTransmissionMap<span class="keyword">...</span>
+0325                     (surfIndex,wavLen,fieldPointXY,<span class="keyword">...</span>
+0326                     sampleGridSize,handles.panelMainTab(2));
+0327             <span class="keyword">case</span> lower(<span class="string">'phaseMap'</span>)
+0328                 currentOpticalSystem1.plotPhaseMap<span class="keyword">...</span>
+0329                     (surfIndex,wavLen,fieldPointXY,<span class="keyword">...</span>
+0330                     sampleGridSize,handles.panelMainTab(2));
+0331             <span class="keyword">case</span> lower(<span class="string">'wavefrontDiattenuationMap'</span>)
+0332                 currentOpticalSystem1.plotWavefrontDiattenuationMap<span class="keyword">...</span>
+0333                     (surfIndex,wavLen,fieldPointXY,<span class="keyword">...</span>
+0334                     sampleGridSize,handles.panelMainTab(2));
+0335             <span class="keyword">case</span> lower(<span class="string">'wavefrontRetardanceMap'</span>)
+0336                 currentOpticalSystem1.plotWavefrontRetardanceMap<span class="keyword">...</span>
+0337                     (surfIndex,wavLen,fieldPointXY,<span class="keyword">...</span>
+0338                     sampleGridSize,handles.panelMainTab(2)) ;
+0339                 
+0340             <span class="keyword">case</span> lower(<span class="string">'polarizationEllipseMap'</span>)
+0341                 currentOpticalSystem1.plotPupilPolarizationEllipseMap<span class="keyword">...</span>
+0342                     (surfIndex,wavLen,fieldPointXY,<span class="keyword">...</span>
+0343                     sampleGridSize,JonesVec,handles.panelMainTab(2)) ;
+0344             <span class="keyword">case</span> lower(<span class="string">'wavefrontAtExitPupil'</span>)
+0345                 <span class="comment">% read zernike coefiicient number popup</span>
+0346                 zerCoeffList = (get(handles.popZernikeCoefficientNumber,<span class="string">'String'</span>));
+0347                 zerCoeffString = (zerCoeffList(get(handles.popZernikeCoefficientNumber,<span class="string">'Value'</span>),:));
+0348                 zerCoeff = str2double(zerCoeffString);
+0349                 
+0350                 polarized = get(handles.chkFieldComponent,<span class="string">'Value'</span>);
+0351                 <span class="keyword">if</span> ~polarized
+0352                     JonesVec = [NaN;NaN];
+0353                     fieldComponent = <span class="string">''</span>;
+0354                 <span class="keyword">else</span>
+0355                     <span class="comment">% Grid size is seq of odd numbers</span>
+0356                     fieldComponentList = (get(handles.popFieldComponent,<span class="string">'String'</span>));
+0357                     fieldComponent = (fieldComponentList{get(handles.popFieldComponent,<span class="string">'Value'</span>),:});
+0358                 <span class="keyword">end</span>
+0359                 
+0360                 currentOpticalSystem1.plotWavefrontAtExitPupil<span class="keyword">...</span>
+0361                     (wavLen,fieldPointXY,sampleGridSize,zerCoeff,<span class="keyword">...</span>
+0362                     polarized,JonesVec,fieldComponent,<span class="keyword">...</span>
+0363                     handles.panelMainTab(2),handles.textHandle) ;
+0364             <span class="keyword">case</span> lower(<span class="string">'FFTPSF'</span>)
+0365                 spotPlotRadius = str2double(<span class="keyword">...</span>
+0366                     get(handles.txtPSFPlotRadius,<span class="string">'String'</span>));
+0367                 
+0368                 polarized = get(handles.chkFieldComponent,<span class="string">'Value'</span>);
+0369                 <span class="keyword">if</span> ~polarized
+0370                     JonesVec = [NaN;NaN];
+0371                     fieldComponent = <span class="string">''</span>;
+0372                 <span class="keyword">else</span>
+0373                     <span class="comment">% Grid size is seq of odd numbers</span>
+0374                     fieldComponentList = (get(handles.popFieldComponent,<span class="string">'String'</span>));
+0375                     fieldComponent = (fieldComponentList{get(handles.popFieldComponent,<span class="string">'Value'</span>),:});
+0376                 <span class="keyword">end</span>
+0377                 
+0378                 currentOpticalSystem1.plotFFTPointSpreadFunction<span class="keyword">...</span>
+0379                     (wavLen,fieldPointXY,sampleGridSize,spotPlotRadius,<span class="keyword">...</span>
+0380                     polarized,JonesVec,fieldComponent,<span class="keyword">...</span>
+0381                     handles.panelMainTab(2),handles.textHandle) ;
+0382         <span class="keyword">end</span>
+0383     <span class="keyword">case</span> lower(rayTracingAnalysis)
+0384         <span class="comment">% Read Hx,Hy,Px,Py and Wavelegth</span>
+0385         Hx = str2double(get(handles.txtHx,<span class="string">'String'</span>));
+0386         Hy = str2double(get(handles.txtHy,<span class="string">'String'</span>));
+0387         Px = str2double(get(handles.txtPx,<span class="string">'String'</span>));
+0388         Py = str2double(get(handles.txtPy,<span class="string">'String'</span>));
+0389         wavLen = str2double(get(handles.txtWavelength,<span class="string">'String'</span>));
+0390         showInTabular = get(handles.chkShowInTabular,<span class="string">'Value'</span>);
+0391         <span class="comment">% Compute Initial Direction and Position</span>
+0392         
+0393         <span class="comment">% Pupil Normalization is Radial</span>
+0394         pupilNormFactor = currentOpticalSystem1.getEntrancePupilDiameter/2;
+0395         pupilZ = currentOpticalSystem1.getEntrancePupilLocation;
+0396         pupilX = Px * pupilNormFactor;
+0397         pupilY = Py * pupilNormFactor;
+0398         
+0399         <span class="comment">% Field normalization can be either radial or</span>
+0400         <span class="comment">% rectangular</span>
+0401         objZ = -currentOpticalSystem1.SurfaceArray(1).Thickness;
+0402         fieldMatrix = currentOpticalSystem1.FieldPointMatrix;
+0403         fieldType = currentOpticalSystem1.FieldType;
+0404         
+0405         <span class="keyword">switch</span> lower(currentOpticalSystem1.FieldNormalization)
+0406             <span class="keyword">case</span> lower(<span class="string">'Rectangular'</span>)
+0407                 Fx = max(abs(fieldMatrix(:,1)));
+0408                 Fy = max(abs(fieldMatrix(:,2)));
+0409                 objFieldX = Hx * Fx;
+0410                 objFieldY = Hy * Fy;
+0411             <span class="keyword">case</span> lower(<span class="string">'Radial'</span>)
+0412                 Fr = max(abs(sqrt((fieldMatrix(:,1)).^2 + (fieldMatrix(:,2)).^2 )));
+0413                 objFieldX = Hx * Fr;
+0414                 objFieldY = Hy * Fr;
+0415         <span class="keyword">end</span>
+0416         pupilPointPosition = [pupilX,pupilY,pupilZ]';
+0417         <span class="keyword">switch</span> lower(fieldType)
+0418             <span class="keyword">case</span> lower(<span class="string">'ObjectHeight'</span>)
+0419                 <span class="comment">% The given obj field values are ray positions</span>
+0420                 rayPosition = [objFieldX,objFieldY,objZ]';
+0421                 rayDirection = (pupilPointPosition - rayPosition)/(norm(pupilPointPosition - rayPosition));
+0422             <span class="keyword">case</span> lower(<span class="string">'Angle'</span>)
+0423                 <span class="comment">% The given obj field values are ray directions</span>
+0424                 
+0425                 <span class="comment">% The angle given indicates the direction of the cheif ray</span>
+0426                 <span class="comment">% Feild points are given by angles</span>
+0427                 angX = objFieldX*pi/180;
+0428                 angY = objFieldY*pi/180;
+0429                 
+0430                 <span class="comment">%convert field angle to ray direction as in Zemax</span>
+0431                 dz = sqrt(1./((tan (angX)).^2+(tan (angY)).^2+1));
+0432                 dx = dz.*tan (angX);
+0433                 dy = dz.*tan (angY);
+0434                 cheifRayDirection = [dx;dy;dz];
+0435                 <span class="comment">% Field point to the center of entrance pupil</span>
+0436                 pupilZLocation = (currentOpticalSystem1.getEntrancePupilLocation);
+0437                 <span class="keyword">if</span> abs(currentOpticalSystem1.SurfaceArray(1).Thickness) &gt; 10^10 <span class="comment">% object at infinity</span>
+0438                     objThick = 0;
+0439                 <span class="keyword">else</span>
+0440                     objThick  = currentOpticalSystem1.SurfaceArray(1).Thickness;
+0441                 <span class="keyword">end</span>
+0442                 
+0443                 radFieldToEnP = (objThick + pupilZLocation)./cheifRayDirection(3,:);
+0444                 <span class="comment">% Initial position of cheif ray</span>
+0445                 cheifRayPosition = <span class="keyword">...</span>
+0446                     [-radFieldToEnP.*cheifRayDirection(1,:);<span class="keyword">...</span>
+0447                     -radFieldToEnP.*cheifRayDirection(2,:);<span class="keyword">...</span>
+0448                     -objThick];
+0449                 
+0450                 <span class="keyword">if</span> abs(currentOpticalSystem1.SurfaceArray(1).Thickness) &gt; 10^10
+0451                     <span class="comment">% collimated ray</span>
+0452                     rayDirection = cheifRayDirection;
+0453                     <span class="comment">% mariginal ray is just shifted ray of the cheif ray.</span>
+0454                     rayPosition(1:2,:) = cheifRayPosition(1:2,:) + pupilPointPosition(1:2,:);
+0455                     rayPosition(3,:) = -objThick;
+0456                 <span class="keyword">else</span>
+0457                     <span class="comment">% Initial position of cheif ray = that of mariginal ray</span>
+0458                     rayPosition = cheifRayPosition;
+0459                     <span class="comment">% Now compute the direction of the mariginal rays</span>
+0460                     rayDirection = pupilSamplingPoint - rayPosition;
+0461                     rayDirection = rayDirection./repmat(sqrt(sum(rayDirection.^2)),[3,1]);
+0462                 <span class="keyword">end</span>
+0463         <span class="keyword">end</span>
+0464         
+0465         <span class="keyword">switch</span> lower(handles.Name)
+0466             <span class="keyword">case</span> lower(<span class="string">'scalarRayTrace'</span>)
+0467                 polarized = 0;
+0468                 jonesVector = [NaN;NaN];
+0469             <span class="keyword">case</span> lower(<span class="string">'polarizationRayTrace'</span>)
+0470                 polarized = 1;
+0471                 <span class="comment">% Read initial polarization state for pupil</span>
+0472                 <span class="comment">% polarization map</span>
+0473                 jonesMagS = str2double(<span class="keyword">...</span>
+0474                     get(handles.txtMagJs,<span class="string">'String'</span>));
+0475                 jonesMagP = str2double(<span class="keyword">...</span>
+0476                     get(handles.txtMagJp,<span class="string">'String'</span>));
+0477                 jonesPhaseS = str2double(<span class="keyword">...</span>
+0478                     get(handles.txtPhaseJs,<span class="string">'String'</span>))*pi/180;
+0479                 jonesPhaseP = str2double(<span class="keyword">...</span>
+0480                     get(handles.txtPhaseJp,<span class="string">'String'</span>))*pi/180;
+0481                 jonesVector = <span class="keyword">...</span>
+0482                     [jonesMagS*exp(1i*jonesPhaseS);<span class="keyword">...</span>
+0483                     jonesMagP*exp(1i*jonesPhaseP)];
+0484         <span class="keyword">end</span>
+0485         
+0486         newRay = <a href="../../../AODParentDir/Class_Definition/@Ray/Ray.html" class="code" title="">Ray</a>;
+0487         newRay.Direction = rayDirection;
+0488         newRay.Position = rayPosition;
+0489         newRay.Polarized = polarized;
+0490         newRay.JonesVector = jonesVector;
+0491         <span class="comment">% Wavelength should be in m for ray objects</span>
+0492         wavLenInMeter = wavLen*currentOpticalSystem1.getWavelengthUnitFactor;
+0493         newRay.Wavelength = wavLenInMeter;
+0494         
+0495         polarizedRayTracerResult = currentOpticalSystem1.tracePolarizedRay(newRay);
+0496         <span class="comment">% Display results based on the type of raytrace</span>
+0497         nSurf = currentOpticalSystem1.NumberOfSurfaces;
+0498         [ lensUnitFactor,lensUnitText ] = currentOpticalSystem1.getLensUnitFactor;
+0499         [ wavUnitFactor, wavUnitText] = currentOpticalSystem1.getWavelengthUnitFactor;
+0500         stopIndex = currentOpticalSystem1.getStopIndex;
+0501         
+0502         <span class="keyword">switch</span> lower(handles.Name)
+0503             <span class="keyword">case</span> lower(<span class="string">'scalarRayTrace'</span>)
+0504                 <span class="keyword">if</span> isempty(polarizedRayTracerResult)||<span class="keyword">...</span>
+0505                         ~strcmpi(class(polarizedRayTracerResult),<span class="string">'RayTraceResult'</span>)
+0506                     msgbox <span class="string">'Ray trace failed. Look the command window for detail error.'</span>;
+0507                     <span class="keyword">return</span>;
+0508                 <span class="keyword">else</span>
+0509                     rayTraceResultText = <span class="keyword">...</span>
+0510                         [<span class="string">'-------------------------------------'</span>,<span class="keyword">...</span>
+0511                         <span class="string">'--------------------------------------'</span>];
+0512                     rayTraceResultText = char(rayTraceResultText,<span class="keyword">...</span>
+0513                         [<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; '</span>,<span class="keyword">...</span>
+0514                         <span class="string">'Scalar Ray Trace Results '</span>,<span class="keyword">...</span>
+0515                         <span class="string">'&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>]);
+0516                     rayTraceResultText = char(rayTraceResultText,<span class="keyword">...</span>
+0517                         [<span class="string">'-------------------------------------'</span>,<span class="keyword">...</span>
+0518                         <span class="string">'--------------------------------------'</span>],<span class="keyword">...</span>
+0519                         [<span class="string">'Normalized X Field Coord(Hx) = '</span>,num2str(Hx)],<span class="keyword">...</span>
+0520                         [<span class="string">'Normalized Y Field Coord(Hy) = '</span>,num2str(Hy)],<span class="keyword">...</span>
+0521                         [<span class="string">'Normalized X Pupil Coord(Px) = '</span>,num2str(Px)],<span class="keyword">...</span>
+0522                         [<span class="string">'Normalized Y Pupil Coord(Py) = '</span>,num2str(Py)],<span class="keyword">...</span>
+0523                         [<span class="string">'Wavelength = '</span>,num2str(wavLen)],<span class="keyword">...</span>
+0524                         [<span class="string">'Wavelength Unit = '</span>,wavUnitText],<span class="keyword">...</span>
+0525                         [<span class="string">'Lens Unit = '</span>,lensUnitText],<span class="keyword">...</span>
+0526                         [<span class="string">'Reference coordinate is the first surface of the optical system.'</span>],<span class="keyword">...</span>
+0527                         [<span class="string">'Direction cosines are after refraction or reflection on the given surface.'</span>]);
+0528                     
+0529                     
+0530                     <span class="comment">% Now Make the output in tabular and</span>
+0531                     <span class="comment">% surface-by-surface sequential format</span>
+0532                     rayTraceResultTabularText = rayTraceResultText;
+0533                     rayTraceResultSeqText = rayTraceResultText;
+0534                     
+0535                     rayTraceResultTabularText = char(rayTraceResultTabularText,<span class="keyword">...</span>
+0536                         [<span class="string">'--------------------------------------------'</span>,<span class="keyword">...</span>
+0537                         <span class="string">'---------------------------------------------'</span>,<span class="keyword">...</span>
+0538                         <span class="string">'--------------------------------------------'</span>,<span class="keyword">...</span>
+0539                         <span class="string">'--------------------------------------------'</span>],<span class="keyword">...</span>
+0540                         [<span class="string">'Surf    X-Coord         Y-Coord         Z-Coord         '</span>,<span class="keyword">...</span>
+0541                         <span class="string">'X-Cos           Y-Cos           Z-Cos           '</span>,<span class="keyword">...</span>
+0542                         <span class="string">'X-Norm          Y-Norm         Z-Norm          '</span>,<span class="keyword">...</span>
+0543                         <span class="string">'Angle In      Path Length'</span>],<span class="keyword">...</span>
+0544                         [<span class="string">'--------------------------------------------'</span>,<span class="keyword">...</span>
+0545                         <span class="string">'---------------------------------------------'</span>,<span class="keyword">...</span>
+0546                         <span class="string">'--------------------------------------------'</span>,<span class="keyword">...</span>
+0547                         <span class="string">'--------------------------------------------'</span>]);
+0548                     result = [[1:nSurf]',<span class="keyword">...</span>
+0549                         [polarizedRayTracerResult.RayIntersectionPoint]',<span class="keyword">...</span>
+0550                         [polarizedRayTracerResult.ExitRayDirection]',<span class="keyword">...</span>
+0551                         [polarizedRayTracerResult.SurfaceNormal]',<span class="keyword">...</span>
+0552                         [polarizedRayTracerResult.IncidenceAngle]'*180/pi,<span class="keyword">...</span>
+0553                         [polarizedRayTracerResult.PathLength]'];
+0554                     <span class="comment">% Convert double to cell matrix</span>
+0555                     resultCellArray = cellstr(num2str(result,<span class="keyword">...</span>
+0556                         <span class="string">'%5d %15.5e %15.5e %15.5e %15.5e %15.5e %15.5e %15.5e %15.5e %15.5e %15.5e %15.5e'</span>));
+0557                     rayTraceResultTabularText = char(rayTraceResultTabularText,char(resultCellArray));
+0558                     <span class="comment">% Now build surface by surface output</span>
+0559                     <span class="keyword">for</span> kk = 1:1:nSurf
+0560                         noIntersection = polarizedRayTracerResult(kk).NoIntersectionPoint;
+0561                         outOfApert = polarizedRayTracerResult(kk).OutOfAperture;
+0562                         totInternalRef = polarizedRayTracerResult(kk).TotalInternalReflection;
+0563                         
+0564                         rayPos = polarizedRayTracerResult(kk).RayIntersectionPoint;
+0565                         rayDir = polarizedRayTracerResult(kk).ExitRayDirection;
+0566                         surfNorm = polarizedRayTracerResult(kk).SurfaceNormal;
+0567                         incAngle = (polarizedRayTracerResult(kk).IncidenceAngle) * 180/pi;
+0568                         pathLen = polarizedRayTracerResult(kk).PathLength;
+0569                         
+0570                         rayTraceResultSeqText = char(rayTraceResultSeqText,<span class="keyword">...</span>
+0571                             [<span class="string">'---------------------------------------'</span>,<span class="keyword">...</span>
+0572                             <span class="string">'--------------------------------------'</span>],<span class="keyword">...</span>
+0573                             [<span class="string">'Tracing Ray to Surface : '</span>, num2str(kk)],<span class="keyword">...</span>
+0574                             [<span class="string">'---------------------------------------'</span>,<span class="keyword">...</span>
+0575                             <span class="string">'--------------------------------------'</span>],<span class="keyword">...</span>
+0576                             [<span class="string">'No Intersection (1 True, 0 False) : '</span>, num2str(noIntersection)],<span class="keyword">...</span>
+0577                             [<span class="string">'Out Of Aperture (1 True, 0 False) : '</span>, num2str(outOfApert)],<span class="keyword">...</span>
+0578                             [<span class="string">'TIR (1 True, 0 False)             : '</span>, num2str(totInternalRef)],<span class="keyword">...</span>
+0579                             [<span class="string">'Ray Intersection Point (Px,Py,Pz) : ('</span>, num2str(rayPos',<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0580                             [<span class="string">'Exit Ray Direction (Dx,Dy,Dz)     : ('</span>, num2str(rayDir',<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0581                             [<span class="string">'Surface Normal(Nx,Ny,Nz)          : ('</span>, num2str(surfNorm',<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0582                             [<span class="string">'Incidence Angle (degree)           : '</span>, num2str(incAngle,<span class="string">'%+12.4e'</span>)],<span class="keyword">...</span>
+0583                             [<span class="string">'Path Length                       : '</span>, num2str(pathLen,<span class="string">'%+12.4e'</span>)]);
+0584                     <span class="keyword">end</span>
+0585                     <span class="keyword">if</span> showInTabular
+0586                         set(handles.textHandle,<span class="keyword">...</span>
+0587                             <span class="string">'String'</span>,rayTraceResultTabularText,<span class="keyword">...</span>
+0588                             <span class="string">'FontSize'</span>,9);
+0589                     <span class="keyword">else</span>
+0590                         set(handles.textHandle,<span class="keyword">...</span>
+0591                             <span class="string">'String'</span>,rayTraceResultSeqText,<span class="keyword">...</span>
+0592                             <span class="string">'FontSize'</span>,9);
+0593                     <span class="keyword">end</span>
+0594                     
+0595                     
+0596                     <span class="comment">% disp(rayTraceResultTabularText);</span>
+0597                     <span class="comment">% disp(rayTraceResultSeqText);</span>
+0598                     
+0599                     <span class="comment">% Click text tab programatically</span>
+0600                     ind = 3;
+0601                     childWindow.selectMainTab(ind);
+0602                     
+0603                 <span class="keyword">end</span>
+0604             <span class="keyword">case</span> lower(<span class="string">'polarizationRayTrace'</span>)
+0605                 <span class="keyword">if</span> isempty(polarizedRayTracerResult)||<span class="keyword">...</span>
+0606                         ~strcmpi(class(polarizedRayTracerResult),<span class="string">'RayTraceResult'</span>)
+0607                     msgbox <span class="string">'Ray trace failed. Look the command window for detail error.'</span>;
+0608                     <span class="keyword">return</span>;
+0609                 <span class="keyword">else</span>
+0610                     rayTraceResultText = <span class="keyword">...</span>
+0611                         [<span class="string">'-------------------------------------'</span>,<span class="keyword">...</span>
+0612                         <span class="string">'--------------------------------------'</span>];
+0613                     rayTraceResultText = char(rayTraceResultText,<span class="keyword">...</span>
+0614                         [<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; '</span>,<span class="keyword">...</span>
+0615                         <span class="string">'Polarized Ray Trace Results '</span>,<span class="keyword">...</span>
+0616                         <span class="string">'&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>]);
+0617                     rayTraceResultText = char(rayTraceResultText,<span class="keyword">...</span>
+0618                         [<span class="string">'---------------------------------------'</span>,<span class="keyword">...</span>
+0619                         <span class="string">'----------------------------------------'</span>],<span class="keyword">...</span>
+0620                         [<span class="string">'Normalized X Field Coord(Hx) = '</span>,num2str(Hx)],<span class="keyword">...</span>
+0621                         [<span class="string">'Normalized Y Field Coord(Hy) = '</span>,num2str(Hy)],<span class="keyword">...</span>
+0622                         [<span class="string">'Normalized X Pupil Coord(Px) = '</span>,num2str(Px)],<span class="keyword">...</span>
+0623                         [<span class="string">'Normalized Y Pupil Coord(Py) = '</span>,num2str(Py)],<span class="keyword">...</span>
+0624                         [<span class="string">'Wavelength = '</span>,num2str(wavLen)],<span class="keyword">...</span>
+0625                         [<span class="string">'Initial Jones Vector = [ '</span>,num2str(jonesVector(1)),<span class="keyword">...</span>
+0626                         <span class="string">' ; '</span>,num2str(jonesVector(2)),<span class="string">' ]'</span>],<span class="keyword">...</span>
+0627                         [<span class="string">'Wavelength Unit = '</span>,wavUnitText],<span class="keyword">...</span>
+0628                         [<span class="string">'Lens Unit = '</span>,lensUnitText],<span class="keyword">...</span>
+0629                         [<span class="string">'Reference coordinate is the first surface of the optical system.'</span>],<span class="keyword">...</span>
+0630                         [<span class="string">'All results are computed after refraction or reflection on the given surface.'</span>]);
+0631                     
+0632                     <span class="comment">% Now Make the output in tabular and</span>
+0633                     <span class="comment">% surface-by-surface sequential format</span>
+0634                     rayTraceResultTabularText = rayTraceResultText;
+0635                     rayTraceResultSeqText = rayTraceResultText;
+0636                     
+0637                     <span class="comment">% Result view options</span>
+0638                     dispFailureInfo = 1;
+0639                     dispPolVector = 1;
+0640                     dispPolMatrix = 1;
+0641                     
+0642                     <span class="comment">% Construct tabular output</span>
+0643                     <span class="comment">% rayTraceResultTabularText</span>
+0644                     
+0645                     <span class="comment">% Now build surface by surface output</span>
+0646                     <span class="keyword">for</span> kk = 1:1:nSurf
+0647                         noIntersection = polarizedRayTracerResult(kk).NoIntersectionPoint;
+0648                         outOfApert = polarizedRayTracerResult(kk).OutOfAperture;
+0649                         totInternalRef = polarizedRayTracerResult(kk).TotalInternalReflection;
+0650                         
+0651                         incRayDir = polarizedRayTracerResult(kk).IncidentRayDirection;
+0652                         refRayDir = polarizedRayTracerResult(kk).ExitRayDirection;
+0653                         surfNorm = polarizedRayTracerResult(kk).SurfaceNormal;
+0654                         pathLen = polarizedRayTracerResult(kk).PathLength;
+0655                         
+0656                         polVectorBefore = polarizedRayTracerResult(kk).PolarizationVectorBeforeCoating;
+0657                         polVectorAfter = polarizedRayTracerResult(kk).PolarizationVectorAfterCoating;
+0658                         jonesMatrix =  polarizedRayTracerResult(kk).CoatingJonesMatrix;
+0659                         polMatrix =  polarizedRayTracerResult(kk).CoatingPMatrix;
+0660                         qMatrix =  polarizedRayTracerResult(kk).CoatingQMatrix;
+0661                         totalPMatrix =  polarizedRayTracerResult(kk).TotalPMatrix;
+0662                         totalQMatrix =  polarizedRayTracerResult(kk).TotalQMatrix;
+0663                         [ellBefore,ellAfter] = polarizedRayTracerResult(kk).getPolarizationEllipseParameters;
+0664                         
+0665                         rayTraceResultSeqText = char(rayTraceResultSeqText,<span class="keyword">...</span>
+0666                             [<span class="string">'-----------------------------------------'</span>,<span class="keyword">...</span>
+0667                             <span class="string">'----------------------------------------'</span>],<span class="keyword">...</span>
+0668                             [<span class="string">'Tracing Ray to Surface : '</span>, num2str(kk)],<span class="keyword">...</span>
+0669                             [<span class="string">'-----------------------------------------'</span>,<span class="keyword">...</span>
+0670                             <span class="string">'----------------------------------------'</span>]);
+0671                         <span class="keyword">if</span> dispFailureInfo
+0672                             rayTraceResultSeqText = char(rayTraceResultSeqText,<span class="keyword">...</span>
+0673                                 [<span class="string">'No Intersection (1 True, 0 False)       : '</span>, num2str(noIntersection)],<span class="keyword">...</span>
+0674                                 [<span class="string">'Out Of Aperture (1 True, 0 False)       : '</span>, num2str(outOfApert)],<span class="keyword">...</span>
+0675                                 [<span class="string">'TIR (1 True, 0 False)                   : '</span>, num2str(totInternalRef)]);
+0676                         <span class="keyword">end</span>
+0677                         rayTraceResultSeqText = char(rayTraceResultSeqText,<span class="keyword">...</span>
+0678                             [<span class="string">'Incident Ray Direction (Kpx,Kpy,Kpz)    : ('</span>, num2str(incRayDir',<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0679                             [<span class="string">'Exit Ray Direction (Kp1x,Kp1y,Kp1z)     : ('</span>, num2str(refRayDir',<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0680                             [<span class="string">'Surface Normal(Nx,Ny,Nz)                : ('</span>, num2str(surfNorm',<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0681                             [<span class="string">'Path Length (theta)                     : '</span>, num2str(pathLen,<span class="string">'%+12.4e'</span>)]);
+0682                         <span class="keyword">if</span> dispPolVector
+0683                             rayTraceResultSeqText = char(rayTraceResultSeqText,<span class="keyword">...</span>
+0684                                 [<span class="string">'Polarization Vector Before (E0x,E0y,E0z): ('</span>, num2str(real(polVectorBefore'),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0685                                 [<span class="string">'                       + i*(E0x,E0y,E0z): ('</span>, num2str(imag(polVectorBefore'),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0686                                 [<span class="string">'Polarization Vector After (E1x,E1y,E1z) : ('</span>, num2str(real(polVectorAfter'),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0687                                 [<span class="string">'                      + i*(E1x,E1y,E1z) : ('</span>, num2str(imag(polVectorAfter'),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0688                                 [<span class="string">'Semi axis of XY Ellipse Before (EM,Em)  : ('</span>, num2str((ellBefore(1:2))',<span class="string">'%+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0689                                 [<span class="string">'Angle of XY Ellipse Before (theta)      : ('</span>, num2str(ellBefore(4),<span class="string">'%+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0690                                 [<span class="string">'Semi axis of XY Ellipse After (EM,Em)   : ('</span>, num2str((ellAfter(1:2))',<span class="string">'%+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0691                                 [<span class="string">'Angle of XY Ellipse After (theta)       : ('</span>, num2str(ellAfter(4),<span class="string">'%+12.4e'</span>),<span class="string">')'</span>]);
+0692                         <span class="keyword">end</span>
+0693                         <span class="keyword">if</span> dispPolMatrix
+0694                             rayTraceResultSeqText = char(rayTraceResultSeqText,<span class="keyword">...</span>
+0695                                 [<span class="string">'Coating Jones Matrix(J11,J12)           : ('</span>, num2str(real(jonesMatrix(1,:)),<span class="string">'%+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0696                                 [<span class="string">'                    (J21,J22)             ('</span>, num2str(real(jonesMatrix(2,:)),<span class="string">'%+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0697                                 [<span class="string">'                 1i*(J11,J12)           : ('</span>, num2str(imag(jonesMatrix(1,:)),<span class="string">'%+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0698                                 [<span class="string">'                 1i*(J21,J22)             ('</span>, num2str(imag(jonesMatrix(2,:)),<span class="string">'%+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0699                                 [<span class="string">'3D Polarization Matrix(P11,P12,P13)     : ('</span>, num2str(real(polMatrix(1,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0700                                 [<span class="string">'                      (P21,P22,P23)       ('</span>, num2str(real(polMatrix(2,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0701                                 [<span class="string">'                      (P31,P32,P33)       ('</span>, num2str(real(polMatrix(3,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0702                                 [<span class="string">'                   1i*(P11,P12,P13)     : ('</span>, num2str(imag(polMatrix(1,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0703                                 [<span class="string">'                   1i*(P21,P22,P23)       ('</span>, num2str(imag(polMatrix(2,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0704                                 [<span class="string">'                   1i*(P31,P32,P33)       ('</span>, num2str(imag(polMatrix(3,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0705                                 [<span class="string">'Coord. Trans. Q Matrix(Q11,Q12,Q13)     : ('</span>, num2str(real(qMatrix(1,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0706                                 [<span class="string">'                      (Q21,Q22,Q23)       ('</span>, num2str(real(qMatrix(2,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0707                                 [<span class="string">'                      (Q31,Q32,Q33)       ('</span>, num2str(real(qMatrix(3,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0708                                 [<span class="string">'                   1i*(Q11,Q12,Q13)     : ('</span>, num2str(imag(qMatrix(1,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0709                                 [<span class="string">'                   1i*(Q21,Q22,Q23)       ('</span>, num2str(imag(qMatrix(2,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0710                                 [<span class="string">'                   1i*(Q31,Q32,Q33)       ('</span>, num2str(imag(qMatrix(3,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0711                                 [<span class="string">'Cumulative P Matrix   (P11,P12,P13)     : ('</span>, num2str(real(totalPMatrix(1,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0712                                 [<span class="string">'                      (P21,P22,P23)       ('</span>, num2str(real(totalPMatrix(2,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0713                                 [<span class="string">'                      (P31,P32,P33)       ('</span>, num2str(real(totalPMatrix(3,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0714                                 [<span class="string">'                   1i*(P11,P12,P13)     : ('</span>, num2str(imag(totalPMatrix(1,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0715                                 [<span class="string">'                   1i*(P21,P22,P23)       ('</span>, num2str(imag(totalPMatrix(2,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0716                                 [<span class="string">'                   1i*(P31,P32,P33)       ('</span>, num2str(imag(totalPMatrix(3,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0717                                 [<span class="string">'Cumulative Q Matrix   (Q11,Q12,Q13)     : ('</span>, num2str(real(totalQMatrix(1,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0718                                 [<span class="string">'                      (Q21,Q22,Q23)       ('</span>, num2str(real(totalQMatrix(2,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0719                                 [<span class="string">'                      (Q31,Q32,Q33)       ('</span>, num2str(real(totalQMatrix(3,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0720                                 [<span class="string">'                   1i*(Q11,Q12,Q13)     : ('</span>, num2str(imag(totalQMatrix(1,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0721                                 [<span class="string">'                   1i*(Q21,Q22,Q23)       ('</span>, num2str(imag(totalQMatrix(2,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>],<span class="keyword">...</span>
+0722                                 [<span class="string">'                   1i*(Q31,Q32,Q33)       ('</span>, num2str(imag(totalQMatrix(3,:)),<span class="string">'%+12.4e %+12.4e %+12.4e'</span>),<span class="string">')'</span>]);
+0723                         <span class="keyword">end</span>
+0724                     <span class="keyword">end</span>
+0725                     <span class="keyword">if</span> showInTabular
+0726                         msgbox(<span class="string">'Tabular output is not currently available for polarization ray tracing'</span>);
+0727                         <span class="comment">% set(handles.textHandle,'String',rayTraceResultTabularText);</span>
+0728                         set(handles.textHandle,<span class="keyword">...</span>
+0729                             <span class="string">'String'</span>,rayTraceResultSeqText,<span class="keyword">...</span>
+0730                             <span class="string">'FontSize'</span>,9);
+0731                     <span class="keyword">else</span>
+0732                         set(handles.textHandle,<span class="keyword">...</span>
+0733                             <span class="string">'String'</span>,rayTraceResultSeqText,<span class="keyword">...</span>
+0734                             <span class="string">'FontSize'</span>,9);
+0735                     <span class="keyword">end</span>
+0736                     <span class="comment">% disp(rayTraceResultTabularText);</span>
+0737                     <span class="comment">% disp(rayTraceResultSeqText);</span>
+0738                     
+0739                     <span class="comment">% Click text tab programatically</span>
+0740                     ind = 3;
+0741                     childWindow.selectMainTab(ind);
+0742                 <span class="keyword">end</span>
+0743         <span class="keyword">end</span>
+0744         
+0745     <span class="keyword">case</span> lower(others)
+0746         <span class="keyword">switch</span> lower(handles.Name)
+0747             <span class="keyword">case</span> lower(<span class="string">'coatingRefractiveIndexProfile'</span>)
+0748                 <span class="comment">% Check for inputs whether to take coating from a given surface or use new</span>
+0749                 <span class="comment">% coating</span>
+0750                 surfIndexList = (get(handles.popSurfaceIndex,<span class="string">'String'</span>));
+0751                 surfIndexString = surfIndexList(get(handles.popSurfaceIndex,<span class="string">'Value'</span>),:);
+0752                 surfIndex = str2double(surfIndexString);
+0753                 <span class="keyword">if</span> strcmpi(surfIndexString,<span class="string">'New Coating'</span>)
+0754                     <span class="comment">% Read coating object from Coating Catalogue</span>
+0755                     name = get(handles.txtCoatingName,<span class="string">'String'</span>);
+0756                     catalogueList = currentOpticalSystem1.CoatingCataloguesList;
+0757                     caotingFound = 0;
+0758                     <span class="keyword">for</span> k = 1:size(catalogueList,1)
+0759                         catalogueName = catalogueList{k};
+0760                         myCoating = <a href="../../../AODParentDir/Catalogue_Module/extractObjectFromAODObjectCatalogue.html" class="code" title="function [ aodObject,objectIndex,dispInfo ] = extractObjectFromAODObjectCatalogue(objectType,objectName,objectCatalogueFullName )">extractObjectFromAODObjectCatalogue</a><span class="keyword">...</span>
+0761                             (<span class="string">'coating'</span>, name,catalogueName );
+0762                         <span class="keyword">if</span> strcmpi(class(myCoating),<span class="string">'Coating'</span>)
+0763                             caotingFound = 1;
+0764                             <span class="keyword">break</span>;
+0765                         <span class="keyword">end</span>
+0766                     <span class="keyword">end</span>
+0767                     <span class="keyword">if</span> ~caotingFound
+0768                         disp(<span class="string">'Coating not found'</span>);
+0769                         <span class="keyword">return</span>;
+0770                     <span class="keyword">end</span>
+0771                 <span class="keyword">elseif</span> ~isnan(surfIndex)
+0772                     <span class="comment">% Read the coating from the surface index</span>
+0773                     myCoating = currentOpticalSystem1.SurfaceArray<span class="keyword">...</span>
+0774                         (surfIndex).Coating;
+0775                 <span class="keyword">else</span>
+0776                     disp([<span class="string">'Error: The surface index should be either '</span><span class="keyword">...</span>
+0777                         <span class="string">'valid surface number or it should be New Caoting'</span>]);
+0778                     <span class="keyword">return</span>;
+0779                 <span class="keyword">end</span>
+0780                 myCoating.plotCoatingRefractiveIndexProfile<span class="keyword">...</span>
+0781                     (handles.axesHandle,handles.tableHandle,handles.textHandle);
+0782                 
+0783             <span class="keyword">case</span> lower(<span class="string">'footprintDiagram'</span>)
+0784                 surfIndexList = (get(handles.popSurfaceIndex,<span class="string">'String'</span>));
+0785                 surfIndexString = surfIndexList(get(handles.popSurfaceIndex,<span class="string">'Value'</span>));
+0786                 surfIndex = str2double(surfIndexString);
+0787                 <span class="keyword">if</span> isnan(surfIndex)
+0788                     disp(<span class="string">'The surface index should be valid index number'</span>);
+0789                     <span class="keyword">return</span>;
+0790                 <span class="keyword">end</span>
+0791                 numberOfRays = str2double(get(handles.txtNumberOfRay,<span class="string">'String'</span>));
+0792                 wavLengthIndexList = (get(handles.popWavelengthIndex,<span class="string">'String'</span>));
+0793                 wavLengthIndexString = (wavLengthIndexList(get(handles.popWavelengthIndex,<span class="string">'Value'</span>),:));
+0794                 <span class="keyword">if</span> strcmpi(wavLengthIndexString,<span class="string">'New Wavelength'</span>)
+0795                 <span class="keyword">elseif</span> strcmpi(wavLengthIndexString,<span class="string">'All'</span>)
+0796                     wavIndex = 1:1:currentOpticalSystem1.NumberOfWavelengths;
+0797                 <span class="keyword">else</span>
+0798                     wavIndex = str2double(wavLengthIndexString);
+0799                 <span class="keyword">end</span>
+0800                 
+0801                 fldIndexList = (get(handles.popFieldIndex,<span class="string">'String'</span>));
+0802                 fldIndexString = (fldIndexList(get(handles.popFieldIndex,<span class="string">'Value'</span>),:));
+0803                 <span class="keyword">if</span> strcmpi(fldIndexString,<span class="string">'All'</span>)
+0804                     fldIndex = 1:1:currentOpticalSystem1.NumberOfFieldPoints;
+0805                 <span class="keyword">else</span>
+0806                     fldIndex = str2double(fldIndexString);
+0807                 <span class="keyword">end</span>
+0808                 
+0809                 <span class="comment">% Extract the wavelength and field point</span>
+0810                 wavLen =  [(currentOpticalSystem1.WavelengthMatrix(wavIndex,1))'];
+0811                 fieldPointXY =  [(currentOpticalSystem1.FieldPointMatrix(fldIndex,1:2))'];
+0812                 <span class="comment">% 1: Cartesian 2: Polar Grid 3: Hexagonal</span>
+0813                 <span class="comment">% 4: Isoenergetic Circular 5: Tangential Plane 6: Sagital Plane 7:Random</span>
+0814                 PupSamplingType = get(handles.popPupilSamplingType,<span class="string">'Value'</span>);
+0815                 
+0816                 currentOpticalSystem1.plotFootprintDiagram(surfIndex,wavLen,<span class="keyword">...</span>
+0817                     fieldPointXY,numberOfRays,PupSamplingType,<span class="keyword">...</span>
+0818                     handles.axesHandle);
+0819                 
+0820             <span class="keyword">case</span> lower(<span class="string">'system2DLayoutDiagram'</span>)
+0821                 numberOfRays = str2double(get(handles.txtNumberOfRay,<span class="string">'String'</span>));
+0822                 
+0823                 wavLengthIndexList = (get(handles.popWavelengthIndex,<span class="string">'String'</span>));
+0824                 wavLengthIndexString = (wavLengthIndexList(get(handles.popWavelengthIndex,<span class="string">'Value'</span>),:));
+0825                 <span class="keyword">if</span> strcmpi(wavLengthIndexString,<span class="string">'New Wavelength'</span>)
+0826                 <span class="keyword">elseif</span> strcmpi(wavLengthIndexString,<span class="string">'All'</span>)
+0827                     wavIndex = 1:1:currentOpticalSystem1.NumberOfWavelengths;
+0828                 <span class="keyword">else</span>
+0829                     wavIndex = str2double(wavLengthIndexString);
+0830                 <span class="keyword">end</span>
+0831                 
+0832                 fldIndexList = (get(handles.popFieldIndex,<span class="string">'String'</span>));
+0833                 fldIndexString = (fldIndexList(get(handles.popFieldIndex,<span class="string">'Value'</span>),:));
+0834                 <span class="keyword">if</span> strcmpi(fldIndexString,<span class="string">'All'</span>)
+0835                     fldIndex = 1:1:currentOpticalSystem1.NumberOfFieldPoints;
+0836                 <span class="keyword">else</span>
+0837                     fldIndex = str2double(fldIndexString);
+0838                 <span class="keyword">end</span>
+0839                 
+0840                 
+0841                 <span class="comment">% Extract the wavelength and field point</span>
+0842                 wavLen =  [(currentOpticalSystem1.WavelengthMatrix(wavIndex,1))'];
+0843                 fieldPointXY =  [(currentOpticalSystem1.FieldPointMatrix(fldIndex,1:2))'];
+0844                 
+0845                 pupSampling = 5; <span class="comment">% Tangential plane sampling</span>
+0846                 
+0847                 <span class="comment">% compute totalRayPathMatrix = 3 X nSurf X nTotalRay</span>
+0848                 totalRayPathMatrix = currentOpticalSystem1.computeRayPathMatrix(wavLen,<span class="keyword">...</span>
+0849                     fieldPointXY,pupSampling,numberOfRays);
+0850                 
+0851                 currentOpticalSystem1.plot2DLayout(totalRayPathMatrix,<span class="keyword">...</span>
+0852                     handles.axesHandle);
+0853             <span class="keyword">case</span> lower(<span class="string">'system3DLayoutDiagram'</span>)
+0854                 numberOfRays = str2double(get(handles.txtNumberOfRay,<span class="string">'String'</span>));
+0855                 
+0856                 wavLengthIndexList = (get(handles.popWavelengthIndex,<span class="string">'String'</span>));
+0857                 wavLengthIndexString = (wavLengthIndexList(get(handles.popWavelengthIndex,<span class="string">'Value'</span>),:));
+0858                 <span class="keyword">if</span> strcmpi(wavLengthIndexString,<span class="string">'New Wavelength'</span>)
+0859                 <span class="keyword">elseif</span> strcmpi(wavLengthIndexString,<span class="string">'All'</span>)
+0860                     wavIndex = 1:1:currentOpticalSystem1.NumberOfWavelengths;
+0861                 <span class="keyword">else</span>
+0862                     wavIndex = str2double(wavLengthIndexString);
+0863                 <span class="keyword">end</span>
+0864                 
+0865                 fldIndexList = (get(handles.popFieldIndex,<span class="string">'String'</span>));
+0866                 fldIndexString = (fldIndexList(get(handles.popFieldIndex,<span class="string">'Value'</span>),:));
+0867                 <span class="keyword">if</span> strcmpi(fldIndexString,<span class="string">'All'</span>)
+0868                     fldIndex = 1:1:currentOpticalSystem1.NumberOfFieldPoints;
+0869                 <span class="keyword">else</span>
+0870                     fldIndex = str2double(fldIndexString);
+0871                 <span class="keyword">end</span>
+0872                 
+0873                 <span class="comment">% Extract the wavelength and field point</span>
+0874                 wavLen =  [(currentOpticalSystem1.WavelengthMatrix(wavIndex,1))'];
+0875                 fieldPointXY =  [(currentOpticalSystem1.FieldPointMatrix(fldIndex,1:2))'];
+0876                 <span class="comment">% 1: Cartesian 2: Polar Grid 3: Hexagonal</span>
+0877                 <span class="comment">% 4: Isoenergetic Circular 5: Tangential Plane 6: Sagital Plane 7:Random</span>
+0878                 pupSamplingType = get(handles.popPupilSamplingType,<span class="string">'Value'</span>);
+0879                 
+0880                 <span class="comment">% compute totalRayPathMatrix = 3 X nSurf X nTotalRay</span>
+0881                 totalRayPathMatrix = currentOpticalSystem1.computeRayPathMatrix(wavLen,<span class="keyword">...</span>
+0882                     fieldPointXY,pupSamplingType,numberOfRays);
+0883                 currentOpticalSystem1.plot3DLayout(totalRayPathMatrix,<span class="keyword">...</span>
+0884                     handles.axesHandle);
+0885             <span class="keyword">case</span> lower(<span class="string">'paraxialAnalysis'</span>)
+0886                 showOptions = struct();
+0887                 showOptions.TotalNumberOfSurfaces = get(handles.chkShowTotalNumberOfSurfaces,<span class="string">'Value'</span>);
+0888                 showOptions.StopSurfaceIndex = get(handles.chkShowStopSurfaceIndex,<span class="string">'Value'</span>);
+0889                 showOptions.SystemTotalTrack = get(handles.chkShowSystemTotalTrack,<span class="string">'Value'</span>);
+0890                 showOptions.EffectiveFocalLength = get(handles.chkShowEffectiveFocalLength,<span class="string">'Value'</span>);
+0891                 showOptions.BackFocalLength = get(handles.chkShowBackFocalLength,<span class="string">'Value'</span>);
+0892                 showOptions.AngularMagnification = get(handles.chkShowAngularMagnification,<span class="string">'Value'</span>);
+0893                 showOptions.EntrancePupilDiameter = get(handles.chkShowEntrancePupilDiameter,<span class="string">'Value'</span>);
+0894                 showOptions.EntrancePupilLocation = get(handles.chkShowEntrancePupilLocation,<span class="string">'Value'</span>);
+0895                 showOptions.ExitPupilDiameter = get(handles.chkShowExitPupilDiameter,<span class="string">'Value'</span>);
+0896                 showOptions.ExitPupilLocation = get(handles.chkShowExitPupilLocation,<span class="string">'Value'</span>);
+0897                 showOptions.ObjectSpaceNA = get(handles.chkShowObjectSpaceNA,<span class="string">'Value'</span>);
+0898                 showOptions.ImageSpaceNA = get(handles.chkShowImageSpaceNA,<span class="string">'Value'</span>);
+0899                 
+0900                 primaryWavLen = currentOpticalSystem1.getPrimaryWavelength;
+0901                 currentOpticalSystem1.performParaxialAnalysis(primaryWavLen,showOptions,handles.textHandle);
+0902                 <span class="comment">% Click text tab programatically</span>
+0903                 ind = 3;
+0904                 childWindow.selectMainTab(ind);
+0905             <span class="keyword">case</span> lower(<span class="string">'pupilApodization'</span>)
+0906                 <span class="comment">% Pupil Apodization</span>
+0907                 apodizationTypeList =  (get(handles.popApodizationType,<span class="string">'String'</span>));
+0908                 apodizationType = char<span class="keyword">...</span>
+0909                     (apodizationTypeList(get(handles.popApodizationType,<span class="string">'Value'</span>),:));
+0910                 apodizationParameters = struct();
+0911                 <span class="keyword">switch</span> lower(apodizationType)
+0912                     <span class="keyword">case</span> lower(<span class="string">'None'</span>)
+0913                         apodizationParameters = <span class="string">''</span>;
+0914                     <span class="keyword">case</span> lower(<span class="string">'Super Gaussian'</span>)
+0915                         apodizationParameters.MaximumIntensity =<span class="keyword">...</span>
+0916                             str2double(get(handles.txtApodMaximumIntensity,<span class="string">'String'</span>));
+0917                         apodizationParameters.Order = <span class="keyword">...</span>
+0918                             str2double(get(handles.txtApodOrder,<span class="string">'String'</span>));
+0919                         apodizationParameters.BeamRadius = <span class="keyword">...</span>
+0920                             str2double(get(handles.txtApodBeamRadius,<span class="string">'String'</span>));
+0921                 <span class="keyword">end</span>
+0922                 <span class="comment">% Grid size is seq of odd numbers</span>
+0923                 gridSizeList = (get(handles.popPupilGridSize,<span class="string">'String'</span>));
+0924                 gridSize = (gridSizeList{get(handles.popPupilGridSize,<span class="string">'Value'</span>),:});
+0925                 
+0926                 sampleGridSizeX = str2double(gridSize(1:findstr(gridSize,<span class="string">'x'</span>)-1));
+0927                 sampleGridSizeY = str2double(gridSize(findstr(gridSize,<span class="string">'x'</span>)+1:end));
+0928                 sampleGridSize = max([sampleGridSizeX,sampleGridSizeY]);
+0929                 
+0930                 currentOpticalSystem1.plotPupilApodization<span class="keyword">...</span>
+0931                     (apodizationType,apodizationParameters,<span class="keyword">...</span>
+0932                     sampleGridSize,handles.axesHandle);
+0933                 
+0934             <span class="keyword">case</span> lower(<span class="string">'transverseRayAberration'</span>)
+0935                 surfIndexList = (get(handles.popSurfaceIndex,<span class="string">'String'</span>));
+0936                 surfIndexString = surfIndexList(get(handles.popSurfaceIndex,<span class="string">'Value'</span>));
+0937                 surfIndex = str2double(surfIndexString);
+0938                 <span class="keyword">if</span> isnan(surfIndex)
+0939                     disp(<span class="string">'The surface index should be valid index number'</span>);
+0940                     <span class="keyword">return</span>;
+0941                 <span class="keyword">end</span>
+0942                 numberOfRays = str2double(get(handles.txtNumberOfRay,<span class="string">'String'</span>));
+0943                 wavLengthIndexList = (get(handles.popWavelengthIndex,<span class="string">'String'</span>));
+0944                 wavLengthIndexString = (wavLengthIndexList(get(handles.popWavelengthIndex,<span class="string">'Value'</span>),:));
+0945                 <span class="keyword">if</span> strcmpi(wavLengthIndexString,<span class="string">'New Wavelength'</span>)
+0946                 <span class="keyword">elseif</span> strcmpi(wavLengthIndexString,<span class="string">'All'</span>)
+0947                     wavIndex = 1:1:currentOpticalSystem1.NumberOfWavelengths;
+0948                 <span class="keyword">else</span>
+0949                     wavIndex = str2double(wavLengthIndexString);
+0950                 <span class="keyword">end</span>
+0951                 
+0952                 fldIndexList = (get(handles.popFieldIndex,<span class="string">'String'</span>));
+0953                 fldIndexString = (fldIndexList(get(handles.popFieldIndex,<span class="string">'Value'</span>),:));
+0954                 <span class="keyword">if</span> strcmpi(fldIndexString,<span class="string">'All'</span>)
+0955                     fldIndex = 1:1:currentOpticalSystem1.NumberOfFieldPoints;
+0956                 <span class="keyword">else</span>
+0957                     fldIndex = str2double(fldIndexString);
+0958                 <span class="keyword">end</span>
+0959                 
+0960                 <span class="comment">% Check condition that both field index and wavelength are</span>
+0961                 <span class="comment">% not multiple at the same time. To avoid having multiple</span>
+0962                 <span class="comment">% graphs, All fiedls can be analysed with specific</span>
+0963                 <span class="comment">% wavelength and vice versa.</span>
+0964                 <span class="keyword">if</span> strcmpi(fldIndexString,<span class="string">'All'</span>) &amp;&amp; strcmpi(wavLengthIndexString,<span class="string">'All'</span>)
+0965                     disp(<span class="string">'Warning: Many number of lines, the graph could be complex.'</span>);
+0966                 <span class="keyword">end</span>                
+0967                 
+0968                 <span class="comment">% Extract the wavelength and field point</span>
+0969                 wavLen =  [(currentOpticalSystem1.WavelengthMatrix(wavIndex,1))'];
+0970                 fieldPointXY =  [(currentOpticalSystem1.FieldPointMatrix(fldIndex,1:2))'];
+0971                 
+0972                 <span class="comment">% Sagital and tangetial aberration components</span>
+0973                 sagAberrCompList = (get(handles.popSagittalAberration,<span class="string">'String'</span>));
+0974                 sagittalAberrComp = sagAberrCompList(get(handles.popSagittalAberration,<span class="string">'Value'</span>));
+0975                 tanAberrCompList = (get(handles.popTangentialAberration,<span class="string">'String'</span>));
+0976                 tangentialAberrComp = tanAberrCompList(get(handles.popTangentialAberration,<span class="string">'Value'</span>));
+0977                 
+0978                 <span class="comment">% Since two graphs will be drawn (sagital and tangential),</span>
+0979                 <span class="comment">% handles.panelMainTab(2) is passed instead of the axes</span>
+0980                 <span class="comment">% handle.</span>
+0981                 currentOpticalSystem1.plotTransverseRayAberration(surfIndex,wavLen,<span class="keyword">...</span>
+0982                     fieldPointXY,numberOfRays,sagittalAberrComp,tangentialAberrComp,<span class="keyword">...</span>
+0983                     handles.panelMainTab(2));                              
+0984         <span class="keyword">end</span>
+0985 <span class="keyword">end</span>
+0986 
+0987 <span class="keyword">end</span>
+0988</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

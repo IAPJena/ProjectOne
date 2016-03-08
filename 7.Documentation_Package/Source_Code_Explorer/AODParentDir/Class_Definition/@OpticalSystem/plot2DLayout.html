@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plot2DLayout</title>
+  <meta name="keywords" content="plot2DLayout">
+  <meta name="description" content="plot2DSurface: Drwas a 2D layout diagram">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>plot2DLayout
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>plot2DSurface: Drwas a 2D layout diagram</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function draw =  plot2DLayout(optSystem,rayPathMatrix,axesHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> plot2DSurface: Drwas a 2D layout diagram
+ Inputs
+   opticalSystem: the optical system object
+   rayPathMatrix:  3 dimensional matrix of dimensions(nSurf X 3 X nRay)
+                   Matrix of ray itersection points to be drwan.
+   axesHandle: axes on to plot the layout
+ Output
+   draw:  1: indicate success of the function</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Analysis_Module/System_Layout/system_2D_layout_v3.0/draw2DLens.html" class="code" title="function [ lensH,zyPoints,errCode ] = draw2DLens(surf1CoordinateTM,rad1,conic1,semiDiam1,surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,lensColor)">draw2DLens</a>	draw2DLens: Plots the 2 dimensional lay out of alens in meridional plane</li><li><a href="../../../AODParentDir/Analysis_Module/System_Layout/system_2D_layout_v3.0/draw2DMirror.html" class="code" title="function [ mirrorH,zyPoints,errCode] = draw2DMirror(surfCoordinateTM,rad,conic,semiDiam,axesHandle,radSpacing,mirrorColor, negThick,varagrin)">draw2DMirror</a>	draw2DMirror: Drwas a single Mirror in 2D layout diagram</li><li><a href="../../../AODParentDir/Analysis_Module/System_Layout/system_2D_layout_v3.0/draw2DSurface.html" class="code" title="function [ surfH,zyPoints,errCode] = draw2DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw2DSurface</a>	draw2DSurface: Drwas a single surface in 2D layout diagram</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function draw =  plot2DLayout(optSystem,rayPathMatrix,</a><span class="keyword">...</span>
+0002     axesHandle)
+0003     <span class="comment">% plot2DSurface: Drwas a 2D layout diagram</span>
+0004     <span class="comment">% Inputs</span>
+0005     <span class="comment">%   opticalSystem: the optical system object</span>
+0006     <span class="comment">%   rayPathMatrix:  3 dimensional matrix of dimensions(nSurf X 3 X nRay)</span>
+0007     <span class="comment">%                   Matrix of ray itersection points to be drwan.</span>
+0008     <span class="comment">%   axesHandle: axes on to plot the layout</span>
+0009     <span class="comment">% Output</span>
+0010     <span class="comment">%   draw:  1: indicate success of the function</span>
+0011 
+0012     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0013     <span class="comment">%</span>
+0014 
+0015     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0016     <span class="comment">%</span>
+0017 
+0018     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0019     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0020     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0021     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0022     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0023     <span class="comment">%   Institute of Applied Physics</span>
+0024     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0025 
+0026     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0027     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0028     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0029 
+0030     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0031 
+0032     <span class="comment">% Check for inputs</span>
+0033     <span class="comment">% deafualt inputs</span>
+0034     <span class="keyword">if</span> nargin &lt; 1
+0035         disp([<span class="string">'Error: The function needs atleast the optical system.'</span>]);
+0036         <span class="keyword">return</span>;
+0037     <span class="keyword">elseif</span> nargin == 1 <span class="comment">% No rays paths are given</span>
+0038         rayPathMatrix = NaN;
+0039         axesHandle = axes(<span class="string">'Parent'</span>,figure,<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+0040             <span class="string">'Position'</span>,[0.1,0.1,0.8,0.8]);
+0041     <span class="keyword">elseif</span> nargin == 2
+0042         axesHandle = axes(<span class="string">'Parent'</span>,figure,<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+0043             <span class="string">'Position'</span>,[0.1,0.1,0.8,0.8]);     
+0044     <span class="keyword">else</span>
+0045 
+0046     <span class="keyword">end</span>
+0047 
+0048     lensCounter = 0;
+0049     nPoints = 500;
+0050     lensColor = [0.9,0.9,0.9];
+0051     
+0052     <span class="comment">%look for lens</span>
+0053     nSurf = optSystem.NumberOfSurfaces;
+0054     <span class="comment">%draw the object surface</span>
+0055     surf1CoordinateTM = optSystem.SurfaceArray(1).SurfaceCoordinateTM;
+0056 
+0057     surf1Position = optSystem.SurfaceArray(1).Position;
+0058     objThick = - surf1Position(3);
+0059     <span class="keyword">if</span> abs(surf1Position(3))&gt;10^10
+0060         surf1Position(3) = 0;
+0061         objThick = 0;
+0062     <span class="keyword">end</span>
+0063 
+0064     rad1 = optSystem.SurfaceArray(1).Radius;
+0065     conic1 = optSystem.SurfaceArray(1).ConicConstant;
+0066     semiDiam1 = optSystem.SurfaceArray(1).SemiDiameter;
+0067     dr = 2*semiDiam1/nPoints;
+0068 
+0069     actualSurfHeight1= semiDiam1;
+0070     drawnSurfHeight1 = semiDiam1;    
+0071     hold on;
+0072     surfColor = <span class="string">'k'</span>;
+0073     [ surfH,zyPoints,errCode ] = <a href="../../../AODParentDir/Analysis_Module/System_Layout/system_2D_layout_v3.0/draw2DSurface.html" class="code" title="function [ surfH,zyPoints,errCode] = draw2DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw2DSurface</a><span class="keyword">...</span>
+0074         (surf1CoordinateTM,rad1,conic1,actualSurfHeight1,<span class="keyword">...</span>
+0075             drawnSurfHeight1,axesHandle,dr,surfColor) ;
+0076     <span class="keyword">if</span> errCode
+0077         <span class="keyword">return</span>;
+0078     <span class="keyword">end</span>
+0079     hold on;
+0080     <span class="comment">% initialize the array for sake of speed</span>
+0081     lensHeight = zeros(1,nSurf);
+0082     lensPositionZ= zeros(1,nSurf);
+0083 
+0084     opticalAxisPoints(:,1) = optSystem.SurfaceArray(1).SurfaceCoordinateTM(1:3,4);
+0085     <span class="keyword">for</span> kk=2:1:nSurf-1
+0086         medium = optSystem.SurfaceArray(kk).Glass.Name;
+0087         lensCounter = lensCounter + 1;
+0088         <span class="keyword">if</span> mod(lensCounter,3)== 0
+0089             lensColor = [0.9,0.8,0.7];
+0090         <span class="keyword">elseif</span> mod(lensCounter,3)== 1
+0091             lensColor = [0.9,0.9,0.9];
+0092         <span class="keyword">else</span>
+0093             lensColor = [0.7,0.8,0.9];
+0094         <span class="keyword">end</span>
+0095         <span class="keyword">if</span> strcmpi(medium,<span class="string">'None'</span>)||strcmpi(medium,<span class="string">'Air'</span>)
+0096             <span class="comment">%%%%</span>
+0097             surf1Position = optSystem.SurfaceArray(kk).Position;
+0098             surf1CoordinateTM = optSystem.SurfaceArray(kk).SurfaceCoordinateTM;
+0099             rad1 = optSystem.SurfaceArray(kk).Radius;
+0100             conic1 = optSystem.SurfaceArray(kk).ConicConstant;
+0101             semiDiam1 = optSystem.SurfaceArray(kk).SemiDiameter;
+0102             dr = 2*semiDiam1/nPoints;
+0103 
+0104             actualSurfHeight1= semiDiam1;
+0105             drawnSurfHeight1 = semiDiam1;
+0106             negThick = (optSystem.SurfaceArray(kk).Thickness &lt; 0)
+0107             hold on;
+0108             <span class="keyword">if</span> strcmpi(optSystem.SurfaceArray(kk).DeviationMode,<span class="string">'-1 Reflective'</span>)
+0109                 [lensHeight(lensCounter),zyPoints,errCode] = <a href="../../../AODParentDir/Analysis_Module/System_Layout/system_2D_layout_v3.0/draw2DMirror.html" class="code" title="function [ mirrorH,zyPoints,errCode] = draw2DMirror(surfCoordinateTM,rad,conic,semiDiam,axesHandle,radSpacing,mirrorColor, negThick,varagrin)">draw2DMirror</a><span class="keyword">...</span>
+0110                 (surf1CoordinateTM,rad1,conic1,semiDiam1,axesHandle,dr,lensColor,negThick);
+0111             <span class="keyword">else</span>
+0112                 surfColor = <span class="string">'k'</span>;
+0113                 [lensHeight(lensCounter),zyPoints,errCode] = <a href="../../../AODParentDir/Analysis_Module/System_Layout/system_2D_layout_v3.0/draw2DSurface.html" class="code" title="function [ surfH,zyPoints,errCode] = draw2DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw2DSurface</a><span class="keyword">...</span>
+0114                 (surf1CoordinateTM,rad1,conic1,actualSurfHeight1,<span class="keyword">...</span>
+0115             drawnSurfHeight1,axesHandle,dr,surfColor);
+0116             <span class="keyword">end</span>
+0117             
+0118             <span class="keyword">if</span> errCode
+0119                 <span class="keyword">return</span>;
+0120             <span class="keyword">end</span>
+0121             lensPositionZ(lensCounter) = surf1Position(3)+ abs(semiDiam1);
+0122             hold on;
+0123         <span class="keyword">else</span>
+0124             surf1Position = optSystem.SurfaceArray(kk).Position;
+0125             surf1CoordinateTM = optSystem.SurfaceArray(kk).SurfaceCoordinateTM;
+0126             rad1 = optSystem.SurfaceArray(kk).Radius;
+0127             conic1 = optSystem.SurfaceArray(kk).ConicConstant;
+0128             semiDiam1 = optSystem.SurfaceArray(kk).SemiDiameter;
+0129 
+0130             surf2Position = optSystem.SurfaceArray(kk+1).Position;
+0131             surf2CoordinateTM = optSystem.SurfaceArray(kk+1).SurfaceCoordinateTM;
+0132             rad2 = optSystem.SurfaceArray(kk+1).Radius;
+0133             conic2 = optSystem.SurfaceArray(kk+1).ConicConstant;
+0134             semiDiam2 = optSystem.SurfaceArray(kk+1).SemiDiameter;
+0135             
+0136             dr = 2*semiDiam2/nPoints;
+0137             hold on;
+0138             [lensHeight(lensCounter),zyPoints,errCode] = <a href="../../../AODParentDir/Analysis_Module/System_Layout/system_2D_layout_v3.0/draw2DLens.html" class="code" title="function [ lensH,zyPoints,errCode ] = draw2DLens(surf1CoordinateTM,rad1,conic1,semiDiam1,surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,lensColor)">draw2DLens</a><span class="keyword">...</span>
+0139                 (surf1CoordinateTM,rad1,conic1, semiDiam1, <span class="keyword">...</span>
+0140                 surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,dr,lensColor);
+0141             <span class="keyword">if</span> errCode
+0142                 <span class="keyword">return</span>;
+0143             <span class="keyword">end</span>
+0144             lensPositionZ(lensCounter) = surf2Position(3)+ abs(semiDiam2);
+0145             hold on;            
+0146         <span class="keyword">end</span>
+0147         opticalAxisPoints(:,kk) = optSystem.SurfaceArray(kk).SurfaceCoordinateTM(1:3,4);
+0148     <span class="keyword">end</span>
+0149     <span class="comment">% draw the image surface</span>
+0150     surf1CoordinateTM = optSystem.SurfaceArray(nSurf).SurfaceCoordinateTM;
+0151     surf1Position = optSystem.SurfaceArray(nSurf).Position;
+0152     rad1 = optSystem.SurfaceArray(nSurf).Radius;
+0153     conic1 = optSystem.SurfaceArray(nSurf).ConicConstant;
+0154     semiDiam1 = optSystem.SurfaceArray(nSurf).SemiDiameter;
+0155     dr = 2*semiDiam1/nPoints;
+0156     surfColor = <span class="string">'k'</span>;
+0157     actualSurfHeight1= semiDiam1;
+0158     drawnSurfHeight1 = semiDiam1;
+0159     hold on;
+0160     
+0161     [ surfH,zyPoints,errCode ] = <a href="../../../AODParentDir/Analysis_Module/System_Layout/system_2D_layout_v3.0/draw2DSurface.html" class="code" title="function [ surfH,zyPoints,errCode] = draw2DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin)">draw2DSurface</a><span class="keyword">...</span>
+0162         (surf1CoordinateTM,rad1,conic1,actualSurfHeight1,<span class="keyword">...</span>
+0163             drawnSurfHeight1,axesHandle,dr,surfColor) ;
+0164     <span class="keyword">if</span> errCode
+0165         <span class="keyword">return</span>;
+0166     <span class="keyword">end</span>
+0167     opticalAxisPoints(:,nSurf) = optSystem.SurfaceArray(nSurf).SurfaceCoordinateTM(1:3,4);
+0168     hold on;
+0169 
+0170     <span class="keyword">if</span> nargin &gt; 1 &amp;&amp; length(rayPathMatrix)~=1  <span class="comment">% NaN is double and its length is 1</span>
+0171         <span class="comment">% Use different color for diffrent wavelengths and different line style for</span>
+0172         <span class="comment">% different field points.</span>
+0173         nRay = size(rayPathMatrix,3);
+0174         nField = size(rayPathMatrix,4);
+0175         nWav = size(rayPathMatrix,5);
+0176         
+0177         availableLineColors = repmat({<span class="string">'b'</span>,<span class="string">'g'</span>,<span class="string">'r'</span>,<span class="string">'c'</span>,<span class="string">'m'</span>,<span class="string">'y'</span>,<span class="string">'k'</span>},1,20); <span class="comment">% 7*20 = 140</span>
+0178         lineColors = availableLineColors(1:nWav*nField);           
+0179         
+0180         <span class="keyword">for</span> wavIndex = 1:nWav
+0181             <span class="keyword">for</span> fieldIndex = 1:nField
+0182                 lineColor = char(lineColors((fieldIndex-1)*nWav + wavIndex));
+0183                 <span class="keyword">for</span> rayIndex = 1:nRay
+0184                     plot(axesHandle,rayPathMatrix(3,:,rayIndex,fieldIndex,wavIndex),<span class="keyword">...</span>
+0185                         rayPathMatrix(2,:,rayIndex,fieldIndex,wavIndex),<span class="keyword">...</span>
+0186                         lineColor); hold on;
+0187                 <span class="keyword">end</span>
+0188                 hold on;
+0189             <span class="keyword">end</span>
+0190             hold on;
+0191         <span class="keyword">end</span>
+0192     <span class="keyword">end</span>
+0193     <span class="comment">% finally set the axis</span>
+0194     xmin = - (1+objThick);
+0195     xmax = max(lensPositionZ);<span class="comment">%surf1Position(3)+1;</span>
+0196     <span class="comment">%     ymax = 2*max(lensHeight);</span>
+0197     <span class="comment">%     ymin = - ymax;</span>
+0198     <span class="comment">%     axis([xmin xmax ymin ymax])</span>
+0199     
+0200     <span class="comment">% draw optical axis</span>
+0201     hold on;
+0202     plot3(axesHandle,opticalAxisPoints(3,:),opticalAxisPoints(2,:),<span class="keyword">...</span>
+0203         opticalAxisPoints(1,:),<span class="string">'-.r'</span>,<span class="string">'LineWidth'</span>,2);
+0204     hold off;
+0205     axis equal;
+0206     draw =  1;
+0207 
+0208 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

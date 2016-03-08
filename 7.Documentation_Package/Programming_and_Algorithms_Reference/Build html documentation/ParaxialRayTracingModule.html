@@ -1,0 +1,114 @@
+﻿<html>
+	
+<head>
+	<title>Paraxial Ray Tracing Module</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("ParaxialRayTracingModule");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Paraxial Ray Tracing Module</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ParaxialandMeridionalRayTracingM.html">Paraxial and Meridional Ray Tracing Module</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="ParaxialandMeridionalRayTracingM.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="ParaxialandMeridionalRayTracingM.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MeridionalRayTracingModule.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h3 class="rvps43"><a name="_Toc369024499"></a>
+<span class="rvts0"><span class="rvts63">ParaxialRay Tracing</span></span></h3>
+<p class="rvps17"><span class="rvts27">There are three commonly used methods for paraxial ray tracing, namely: yni method, ynu method and matrix method. &nbsp;In all paraxial ray tracing methods, a ray at a point is given by its height from the optical axis, y, and its slope (tangent of angle), u (for small angles u can be angle in radians).</span></p>
+<p class="rvps17"><img width="261" height="172" alt="" style="padding : 1px;" src="lib/NewItem233.png"/><img width="280" height="114" alt="" style="padding : 1px;" src="lib/NewItem232.png"/></p>
+<p class="rvps17"><span class="rvts27"><br/></span></p>
+<p class="rvps17"><span class="rvts27">Although ynu method is commonly used for efficient ray tracing by hand or in simple programs such as excel sheets, some commercial ray tracing programs use yni method as it leads to computation of the paraxial incidence angle as an intermediate result of the ray trace. &nbsp;So, the yni method is used to develop paraxial ray tracing module for our ray tracing toolbox. In paraxial approximation the equations for conic sections becomes that of spherical surfaces. </span></p>
+<p class="rvps17"><span class="rvts27"><br/></span></p>
+<p class="rvps17"><span class="rvts27">The important formulas employed for yni ray tracing method are:</span></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem255.png"/></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem254.png"/></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem253.png"/></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem252.png"/></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem251.png"/></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem250.png"/></p>
+<p class="rvps17"><span class="rvts27"><br/></span></p>
+<p class="rvps17"><span class="rvts27">In addition to the basic yni ray trace function, the paraxial ray tracing module includes functions to determine:</span></p>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps44" style="margin-left: 0px; text-indent: 0px"><span class="rvts27">The entrance and exit pupil (position and size): using reverse yni ray tracing</span></li>
+<li class="rvps44" style="margin-left: 0px; text-indent: 0px"><span class="rvts27">The chief and marginal ray: using the position and size of the pupil</span></li>
+<li class="rvps44" style="margin-left: 0px; text-indent: 0px"><span class="rvts27">The back focal length and effective focal length of the system</span></li>
+<li class="rvps44" style="margin-left: 0px; text-indent: 0px"><span class="rvts27">The image and object space numerical apertures</span></li>
+<li class="rvps44" style="margin-left: 0px; text-indent: 0px"><span class="rvts27">The paraxial magnification</span></li>
+</ul>
+<p class="rvps17"><span class="rvts27">The system aperture is given by either the object space NA or the entrance pupil diameter and the stop surface index is set by the user using the system configuration dialog. &nbsp;</span></p>
+<p class="rvps17"><span class="rvts27">To determine location of entrance pupil</span></p>
+<ol style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: decimal;">
+<li class="rvps42" style="text-indent: 0px"><span class="rvts29">Trace an arbitrary paraxial ray from axial point at stop surface back towards to the object side using the paraxial ray tracing. </span></li>
+<li class="rvps42" style="text-indent: 0px"><span class="rvts29">The resulting object side ray is the chief ray for the corresponding ray height. </span></li>
+<li class="rvps42" style="text-indent: 0px"><span class="rvts29">The axial crossing point of the object side ray determines the location of the entrance pupil as, by definition, the chief ray crosses the optical axis at entrance pupil if it is not refracted by the optical system. </span></li>
+</ol>
+<p class="rvps17"><span class="rvts27">Once the location of entrance pupil is determined, the object side numerical aperture and the entrance pupil diameter can computed from each other if one is already known. </span></p>
+<p class="rvps17"><span class="rvts27"><br/></span></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem258.png"/><img alt="" style="padding : 1px;" src="lib/NewItem257.png"/></p>
+<p class="rvps17"><span class="rvts27"><br/></span></p>
+<p class="rvps17"><span class="rvts27">The chief ray angle for a given field height can be computed by &nbsp;projecting a ray from the field point to the center of entrance pupil diameter. </span></p>
+<p class="rvps17"><span class="rvts27"><br/></span></p>
+<p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem256.png"/></p>
+<p class="rvps17"><span class="rvts27"><br/></span></p>
+<p class="rvps17"><span class="rvts27">Image space numerical aperture can be computed from the marginal ray angles in the image space. And the exit pupil can be located following similar method as for entrance pupil but now tracing the paraxial ray from stop in forward direction to the image side. </span></p>
+<p class="rvps17"><span class="rvts27"><br/></span></p>
+<p class="rvps17"><span class="rvts27">The back focal length and effective focal lengths can be computed by tracing a paraxial ray which is parallel to the optical axis and determining its intersection point with the optical axis in the image space.</span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/help-authoring-tool">Free help authoring environment</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeIncidenceAngle</title>
+  <meta name="keywords" content="computeIncidenceAngle">
+  <meta name="description" content="COMPUTEINCIDENCEANGLE to calculate the incident angle inc (the angle betweent">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- ../menu.html Scalar_Ray_Tracing_Module --><!-- menu.html homo_trace -->
+<h1>computeIncidenceAngle
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>COMPUTEINCIDENCEANGLE to calculate the incident angle inc (the angle betweent</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function incidenceAngle = computeIncidenceAngle (incidentDirection,surfaceNormal); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> COMPUTEINCIDENCEANGLE to calculate the incident angle inc (the angle betweent 
+ the incident ray and the normal vector of the surface) according to the direction 
+ cosines of the ray
+ Inputs:
+   incidentDirection: is a 1-by-3 vector, which is the directions cosines of the ray (j-1)
+   surfaceNormal: 1-by-3 element vector, which is the normal vector cosines of the 
+                  surface j at the intersection point.
+ Output:
+ incidenceAngle: scalar which is the local incident angle of the surface j and the 0&lt;=inc&lt;=(pi/2)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function incidenceAngle = computeIncidenceAngle (incidentDirection,surfaceNormal);</a>
+0002     <span class="comment">% COMPUTEINCIDENCEANGLE to calculate the incident angle inc (the angle betweent</span>
+0003     <span class="comment">% the incident ray and the normal vector of the surface) according to the direction</span>
+0004     <span class="comment">% cosines of the ray</span>
+0005     <span class="comment">% Inputs:</span>
+0006     <span class="comment">%   incidentDirection: is a 1-by-3 vector, which is the directions cosines of the ray (j-1)</span>
+0007     <span class="comment">%   surfaceNormal: 1-by-3 element vector, which is the normal vector cosines of the</span>
+0008     <span class="comment">%                  surface j at the intersection point.</span>
+0009     <span class="comment">% Output:</span>
+0010     <span class="comment">% incidenceAngle: scalar which is the local incident angle of the surface j and the 0&lt;=inc&lt;=(pi/2)</span>
+0011     
+0012    <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0013     <span class="comment">%</span>
+0014 
+0015     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0016     <span class="comment">%</span>
+0017 
+0018     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0019     <span class="comment">%   Part of the RAYTRACE toolbox</span>
+0020     <span class="comment">%   Written by: Yi Zhong 29.08.2012</span>
+0021     <span class="comment">%   Institute of Applied Physics</span>
+0022     <span class="comment">%   Friedrich-Schiller-University</span>
+0023     
+0024     <span class="comment">%   Modified By: Worku, Norman Girma</span>
+0025     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0026     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0027     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0028     <span class="comment">%   Institute of Applied Physics</span>
+0029     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0030                              
+0031     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0032     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0033     <span class="comment">% 29.08.2012    Yi Zhong             Original Version         Version 2.1</span>
+0034     <span class="comment">% Oct 14,2013   Worku, Norman G.     OOP Version              Version 3.0</span>
+0035 
+0036     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0037 
+0038     <span class="keyword">try</span>
+0039         incidenceAngle = acos(abs((incidentDirection*surfaceNormal')/<span class="keyword">...</span>
+0040         (norm(incidentDirection)*norm(surfaceNormal)))); <span class="comment">% all the angle are expressed</span>
+0041         <span class="comment">% positive and we do not consider that the angle could be negative</span>
+0042     <span class="keyword">catch</span> err  
+0043              <span class="comment">%open file</span>
+0044          fid = fopen(<span class="string">'logFile'</span>,<span class="string">'a+'</span>);
+0045          <span class="comment">% write the error to file</span>
+0046          <span class="comment">% first line: message</span>
+0047          fprintf(fid,<span class="string">'%s\n'</span>,err.message);
+0048          <span class="comment">% following lines: stack</span>
+0049          <span class="keyword">for</span> e=1:length(err.stack)
+0050             fprintf(fid,<span class="string">'%sin %s at %i\n'</span>,txt,err.stack(e).name,err.stack(e).line);
+0051          <span class="keyword">end</span>
+0052          <span class="comment">% close file</span>
+0053          fclose(fid)
+0054          
+0055         msgbox(strcat(err.message,<span class="string">' So the function &quot;computeIncidenceAngle&quot; will return NaN'</span>), <span class="keyword">...</span>
+0056         <span class="string">'Program Error'</span>,<span class="string">'error'</span>);
+0057         incidenceAngle = NaN;
+0058     <span class="keyword">end</span>
+0059 <span class="keyword">end</span>
+0060</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

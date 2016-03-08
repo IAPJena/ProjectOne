@@ -1,0 +1,9 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  Glass -> Glass;
+  getAbbeNumber -> getRefractiveIndex;
+
+  Glass [URL="Glass.html"];
+  getAbbeNumber [URL="getAbbeNumber.html"];
+  getRefractiveIndex [URL="getRefractiveIndex.html"];
+}

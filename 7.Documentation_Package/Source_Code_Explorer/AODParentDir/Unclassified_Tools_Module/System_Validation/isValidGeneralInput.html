@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of isValidGeneralInput</title>
+  <meta name="keywords" content="isValidGeneralInput">
+  <meta name="description" content="validInput: Validates user input to the toolbox depending on the type">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Unclassified_Tools_Module --><!-- menu.html System_Validation -->
+<h1>isValidGeneralInput
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>validInput: Validates user input to the toolbox depending on the type</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ valid,reason ] = isValidGeneralInput( varargin ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> validInput: Validates user input to the toolbox depending on the type
+ Inputs:
+  input_args: array of [Value1, Type1,Value2, Type2,...]
+    where Type is string indicating the type of the value being validated
+ Outputs:
+  valid : array of 0s or 1s showing validity of inputs
+  reason: cell array of reasons for validity and invalidity of the
+  input</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@AODParentWindow/InitializeSurfaceEditorPanel.html" class="code" title="function InitializeSurfaceEditorPanel(parentWindow)">InitializeSurfaceEditorPanel</a>	InitializeSurfaceEditorPanel: Define and initialized the uicontrols of the</li><li><a href="../../../AODParentDir/Class_Definition/@AODParentWindow/openSavedOpticalSystem.html" class="code" title="function opened = openSavedOpticalSystem(parentWindow,savedOpticalSystem,pathName, fileName)">openSavedOpticalSystem</a>	extract all data from a given OpticalSystem object "SavedOpticalSystem"</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ valid,reason ] = isValidGeneralInput( varargin )</a>
+0002     <span class="comment">% validInput: Validates user input to the toolbox depending on the type</span>
+0003     <span class="comment">% Inputs:</span>
+0004     <span class="comment">%  input_args: array of [Value1, Type1,Value2, Type2,...]</span>
+0005     <span class="comment">%    where Type is string indicating the type of the value being validated</span>
+0006     <span class="comment">% Outputs:</span>
+0007     <span class="comment">%  valid : array of 0s or 1s showing validity of inputs</span>
+0008     <span class="comment">%  reason: cell array of reasons for validity and invalidity of the</span>
+0009     <span class="comment">%  input</span>
+0010     <span class="keyword">if</span> nargin &lt; 1
+0011         valid = 1;
+0012         reason = <span class="string">'Validation code not defined yet'</span>;
+0013         <span class="keyword">return</span>;
+0014     <span class="keyword">end</span>
+0015     <span class="keyword">for</span> kk=2:2:nargin
+0016         inputValue = varargin{kk-1};
+0017         inputType = varargin{kk};
+0018         <span class="keyword">switch</span> inputType
+0019             <span class="keyword">case</span> <span class="string">'TiltDecenterOrder'</span>
+0020                 <span class="comment">% length should be 12</span>
+0021                 <span class="keyword">if</span> length(inputValue) ~= 12
+0022                     valid(kk/2) = 0;
+0023                     reason{kk/2} = <span class="string">'Length of TiltDecenterOrder should be 12.'</span>;
+0024                     <span class="keyword">continue</span>;
+0025                 <span class="keyword">end</span>
+0026                 <span class="comment">% only strings made of Dx,Dy,Dz,Tx,Ty &amp; Tz are valid</span>
+0027                 <span class="comment">% to be written in the future!!</span>
+0028                 orderStr = upper(inputValue);         
+0029                 dx = findstr(orderStr,<span class="string">'DX'</span>);
+0030                 dy = findstr(orderStr,<span class="string">'DY'</span>);
+0031                 dz = findstr(orderStr,<span class="string">'DZ'</span>);
+0032                 tx = findstr(orderStr,<span class="string">'TX'</span>);
+0033                 ty = findstr(orderStr,<span class="string">'TY'</span>);
+0034                 tz = findstr(orderStr,<span class="string">'TZ'</span>);
+0035                 <span class="keyword">if</span> (isempty(dx)||isempty(dy)||isempty(tx)||isempty(ty)||isempty(tz))
+0036                     valid(kk/2) = 0;
+0037                     reason{kk/2} = <span class="string">'All tilt and decenter parameters should be in the order.'</span>;
+0038                     <span class="keyword">continue</span>;                    
+0039                 <span class="keyword">end</span>                
+0040                 valid(kk/2) = 1;
+0041                 reason{kk/2} = <span class="string">'Passed All Validity Test.'</span>;
+0042                                        
+0043             <span class="keyword">case</span> <span class="string">'Number'</span> 
+0044                 <span class="comment">% To be continued in the future ass needed!!</span>
+0045                 
+0046         <span class="keyword">end</span>
+0047     <span class="keyword">end</span> 
+0048 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

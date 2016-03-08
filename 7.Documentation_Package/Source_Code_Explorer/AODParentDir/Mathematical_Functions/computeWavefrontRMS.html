@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeWavefrontRMS</title>
+  <meta name="keywords" content="computeWavefrontRMS">
+  <meta name="description" content="computeRootMeanSquare: computes the root mean square of a given wavefront.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Mathematical_Functions -->
+<h1>computeWavefrontRMS
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>computeRootMeanSquare: computes the root mean square of a given wavefront.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ rms ] = computeWavefrontRMS( OPDAtExitPupil,pupilWeightMatrix ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeRootMeanSquare: computes the root mean square of a given wavefront. 
+ The function is vectorized so it can work on multiple inputs once at 
+ the same time.
+ Input:
+    inMatrix: 3D matrix (l x m x N)
+ Output:
+    rms : 1 X N rms corresponding to each slice of 2D matrix</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/plotWavefrontAtExitPupil.html" class="code" title="function [ XMulti,YMulti,OPDAtExitPupilMulti,PupilWeightMatrixMulti,RMSMulti,WPVMulti,ZERMulti,AmpTransCoeffMulti,SrehlRatioMuti] =plotWavefrontAtExitPupil( optSystem,wavLen,fieldPointXY,rayGridSize,zerCoeff,polarized,jonesVec,resultComponent,plotPanelHandle,textHandle)">plotWavefrontAtExitPupil</a>	PLOTWAVEFRONTATEXITPUPIL: computes and plots the OPD surface in the exit pupil of</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ rms ] = computeWavefrontRMS( OPDAtExitPupil,pupilWeightMatrix )</a>
+0002     <span class="comment">% computeRootMeanSquare: computes the root mean square of a given wavefront.</span>
+0003     <span class="comment">% The function is vectorized so it can work on multiple inputs once at</span>
+0004     <span class="comment">% the same time.</span>
+0005     <span class="comment">% Input:</span>
+0006     <span class="comment">%    inMatrix: 3D matrix (l x m x N)</span>
+0007     <span class="comment">% Output:</span>
+0008     <span class="comment">%    rms : 1 X N rms corresponding to each slice of 2D matrix</span>
+0009 
+0010     <span class="comment">% pupilWeightMatrix = used to indicate weighting factor for each pupil</span>
+0011     <span class="comment">% location and if == 0 =&gt; Vignated rays and are not even considered for</span>
+0012     <span class="comment">% computation of the mean.</span>
+0013     
+0014     <span class="comment">% Replace any NAN with zeros</span>
+0015     OPDAtExitPupil(find(isnan(OPDAtExitPupil))) = 0;
+0016     
+0017     <span class="comment">% The RMS is calculated as the mean of the squares of the numbers, square-rooted:</span>
+0018     l = size(OPDAtExitPupil,1);
+0019     m = size(OPDAtExitPupil,2);
+0020     N = size(OPDAtExitPupil,3);
+0021     rms = zeros(1,N);
+0022     <span class="keyword">for</span> kk = 1:N
+0023         nonVignatedOPD = OPDAtExitPupil(find(pupilWeightMatrix));
+0024         nonVignatedWeight = pupilWeightMatrix(find(pupilWeightMatrix));         
+0025         rms(kk) = sqrt(mean((nonVignatedOPD.^2).*(nonVignatedWeight))-<span class="keyword">...</span>
+0026             (mean((nonVignatedOPD).*(nonVignatedWeight))).^2);
+0027 <span class="comment">%              rms(kk) = sqrt(squeeze((mean(mean(OPDAtExitPupil.^2))))-(squeeze((mean(mean(OPDAtExitPupil))))).^2);</span>
+0028     <span class="keyword">end</span>
+0029 <span class="keyword">end</span>
+0030</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

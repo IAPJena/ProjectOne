@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of prop_fraun_fft</title>
+  <meta name="keywords" content="prop_fraun_fft">
+  <meta name="description" content="_________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- ../menu.html Existing_Propagators --><!-- menu.html Fraunhofer_Scalar -->
+<h1>prop_fraun_fft
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>_________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function efelds = prop_fraun_fft(xp,yp,efeld,xs,ys,z,wl) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">_________________________________________________________________
+
+  Propagation of a complex field in farfield approximation in 2D.
+  in the case of a spherical wave it is assumed, that the field has a
+  radius of curvature very near to the propagation distance z
+
+  Version      :  2013-12-19   H.Gross
+_________________________________________________________________
+
+  Input :   xp(npx)         : x-coordinate pupil
+            yp(npy)         : y-coordinate pupil
+            efeld(npx,npy)  : Input field pupil
+            wl              : wavelength in mm
+            z               : distance of propagation
+            xs(npx)         : x-coordinate final plane
+            ys(npy)         : y-coordinate final plane
+
+  Output :  efelds(npx,npy) : output field
+_________________________________________________________________</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/czt_2d.html" class="code" title="function xout = czt_2d( xin , scalx , scaly , idir )">czt_2d</a>	___________________________________________________________________________________</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="../../../../AODParentDir/Class_Definition/@OpticalSystem/plotFFTPointSpreadFunction.html" class="code" title="function [ XMulti,YMulti,normalizedIntensityMulti,peakIntensityMulti,SrehlRatioMuti1 ] =plotFFTPointSpreadFunction( optSystem,wavLen,fieldPointXY,gridSize,spotPlotRadius,polarized,jonesVec,resultComponent,plotPanelHandle,textHandle)">plotFFTPointSpreadFunction</a>	plotFFTPointSpreadFunction Summary of this function goes here</li><li><a href="prop_fraun_fft_test.html" class="code" title="">prop_fraun_fft_test</a>	Test Fraunhofer-Propagator</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function efelds = prop_fraun_fft(xp,yp,efeld,xs,ys,z,wl)</a>
+0002 <span class="comment">%_________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  Propagation of a complex field in farfield approximation in 2D.</span>
+0005 <span class="comment">%  in the case of a spherical wave it is assumed, that the field has a</span>
+0006 <span class="comment">%  radius of curvature very near to the propagation distance z</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">%  Version      :  2013-12-19   H.Gross</span>
+0009 <span class="comment">%_________________________________________________________________</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">%  Input :   xp(npx)         : x-coordinate pupil</span>
+0012 <span class="comment">%            yp(npy)         : y-coordinate pupil</span>
+0013 <span class="comment">%            efeld(npx,npy)  : Input field pupil</span>
+0014 <span class="comment">%            wl              : wavelength in mm</span>
+0015 <span class="comment">%            z               : distance of propagation</span>
+0016 <span class="comment">%            xs(npx)         : x-coordinate final plane</span>
+0017 <span class="comment">%            ys(npy)         : y-coordinate final plane</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">%  Output :  efelds(npx,npy) : output field</span>
+0020 <span class="comment">%_________________________________________________________________</span>
+0021 <span class="comment">%</span>
+0022 npx  = length( xp ); npy = length( yp );
+0023 nax  = max( xp ) / z ;   nay  = max( yp ) / z ; 
+0024 <span class="comment">%</span>
+0025 dx = abs( xs(2) - xs(1));  dy = abs( ys(2) - ys(1));
+0026 scalx = wl / ( 2 * dx * nax ) ;    scaly = wl / ( 2 * dy * nay ) ;
+0027 <span class="comment">%</span>
+0028 <span class="comment">%  phase factor for z-plane</span>
+0029 <span class="comment">%</span>
+0030 [ypm,xpm] = meshgrid( yp , xp );
+0031 v = pi * 1i / ( wl * z );
+0032 vn = 1/(npx*npy) ;
+0033 phas = exp( v*( xpm.^2 + ypm.^2 ) );
+0034 <span class="comment">%</span>
+0035 <span class="comment">% Fourier transform</span>
+0036 <span class="comment">%</span>
+0037 efelds = <a href="../../../../AODParentDir/Diffraction_Module/Existing_Propagators/czt_2d.html" class="code" title="function xout = czt_2d( xin , scalx , scaly , idir )">czt_2d</a>( efeld .* phas , scalx, scaly , 0 )*vn;
+0038 <span class="comment">%</span>
+0039 <span class="comment">%  Correction of quadratic phase in final plane</span>
+0040 <span class="comment">%</span>
+0041 [ysm,xsm] = meshgrid( ys , xs );
+0042 phas = exp( v * ( xsm.^2 + ysm.^2 ) );
+0043 efelds = efelds .* phas ;
+0044 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

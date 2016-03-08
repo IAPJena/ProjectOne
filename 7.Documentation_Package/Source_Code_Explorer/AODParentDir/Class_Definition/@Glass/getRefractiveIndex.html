@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getRefractiveIndex</title>
+  <meta name="keywords" content="getRefractiveIndex">
+  <meta name="description" content="getRefractiveIndex: Returns the refractive index of the glass">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @Glass -->
+<h1>getRefractiveIndex
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getRefractiveIndex: Returns the refractive index of the glass</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [n] = getRefractiveIndex(Glass,wavLen) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getRefractiveIndex: Returns the refractive index of the glass
+ It supports vector inputs of wavlengths and gives vector output of n</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="getAbbeNumber.html" class="code" title="function [abbeNumber] = getAbbeNumber(Glass,wavLenF,wavLenD,wavLenC)">getAbbeNumber</a>	getAbbeNumber: Returns abbe number of glass computed from</li><li><a href="../../../AODParentDir/Class_Definition/@OpticalSystem/tracePolarizedRay.html" class="code" title="function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture)">tracePolarizedRay</a>	tracePolarizedRay: main function of polarized ray tracer</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [n] = getRefractiveIndex(Glass,wavLen)</a>
+0002 <span class="comment">% getRefractiveIndex: Returns the refractive index of the glass</span>
+0003 <span class="comment">% It supports vector inputs of wavlengths and gives vector output of n</span>
+0004 
+0005 <span class="comment">% for a given wavelength. Uses sellmeir1 equation.</span>
+0006 glassParameters = Glass.GlassParameters;
+0007 nRay = size(wavLen,2);
+0008 format long;
+0009 <span class="keyword">switch</span> lower(strtrim(Glass.Type))
+0010     <span class="keyword">case</span> lower(<span class="string">'FixedIndex'</span>)
+0011         n = repmat(glassParameters(1),[1,nRay]);
+0012     <span class="keyword">case</span>  lower(<span class="string">'Sellmeier1'</span>)
+0013         <span class="comment">% all the coeffifints are in sq. µm and the wavelength in um</span>
+0014         B1 = 0; B2 = 0; B3 = 0; C1 = 0; C2 = 0; C3 = 0;
+0015         <span class="comment">% First convert Wavelength to um as all sellmeir coefficients</span>
+0016         <span class="comment">% are in sq um.</span>
+0017         wavLen = wavLen*10^6;
+0018         <span class="keyword">try</span>
+0019             B1 = glassParameters(1);
+0020             B2 = glassParameters(2);
+0021             B3 = glassParameters(3);
+0022             C1 = glassParameters(4);
+0023             C2 = glassParameters(5);
+0024             C3 = glassParameters(6);
+0025         <span class="keyword">catch</span>
+0026         <span class="keyword">end</span>
+0027         n = sqrt(1 + <span class="keyword">...</span>
+0028             ((B1*wavLen.^2)./(wavLen.^2 - C1)) + <span class="keyword">...</span>
+0029             ((B2*wavLen.^2)./(wavLen.^2 - C2)) + <span class="keyword">...</span>
+0030             ((B3*wavLen.^2)./(wavLen.^2 - C3)));
+0031         
+0032 <span class="comment">%         % Compute absolute refractive index of air at default temp and</span>
+0033 <span class="comment">%         % pressure.</span>
+0034 <span class="comment">%         P = 1; % Constant Pressure in ATM</span>
+0035 <span class="comment">%         T = 20; % Constant Temprature in celcius</span>
+0036 <span class="comment">%         nref = 1 + (6432.8 + ((2949810*(wavLen.^2))./(146*(wavLen.^2)-1)) +...</span>
+0037 <span class="comment">%             ((25540*(wavLen.^2))./(41*(wavLen.^2)-1)))*10^-8;</span>
+0038 <span class="comment">%         nAbsAir = 1 + (((nref-1).*P)/(1 + (T-15)*(3.4785*10^-3)));</span>
+0039 <span class="comment">%</span>
+0040 <span class="comment">%         % Now Compute the relative refractive index of the glass which will</span>
+0041 <span class="comment">%         % be used in the raytrace calculations</span>
+0042 <span class="comment">%         n = nAbsGlass/nAbsAir;</span>
+0043 <span class="keyword">end</span>
+0044 
+0045 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

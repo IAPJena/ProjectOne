@@ -1,0 +1,524 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>User Manual MATLAB Based Optical Analysis Toolbox V 3.0- Table of Contents</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#tabs .ui-widget-header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.dynatree.min.js"></script>
+	<script type="text/javascript" src="js/hndjsse.js"></script>
+	<script type="text/javascript">
+	
+		window.bSearchDataLoaded = false;
+		var sHelpIdToActivate = '';
+	
+		$(document).ready(function()
+		{
+			var sAnchorName = '';
+			try { sAnchorName = top.location.href.substring(top.location.href.lastIndexOf("#") + 1, top.location.href.length); }
+			catch(err) { sAnchorName = ''; }
+			var nSelectedTab = 0;
+			if (sAnchorName == '_index') nSelectedTab = 1
+			else if (sAnchorName == '_search') nSelectedTab = 2;			
+			$("#tabs").tabs({
+				selected: nSelectedTab,
+				select: function(event, ui) { HideKwPopup(); }
+			});
+			
+			// Toc
+			if ($("#tab-toc").length) {
+				$("#tab-toc").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#tab-keywords").length && $("#tab-keywords").dynatree && $("#tab-keywords").dynatree("getTree") && $("#tab-keywords").dynatree("getTree").activateKey)
+							$("#tab-keywords").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							window.open(node.data.href, node.data.target);
+						}
+					}
+				});
+				// Expand all nodes if required
+				$("#tab-toc").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				// Select the active help id
+				if (sHelpIdToActivate != '') $("#tab-toc").dynatree("getTree").activateKey(sHelpIdToActivate);
+			}
+			
+			// Keywords
+			
+			if ($("#tab-keywords").length) {
+				$("#tab-keywords").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onClick: function(node, event){
+						HideKwPopup();
+						if (node.data && node.data.click)
+						{
+							var aRefList = null;
+							eval('aRefList=' + node.data.click);
+							if (ShowKwPopup(node.li, aRefList))
+							{
+								if ($("#tab-toc") && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").activateKey)
+									$("#tab-toc").dynatree("getTree").activateKey(null);
+								if(node.data.href && node.data.href != '#'){
+									window.open(node.data.href, node.data.target);
+								}
+							}
+						}
+					}
+				});
+				// Expand all nodes if required
+				$("#tab-keywords").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				}
+			
+			// Load search data
+			(function() {
+				var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+				se.src = 'js/hndsd.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+			})();
+		});
+		
+		$('body').click(function() {
+			HideKwPopup();
+		});
+		
+		function SelectTocItem(sHelpId)
+		{
+			if ($("#tab-toc").length && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").getNodeByKey) {
+				$("#tab-toc").dynatree("getTree").getNodeByKey(sHelpId).activateSilently();
+			}
+			else {
+				sHelpIdToActivate = sHelpId;
+			}
+		}
+		
+		function HideKwPopup()
+		{
+			if($("#popupMenu")) $("#popupMenu").remove();
+		}
+		
+		function ShowKwPopup(oSender, aLinks)
+		{
+			HideKwPopup();
+			if (!aLinks || !aLinks.length || aLinks.length == 0) return false
+			else if (aLinks.length == 1) return true
+			else
+			{
+				var oParentDiv = document.createElement("DIV");
+				oParentDiv.id = "popupMenu";
+				var oLink = null;
+				// Close button
+				oLink = document.createElement("SPAN");
+				oLink.className = "close-button";
+				oLink.innerHTML = "X";
+				oLink.href = "#";
+				oLink.onclick = HideKwPopup;
+				oParentDiv.appendChild(oLink);
+				// Items
+				for (var nCnt=0; nCnt<aLinks.length; nCnt++)
+				{
+					oLink = document.createElement("A");
+					oLink.innerHTML = aLinks[nCnt][0];
+					oLink.href = aLinks[nCnt][1];
+					oLink.target = "FrameMain";
+					oLink.onclick = HideKwPopup;
+					oParentDiv.appendChild(oLink);
+				}
+				document.body.appendChild(oParentDiv);
+				var pos = $(oSender).offset(); 
+				var height = $(oSender).height();
+				$(oParentDiv).css({
+					"left": (pos.left+20) + "px",
+					"top": (pos.top + height + 5) + "px"
+				});
+				$(oParentDiv).show();
+				return false;
+			}
+		}
+		
+		function PerformSearch()
+		{
+			if (!window.bSearchDataLoaded) {
+				$("#search_results").html("Search engine data hasn't been fully loaded yet or an error occurred while loading it. This usually happens when documentation is browsed locally.");
+				return;
+			}
+			sValue = $("#search_value").val();
+			$("#search_results").html('Searching...');
+			var oSearchEngine = new HndJsSe;
+			oSearchEngine.ParseInput(sValue);			
+			oSearchEngine.PerformSearch();
+			if (!oSearchEngine.aResults || !oSearchEngine.aResults.length)
+			{
+				$("#search_results").html('No results found.');
+			}
+			else
+			{
+				$("#search_results").html('<div id="search_results_content"></div>');
+				var oUl = $("#search_results_content").append("<ul id='lr'></ul>").find("ul");
+				for (var nCnt = 0; nCnt < oSearchEngine.aResults.length; nCnt++)
+				{
+					if (oSearchEngine.aResults[nCnt][0] < aTl.length)
+					{
+						oUl.append("<li><a href='" + aTl[oSearchEngine.aResults[nCnt][0]][0] + "?search=" + escape(sValue) + "' target='FrameMain'>" + unescape(aTl[oSearchEngine.aResults[nCnt][0]][1]) + "</a></li>");
+					}
+				}
+				// Tree
+				$("#search_results_content").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#search_results_content") && $("#search_results_content").dynatree && $("#search_results_content").dynatree("getTree") && $("#search_results_content").dynatree("getTree").activateKey)
+							$("#search_results_content").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							window.open(node.data.href, node.data.target);
+						}
+					}
+				});
+			}
+		}
+	</script>
+</head>
+
+<body>
+
+	<div id="tabs">
+		<ul>
+			<li><a href="#tab-toc">Contents</a></li>
+			<li><a href="#tab-keywords">Index</a></li>
+			<li><a href="#tab-search">Search</a></li>
+			</ul>
+		<div id="tab-toc">
+			<ul id="toc" class="">
+
+				<li class="" id="CoverPage" data="icon: '10.png'">
+							<a
+							href="CoverPage.html"
+							target="FrameMain">
+								Cover Page</a>
+
+				</li><li class="" id="Objective" data="icon: '10.png'">
+							<a
+							href="Objective.html"
+							target="FrameMain">
+								Objective</a>
+
+				</li><li class="" id="GeneralFolderStructure" data="icon: '10.png'">
+							<a
+							href="GeneralFolderStructure.html"
+							target="FrameMain">
+								General Folder Structure</a>
+
+				</li><li class="folder" id="StartingtheToolbox" data="">
+							<a
+							href="StartingtheToolbox.html"
+							target="FrameMain">
+								Starting the Toolbox</a>
+
+				<ul><li class="" id="SettingupaNewOpticalSystem" data="">
+							<a
+							href="SettingupaNewOpticalSystem.html"
+							target="FrameMain">
+								Setting up a New Optical System</a>
+
+				</li><li class="" id="OpeningOpticalSystemsfromFile" data="">
+							<a
+							href="OpeningOpticalSystemsfromFile.html"
+							target="FrameMain">
+								Opening Optical Systems from File</a>
+
+				</li></ul></li><li class="folder" id="ParentWindow" data="">
+							<a
+							href="ParentWindow.html"
+							target="FrameMain">
+								Parent Window</a>
+
+				<ul><li class="" id="SurfaceEditorPanel" data="">
+							<a
+							href="SurfaceEditorPanel.html"
+							target="FrameMain">
+								Surface Editor Panel</a>
+
+				</li><li class="" id="SystemConfigurationPanel" data="">
+							<a
+							href="SystemConfigurationPanel.html"
+							target="FrameMain">
+								System Configuration Panel</a>
+
+				</li><li class="" id="MenuItems" data="">
+							<a
+							href="MenuItems.html"
+							target="FrameMain">
+								Menu Items</a>
+
+				</li></ul></li><li class="" id="ChildrenWindows" data="icon: '0.png'">
+							<a
+							href="ChildrenWindows.html"
+							target="FrameMain">
+								Children Windows</a>
+
+				</li><li class="folder" id="SystemLayout" data="">
+							<a
+							href="SystemLayout.html"
+							target="FrameMain">
+								System Layout</a>
+
+				<ul><li class="" id="2DSystemLayoutWindow" data="">
+							<a
+							href="2DSystemLayoutWindow.html"
+							target="FrameMain">
+								2D System Layout Window</a>
+
+				</li><li class="" id="3DSystemLayoutWindow" data="">
+							<a
+							href="3DSystemLayoutWindow.html"
+							target="FrameMain">
+								3D System Layout Window</a>
+
+				</li></ul></li><li class="folder" id="SingleRayTracing1" data="">
+							<a
+							href="SingleRayTracing1.html"
+							target="FrameMain">
+								Single Ray Tracing</a>
+
+				<ul><li class="" id="ScalarRayTrace" data="">
+							<a
+							href="ScalarRayTrace.html"
+							target="FrameMain">
+								Scalar Ray Trace</a>
+
+				</li><li class="" id="PolarizationRayTrace" data="">
+							<a
+							href="PolarizationRayTrace.html"
+							target="FrameMain">
+								Polarization Ray Trace</a>
+
+				</li></ul></li><li class="folder" id="OpticalSystemAnalysis" data="">
+							<a
+							href="OpticalSystemAnalysis.html"
+							target="FrameMain">
+								Optical System Analysis</a>
+
+				<ul><li class="" id="ParaxialAnalysis" data="">
+							<a
+							href="ParaxialAnalysis.html"
+							target="FrameMain">
+								Paraxial Analysis</a>
+
+				</li><li class="" id="TransverseRayAberration" data="">
+							<a
+							href="TransverseRayAberration.html"
+							target="FrameMain">
+								Transverse Ray Aberration</a>
+
+				</li><li class="" id="LongitudinalAberration" data="">
+							<a
+							href="LongitudinalAberration.html"
+							target="FrameMain">
+								Longitudinal Aberration</a>
+
+				</li><li class="" id="FootprintDiagram" data="">
+							<a
+							href="FootprintDiagram.html"
+							target="FrameMain">
+								Footprint  Diagram</a>
+
+				</li><li class="" id="PupilApodization" data="">
+							<a
+							href="PupilApodization.html"
+							target="FrameMain">
+								Pupil Apodization</a>
+
+				</li><li class="" id="PolarizationEllipseMap" data="">
+							<a
+							href="PolarizationEllipseMap.html"
+							target="FrameMain">
+								Polarization Ellipse Map</a>
+
+				</li><li class="folder" id="Diffraction" data="">
+							<a
+							href="Diffraction.html"
+							target="FrameMain">
+								Diffraction</a>
+
+				<ul><li class="" id="WavefrontExitPupil" data="">
+							<a
+							href="WavefrontExitPupil.html"
+							target="FrameMain">
+								Wavefront @ Exit Pupil</a>
+
+				</li><li class="" id="FFTPSF" data="">
+							<a
+							href="FFTPSF.html"
+							target="FrameMain">
+								FFT PSF</a>
+
+				</li></ul></li><li class="folder" id="PolarizationAberration" data="">
+							<a
+							href="PolarizationAberration.html"
+							target="FrameMain">
+								Polarization Aberration:</a>
+
+				<ul><li class="" id="AmplitudeTransmissionMap" data="">
+							<a
+							href="AmplitudeTransmissionMap.html"
+							target="FrameMain">
+								Amplitude Transmission Map</a>
+
+				</li><li class="" id="PhaseMap" data="">
+							<a
+							href="PhaseMap.html"
+							target="FrameMain">
+								Phase Map</a>
+
+				</li><li class="" id="WavefrontDiattenuationMap" data="">
+							<a
+							href="WavefrontDiattenuationMap.html"
+							target="FrameMain">
+								Wavefront Diattenuation Map</a>
+
+				</li><li class="" id="WavefrontRetardationMap" data="">
+							<a
+							href="WavefrontRetardationMap.html"
+							target="FrameMain">
+								Wavefront Retardation Map</a>
+
+				</li></ul></li></ul></li><li class="folder" id="Coating1" data="">
+							<a
+							href="Coating1.html"
+							target="FrameMain">
+								Coating</a>
+
+				<ul><li class="" id="NewCoatingCatalogue" data="">
+							<a
+							href="NewCoatingCatalogue.html"
+							target="FrameMain">
+								New Coating Catalogue</a>
+
+				</li><li class="" id="CoatingDataEditor" data="">
+							<a
+							href="CoatingDataEditor.html"
+							target="FrameMain">
+								Coating Data Editor</a>
+
+				</li><li class="folder" id="CoatingAnalysis1" data="">
+							<a
+							href="CoatingAnalysis1.html"
+							target="FrameMain">
+								Coating Analysis</a>
+
+				<ul><li class="" id="RefractiveIndexProfile" data="">
+							<a
+							href="RefractiveIndexProfile.html"
+							target="FrameMain">
+								Refractive Index Profile</a>
+
+				</li><li class="" id="CoatingPropertyVersusIncidenceAn" data="">
+							<a
+							href="CoatingPropertyVersusIncidenceAn.html"
+							target="FrameMain">
+								Coating Property Versus Incidence Angle</a>
+
+				</li><li class="" id="CoatingPropertiesvsWavelength" data="">
+							<a
+							href="CoatingPropertiesvsWavelength.html"
+							target="FrameMain">
+								Coating Properties vs Wavelength</a>
+
+				</li></ul></li></ul></li><li class="folder" id="Glass" data="">
+							<a
+							href="Glass.html"
+							target="FrameMain">
+								Glass</a>
+
+				<ul><li class="" id="GlassDataEditor" data="">
+							<a
+							href="GlassDataEditor.html"
+							target="FrameMain">
+								Glass Data Editor</a>
+
+				</li><li class="" id="NewGlassCatalogue" data="">
+							<a
+							href="NewGlassCatalogue.html"
+							target="FrameMain">
+								New Glass Catalogue</a>
+
+				</li></ul></li><li class="folder" id="Help" data="">
+							<a
+							href="Help.html"
+							target="FrameMain">
+								Help</a>
+
+				<ul><li class="" id="About" data="">
+							<a
+							href="About.html"
+							target="FrameMain">
+								About</a>
+
+				</li><li class="" id="UserManual" data="">
+							<a
+							href="UserManual.html"
+							target="FrameMain">
+								User Manual</a>
+
+				</li><li class="" id="ProgrammingandAlgorithmsReferenc" data="">
+							<a
+							href="ProgrammingandAlgorithmsReferenc.html"
+							target="FrameMain">
+								Programming and Algorithms Reference</a>
+
+				</li><li class="" id="SourceCodeViewer" data="">
+							<a
+							href="SourceCodeViewer.html"
+							target="FrameMain">
+								Source Code Viewer</a>
+
+				</li></ul></li></ul>
+		</div>
+		
+		<div id="tab-keywords">
+			<ul id="keywords">
+
+				</ul>
+		</div>
+		
+		<div id="tab-search">
+			<form onsubmit="PerformSearch(); return false;">
+				<label for="search_value">Search:</label>
+				<input id="search_value" name="search_value"></input>
+				<input type="submit" value="Search"/>
+			</form>
+			<div id="search_results"></div>
+		</div>
+		
+		</div>
+    
+</body>
+
+</html>
+

@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of draw3DSurface</title>
+  <meta name="keywords" content="draw3DSurface">
+  <meta name="description" content="draw3DSurface: Drwas a single surface in 3D layout diagram">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Analysis_Module --><!-- # System_Layout --><!-- menu.html system_3D_layout_v2.0 -->
+<h1>draw3DSurface
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>draw3DSurface: Drwas a single surface in 3D layout diagram</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="box"><strong>function [ surfH,xyzPoints ] = draw3DSurface(surfCoordinateTM,rad,conic,actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> draw3DSurface: Drwas a single surface in 3D layout diagram
+ Inputs
+   surfCoordinateTM,rad,conic,semiDiam: coordinate transfer matrix, radius, conic constant and
+   semidiameter of the surface 
+   axesHandle: axes to plot the surface. A negative number can be
+   passed as axes handle to supress the graphical output.
+   radSpacing: radius sampling Spacing 
+   varagrin: Not used yet. Can be used to indicate edge type and
+   thickness in future
+ Output
+   surfH:  height of the surface drawn</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../../matlabicon.gif)">
+<li><a href="draw3DLens.html" class="code" title="function [ lensH,xyzPoints1, xyzPoints2] = draw3DLens(surf1CoordinateTM,rad1,conic1,semiDiam1,surf2CoordinateTM,rad2,conic2,semiDiam2,axesHandle,radSpacing,lensColor )">draw3DLens</a>	draw3DLens: Plots the 3 dimensional lay out of alens in 3d Space</li><li><a href="../../../../AODParentDir/Class_Definition/@OpticalSystem/plot3DLayout.html" class="code" title="function draw = plot3DLayout( optSystem,rayPathMatrix,axesHandle)">plot3DLayout</a>	plot3DSurface: Drwas a 3D layout diagram</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ surfH,xyzPoints ] = draw3DSurface(surfCoordinateTM,rad,conic,</a><span class="keyword">...</span>
+0002     actualSurfHeight,drawnSurfHeight,axesHandle,radSpacing,surfColor,varagrin) 
+0003     <span class="comment">% draw3DSurface: Drwas a single surface in 3D layout diagram</span>
+0004     <span class="comment">% Inputs</span>
+0005     <span class="comment">%   surfCoordinateTM,rad,conic,semiDiam: coordinate transfer matrix, radius, conic constant and</span>
+0006     <span class="comment">%   semidiameter of the surface</span>
+0007     <span class="comment">%   axesHandle: axes to plot the surface. A negative number can be</span>
+0008     <span class="comment">%   passed as axes handle to supress the graphical output.</span>
+0009     <span class="comment">%   radSpacing: radius sampling Spacing</span>
+0010     <span class="comment">%   varagrin: Not used yet. Can be used to indicate edge type and</span>
+0011     <span class="comment">%   thickness in future</span>
+0012     <span class="comment">% Output</span>
+0013     <span class="comment">%   surfH:  height of the surface drawn</span>
+0014 
+0015     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0016     <span class="comment">%</span>
+0017 
+0018     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0019     <span class="comment">%</span>
+0020 
+0021     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0022     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0023     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0024     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0025     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0026     <span class="comment">%   Institute of Applied Physics</span>
+0027     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0028                              
+0029     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0030     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0031     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0032 
+0033     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0034     surfPosition = surfCoordinateTM(1:3,4);
+0035     surfRotation = (surfCoordinateTM(1:3,1:3)); <span class="comment">% from local to global</span>
+0036            
+0037     <span class="comment">% the actual height of the surf is minimum of the given actualSurfHeight</span>
+0038     <span class="comment">%  and radius</span>
+0039     actualSurfHeight = min(abs([rad,actualSurfHeight]));
+0040 
+0041     <span class="keyword">if</span> actualSurfHeight==0 
+0042         actualSurfHeight = 2*radSpacing;
+0043     <span class="keyword">end</span>
+0044 
+0045     nPointsSurf = actualSurfHeight/radSpacing;
+0046     <span class="comment">% nPointsAll includes all points which are drawn (may have some</span>
+0047     <span class="comment">% additional points from the actual surface)</span>
+0048     nPointsAll  = drawnSurfHeight/radSpacing;
+0049     r = (linspace(-drawnSurfHeight,drawnSurfHeight,nPointsAll))';
+0050     phi = (linspace(0,2*pi,nPointsAll));
+0051     k = conic;
+0052     c = 1/rad;
+0053 
+0054     x = r*cos(phi);
+0055     y = r*sin(phi);
+0056     z = (c*((x).^2+(y).^2))./(1+sqrt(1-(1+k)*c^2*((x).^2+(y).^2)));
+0057     <span class="comment">% Z values will be complex for points outside the actual surface.</span>
+0058     <span class="comment">% So replace the complex Z values wi the neighboring values</span>
+0059     z = real(z);
+0060     <span class="comment">% Chnage the Z coordinate values to the extreme z for all points</span>
+0061     <span class="comment">% outside the actual surface area.</span>
+0062     pointRad = sqrt(x.^2+y.^2);
+0063     actualSurfacePointIndices = find(pointRad&lt;actualSurfHeight);    
+0064     <span class="keyword">if</span> ~isempty(actualSurfacePointIndices)
+0065         <span class="keyword">if</span> rad &lt; 0
+0066             extremeZ = min(z(actualSurfacePointIndices));
+0067         <span class="keyword">else</span>
+0068             extremeZ = max(z(actualSurfacePointIndices));
+0069         <span class="keyword">end</span>
+0070         z(abs(z)&gt;abs(extremeZ)) = extremeZ;
+0071     <span class="keyword">end</span>
+0072 
+0073     xyzPointsLocal(1,:,:) = x;
+0074     xyzPointsLocal(2,:,:) = y;
+0075     xyzPointsLocal(3,:,:) = z;
+0076     
+0077     
+0078     <span class="comment">% Multiply each points with rotation matrix. This can be done by</span>
+0079     <span class="comment">% using the functions NUM2CELL to break the matrix xyzPointsLocal</span>
+0080     <span class="comment">% into a cell matrix with each cell containg x,y,z values and</span>
+0081     <span class="comment">% CELLFUN to operate across the cells. Then finally convert to</span>
+0082     <span class="comment">% number matrix.</span>
+0083     cellArray = num2cell(xyzPointsLocal,[1]);
+0084     Z = cellfun(@(p) p'*surfRotation,cellArray,<span class="string">'UniformOutput'</span>,false);
+0085     Zn = cell2mat(squeeze(Z));
+0086     xRot = (Zn(:,1:3:end));
+0087     yRot = (Zn(:,2:3:end));
+0088     zRot = (Zn(:,3:3:end));
+0089 
+0090     xyzPointsRotated = cat(3,xRot,yRot,zRot);
+0091     xyzPointsTranslated(:,:,1) = xyzPointsRotated(:,:,1) + surfPosition(1);
+0092     xyzPointsTranslated(:,:,2) = xyzPointsRotated(:,:,2) + surfPosition(2);
+0093     xyzPointsTranslated(:,:,3) = xyzPointsRotated(:,:,3) + surfPosition(3);        
+0094     xyzPoints = xyzPointsTranslated;   
+0095     surfH = actualSurfHeight;
+0096 
+0097      <span class="comment">% Plot the surface on the axes handle</span>
+0098      <span class="keyword">if</span> axesHandle &gt; 0 <span class="comment">% negative value can be used to supress the output</span>
+0099         <span class="comment">% now take only Z-Y coordinates for 2D plot</span>
+0100         x = xyzPoints(:,:,1);
+0101         y = xyzPoints(:,:,2);
+0102         z = xyzPoints(:,:,3); 
+0103         surf(axesHandle,x,z,y,<span class="string">'facecolor'</span>,surfColor,<span class="keyword">...</span>
+0104                  <span class="string">'edgecolor'</span>,<span class="string">'none'</span>,<span class="keyword">...</span>
+0105                  <span class="string">'facelighting'</span>,<span class="string">'phong'</span>);      
+0106         <span class="comment">% Draw the edges</span>
+0107         hold on;
+0108         borderColor = [0.6,0.6,0.6];
+0109         plot3(x(1,:),z(1,:),y(1,:),<span class="string">'Color'</span>,borderColor,<span class="string">'Parent'</span>,axesHandle)                   
+0110     <span class="keyword">end</span>
+0111 
+0112 <span class="keyword">end</span>
+0113</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotFFTPointSpreadFunction</title>
+  <meta name="keywords" content="plotFFTPointSpreadFunction">
+  <meta name="description" content="plotFFTPointSpreadFunction Summary of this function goes here">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>plotFFTPointSpreadFunction
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>plotFFTPointSpreadFunction Summary of this function goes here</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ XMulti,YMulti,normalizedIntensityMulti,peakIntensityMulti,SrehlRatioMuti1 ] =plotFFTPointSpreadFunction( optSystem,wavLen,fieldPointXY,gridSize,spotPlotRadius,polarized,jonesVec,resultComponent,plotPanelHandle,textHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> plotFFTPointSpreadFunction Summary of this function goes here
+   if axesHandle is not given then plot is not needed and only
+   calculated datas shall be returned.
+   apodType,apodParam : Apodization type index and corresponding
+   apodization parameters.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fraunhofer_Scalar/prop_fraun_fft.html" class="code" title="function efelds = prop_fraun_fft(xp,yp,efeld,xs,ys,z,wl)">prop_fraun_fft</a>	_________________________________________________________________</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Test_Scripts/Bundle_Oriented_Diffraction.html" class="code" title="">Bundle_Oriented_Diffraction</a>	Clear command window</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ XMulti,YMulti,normalizedIntensityMulti,peakIntensityMulti,SrehlRatioMuti1 ] =</a><span class="keyword">...</span>
+0002     plotFFTPointSpreadFunction( optSystem,wavLen,fieldPointXY,gridSize,<span class="keyword">...</span>
+0003     spotPlotRadius,polarized,jonesVec,resultComponent,<span class="keyword">...</span>
+0004     plotPanelHandle,textHandle)
+0005 <span class="comment">% plotFFTPointSpreadFunction Summary of this function goes here</span>
+0006 <span class="comment">%   if axesHandle is not given then plot is not needed and only</span>
+0007 <span class="comment">%   calculated datas shall be returned.</span>
+0008 <span class="comment">%   apodType,apodParam : Apodization type index and corresponding</span>
+0009 <span class="comment">%   apodization parameters.</span>
+0010 
+0011 <span class="comment">% Default inputs</span>
+0012 dispPlot = 1;
+0013 dispText = 1;
+0014 <span class="keyword">if</span> nargin &lt; 4
+0015     disp([<span class="string">'Error: The plotFFTPointSpreadFunction function needs atleast'</span>,<span class="keyword">...</span>
+0016         <span class="string">'optSystem,wavLen, fieldPointXY and rayGridSize as arguments.'</span>]);
+0017     XMulti = [];
+0018     YMulti = [];
+0019     normalizedIntensityMulti = [];
+0020     peakIntensityMulti = [];
+0021     <span class="keyword">return</span>
+0022 <span class="keyword">elseif</span> nargin == 4
+0023     spotPlotRadius = 0.02;
+0024     polarized = 0;
+0025     jonesVec = [NaN;NaN];
+0026     resultComponent = <span class="string">''</span>;        
+0027 
+0028     dispPlot = 0;
+0029     dispText = 0;
+0030 <span class="keyword">elseif</span> nargin == 5 || nargin == 6 || nargin == 7
+0031     polarized = 0;
+0032     jonesVec = [NaN;NaN];
+0033     resultComponent = <span class="string">''</span>;        
+0034 
+0035     dispPlot = 0;
+0036     dispText = 0;
+0037 <span class="keyword">elseif</span> nargin == 8
+0038     dispPlot = 0;
+0039     dispText = 0;
+0040 <span class="keyword">elseif</span> nargin == 9
+0041     dispText = 0;
+0042 <span class="keyword">else</span>
+0043 
+0044 <span class="keyword">end</span>
+0045 
+0046 <span class="comment">% Read apodization parameters of the optical system</span>
+0047 apodType = optSystem.ApodizationType;
+0048 apodParam = optSystem.ApodizationParameters;
+0049 
+0050 <span class="comment">% Compute the wavefront surface no axes handle is given to supress the</span>
+0051 <span class="comment">% plot. NB. The X,Y and OPDAtExitPupil will be 4D matrix of dim</span>
+0052 <span class="comment">% [l,m,nField,nWav]</span>
+0053 zerCoeff = 9;
+0054 <span class="keyword">if</span> strcmpi(resultComponent,<span class="string">'Ex+Ey+Ez'</span>) &amp;&amp; polarized
+0055 [ XMultiEx,YMultiEx,OPDAtExitPupilMultiEx,PupilWeightMatrixMultiEx,<span class="keyword">...</span>
+0056     RMSMultiEx,WPVMultiEx,ZERMultiEx,AmpTransCoeffMultiEx,SrehlRatioMuti1 ] = <span class="keyword">...</span>
+0057     optSystem.plotWavefrontAtExitPupil(wavLen,fieldPointXY,gridSize,<span class="keyword">...</span>
+0058     zerCoeff,polarized,jonesVec,<span class="string">'Ex'</span>);
+0059 [ XMultiEy,YMultiEy,OPDAtExitPupilMultiEy,PupilWeightMatrixMultiEy,<span class="keyword">...</span>
+0060     RMSMultiEy,WPVMultiEy,ZERMultiEy,AmpTransCoeffMultiEy,SrehlRatioMuti1 ] = <span class="keyword">...</span>
+0061     optSystem.plotWavefrontAtExitPupil(wavLen,fieldPointXY,gridSize,<span class="keyword">...</span>
+0062     zerCoeff,polarized,jonesVec,<span class="string">'Ey'</span>);
+0063 [ XMultiEz,YMultiEz,OPDAtExitPupilMultiEz,PupilWeightMatrixMultiEz,<span class="keyword">...</span>
+0064     RMSMultiEz,WPVMultiEz,ZERMultiEz,AmpTransCoeffMultiEz,SrehlRatioMuti1 ] = <span class="keyword">...</span>
+0065     optSystem.plotWavefrontAtExitPupil(wavLen,fieldPointXY,gridSize,<span class="keyword">...</span>
+0066     zerCoeff,polarized,jonesVec,<span class="string">'Ez'</span>);
+0067 
+0068 nField = size(OPDAtExitPupilMultiEx,3);
+0069 nWav = size(OPDAtExitPupilMultiEx,4);
+0070 <span class="keyword">else</span>
+0071 [ XMulti1,YMulti1,OPDAtExitPupilMulti1,PupilWeightMatrixMulti1,<span class="keyword">...</span>
+0072     RMSMulti1,WPVMulti1,ZERMulti1,AmpTransCoeffMulti1,SrehlRatioMuti1 ] = <span class="keyword">...</span>
+0073     optSystem.plotWavefrontAtExitPupil(wavLen,fieldPointXY,gridSize,<span class="keyword">...</span>
+0074     zerCoeff,polarized,jonesVec,resultComponent);
+0075 nField = size(OPDAtExitPupilMulti1,3);
+0076 nWav = size(OPDAtExitPupilMulti1,4);
+0077 <span class="keyword">end</span>
+0078 <span class="comment">% % compute pupil apodization no axes handle is given to supress the</span>
+0079 <span class="comment">% % plot</span>
+0080 <span class="comment">% gridSizenew = size(OPDAtExitPupilMulti,1);</span>
+0081 <span class="comment">% [ X,Y,pupilApodization ] =  optSystem.plotPupilApodization(apodType,apodParam,gridSizenew);</span>
+0082 
+0083 
+0084 <span class="keyword">if</span> dispPlot
+0085 <span class="comment">% Clear all childs of plotPanelHandle</span>
+0086 set(get(plotPanelHandle,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0087 <span class="keyword">end</span>
+0088 textResult = char(<span class="string">''</span>,<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; FFT PSF &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>,<span class="string">''</span>);
+0089 
+0090 <span class="comment">% Generate a new panel for each field and wavelength combination to display</span>
+0091 <span class="comment">% the wavefront @ exit pupil in the subplots.</span>
+0092 <span class="keyword">for</span> wavIndex = 1:nWav
+0093     <span class="keyword">for</span> fieldIndex = 1:nField
+0094         <span class="keyword">if</span> dispPlot
+0095         subplotPanel = uipanel(<span class="string">'Parent'</span>,plotPanelHandle,<span class="keyword">...</span>
+0096             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0097             <span class="string">'Position'</span>,[(wavIndex-1)/nWav,(nField-fieldIndex)/nField,<span class="keyword">...</span>
+0098             min([1/nWav,1/nField]),min([1/nWav,1/nField])],<span class="keyword">...</span>
+0099             <span class="string">'Title'</span>,[<span class="string">'Field Point XY : ['</span>,num2str(fieldPointXY(1,fieldIndex)),<span class="string">','</span>,<span class="keyword">...</span>
+0100                 num2str(fieldPointXY(2,fieldIndex)),<span class="string">']'</span>,<span class="keyword">...</span>
+0101                 <span class="string">' &amp; Wavelength : '</span>,num2str(wavLen(wavIndex))]);
+0102         subplotAxes = axes(<span class="string">'Parent'</span>,subplotPanel,<span class="keyword">...</span>
+0103             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0104             <span class="string">'Position'</span>,[0.05,0.05,0.9,0.9]);
+0105         <span class="keyword">end</span>        
+0106         <span class="keyword">if</span> strcmpi(resultComponent,<span class="string">'Ex+Ey+Ez'</span>) &amp;&amp; polarized
+0107              X = XMultiEx(:,:,fieldIndex,wavIndex);
+0108              Y = YMultiEx(:,:,fieldIndex,wavIndex);
+0109              pupilApodization = PupilWeightMatrixMultiEx(:,:,fieldIndex,wavIndex);
+0110             
+0111             OPDAtExitPupilEx = OPDAtExitPupilMultiEx(:,:,fieldIndex,wavIndex);         
+0112             ampTransCoefficientEx = AmpTransCoeffMultiEx(:,:,fieldIndex,wavIndex);
+0113             
+0114             OPDAtExitPupilEy = OPDAtExitPupilMultiEy(:,:,fieldIndex,wavIndex);         
+0115             ampTransCoefficientEy = AmpTransCoeffMultiEy(:,:,fieldIndex,wavIndex);
+0116             
+0117             OPDAtExitPupilEz = OPDAtExitPupilMultiEz(:,:,fieldIndex,wavIndex);         
+0118             ampTransCoefficientEz = AmpTransCoeffMultiEz(:,:,fieldIndex,wavIndex); 
+0119             
+0120 <span class="comment">%             figure;surf(ampTransCoefficientEx);shading interp</span>
+0121 <span class="comment">%             figure;surf(ampTransCoefficientEy);shading interp</span>
+0122 <span class="comment">%             figure;surf(ampTransCoefficientEz);shading interp</span>
+0123 <span class="comment">%</span>
+0124 <span class="comment">%             figure;surf(OPDAtExitPupilEx);shading interp</span>
+0125 <span class="comment">%             figure;surf(OPDAtExitPupilEy);shading interp</span>
+0126 <span class="comment">%             figure;surf(OPDAtExitPupilEz);shading interp</span>
+0127             
+0128         <span class="keyword">else</span>
+0129             X = XMulti1(:,:,fieldIndex,wavIndex);
+0130             Y = YMulti1(:,:,fieldIndex,wavIndex);
+0131             pupilApodization = PupilWeightMatrixMulti1(:,:,fieldIndex,wavIndex); 
+0132             
+0133             OPDAtExitPupil = OPDAtExitPupilMulti1(:,:,fieldIndex,wavIndex);         
+0134             ampTransCoefficient = AmpTransCoeffMulti1(:,:,fieldIndex,wavIndex);
+0135             
+0136 <span class="comment">%             figure;surf(ampTransCoefficient);shading interp</span>
+0137 <span class="comment">%             figure;surf(OPDAtExitPupil);shading interp</span>
+0138           
+0139         <span class="keyword">end</span>
+0140         <span class="comment">% propagate complex pupil function using scalar diffraction and plot psf</span>
+0141         xp = X(1,:);
+0142         yp = Y(:,1);
+0143         
+0144         <span class="comment">% For the spot display</span>
+0145         npx = length(xp);
+0146         npy = npx;
+0147         dus = spotPlotRadius; <span class="comment">% size to see the result</span>
+0148         xs = linspace(-dus,dus,npx);
+0149         ys = xs;
+0150         
+0151         <span class="comment">% Modify the OPD by appending zeros in the bottom and left</span>
+0152         <span class="comment">% Similarly add an additional point in the -ve directions for xp and</span>
+0153         <span class="comment">% yp. This is required as the function 'prop_fraun_fft' assumes NxN</span>
+0154         <span class="comment">% input field (even N), where the real field is of odd dimension</span>
+0155         <span class="comment">% starting from 2 to N and N/2+1 beign its center.</span>
+0156         
+0157 <span class="comment">%         mod_xp = [2*xp(1)-xp(2),xp];</span>
+0158 <span class="comment">%         mod_yp = [2*yp(1)-yp(2);yp];</span>
+0159 <span class="comment">%         mod_xs = [2*xs(1)-xs(2),xs];</span>
+0160 <span class="comment">%         mod_ys = [2*ys(1)-ys(2),ys];</span>
+0161 <span class="comment">%         mod_OPDAtExitPupil = [zeros(size(OPDAtExitPupil,1),1),OPDAtExitPupil];</span>
+0162 <span class="comment">%         mod_OPDAtExitPupil = [mod_OPDAtExitPupil;zeros(1,size(mod_OPDAtExitPupil,2))];</span>
+0163 
+0164         wl = wavLen(wavIndex)*optSystem.getWavelengthUnitFactor*10^3; <span class="comment">% Wavelength in mm</span>
+0165         
+0166         <span class="keyword">if</span>  strcmpi(resultComponent,<span class="string">'Ex+Ey+Ez'</span>) &amp;&amp; polarized
+0167             kWEx = (2*pi/(wavLen(wavIndex)*optSystem.getWavelengthUnitFactor))*<span class="keyword">...</span>
+0168                 OPDAtExitPupilEx*optSystem.getLensUnitFactor;
+0169             efdEx = ampTransCoefficientEx.*sqrt(pupilApodization).*exp(-1i.*kWEx); <span class="comment">% Complex pupil fun</span>
+0170             kWEy = (2*pi/(wavLen(wavIndex)*optSystem.getWavelengthUnitFactor))*<span class="keyword">...</span>
+0171                 OPDAtExitPupilEy*optSystem.getLensUnitFactor;
+0172             efdEy = ampTransCoefficientEy.*sqrt(pupilApodization).*exp(-1i.*kWEy); <span class="comment">% Complex pupil fun</span>
+0173 
+0174             kWEz = (2*pi/(wavLen(wavIndex)*optSystem.getWavelengthUnitFactor))*<span class="keyword">...</span>
+0175                 OPDAtExitPupilEz*optSystem.getLensUnitFactor;
+0176             efdEz = ampTransCoefficientEz.*sqrt(pupilApodization).*exp(-1i.*kWEz); <span class="comment">% Complex pupil fun</span>
+0177            
+0178             z = -optSystem.getExitPupilLocation;
+0179             <span class="comment">% Add spherical phase correction as the existing diffraction code</span>
+0180             <span class="comment">% assumes the wavefront has curvature = Z of propagation</span>
+0181             [xpm,ypm] = meshgrid(xp,yp);
+0182             rpm = sqrt(xpm.^2+ypm.^2);
+0183             rcurv = z;
+0184             efdEx = efdEx .* exp(-1i*pi/(wl*z)*(rpm.^2));
+0185             efdEy = efdEy .* exp(-1i*pi/(wl*z)*(rpm.^2));
+0186             efdEz = efdEz .* exp(-1i*pi/(wl*z)*(rpm.^2));
+0187             <span class="comment">%  Propagation</span>
+0188             efdsEx = <a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fraunhofer_Scalar/prop_fraun_fft.html" class="code" title="function efelds = prop_fraun_fft(xp,yp,efeld,xs,ys,z,wl)">prop_fraun_fft</a>(xp,yp,efdEx,xs,ys,z,wl);
+0189             efdsEy = <a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fraunhofer_Scalar/prop_fraun_fft.html" class="code" title="function efelds = prop_fraun_fft(xp,yp,efeld,xs,ys,z,wl)">prop_fraun_fft</a>(xp,yp,efdEy,xs,ys,z,wl);
+0190             efdsEz = <a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fraunhofer_Scalar/prop_fraun_fft.html" class="code" title="function efelds = prop_fraun_fft(xp,yp,efeld,xs,ys,z,wl)">prop_fraun_fft</a>(xp,yp,efdEz,xs,ys,z,wl);
+0191             
+0192             intEx = abs(efdsEx).^2;
+0193             intEy = abs(efdsEy).^2;
+0194             intEz = abs(efdsEz).^2;
+0195             
+0196             int = intEx + intEy + intEz;
+0197         <span class="keyword">else</span>
+0198             kW = (2*pi/(wavLen(wavIndex)*optSystem.getWavelengthUnitFactor))*<span class="keyword">...</span>
+0199                 OPDAtExitPupil*optSystem.getLensUnitFactor;
+0200             efd = ampTransCoefficient.*sqrt(pupilApodization).*exp(-1i.*kW); <span class="comment">% Complex pupil fun</span>
+0201             z = -optSystem.getExitPupilLocation;
+0202             <span class="comment">% Add spherical phase correction as the existing diffraction code</span>
+0203             <span class="comment">% assumes the wavefront has curvature = Z of propagation</span>
+0204             [xpm,ypm] = meshgrid(xp,yp);
+0205             rpm = sqrt(xpm.^2+ypm.^2);
+0206             rcurv = z;
+0207             efd = efd .* exp(-1i*pi/(wl*z)*(rpm.^2));
+0208             <span class="comment">%  Propagation</span>
+0209             efds = <a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Fraunhofer_Scalar/prop_fraun_fft.html" class="code" title="function efelds = prop_fraun_fft(xp,yp,efeld,xs,ys,z,wl)">prop_fraun_fft</a>(xp,yp,efd,xs,ys,z,wl);
+0210             int = abs(efds).^2;
+0211         <span class="keyword">end</span>
+0212         
+0213         <span class="comment">% Normalize and plot Intensity</span>
+0214         normalize = 1;        
+0215         <span class="keyword">if</span> normalize
+0216             peakIntensity = max(max(int));
+0217             int = int./peakIntensity;
+0218         <span class="keyword">end</span>
+0219         [xbm,ybm] = meshgrid(xs,ys);
+0220         
+0221         strehlRatio = SrehlRatioMuti1(fieldIndex,wavIndex);        
+0222         textResult = char(textResult,<span class="keyword">...</span>
+0223             [<span class="string">'Field Point XY : ['</span>,num2str(fieldPointXY(1,fieldIndex)),<span class="string">','</span>,<span class="keyword">...</span>
+0224             num2str(fieldPointXY(2,fieldIndex)),<span class="string">']'</span>],<span class="keyword">...</span>
+0225             [<span class="string">'Wavelength : '</span>,num2str(wavLen(wavIndex))],<span class="keyword">...</span>
+0226             [<span class="string">'Srehl Ratio (Approximation of Marechal) : '</span>,num2str(strehlRatio)],<span class="string">''</span>);
+0227         <span class="comment">% ['Peak Intensity : ',num2str(peakIntensity)],'');</span>
+0228         
+0229         <span class="keyword">if</span> dispPlot
+0230             <span class="comment">%</span>
+0231             <span class="comment">% Plot the PSF</span>
+0232             surf(subplotAxes,xbm,ybm,int')
+0233             shading interp
+0234         <span class="keyword">end</span>
+0235         
+0236         normalizedIntensityMulti (:,:,fieldIndex,wavIndex) = int';
+0237         peakIntesityMulti(:,:,fieldIndex,wavIndex) = peakIntensity;
+0238         XMulti (:,:,fieldIndex,wavIndex) = xbm;
+0239         YMulti (:,:,fieldIndex,wavIndex) = ybm;
+0240         <span class="comment">%     %</span>
+0241         <span class="comment">%     % Plot the 2D cross section in subfigure 2</span>
+0242         <span class="comment">%     subplot(1,2,2);</span>
+0243         <span class="comment">%     plot(xs,int(:,npy/2+1),'r-'); hold on;</span>
+0244         <span class="comment">%     plot(ys,int(npx/2+1,:),'b-'); %hold on;</span>
+0245     <span class="keyword">end</span>
+0246 <span class="keyword">end</span>
+0247 <span class="keyword">if</span> dispText
+0248     set(textHandle,<span class="string">'String'</span>,textResult);
+0249 <span class="keyword">else</span>
+0250     disp(textResult);
+0251 <span class="keyword">end</span>
+0252 set(gcf,<span class="string">'Name'</span>,[<span class="string">'Point Spread Function (PSF)'</span>]);
+0253 <span class="keyword">end</span>
+0254</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

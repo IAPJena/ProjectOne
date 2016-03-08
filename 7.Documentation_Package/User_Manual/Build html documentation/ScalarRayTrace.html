@@ -1,0 +1,135 @@
+﻿<html>
+	
+<head>
+	<title>Scalar Ray Trace</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "User Manual MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("ScalarRayTrace");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Scalar Ray Trace</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="SingleRayTracing1.html">Single Ray Tracing</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="SingleRayTracing1.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="SingleRayTracing1.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="PolarizationRayTrace.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps2"><span class="rvts34">Scalar Ray Trace</span></p>
+<p class="rvps2"><span class="rvts34"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem101.png"/><img alt="" style="padding : 1px;" src="lib/NewItem134.png"/></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts33">Purpose:</span></p>
+<p class="rvps2"><span class="rvts28">To see the real scalar ray trace results for single &nbsp;ray.</span></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts33">Setting:</span></p>
+<div class="rvps2"><table border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps3"><span class="rvts33">Settings</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps3"><span class="rvts33">Description</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps3"><span class="rvts33">Remarks</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Hx(Normalized) ,Hy(Normalized)</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Normalized values for field coordinates/angles in the object space.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">Valid values [-1,1]</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Px(Normalized) ,Py(Normalized)</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Normalized values for pupil coordinates at the entrance pupil.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">Valid values [-1,1]</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Wavelength Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Index of the wavelength value &nbsp;for the ray.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">A single index should be selected. But new wavelengths can also be used.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Wavelength</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">The wavelength to be used for the ray trace in micrometer.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35">If "New Wavelength" is selected for a &nbsp;wavelength index, the new wavelength should be specified here in micrometer. </span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts28">Show in Tabular</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts28">Display the result in tabular format as in Zemax.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps11"><span class="rvts35"> If deselected, the ray trace results will be displayed in a text format giving the results in surface to surface sequence.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts34"><br/></span></p>
+<p class="rvps2"><span class="rvts33"><br/></span></p>
+<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/help-authoring-tool">Free help authoring tool</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

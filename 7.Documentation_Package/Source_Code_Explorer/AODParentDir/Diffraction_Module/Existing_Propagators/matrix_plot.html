@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of matrix_plot</title>
+  <meta name="keywords" content="matrix_plot">
+  <meta name="description" content="___________________________________________________________________________________">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Diffraction_Module --><!-- menu.html Existing_Propagators -->
+<h1>matrix_plot
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>___________________________________________________________________________________</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function matrix_plot(nzeil,nspalt,izeil,ispalt) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">___________________________________________________________________________________
+
+  Aufruf :  matrix_plot(nzeil,nspalt,izeil,ispalt)
+
+  Routine zum Zeichnen eines Teilplots aus einer Matrix mit fester 
+  Zeilen- und Spaltenzahl
+  Der Plot wird formatfüllend auf die Seite plaziert
+
+  Version :   23.02.03   H. Gross
+___________________________________________________________________________________
+
+  Input :        nzeil  : Anzahl der Zeilen
+                 nspalt : Anzahl der Spalten
+
+                 izeil  : aktuell Nr der Zeile
+                 ispalt : aktuell Nr der Spalte
+
+  Output :       -
+___________________________________________________________________________________</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Split_Z_Beam_Propagation/prop_bpm_2d_test.html" class="code" title="">prop_bpm_2d_test</a>	___________________________________________________________________________________</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function matrix_plot(nzeil,nspalt,izeil,ispalt)</a>
+0002 <span class="comment">%___________________________________________________________________________________</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">%  Aufruf :  matrix_plot(nzeil,nspalt,izeil,ispalt)</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%  Routine zum Zeichnen eines Teilplots aus einer Matrix mit fester</span>
+0007 <span class="comment">%  Zeilen- und Spaltenzahl</span>
+0008 <span class="comment">%  Der Plot wird formatfüllend auf die Seite plaziert</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">%  Version :   23.02.03   H. Gross</span>
+0011 <span class="comment">%___________________________________________________________________________________</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">%  Input :        nzeil  : Anzahl der Zeilen</span>
+0014 <span class="comment">%                 nspalt : Anzahl der Spalten</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">%                 izeil  : aktuell Nr der Zeile</span>
+0017 <span class="comment">%                 ispalt : aktuell Nr der Spalte</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">%  Output :       -</span>
+0020 <span class="comment">%___________________________________________________________________________________</span>
+0021 <span class="comment">%</span>
+0022 xwo = 1 / nspalt;
+0023 xw  = xwo * 0.9;
+0024 xl  = ( ispalt - 1 )*xwo + xwo/15 ;
+0025 <span class="comment">%</span>
+0026 yho = 1 / nzeil;
+0027 yh  = yho * 0.9;
+0028 yu  = ( nzeil - izeil )*yho + yho/20;
+0029 <span class="comment">%</span>
+0030 subplot(<span class="string">'Position'</span>,[xl yu xw yh]);
+0031 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

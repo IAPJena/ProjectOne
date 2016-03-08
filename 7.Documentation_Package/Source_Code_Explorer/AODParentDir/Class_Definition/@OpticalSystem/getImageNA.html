@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getImageNA</title>
+  <meta name="keywords" content="getImageNA">
+  <meta name="description" content="getImageNA: returns image space NA of the optical system">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>getImageNA
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>getImageNA: returns image space NA of the optical system</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function NAI = getImageNA(OS,wavLen) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> getImageNA: returns image space NA of the optical system</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Paraxial_Optics_Module/computeImageNA.html" class="code" title="function imgNA = computeImageNA(exitPupilLocation,exitPupilDiameter, imageRefractiveIndex,imageThick, paraxialImageDistance)">computeImageNA</a>	computeObjectNA: compute the paraxial object space NA</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function NAI = getImageNA(OS,wavLen)</a>
+0002     <span class="comment">% getImageNA: returns image space NA of the optical system</span>
+0003     <span class="keyword">if</span> nargin &lt; 2
+0004         wavLen = OS.getPrimaryWavelength;      
+0005     <span class="keyword">end</span>    
+0006     exitPupilLocation = OS.getExitPupilLocation(wavLen);
+0007     exitPupilDiameter = OS.getExitPupilDiameter(wavLen);
+0008     imageRefractiveIndex = OS.SurfaceArray(OS.NumberOfSurfaces-1)<span class="keyword">...</span>
+0009                   .Glass.getRefractiveIndex(wavLen);
+0010     imageThick = OS.SurfaceArray(OS.NumberOfSurfaces-1). <span class="keyword">...</span>
+0011         Thickness;
+0012     paraxialImageDistance = OS.getParaxialImageLocation;
+0013     NAI = <a href="../../../AODParentDir/Paraxial_Optics_Module/computeImageNA.html" class="code" title="function imgNA = computeImageNA(exitPupilLocation,exitPupilDiameter, imageRefractiveIndex,imageThick, paraxialImageDistance)">computeImageNA</a><span class="keyword">...</span>
+0014         (exitPupilLocation,exitPupilDiameter, imageRefractiveIndex,<span class="keyword">...</span>
+0015         imageThick, paraxialImageDistance);            
+0016 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

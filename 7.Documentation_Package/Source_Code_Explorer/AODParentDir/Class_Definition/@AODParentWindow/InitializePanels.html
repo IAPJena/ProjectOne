@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of InitializePanels</title>
+  <meta name="keywords" content="InitializePanels">
+  <meta name="description" content="InitializeOpenedWindowsPanel: Define and initialized the uicontrols of the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODParentWindow -->
+<h1>InitializePanels
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>InitializeOpenedWindowsPanel: Define and initialized the uicontrols of the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function InitializePanels(parentWindow) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> InitializeOpenedWindowsPanel: Define and initialized the uicontrols of the 
+ four panels of the parent window (panelWelcome,panelSurfaceEditorMain,
+ panelSystemConfigurationData,panelOpenedWindows)
+ Member of AODParentWindow class</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function btnMainTab_Callback(~, ~, parentWindow,tabInd)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function InitializePanels(parentWindow)</a>
+0002 <span class="comment">% InitializeOpenedWindowsPanel: Define and initialized the uicontrols of the</span>
+0003 <span class="comment">% four panels of the parent window (panelWelcome,panelSurfaceEditorMain,</span>
+0004 <span class="comment">% panelSystemConfigurationData,panelOpenedWindows)</span>
+0005 <span class="comment">% Member of AODParentWindow class</span>
+0006 
+0007 aodHandles = parentWindow.AODParentHandles;
+0008     fontSize = aodHandles.FontSize;
+0009     fontName = aodHandles.FontName;
+0010     
+0011     nMainTab = aodHandles.nMainTab;
+0012     aodHandles.panelMain = uipanel(<span class="keyword">...</span>
+0013         <span class="string">'Parent'</span>,aodHandles.FigureHandle,<span class="keyword">...</span>
+0014         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0015         <span class="string">'units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span><span class="comment">.</span>
+0016         <span class="string">'Position'</span>,[0.15,0.04,0.85,0.96]);    
+0017 
+0018     aodHandles.mainTabGroup = uipanel(<span class="keyword">...</span>
+0019         <span class="string">'Parent'</span>, aodHandles.panelMain, <span class="keyword">...</span>
+0020         <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0021         <span class="string">'Position'</span>, [0, 0, 1.0, 1]); 
+0022     tabBtnWidth = 0.18;
+0023     tabBtnHeight = 0.04;
+0024     <span class="keyword">for</span> k = 1:nMainTab
+0025         <span class="keyword">switch</span> k
+0026             <span class="keyword">case</span> 1
+0027                 tabString = <span class="string">'Welcome'</span>;
+0028             <span class="keyword">case</span> 2
+0029                 tabString = <span class="string">'Surface Editor'</span>;
+0030             <span class="keyword">case</span> 3
+0031                 tabString = <span class="string">'System Configuration'</span>;
+0032         <span class="keyword">end</span>
+0033         aodHandles.panelMainTab(k) = <span class="keyword">...</span><span class="comment">.</span>
+0034             uipanel(aodHandles.mainTabGroup,<span class="keyword">...</span>
+0035             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0036             <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0037             <span class="string">'Position'</span>, [0, 0, 1.0, 0.95]);
+0038         aodHandles.btnMainTab(k) = <span class="keyword">...</span><span class="comment">.</span>
+0039             uicontrol(aodHandles.mainTabGroup,<span class="keyword">...</span>
+0040             <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+0041             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0042             <span class="string">'Style'</span>,<span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+0043             <span class="string">'BackgroundColor'</span>,[200,200,200]./256,<span class="keyword">...</span>
+0044             <span class="string">'Position'</span>, [(k-1)*tabBtnWidth, 0.955, tabBtnWidth, tabBtnHeight],<span class="keyword">...</span>
+0045             <span class="string">'String'</span>,tabString);       
+0046     <span class="keyword">end</span>
+0047     <span class="keyword">for</span> k = 1:nMainTab
+0048          set(aodHandles.btnMainTab(k),<span class="keyword">...</span>
+0049             <span class="string">'Callback'</span>,{@<a href="#_sub1" class="code" title="subfunction btnMainTab_Callback(~, ~, parentWindow,tabInd)">btnMainTab_Callback</a>,parentWindow,k}); 
+0050     <span class="keyword">end</span>
+0051     aodHandles.panelWelcome = uipanel(<span class="keyword">...</span>
+0052         <span class="string">'Parent'</span>,aodHandles.panelMainTab(1),<span class="keyword">...</span>
+0053         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0054         <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0055         <span class="string">'Position'</span>,[0,0,1,1]);
+0056     aodHandles.panelSurfaceEditorMain = uipanel(<span class="keyword">...</span>
+0057         <span class="string">'Parent'</span>,aodHandles.panelMainTab(2),<span class="keyword">...</span>
+0058         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0059         <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0060         <span class="string">'Position'</span>,[0,0,1,1]);
+0061     aodHandles.panelSystemConfigurationData = uipanel(<span class="keyword">...</span>
+0062         <span class="string">'Parent'</span>,aodHandles.panelMainTab(3),<span class="keyword">...</span>
+0063         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0064         <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0065         <span class="string">'Position'</span>,[0,0,1,1]);
+0066 
+0067     aodHandles.panelLeftSide = uipanel(<span class="keyword">...</span>
+0068         <span class="string">'Parent'</span>,aodHandles.FigureHandle,<span class="keyword">...</span>
+0069         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0070         <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0071         <span class="string">'Position'</span>,[0,0.04,0.15,0.96]);
+0072     
+0073     aodHandles.panelOpenedWindows = uipanel(<span class="keyword">...</span>
+0074         <span class="string">'Parent'</span>,aodHandles.FigureHandle,<span class="keyword">...</span>
+0075         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0076         <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0077         <span class="string">'Position'</span>,[0,0.04,0.15,0.96]);
+0078 
+0079     nTaskBar = 5;
+0080     <span class="keyword">for</span> k = 1:nTaskBar
+0081         aodHandles.panelTaskBar(k) = uipanel(<span class="keyword">...</span>
+0082             <span class="string">'Parent'</span>,aodHandles.FigureHandle,<span class="keyword">...</span>
+0083             <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, fontName,<span class="keyword">...</span>
+0084             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0085             <span class="string">'Position'</span>,[(k-1)/nTaskBar,0,1/nTaskBar,0.04]);
+0086     <span class="keyword">end</span>
+0087    
+0088    <span class="comment">% Callbacks</span>
+0089    <a name="_sub1" href="#_subfunctions" class="code">function btnMainTab_Callback(~, ~, parentWindow,tabInd)</a>
+0090        parentWindow.selectMainTab(tabInd)
+0091    <span class="keyword">end</span>
+0092 parentWindow.AODParentHandles = aodHandles;
+0093 <span class="keyword">end</span>
+0094</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

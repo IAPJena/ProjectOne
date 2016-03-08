@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeAngleBetweenVectors</title>
+  <meta name="keywords" content="computeAngleBetweenVectors">
+  <meta name="description" content="computeAngleBetweenVectors: to calculate the angle inc (the angle betweent">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Scalar_Ray_Tracing_Module -->
+<h1>computeAngleBetweenVectors
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>computeAngleBetweenVectors: to calculate the angle inc (the angle betweent</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function angle = computeAngleBetweenVectors (vect1,vect2); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeAngleBetweenVectors: to calculate the angle inc (the angle betweent 
+ vect1 and vect2). The function is vectorized so it can work on
+ multiple inputs once at the same time.
+   The function is also vectorized so if the inputs are array then 
+   the output will also be array of the same size. 
+ Inputs:
+   vect1,vect2: are 3-by-N vectors, 
+ Output:
+  angle: NX1 which is the angle between the two vectors. Alaways
+  between 0 - 180.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Mathematical_Functions/compute3dDot.html" class="code" title="function [ outVal ] = compute3dDot(vect1,vect2)">compute3dDot</a>	compute3dDot: computes the dot product of two 3xN vectors</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/tracePolarizedRay.html" class="code" title="function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture)">tracePolarizedRay</a>	tracePolarizedRay: main function of polarized ray tracer</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function angle = computeAngleBetweenVectors (vect1,vect2);</a>
+0002     <span class="comment">% computeAngleBetweenVectors: to calculate the angle inc (the angle betweent</span>
+0003     <span class="comment">% vect1 and vect2). The function is vectorized so it can work on</span>
+0004     <span class="comment">% multiple inputs once at the same time.</span>
+0005     <span class="comment">%   The function is also vectorized so if the inputs are array then</span>
+0006     <span class="comment">%   the output will also be array of the same size.</span>
+0007     <span class="comment">% Inputs:</span>
+0008     <span class="comment">%   vect1,vect2: are 3-by-N vectors,</span>
+0009     <span class="comment">% Output:</span>
+0010     <span class="comment">%  angle: NX1 which is the angle between the two vectors. Alaways</span>
+0011     <span class="comment">%  between 0 - 180.</span>
+0012    
+0013     
+0014    <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0015     <span class="comment">%</span>
+0016 
+0017     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0018     <span class="comment">%</span>
+0019 
+0020     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0021     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0022     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0023     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0024     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0025     <span class="comment">%   Institute of Applied Physics</span>
+0026     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0027                              
+0028     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0029     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0030     <span class="comment">% Jan 14,2014   Worku, Norman G.     Original Version              Version 3.0</span>
+0031     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0032 
+0033     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0034 
+0035     <span class="comment">% Compute the scalar product and A.B = |A||B|Cos(theta)</span>
+0036     n = size(vect1,2);
+0037     angle = acos((<a href="../../AODParentDir/Mathematical_Functions/compute3dDot.html" class="code" title="function [ outVal ] = compute3dDot(vect1,vect2)">compute3dDot</a>(vect1,vect2))./<span class="keyword">...</span>
+0038         ((sqrt(sum(vect1.^2,1))).*(sqrt(sum(vect2.^2,1)))));
+0039 <span class="keyword">end</span>
+0040</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

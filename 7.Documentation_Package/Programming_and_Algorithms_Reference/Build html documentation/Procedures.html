@@ -1,0 +1,544 @@
+﻿<html>
+	
+<head>
+	<title>Procedures</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("Procedures");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Procedures</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ExamplesofExtendingtheToolbox.html">Examples of Extending the Toolbox</a> &rsaquo;&rsaquo; <a href="Method1Aspartofthetoolbox.html">Method 1: As part of the toolbox</a> &rsaquo;&rsaquo; <a href="TransverseRayAberrationDiagram.html">Transverse Ray Aberration Diagram</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="TransverseRayAberrationDiagram.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="TransverseRayAberrationDiagram.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="Results.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts59">Procedures: Transverse Ray Aberration Diagram</span></span></h1>
+<p class="rvps10"><span class="rvts84">Step 1: Define the Input and Outputs</span></p>
+<p class="rvps10"><span class="rvts37">Output: </span></p>
+<p class="rvps10"><span class="rvts38">Graphs showing the transverse aberration (in X or Y) of sagittal or tangential rays with respect to the cheif ray at a given surface.</span></p>
+<p class="rvps10"><span class="rvts37">Input:</span></p>
+<p class="rvps10"><span class="rvts38">The analysis window requires the following setting parameters:</span></p>
+<div class="rvps2"><table border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps3"><span class="rvts28">Settings</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps3"><span class="rvts28">Description</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps3"><span class="rvts28">Remarks</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts27">Surface Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts27">The surface index used to compute the transverse aberration.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps13"><span class="rvts29"><br/></span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts27">Field Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts27">Index of the field value &nbsp;for the analysis.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps13"><span class="rvts29">All fields can be used at the same time if a single wavelength is selected.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts27">Wavelength Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts27">Index of the wavelength value &nbsp;for the analysis.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps13"><span class="rvts29">All wavelengths can be used at the same time if a single field point is selected.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts27">Number of Rays</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts27">The number of rays to be traced per each field point and each wavelength.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps13"><span class="rvts29">Number less than 3 is not recommended.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts27">Sagittal</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts27">Selects which aberration component to plot for the sagittal fan. </span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps13"><span class="rvts29">Since sagittal fans are</span></p>
+<p class="rvps2"><span class="rvts27">functions &nbsp;of &nbsp;the &nbsp;x &nbsp;pupil &nbsp;coordinate, &nbsp;the &nbsp;default &nbsp;is to &nbsp;plot &nbsp;the &nbsp;x &nbsp;component &nbsp;of &nbsp;the</span></p>
+<p class="rvps2"><span class="rvts27">aberration.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts27">Tangential</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts27">Selects which aberration component to plot for the tangential fan. </span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps13"><span class="rvts29">Since tangential fans</span></p>
+<p class="rvps2"><span class="rvts27">are functions of the y pupil coordinate, the default is to plot the y component of the</span></p>
+<p class="rvps2"><span class="rvts27">aberration.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps10"><span class="rvts38"><br/></span></p>
+<p class="rvps10"><span class="rvts84">Step 2: Determine the Toolbox Modules to be Extended</span></p>
+<p class="rvps10"><span class="rvts38">This feature requires extension of the following modules of the toolbox:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps10"><span class="rvts37">AODParentWindow Class: </span></li>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li class="rvps10"><span class="rvts38">A new menu item and/or toolbar button should be added. This can be done by editing the "</span><span class="rvts41">InitializeMenuAndToolbarItems.m</span><span class="rvts38">" file in the class folder. Here a sub menu item called "Ray Aberration" is added to the Optical System menu !! Here is the code added for the menu item addition with corresponding callbacks:</span></li>
+</ul></ul>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts91">% Menu Item Definition</span></p>
+<p class="rvps61"><span class="rvts41">aodHandles.menuTransverseRayAberration = uimenu( </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, aodHandles.menuOpticalSystemAnalysis, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Tag'</span><span class="rvts41">, </span><span class="rvts88">'menuTransverseRayAberration'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Label'</span><span class="rvts41">, </span><span class="rvts88">'Ray Aberration'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Checked'</span><span class="rvts41">, </span><span class="rvts88">'off'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Callback'</span><span class="rvts41">, {@menuTransverseRayAberration_Callback,parentWindow}); </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts91">% Menu Item Callback Definition </span></p>
+<p class="rvps61"><span class="rvts87">function</span><span class="rvts41"> menuTransverseRayAberration_Callback(~,~,myParent)</span></p>
+<p class="rvps62"><span class="rvts41">AODChildWindow(</span><span class="rvts88">'transverseRayAberration'</span><span class="rvts41">,myParent);</span></p>
+<p class="rvps61"><span class="rvts87">end</span><span class="rvts90">&nbsp;</span><span class="rvts41"> &nbsp;</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps10"><span class="rvts37">AODChildWindow Class: </span></li>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li class="rvps10"><span class="rvts38">A new analysis window called "transverseTransverseRayAberration" should be added. </span></li>
+<li class="rvps10"><span class="rvts37">Setting Window: </span></li>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: square;">
+<li class="rvps10"><span class="rvts38">Most uicontrols (such as Surface Index, Field Index , ...) required for the new window are already defined in the toolbox as they are used for existing analysis windows. So they can be used directly with out redefining just by setting their position property. &nbsp;But the uicontrols to select tangetial and sagital aberration component are new to the toolbox and so should be defined first in the child window class. </span></li>
+<li class="rvps10"><span class="rvts38">Here the toolbox function "</span><span class="rvts41">BuildChildWindowSettingPanel.m</span><span class="rvts38">" is edited as follows:</span></li>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps10"><span class="rvts38">The child windows are categorized in to different groups to simplify sharing of codes to design their graphical user interfaces. But the new window "transverseTransverseRayAberration" doesn't seems to fit in to any of the existing categories, so it is placed in t the "others" group.</span></li>
+</ul></ul></ul></ul>
+<p class="rvps63"><span class="rvts85">% Uncategorized</span></p>
+<p class="rvps63"><span class="rvts41">others = </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41">{ </span><span class="rvts88">'coatingRefractiveIndexProfile'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'footprintDiagram'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'system2DLayoutDiagram'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'system3DLayoutDiagram'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'paraxialAnalysis'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'pupilApodization'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'transverseRayAberration'</span><span class="rvts41">};</span></p>
+<p class="rvps2"><span class="rvts89"><br/></span></p>
+<p class="rvps63"><span class="rvts85">% ------------------------------------------------------------</span></p>
+<p class="rvps63"><span class="rvts85">% This code was added just in the line just above the line saying "Add any new &nbsp; &nbsp; </span><span class="rvts85"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps63"><span class="rvts85">% uicontrol definitions here"</span></p>
+<p class="rvps63"><span class="rvts85">% ------------------------------------------------------------</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41">lblTangetialAberration = uicontrol( </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Tag'</span><span class="rvts41">, </span><span class="rvts88">'lblTangetialAberration'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Style'</span><span class="rvts41">, </span><span class="rvts88">'text'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'HorizontalAlignment'</span><span class="rvts41">,</span><span class="rvts88">'Left'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'FontSize'</span><span class="rvts41">,fontSize,</span><span class="rvts88">'FontName'</span><span class="rvts41">, </span><span class="rvts88">'FixedWidth'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'off'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'String'</span><span class="rvts41">, </span><span class="rvts88">'Tangetial'</span><span class="rvts41">);</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41">popTangetialAberration = uicontrol( </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Tag'</span><span class="rvts41">, </span><span class="rvts88">'popTangetialAberration'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'FontSize'</span><span class="rvts41">,fontSize,</span><span class="rvts88">'FontName'</span><span class="rvts41">, </span><span class="rvts88">'FixedWidth'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'off'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Style'</span><span class="rvts41">, </span><span class="rvts88">'popupmenu'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'BackgroundColor'</span><span class="rvts41">, [1 1 1], </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'String'</span><span class="rvts41">, [</span><span class="rvts88">'X Aberration'</span><span class="rvts41">,</span><span class="rvts88">'Y Aberration'</span><span class="rvts41">],</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Value'</span><span class="rvts41">,2);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% ------------------------------------------------------------</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; </span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41">lblSagittalAberration = uicontrol( </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Tag'</span><span class="rvts41">, </span><span class="rvts88">'lblSagittalAberration'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Style'</span><span class="rvts41">, </span><span class="rvts88">'text'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'HorizontalAlignment'</span><span class="rvts41">,</span><span class="rvts88">'Left'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'FontSize'</span><span class="rvts41">,fontSize,</span><span class="rvts88">'FontName'</span><span class="rvts41">, </span><span class="rvts88">'FixedWidth'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'off'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'String'</span><span class="rvts41">, </span><span class="rvts88">'Sagittal'</span><span class="rvts41">);</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41">popSagittalAberration = uicontrol( </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Tag'</span><span class="rvts41">, </span><span class="rvts88">'popSagittalAberration'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'FontSize'</span><span class="rvts41">,fontSize,</span><span class="rvts88">'FontName'</span><span class="rvts41">, </span><span class="rvts88">'FixedWidth'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'off'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Style'</span><span class="rvts41">, </span><span class="rvts88">'popupmenu'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'BackgroundColor'</span><span class="rvts41">, [1 1 1], </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'String'</span><span class="rvts41">, [</span><span class="rvts88">'X Aberration'</span><span class="rvts41">,</span><span class="rvts88">'Y Aberration'</span><span class="rvts41">],</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Value'</span><span class="rvts41">,1); &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts85"> </span><span class="rvts85"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">%% Add any new uicontrol definitions here</span></p>
+<p class="rvps2"><span class="rvts86"><br/></span></p>
+<p class="rvps2"><span class="rvts86"><br/></span></p>
+<p class="rvps2"><span class="rvts85"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; % The following code was added inside the main switch case &nbsp;= 'others' to position the setting panel uicontrols for the &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;% new analysis window</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">case</span><span class="rvts41"> lower(</span><span class="rvts88">'transverseRayAberration'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(lblSurfaceIndex,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.02 0.85 0.15 0.09]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.lblSurfaceIndex = lblSurfaceIndex;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(popSurfaceIndex,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.22 0.88 0.25 0.07]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.popSurfaceIndex = popSurfaceIndex;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.txtCoatingName = txtCoatingName;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(lblWavelengthIndex,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.53 0.85 0.20 0.09]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.lblWavelengthIndex = lblWavelengthIndex;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(popWavelengthIndex,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'String'</span><span class="rvts41">,[</span><span class="rvts88">'All'</span><span class="rvts41">;get(popWavelengthIndex,</span><span class="rvts88">'String'</span><span class="rvts41">)],</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.73 0.88 0.25 0.07]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.popWavelengthIndex = popWavelengthIndex;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.txtWavelength = txtWavelength;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">%------------------------------------------------------</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(lblFieldIndex,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.02 0.75 0.20 0.09]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.lblFieldIndex = lblFieldIndex;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(popFieldIndex,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'String'</span><span class="rvts41">,[</span><span class="rvts88">'All'</span><span class="rvts41">;get(popFieldIndex,</span><span class="rvts88">'String'</span><span class="rvts41">)],</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.22 0.78 0.25 0.07]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.popFieldIndex = popFieldIndex;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(lblNumberOfRay,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.53 0.75 0.20 0.09]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.lblNumberOfRay = lblNumberOfRay;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(txtNumberOfRay,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.73 0.78 0.25 0.07]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.txtNumberOfRay = txtNumberOfRay;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% ----------------------------------------------------</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(lblSagittalAberration,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.02 0.65 0.20 0.09]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.lblSagittalAberration = lblSagittalAberration;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(popSagittalAberration,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.22 0.68 0.25 0.07]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.popSagittalAberration = popSagittalAberration;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% ----------------------------------------------------</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(lblTangetialAberration,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.53 0.65 0.20 0.09]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.lblTangetialAberration = lblTangetialAberration;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set(popTangetialAberration,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Parent'</span><span class="rvts41">, childHandle.panelMainTab(1), </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">, </span><span class="rvts88">'normalized'</span><span class="rvts41">, </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Visible'</span><span class="rvts41">,</span><span class="rvts88">'on'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">, [0.73 0.68 0.25 0.07]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;childHandle.popTangetialAberration = popTangetialAberration; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts85"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;%% Add case statements for new windows in the </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% "others" category here</span></p>
+<p class="rvps2"><span class="rvts43"><br/></span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li class="rvps10"><span class="rvts37">"Ok" Button:</span><span class="rvts38"> </span></li>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: square;">
+<li class="rvps10"><span class="rvts38">The "Ok" button should also be programmed in the child window class to collect and validate the user inputs from setting window and call a function to perform the analysis.</span></li>
+<li class="rvps10"><span class="rvts38">Here the toolbox function "</span><span class="rvts41">btnOkCallback.m</span><span class="rvts38">" is edited as follows:</span></li>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps10"><span class="rvts38">The child windows are categorized in to different groups to simplify sharing of codes to collect data from the graphical user interfaces. But the new window "transverseTransverseRayAberration" doesn't seems to fit in to any of the existing categories, so it is placed in t the "others" group.</span></li>
+</ul></ul></ul></ul>
+<p class="rvps63"><span class="rvts85">% Uncategorized</span></p>
+<p class="rvps63"><span class="rvts41">others = </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41">{ </span><span class="rvts88">'coatingRefractiveIndexProfile'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'footprintDiagram'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'system2DLayoutDiagram'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'system3DLayoutDiagram'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'paraxialAnalysis'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'pupilApodization'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'transverseRayAberration'</span><span class="rvts41">};</span></p>
+<p class="rvps2"><span class="rvts41"><br/></span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% The following code was added inside the main switch case = others</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">case</span><span class="rvts41"> lower(</span><span class="rvts88">'transverseRayAberration'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;surfIndexList = (get(handles.popSurfaceIndex,</span><span class="rvts88">'String'</span><span class="rvts41">));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;surfIndexString = surfIndexList(get(handles.popSurfaceIndex,</span><span class="rvts88">'Value'</span><span class="rvts41">));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;surfIndex = str2double(surfIndexString);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">if</span><span class="rvts41"> isnan(surfIndex)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;disp(</span><span class="rvts88">'The surface index should be valid index number'</span><span class="rvts41">);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">return</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;numberOfRays = str2double(get(handles.txtNumberOfRay,</span><span class="rvts88">'String'</span><span class="rvts41">));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wavLengthIndexList = (get(handles.popWavelengthIndex,</span><span class="rvts88">'String'</span><span class="rvts41">));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wavLengthIndexString = (wavLengthIndexList(get(handles.popWavelengthIndex,</span><span class="rvts88">'Value'</span><span class="rvts41">),:));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">if</span><span class="rvts41"> strcmpi(wavLengthIndexString,</span><span class="rvts88">'New Wavelength'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">elseif</span><span class="rvts41"> strcmpi(wavLengthIndexString,</span><span class="rvts88">'All'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wavIndex = 1:1:currentOpticalSystem1.NumberOfWavelengths;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">else</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wavIndex = str2double(wavLengthIndexString);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fldIndexList = (get(handles.popFieldIndex,</span><span class="rvts88">'String'</span><span class="rvts41">));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fldIndexString = (fldIndexList(get(handles.popFieldIndex,</span><span class="rvts88">'Value'</span><span class="rvts41">),:));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">if</span><span class="rvts41"> strcmpi(fldIndexString,</span><span class="rvts88">'All'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fldIndex = 1:1:currentOpticalSystem1.NumberOfFieldPoints;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">else</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fldIndex = str2double(fldIndexString);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% Check condition that both field index and wavelength are</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% not multiple at the same time. To avoid having multiple</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% graphs, All fiedls can be analysed with specific</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% wavelength and vice versa.</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">if</span><span class="rvts41"> strcmpi(fldIndexString,</span><span class="rvts88">'All'</span><span class="rvts41">) &amp;&amp; strcmpi(wavLengthIndexString,</span><span class="rvts88">'All'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;disp(</span><span class="rvts88">'Error:Both field index and wavelength index can not be "All" at the same time.'</span><span class="rvts41">);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">return</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">end</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% Extract the wavelength and field point</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wavLen = &nbsp;[(currentOpticalSystem1.WavelengthMatrix(wavIndex,1))'];</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fieldPointXY = &nbsp;[(currentOpticalSystem1.FieldPointMatrix(fldIndex,1:2))'];</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% Sagital and tangetial aberration components</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sagAberrCompList = (get(handles.popSagittalAberration,</span><span class="rvts88">'String'</span><span class="rvts41">));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sagittalAberrComp = sagAberrCompList(get(handles.popSagittalAberration,</span><span class="rvts88">'Value'</span><span class="rvts41">));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tanAberrCompList = (get(handles.popTangentialAberration,</span><span class="rvts88">'String'</span><span class="rvts41">));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tangentialAberrComp = tanAberrCompList(get(handles.popTangentialAberration,</span><span class="rvts88">'Value'</span><span class="rvts41">));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% Since two graphs will be drawn (sagital and tangential),</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% handles.panelMainTab(2) is passed instead of the axes</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts85">% handle.</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;currentOpticalSystem1.plotTransverseRayAberration(surfIndex,wavLen,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fieldPointXY,numberOfRays,sagittalAberrComp,tangentialAberrComp,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;handles.panelMainTab(2)); &nbsp; </span></p>
+<p class="rvps2"><span class="rvts41"><br/></span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps10"><span class="rvts37">OpticalSystem Class:</span></li>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li class="rvps10"><span class="rvts38">A new method, called "plotTransverseRayAberration" should be added to the class to perform the analysis and plot the result.</span></li>
+<li class="rvps10"><span class="rvts38">The function source code is as shown below</span></li>
+</ul></ul>
+<p class="rvps10"><span class="rvts87">function</span><span class="rvts41"> plotTransverseRayAberration(optSystem,surfIndex,wavLen,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;fieldPointXY,numberOfRays,sagittalAberrComp,tangentialAberrComp,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;plotPanelHandle)</span></p>
+<p class="rvps2"><span class="rvts85">% Displays the transverse ray aberration of sagital and tangetial ray fans</span></p>
+<p class="rvps2"><span class="rvts85">% on any surface with respect to the cheif ray. </span></p>
+<p class="rvps2"><span class="rvts85"> </span></p>
+<p class="rvps2"><span class="rvts85">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></p>
+<p class="rvps2"><span class="rvts85">% &nbsp; Written By: Worku, Norman Girma</span></p>
+<p class="rvps2"><span class="rvts85">% &nbsp; Advisor: Prof. Herbert Gross</span></p>
+<p class="rvps2"><span class="rvts85">% &nbsp; Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span></p>
+<p class="rvps2"><span class="rvts85">% &nbsp; Optical System Design and Simulation Research Group</span></p>
+<p class="rvps2"><span class="rvts85">% &nbsp; Institute of Applied Physics</span></p>
+<p class="rvps2"><span class="rvts85">% &nbsp; Friedrich-Schiller-University of Jena</span></p>
+<p class="rvps2"><span class="rvts85"> </span></p>
+<p class="rvps2"><span class="rvts85">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></p>
+<p class="rvps2"><span class="rvts85">% Date----------Modified By ---------Modification Detail--------Remark</span></p>
+<p class="rvps2"><span class="rvts85">% May 21,2014 &nbsp; Worku, Norman G. &nbsp; &nbsp; Original Version &nbsp; &nbsp; &nbsp;As example of extension</span></p>
+<p class="rvps2"><span class="rvts85"> </span></p>
+<p class="rvps2"><span class="rvts85">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></p>
+<p class="rvps2"><span class="rvts85"> </span></p>
+<p class="rvps2"><span class="rvts85">% Default Inputs</span></p>
+<p class="rvps2"><span class="rvts87">if</span><span class="rvts41"> nargin &lt; 7</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;disp(</span><span class="rvts88">'Error: The function requires atleast 6 arguments, optSystem,'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">' surfIndex, wavLen, fieldPointXY, numberOfRays, sagittalAberrComp,'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">' and tangentialAberrComp.'</span><span class="rvts41">);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts87">return</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts87">elseif</span><span class="rvts41"> nargin == 7</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;axesHandle = axes(</span><span class="rvts88">'Parent'</span><span class="rvts41">,figure,</span><span class="rvts88">'Units'</span><span class="rvts41">,</span><span class="rvts88">'normalized'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">,[0.1,0.1,0.8,0.8]);</span></p>
+<p class="rvps2"><span class="rvts87">else</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts85">% Assign different symbals and colors for lines of d/t wavelengths</span></p>
+<p class="rvps2"><span class="rvts85">% and feild points respectively</span></p>
+<p class="rvps2"><span class="rvts41">availablelineColor = repmat([</span><span class="rvts88">'b'</span><span class="rvts41">,</span><span class="rvts88">'k'</span><span class="rvts41">,</span><span class="rvts88">'r'</span><span class="rvts41">,</span><span class="rvts88">'g'</span><span class="rvts41">,</span><span class="rvts88">'c'</span><span class="rvts41">,</span><span class="rvts88">'m'</span><span class="rvts41">],1,20); </span><span class="rvts85">% 7*20 = 140</span></p>
+<p class="rvps2"><span class="rvts85">% spotSymbal = availableSpotSymbal(1:size(fieldPointXY,2));</span></p>
+<p class="rvps2"><span class="rvts41">lineColorList = availablelineColor(1:size(wavLen,2)*size(fieldPointXY,2));</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts85">%cla(axesHandle,'reset')</span></p>
+<p class="rvps2"><span class="rvts41">delete(allchild(plotPanelHandle));</span></p>
+<p class="rvps2"><span class="rvts41">JonesVec = [NaN;NaN];</span></p>
+<p class="rvps2"><span class="rvts85">% polarizedRayTracerResult = &nbsp;nSurf X nRay X nField X nWav</span></p>
+<p class="rvps2"><span class="rvts85">% pupil sampling = 5: Tangential Plane 6: Sagital Plane</span></p>
+<p class="rvps2"><span class="rvts41">PupSamplingTypeSagittal = 6;</span></p>
+<p class="rvps2"><span class="rvts41">PupSamplingTypeTangential = 5;</span></p>
+<p class="rvps2"><span class="rvts41">[sagittalRayTracerResult] = optSystem.multipleRayTracer(wavLen,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;fieldPointXY,numberOfRays,PupSamplingTypeSagittal,JonesVec);</span></p>
+<p class="rvps2"><span class="rvts41">[tangentialRayTracerResult] = optSystem.multipleRayTracer(wavLen,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;fieldPointXY,numberOfRays,PupSamplingTypeTangential,JonesVec);</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts41">nSurface = size(sagittalRayTracerResult,1);</span></p>
+<p class="rvps2"><span class="rvts41">nRay = size(sagittalRayTracerResult,2);</span></p>
+<p class="rvps2"><span class="rvts41">nField = size(sagittalRayTracerResult,3);</span></p>
+<p class="rvps2"><span class="rvts41">nWav = size(sagittalRayTracerResult,4);</span></p>
+<p class="rvps2"><span class="rvts85">% trace the cheif ray with either primary wavelength (for multiple </span></p>
+<p class="rvps2"><span class="rvts85">% wavelength analysis)or the specified wavelength (for single wavelegnth).</span></p>
+<p class="rvps2"><span class="rvts87">if</span><span class="rvts41"> nWav &gt; 1 &amp;&amp; nField &gt; 1</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;disp(</span><span class="rvts88">'Error: Both field index and wavelength index can not be multiple at the same time.'</span><span class="rvts41">);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts87">return</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts87">elseif</span><span class="rvts41"> nWav &gt; 1 &amp;&amp; nField == 1</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts85">% Use the primary wavelength for the cheif ray </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;cheifRayWavLenInMet = optSystem.getPrimaryWavelength;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts85">% Change wavlegth back to the system wavelength unit</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;wavUnitFactor = optSystem.getWavelengthUnitFactor;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;cheifRayWavLen = cheifRayWavLenInMet/wavUnitFactor;</span></p>
+<p class="rvps2"><span class="rvts87">elseif</span><span class="rvts41"> nWav == 1 </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts85">% Use the specified wavelength for the cheif ray </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;cheifRayWavLen = wavLen;</span></p>
+<p class="rvps2"><span class="rvts87">else</span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41">considerSurfAperture = 0;</span></p>
+<p class="rvps2"><span class="rvts85">% cheifRayTraceResult: nSurf X nField as each field point has different</span></p>
+<p class="rvps2"><span class="rvts85">% cheif rays</span></p>
+<p class="rvps2"><span class="rvts41">cheifRayTraceResult = optSystem.traceCheifRay(fieldPointXY,cheifRayWavLen,considerSurfAperture );</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts85">% Use different color for diffrent wavelengths and different field points. &nbsp; </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; </span></p>
+<p class="rvps2"><span class="rvts87">for</span><span class="rvts41"> wavIndex = 1:nWav</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts87">for</span><span class="rvts41"> fieldIndex = 1:nField</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;lineIndex = fieldIndex + (wavIndex-1)*nField;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;cheifRayIntersection = [cheifRayTraceResult(surfIndex,fieldIndex).RayIntersectionPoint];</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;cheifRayIntersections = repmat(cheifRayIntersection,[1,nRay]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;sagittalFanIntersectionPoints = </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[sagittalRayTracerResult(surfIndex,:,fieldIndex,wavIndex).RayIntersectionPoint];</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;tangentialFanIntersectionPoints = </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[tangentialRayTracerResult(surfIndex,:,fieldIndex,wavIndex).RayIntersectionPoint];</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">if</span><span class="rvts41"> strcmpi(sagittalAberrComp,</span><span class="rvts88">'X Aberration'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sagY(lineIndex,:) = sagittalFanIntersectionPoints(1,:) - cheifRayIntersections(1,:);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;yLabelSag = </span><span class="rvts88">'EX'</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">elseif</span><span class="rvts41"> strcmpi(sagittalAberrComp,</span><span class="rvts88">'Y Aberration'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sagY(lineIndex,:) = sagittalFanIntersectionPoints(2,:) - cheifRayIntersections(2,:);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;yLabelSag = </span><span class="rvts88">'EY'</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">else</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">if</span><span class="rvts41"> strcmpi(tangentialAberrComp,</span><span class="rvts88">'X Aberration'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tanY(lineIndex,:) = tangentialFanIntersectionPoints(1,:) - cheifRayIntersections(1,:);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;yLabelTan = </span><span class="rvts88">'EX'</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">elseif</span><span class="rvts41"> strcmpi(tangentialAberrComp,</span><span class="rvts88">'Y Aberration'</span><span class="rvts41">)</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tanY(lineIndex,:) = tangentialFanIntersectionPoints(2,:) - cheifRayIntersections(2,:);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;yLabelTan = </span><span class="rvts88">'EY'</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">else</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">end</span><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;xLabelTan = </span><span class="rvts88">'PY'</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;xLabelSag = </span><span class="rvts88">'PX'</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;sagX(lineIndex,:) = linspace(-1,1,size(sagY,2));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;tanX(lineIndex,:) = linspace(-1,1,size(tanY,2));</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;legendText{lineIndex} = [</span><span class="rvts88">'Field: ['</span><span class="rvts41">,num2str(fieldPointXY(1,fieldIndex)),</span><span class="rvts88">','</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;num2str(fieldPointXY(2,fieldIndex)),</span><span class="rvts88">']'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts88">' Wav: '</span><span class="rvts41">,num2str(wavLen(wavIndex))];</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts87"> </span></p>
+<p class="rvps2"><span class="rvts85">% Generate two new panel for sagital and tangential fans.</span></p>
+<p class="rvps2"><span class="rvts41">tangentialPlotPanel = uipanel(</span><span class="rvts88">'Parent'</span><span class="rvts41">,plotPanelHandle,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">,</span><span class="rvts88">'Normalized'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">,[0.52,0.1,0.45,0.8],</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Title'</span><span class="rvts41">,[char(tangentialAberrComp),</span><span class="rvts88">' for Tangential Fan'</span><span class="rvts41">]);</span></p>
+<p class="rvps2"><span class="rvts41">tangentialPlotAxes = axes(</span><span class="rvts88">'Parent'</span><span class="rvts41">,tangentialPlotPanel,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">,</span><span class="rvts88">'Normalized'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">,[0.1,0.2,0.88,0.6]);</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts87">for</span><span class="rvts41"> tanKK = 1:lineIndex</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;currentLineColor = lineColorList(tanKK);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;plot(tangentialPlotAxes,tanX(tanKK,:),tanY(tanKK,:),currentLineColor); &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;hold </span><span class="rvts88">on</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41">grid </span><span class="rvts88">on</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41">xlabel(tangentialPlotAxes,xLabelTan,</span><span class="rvts88">'FontSize'</span><span class="rvts41">,12);</span></p>
+<p class="rvps2"><span class="rvts41">ylabel(tangentialPlotAxes,yLabelTan,</span><span class="rvts88">'FontSize'</span><span class="rvts41">,12);</span></p>
+<p class="rvps2"><span class="rvts41">legend(tangentialPlotAxes,legendText)</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts41">sagittalPlotPanel = uipanel(</span><span class="rvts88">'Parent'</span><span class="rvts41">,plotPanelHandle,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">,</span><span class="rvts88">'Normalized'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">,[0.03,0.1,0.45,0.8],</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Title'</span><span class="rvts41">,[char(sagittalAberrComp),</span><span class="rvts88">' for Sagital Fan'</span><span class="rvts41">]);</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts41">sagittalPlotAxes = axes(</span><span class="rvts88">'Parent'</span><span class="rvts41">,sagittalPlotPanel,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Units'</span><span class="rvts41">,</span><span class="rvts88">'Normalized'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Position'</span><span class="rvts41">,[0.1,0.2,0.88,0.6]);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts87">for</span><span class="rvts41"> sagKK = 1:lineIndex</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;currentLineColor = lineColorList(sagKK);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;plot(sagittalPlotAxes,sagX(sagKK,:),sagY(sagKK,:),currentLineColor);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;hold </span><span class="rvts88">on</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41">grid </span><span class="rvts88">on</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41">xlabel(sagittalPlotAxes,xLabelSag,</span><span class="rvts88">'FontSize'</span><span class="rvts41">,12);</span></p>
+<p class="rvps2"><span class="rvts41">ylabel(sagittalPlotAxes,yLabelSag,</span><span class="rvts88">'FontSize'</span><span class="rvts41">,12);</span></p>
+<p class="rvps2"><span class="rvts41">legend(sagittalPlotAxes,legendText)</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps10"><span class="rvts38"><br/></span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com">Free HTML Help documentation generator</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,504 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of tracePolarizedRay</title>
+  <meta name="keywords" content="tracePolarizedRay">
+  <meta name="description" content="tracePolarizedRay: main function of polarized ray tracer">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>tracePolarizedRay
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>tracePolarizedRay: main function of polarized ray tracer</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> tracePolarizedRay: main function of polarized ray tracer 
+ The function is vectorized so it can work on multiple sets of 
+ inputs once at the same time. That is array of ray objects.
+ Inputs
+   optSystem: data type &quot;OpticalSystem&quot;
+   ObjectRay: data type &quot;Ray&quot; or array of Ray object
+ Output:
+   polarizedRayTracerResult: array of &quot;RayTraceResult&quot; or can be
+   matrix of RayTraceResult objects if the input is array of Ray
+   object. Size : nSurface X nTotalRay</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Class_Definition/@Coating/getReflectionCoefficients.html" class="code" title="function  [ampRs,ampRp,powRs,powRp,JonesRefMatrix] = getReflectionCoefficients(Coating,wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm)">getReflectionCoefficients</a>	Computes the amplitude and power coefficients of reflection using</li><li><a href="../../../AODParentDir/Class_Definition/@Coating/getTransmissionCoefficients.html" class="code" title="function [ampTs,ampTp,powTs,powTp,JonesTransMatrix] = getTransmissionCoefficients(coating,wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm)">getTransmissionCoefficients</a>	Computes the amplitude and power coefficients of</li><li><a href="../../../AODParentDir/Class_Definition/@Glass/getRefractiveIndex.html" class="code" title="function [n] = getRefractiveIndex(Glass,wavLen)">getRefractiveIndex</a>	getRefractiveIndex: Returns the refractive index of the glass</li><li><a href="../../../AODParentDir/Class_Definition/@RayTraceResult/RayTraceResult.html" class="code" title="">RayTraceResult</a>	</li><li><a href="../../../AODParentDir/Mathematical_Functions/compute3dDot.html" class="code" title="function [ outVal ] = compute3dDot(vect1,vect2)">compute3dDot</a>	compute3dDot: computes the dot product of two 3xN vectors</li><li><a href="../../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>	multiplySliced3DMatrices: To perform slicewise multiplication of 3D</li><li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeAccumulatedPhase.html" class="code" title="function accPhase = computeAccumulatedPhase( geometricalPathLength,wavelength )">computeAccumulatedPhase</a>	computeAccumulatedPhase: Computs phase accumulated in agiven path by</li><li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computePhasePropagationFactors.html" class="code" title="function [ pc,ps ] = computePhasePropagationFactors( geometricalPathLength,vacumeWavelength )">computePhasePropagationFactors</a>	computePhasePropagationFactors:  computes the cosine ans sign of the phase</li><li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/convertJVToPolVector.html" class="code" title="function polarizationVector = convertJVToPolVector(JV,dirK)">convertJVToPolVector</a>	convertJonesVectToPolVect Converts a given jones vector to polarization</li><li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/convertJonesMatrixToPolarizationMatrix.html" class="code" title="function [ Pqm1 ] = convertJonesMatrixToPolarizationMatrix( JMq,Kqm1,Kq)">convertJonesMatrixToPolarizationMatrix</a>	convertJonesToPolarizationMatrix:  Converts 2D Jones Matrix to 3D P Matrix</li><li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/normalizeJonesVector.html" class="code" title="function [ normalizedJonesVector ] = normalizeJonesVector( jonesVector )">normalizeJonesVector</a>	normalizeJonesVector normalizes a given jones vector</li><li><a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/computeAngleBetweenVectors.html" class="code" title="function angle = computeAngleBetweenVectors (vect1,vect2);">computeAngleBetweenVectors</a>	computeAngleBetweenVectors: to calculate the angle inc (the angle betweent</li><li><a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/globalToLocalCoordinate.html" class="code" title="function localRayData = globalToLocalCoordinate(globalRayData,polarized,surfaceCoordinateTM,referenceCoordinateTM)">globalToLocalCoordinate</a>	GLOBALTOLOCALCOORDINATE the transfer from the reference coordinate system</li><li><a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computeIntersectionPoint.html" class="code" title="function [interPoint,outOfAperture] = computeIntersectionPoint(localRayPosition,localRayDirection,geometricalPathLength,apertureType,apertureParam,considerSurfAperture)">computeIntersectionPoint</a>	COMPUTEINTERSECTIONPOINT to calculate the intersection point of a ray on one surface</li><li><a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computePathLength.html" class="code" title="function [geometricalPathLength, opticalPathLength,NoIntersectioPoint] = computePathLength(rayInitialPosition,rayDirection,surfaceType,surfaceRadius,surfaceConic,refractiveIndexBefore)">computePathLength</a>	COMPUTEPATHLENGTH to calculate the path length of the ray from the start</li><li><a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computeReflectedRayDirection.html" class="code" title="function refRayDirection = computeReflectedRayDirection (incidentDirection,surfaceNormal);">computeReflectedRayDirection</a>	COMPUTERELFLECTEDRAYDIRECTION to calculate the new direction after reflection</li><li><a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computeRefractedRayDirection.html" class="code" title="function [refLocalRayDirection,TIR] = computeRefractedRayDirection(incidentDirection,normalVector,indexBefore,indexAfter)">computeRefractedRayDirection</a>	COMPUTEREFRACTEDRAYDIRECTION to calculate the new direction after refraction</li><li><a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computeSurfaceNormal.html" class="code" title="function surfaceNormal = computeSurfaceNormal(intersectionPoint,surfaceType,surfaceRadius,surfaceConic)">computeSurfaceNormal</a>	COMPUTESURFACENORMAL to calculate the normal vector at a point of the surface</li><li><a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/localToGlobalCoordinate.html" class="code" title="function [globalRayData,globalSurfaceNormal,globalIncidentRayDirection,globalExitRayDirection] = localToGlobalCoordinate(localRayData,polarized,localSurfaceNormal,localIncidentRayDirection,localExitRayDirection,surfaceCoordinateTM,referenceCoordinateTM);">localToGlobalCoordinate</a>	LOCALTOGLOBALCOORDINATE the transfer from the local coordinate system back to</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function polarizedRayTracerResult = tracePolarizedRay(optSystem, objectRay, considerSurfAperture)</a>
+0002     <span class="comment">% tracePolarizedRay: main function of polarized ray tracer</span>
+0003     <span class="comment">% The function is vectorized so it can work on multiple sets of</span>
+0004     <span class="comment">% inputs once at the same time. That is array of ray objects.</span>
+0005     <span class="comment">% Inputs</span>
+0006     <span class="comment">%   optSystem: data type &quot;OpticalSystem&quot;</span>
+0007     <span class="comment">%   ObjectRay: data type &quot;Ray&quot; or array of Ray object</span>
+0008     <span class="comment">% Output:</span>
+0009     <span class="comment">%   polarizedRayTracerResult: array of &quot;RayTraceResult&quot; or can be</span>
+0010     <span class="comment">%   matrix of RayTraceResult objects if the input is array of Ray</span>
+0011     <span class="comment">%   object. Size : nSurface X nTotalRay</span>
+0012 
+0013     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0014     <span class="comment">%</span>
+0015     <span class="comment">% 1.    Normalize the jones vector of initial ray and convert to</span>
+0016     <span class="comment">%       Polarization Vector ()</span>
+0017     <span class="comment">% 2.    Initialize the total phase to 0, total P and Q matrices to unity</span>
+0018     <span class="comment">% 3.    Record the initial ray data, (including total phase, total P</span>
+0019     <span class="comment">%       and Q matrices) at the object surface to ray trace result</span>
+0020     <span class="comment">%       structure. The initial diattenuation and retardance are not defined.</span>
+0021     <span class="comment">% 4.    For surface index , k = 2 to Total number of surface, nTotal</span>
+0022     <span class="comment">%   a)    Transfer current ray location, direction and polarization vector</span>
+0023     <span class="comment">%       to local coordinates corresponding to kth surface</span>
+0024     <span class="comment">%   b)    Compute local intersection point with the surface and path length</span>
+0025     <span class="comment">%       to the intersection point</span>
+0026     <span class="comment">%   c)    Compute the phase advancement from the path length</span>
+0027     <span class="comment">%   d)    Compute the local polarization vector before the coating</span>
+0028     <span class="comment">%   e)    Compute the local surface normal at the intersection point</span>
+0029     <span class="comment">%   f)    Compute local reflected or refracted ray direction by using</span>
+0030     <span class="comment">%       Snell’s law in 3D  based on the surface deviation mod</span>
+0031     <span class="comment">%   g)    Compute the jones matrix (either transmission or reflection) of</span>
+0032     <span class="comment">%       the coating</span>
+0033     <span class="comment">%   h)    Convert the coating jones matrix to polarization matrix ()</span>
+0034     <span class="comment">%   i)    Compute the new local polarization vector after the coating</span>
+0035     <span class="comment">%   j)    Update the total polarization ray tracing matrix P for the ray</span>
+0036     <span class="comment">%   k)    Compute the parallel ray transport matrix Q related to the</span>
+0037     <span class="comment">%       incident and exit directions</span>
+0038     <span class="comment">%   l)    Update the total parallel ray transport matrix Q for the ray</span>
+0039     <span class="comment">%   m)    Compute the diattenuation and retardance associated with the coating</span>
+0040     <span class="comment">%   n)    Transfer  all vectors in local coordinate system back to the</span>
+0041     <span class="comment">%       global coordinate system</span>
+0042     <span class="comment">%   o)    Record : Ray Intersection Point, Incident Ray Direction, Exit</span>
+0043     <span class="comment">%       Ray Direction, Surface Normal , Incidence Angle , Exit Angle ,</span>
+0044     <span class="comment">%       Path Length , Polarization Vector Initial ,</span>
+0045     <span class="comment">%       Polarization Vector Before Coating , Polarization Vector After Coating ,</span>
+0046     <span class="comment">%       Diattenuation, Retardance, Total P Matrix and Total Q Matrix</span>
+0047     <span class="comment">%       to the ray tracing result object.</span>
+0048     <span class="comment">% 5.    Go to next surface</span>
+0049 
+0050     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0051     <span class="comment">%</span>
+0052 
+0053     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0054     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0055     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0056     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0057     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0058     <span class="comment">%   Institute of Applied Physics</span>
+0059     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0060                              
+0061     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0062     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0063     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0064     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0065     
+0066     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0067     
+0068     <span class="comment">% Deafualt arguments</span>
+0069     <span class="keyword">if</span> nargin &lt; 2
+0070         disp([<span class="string">'Error: Missing Input. The function tracePolarizedray needs '</span><span class="keyword">...</span>
+0071             <span class="string">' atleast the optical system and an object ray as input argument.'</span>]);
+0072         <span class="keyword">return</span>;
+0073     <span class="keyword">elseif</span> nargin == 2
+0074         considerSurfAperture = 1;
+0075     <span class="keyword">else</span>
+0076     <span class="keyword">end</span>
+0077     
+0078     
+0079     nSurface = optSystem.NumberOfSurfaces;
+0080     <span class="comment">% determine the lens units and wavelength units factors</span>
+0081     lensUnit = optSystem.LensUnit; <span class="comment">% 1:'(mm)',2:'(cm)',3:'(m)'</span>
+0082     wavUnit = optSystem.WavelengthUnit; <span class="comment">% 1:'(nm)',2:'(um)'</span>
+0083 
+0084     lensUnitFactor = (lensUnit==1)*(10^-3) + (lensUnit==2)*(10^-2) +<span class="keyword">...</span>
+0085         (lensUnit==3)*(1);
+0086     wavUnitFactor = (wavUnit==1)*(10^-9) + (wavUnit==2)*(10^-6);
+0087     
+0088     nRay = length(objectRay);
+0089    
+0090     polarized = [objectRay.Polarized];
+0091     <span class="comment">% Determine the tracing method. Polarized objects need polarized ray</span>
+0092     <span class="comment">% trace.</span>
+0093     polarized = polarized(1);
+0094     
+0095     wavlen  = [objectRay.Wavelength]; <span class="comment">% wavlen is in m for Ray object</span>
+0096     currentRayDirection = [objectRay.Direction];
+0097     currentRayPosition = [objectRay.Position];
+0098     <span class="comment">% Initialize the total phase to 0,</span>
+0099     totalPhase = zeros([1,nRay]);
+0100     
+0101     <span class="keyword">if</span> polarized 
+0102         jonesVector = [objectRay.JonesVector];
+0103         <span class="comment">% normalize the given jones vector and convert to Polarization Vector</span>
+0104         normalizedJonesVector = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/normalizeJonesVector.html" class="code" title="function [ normalizedJonesVector ] = normalizeJonesVector( jonesVector )">normalizeJonesVector</a>(jonesVector);
+0105         
+0106         <span class="comment">%% Shall be changed or checked</span>
+0107          currentRayPolarizationVector = (<a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/convertJVToPolVector.html" class="code" title="function polarizationVector = convertJVToPolVector(JV,dirK)">convertJVToPolVector</a>(normalizedJonesVector,<span class="keyword">...</span>
+0108          currentRayDirection));
+0109 <span class="comment">% currentRayPolarizationVector = convertJonesVectorToPolarizationVectorNew...</span>
+0110 <span class="comment">%     (normalizedJonesVector,currentRayDirection,[0;0;1]);</span>
+0111        <span class="comment">%%</span>
+0112         <span class="comment">% initialize toatl P, Q and coatingJonesMatrix matrices to unity;</span>
+0113         totalPMatrix = repmat(eye(3),[1,1,nRay]);
+0114         totalQMatrix = repmat(eye(3),[1,1,nRay]);
+0115 
+0116         coatingJonesMatrix = repmat(eye(2),[1,1,nRay]);
+0117         coatingPMatrix = repmat(eye(3),[1,1,nRay]);
+0118         coatingQMatrix = repmat(eye(3),[1,1,nRay]);
+0119     <span class="keyword">end</span>
+0120     
+0121     <span class="comment">% Initialize the matrix of ray trace result object. Preallocation</span>
+0122     multipleRayTracerResult(nSurface,nRay) = <a href="../../../AODParentDir/Class_Definition/@RayTraceResult/RayTraceResult.html" class="code" title="">RayTraceResult</a>;
+0123     
+0124     <span class="comment">% Add initial ray at the object surface to ray trace result structure</span>
+0125     <span class="comment">%  All 1 D array are recorded as 3x1 vertical vector</span>
+0126     infThickness = abs(currentRayPosition(3,:)) &gt; 10^10;
+0127     currentRayPosition(3,infThickness) = 0;
+0128     
+0129     currentSurfaceNormal = repmat([0;0;1],[1,nRay]); <span class="comment">% assume plane object surface.</span>
+0130      
+0131     RayIntersectionPoint = currentRayPosition;
+0132     IncidentRayDirection = repmat([NaN;NaN;NaN],[1,nRay]); <span class="comment">% no ray is incident to object surface</span>
+0133     ExitRayDirection = currentRayDirection;
+0134 
+0135     SurfaceNormal = currentSurfaceNormal; <span class="comment">% [0,0,1]; % assume plane object surface.</span>
+0136     IncidenceAngle = NaN([1,nRay]);
+0137     ExitAngle = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/computeAngleBetweenVectors.html" class="code" title="function angle = computeAngleBetweenVectors (vect1,vect2);">computeAngleBetweenVectors</a><span class="keyword">...</span>
+0138              (currentRayDirection,currentSurfaceNormal);
+0139     PathLength = zeros([1,nRay]);
+0140     OpticalPathLength = zeros([1,nRay]);
+0141     
+0142     NoIntersectionPoint = zeros([1,nRay]); 
+0143     OutOfAperture = zeros([1,nRay]); 
+0144     TotalInternalReflection = zeros([1,nRay]);
+0145     
+0146     <span class="keyword">if</span> polarized
+0147         PolarizationVectorBeforeCoating = repmat([NaN;NaN;NaN],[1,nRay]);
+0148         <span class="comment">%  object surface has no coating</span>
+0149         PolarizationVectorAfterCoating = currentRayPolarizationVector; 
+0150 
+0151         TotalPMatrix = totalPMatrix;
+0152         TotalQMatrix = totalQMatrix;
+0153 
+0154         CoatingJonesMatrix = coatingJonesMatrix;
+0155         CoatingPMatrix = coatingPMatrix;
+0156         CoatingQMatrix = coatingQMatrix;
+0157 
+0158         multipleRayTracerResult(1,:) = <a href="../../../AODParentDir/Class_Definition/@RayTraceResult/RayTraceResult.html" class="code" title="">RayTraceResult</a>(RayIntersectionPoint,SurfaceNormal,<span class="keyword">...</span><span class="comment">        </span>
+0159            IncidentRayDirection,IncidenceAngle,ExitRayDirection,ExitAngle,<span class="keyword">...</span>
+0160            NoIntersectionPoint,OutOfAperture,TotalInternalReflection,PathLength,OpticalPathLength,<span class="keyword">...</span>
+0161            PolarizationVectorBeforeCoating,PolarizationVectorAfterCoating,<span class="keyword">...</span>
+0162            CoatingJonesMatrix,CoatingPMatrix,CoatingQMatrix,TotalPMatrix,TotalQMatrix);    
+0163     <span class="keyword">else</span>
+0164         multipleRayTracerResult(1,:) = <a href="../../../AODParentDir/Class_Definition/@RayTraceResult/RayTraceResult.html" class="code" title="">RayTraceResult</a>(RayIntersectionPoint,SurfaceNormal,<span class="keyword">...</span><span class="comment">        </span>
+0165             IncidentRayDirection,IncidenceAngle,ExitRayDirection,ExitAngle,<span class="keyword">...</span>
+0166             NoIntersectionPoint,OutOfAperture,TotalInternalReflection,PathLength,OpticalPathLength);        
+0167     <span class="keyword">end</span>
+0168       
+0169     <span class="keyword">for</span> surfaceIndex = 2:1:nSurface
+0170        <span class="comment">% Transfer current ray location, direction and polarization vector</span>
+0171        <span class="comment">% to local coordinates corresponding to kth surface</span>
+0172        globalRayPosition = currentRayPosition;
+0173        globalRayDirection = currentRayDirection; 
+0174        <span class="keyword">if</span> polarized
+0175            globalRayPolarizationVector = currentRayPolarizationVector;
+0176            globalRayData = cat(3,globalRayPosition,globalRayDirection,<span class="keyword">...</span>
+0177                globalRayPolarizationVector);  
+0178        <span class="keyword">else</span>
+0179            globalRayData = cat(3,globalRayPosition,globalRayDirection);            
+0180        <span class="keyword">end</span>
+0181        
+0182        <span class="comment">%% New Code for Global to Local Coordinate transformation using Coordinate Transfer Matrix</span>
+0183        prevRefCoordinateTM = optSystem.SurfaceArray(surfaceIndex-1).ReferenceCoordinateTM;
+0184        prevSurfCoordinateTM = optSystem.SurfaceArray(surfaceIndex-1).SurfaceCoordinateTM;
+0185        prevThickness = optSystem.SurfaceArray(surfaceIndex-1).Thickness;
+0186        <span class="keyword">if</span> abs(prevThickness) &gt; 10^10
+0187           prevThickness = 0;
+0188        <span class="keyword">end</span>
+0189     
+0190        [surfaceCoordinateTM,referenceCoordinateTM] = <span class="keyword">...</span>
+0191            optSystem.SurfaceArray(surfaceIndex).TiltAndDecenter<span class="keyword">...</span>
+0192                 (prevRefCoordinateTM,prevSurfCoordinateTM,prevThickness);
+0193         localRayData = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/globalToLocalCoordinate.html" class="code" title="function localRayData = globalToLocalCoordinate(globalRayData,polarized,surfaceCoordinateTM,referenceCoordinateTM)">globalToLocalCoordinate</a>(globalRayData,polarized,<span class="keyword">...</span>
+0194            surfaceCoordinateTM,referenceCoordinateTM);
+0195             
+0196        <span class="comment">%% End of New code</span>
+0197 
+0198        <span class="comment">% from this point onwards  currentRay become localRay</span>
+0199        currentRayPosition = localRayData(:,:,1);
+0200        currentRayDirection = localRayData(:,:,2);
+0201        <span class="keyword">if</span> polarized
+0202             currentRayPolarizationVector = localRayData(:,:,3);
+0203        <span class="keyword">end</span>
+0204        <span class="comment">% Path length calculation</span>
+0205        surfaceType = optSystem.SurfaceArray(surfaceIndex).Type;
+0206        surfaceRadius = optSystem.SurfaceArray(surfaceIndex).Radius;
+0207        surfaceConic = optSystem.SurfaceArray(surfaceIndex).ConicConstant;
+0208       
+0209        refractiveIndexBefore = optSystem.SurfaceArray(surfaceIndex-1).Glass. <span class="keyword">...</span>
+0210            <a href="../../../AODParentDir/Class_Definition/@Glass/getRefractiveIndex.html" class="code" title="function [n] = getRefractiveIndex(Glass,wavLen)">getRefractiveIndex</a>(wavlen); 
+0211        
+0212         rayInitialPosition = currentRayPosition;
+0213         rayDirection = currentRayDirection;
+0214         
+0215         <span class="comment">% Correction for collimated inclined rays from infinity</span>
+0216         <span class="comment">% The ray positions should be shifted bit in such away that the OPL</span>
+0217         <span class="comment">% will be the same for all rays initially.</span>
+0218         <span class="keyword">if</span> surfaceIndex == 2 &amp;&amp; optSystem.SurfaceArray(1).Thickness &gt; 10^10
+0219             <span class="comment">% If any point on a line passing through P and with unit vector u</span>
+0220             <span class="comment">% is given by Lp = P + u*t. (t is scalar shift along the line)</span>
+0221             <span class="comment">% t for point where a perpendicular line from orign (0,0,0) cross the</span>
+0222             <span class="comment">% given line is given by t = -P.u</span>
+0223             t = - <a href="../../../AODParentDir/Mathematical_Functions/compute3dDot.html" class="code" title="function [ outVal ] = compute3dDot(vect1,vect2)">compute3dDot</a>(rayInitialPosition,rayDirection);
+0224             rayInitialPosition = rayInitialPosition + rayDirection.*repmat(t,[3,1]);
+0225         <span class="keyword">end</span>
+0226         
+0227         [geometricalPathLength, opticalPathLength,NoIntersectionPoint] = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computePathLength.html" class="code" title="function [geometricalPathLength, opticalPathLength,NoIntersectioPoint] = computePathLength(rayInitialPosition,rayDirection,surfaceType,surfaceRadius,surfaceConic,refractiveIndexBefore)">computePathLength</a> <span class="keyword">...</span>
+0228             (rayInitialPosition,rayDirection,surfaceType,surfaceRadius,<span class="keyword">...</span>
+0229             surfaceConic,refractiveIndexBefore);  <span class="comment">% 2nd function</span>
+0230         
+0231         totalNoIntersection = sum(NoIntersectionPoint);
+0232         <span class="keyword">if</span> totalNoIntersection &gt; 0
+0233             disp([num2str(totalNoIntersection) , <span class="string">' rays do not intersect surface '</span>,<span class="keyword">...</span>
+0234                 num2str(surfaceIndex),<span class="string">'. They have no intersection point. They are'</span>,<span class="keyword">...</span>
+0235                 <span class="string">' ignored in other computations.'</span>]);
+0236         <span class="keyword">else</span>
+0237             disp([<span class="string">'All of '</span>,num2str(nRay),<span class="string">' rays intersect surface '</span>,num2str(surfaceIndex),<span class="string">'.'</span>]);            
+0238         <span class="keyword">end</span>  
+0239 
+0240         <span class="comment">% compute current accumulated phase</span>
+0241         accumulatedPhase = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeAccumulatedPhase.html" class="code" title="function accPhase = computeAccumulatedPhase( geometricalPathLength,wavelength )">computeAccumulatedPhase</a><span class="keyword">...</span>
+0242             (geometricalPathLength*lensUnitFactor,wavlen);
+0243         
+0244         <span class="comment">% add current phase to exsisting total phase</span>
+0245         totalPhase = totalPhase + accumulatedPhase;
+0246 
+0247         apertureType = optSystem.SurfaceArray(surfaceIndex).ApertureType;
+0248         apertureParam = optSystem.SurfaceArray(surfaceIndex).ApertureParameter;
+0249 
+0250         [localIntersectionPoint,outOfAperture] = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computeIntersectionPoint.html" class="code" title="function [interPoint,outOfAperture] = computeIntersectionPoint(localRayPosition,localRayDirection,geometricalPathLength,apertureType,apertureParam,considerSurfAperture)">computeIntersectionPoint</a>(rayInitialPosition,<span class="keyword">...</span>
+0251             rayDirection, geometricalPathLength,apertureType,apertureParam,considerSurfAperture); <span class="comment">% 3rd function</span>
+0252 
+0253         totalOutOfAperture = sum(outOfAperture);
+0254 
+0255         <span class="keyword">if</span> totalOutOfAperture &gt; 0
+0256             disp([num2str(totalOutOfAperture) , <span class="string">' rays are vignated at surface '</span>,<span class="keyword">...</span>
+0257                 num2str(surfaceIndex),<span class="string">'. They intersect the surface outside the '</span> ,<span class="keyword">...</span><span class="comment"> </span>
+0258                 <span class="string">'aperture area. They are ignored in other computations.'</span>]);
+0259         <span class="keyword">else</span>
+0260             disp([<span class="string">'All of '</span>,num2str(nRay),<span class="string">' rays pass through surface '</span>,num2str(surfaceIndex),<span class="string">'.'</span>]);            
+0261         <span class="keyword">end</span>         
+0262 
+0263         currentRayPosition = localIntersectionPoint;
+0264         <span class="keyword">if</span> polarized
+0265             <span class="comment">% phase advancement</span>
+0266             <span class="comment">% Zemax method, just multiply the real part by cos(phase) and imaginary</span>
+0267             <span class="comment">% by sin(phase)</span>
+0268             [pc,ps] = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computePhasePropagationFactors.html" class="code" title="function [ pc,ps ] = computePhasePropagationFactors( geometricalPathLength,vacumeWavelength )">computePhasePropagationFactors</a><span class="keyword">...</span>
+0269                 (geometricalPathLength*lensUnitFactor,wavlen);
+0270             currentRayPolarizationVector = (currentRayPolarizationVector).*repmat((pc + 1i *ps),[3,1]);   
+0271             currentRayPolarizationVectorBefore = currentRayPolarizationVector;
+0272         <span class="keyword">end</span>
+0273         <span class="comment">% Compute Reflection and Refraction by solving Snells law in 3D</span>
+0274         surfaceType = optSystem.SurfaceArray(surfaceIndex).Type;
+0275         surfaceRadius = optSystem.SurfaceArray(surfaceIndex).Radius;
+0276         surfaceConic = optSystem.SurfaceArray(surfaceIndex).ConicConstant;
+0277         localSurfaceNormal = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computeSurfaceNormal.html" class="code" title="function surfaceNormal = computeSurfaceNormal(intersectionPoint,surfaceType,surfaceRadius,surfaceConic)">computeSurfaceNormal</a>(localIntersectionPoint,<span class="keyword">...</span>
+0278             surfaceType,surfaceRadius,surfaceConic); <span class="comment">% 4th function</span>
+0279         
+0280         <span class="comment">% If the thickness is Negative =&gt; Mirrored Z axis =&gt; the Z</span>
+0281         <span class="comment">% compinent of the normal vector shall be in -ve direction</span>
+0282         <span class="comment">% and x and y</span>
+0283         <span class="keyword">if</span> prevThickness == 0
+0284             localSurfaceNormal = localSurfaceNormal;
+0285         <span class="keyword">else</span>
+0286             localSurfaceNormal = sign(prevThickness)*localSurfaceNormal;
+0287         <span class="keyword">end</span>
+0288         localIncidentRayDirection = currentRayDirection;
+0289         localIncidenceAngle = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/computeAngleBetweenVectors.html" class="code" title="function angle = computeAngleBetweenVectors (vect1,vect2);">computeAngleBetweenVectors</a> (localIncidentRayDirection,<span class="keyword">...</span>
+0290             localSurfaceNormal); <span class="comment">% new function replacing yi's 5th function</span>
+0291         <span class="keyword">if</span> surfaceIndex &lt; nSurface                
+0292            indexBefore = optSystem.SurfaceArray(surfaceIndex-1).Glass. <span class="keyword">...</span>
+0293                <a href="../../../AODParentDir/Class_Definition/@Glass/getRefractiveIndex.html" class="code" title="function [n] = getRefractiveIndex(Glass,wavLen)">getRefractiveIndex</a>(wavlen);    
+0294            indexAfter =  optSystem.SurfaceArray(surfaceIndex).Glass. <span class="keyword">...</span>
+0295                <a href="../../../AODParentDir/Class_Definition/@Glass/getRefractiveIndex.html" class="code" title="function [n] = getRefractiveIndex(Glass,wavLen)">getRefractiveIndex</a>(wavlen);  
+0296            <span class="keyword">if</span> polarized
+0297                 coatingType = optSystem.SurfaceArray(surfaceIndex).Coating.Type;
+0298            <span class="keyword">end</span>
+0299            Kqm1 = localIncidentRayDirection;
+0300            <span class="keyword">if</span> strcmp(optSystem.SurfaceArray(surfaceIndex).DeviationMode,<span class="keyword">...</span>
+0301                     <span class="string">'-1 Reflective'</span>) <span class="comment">% reflection</span>
+0302                 localReflectedRayDirection = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computeReflectedRayDirection.html" class="code" title="function refRayDirection = computeReflectedRayDirection (incidentDirection,surfaceNormal);">computeReflectedRayDirection</a> <span class="keyword">...</span>
+0303                     (localIncidentRayDirection,localSurfaceNormal); <span class="comment">% 6th function</span>
+0304                 localReflectedRayAngle = localIncidenceAngle;
+0305             
+0306                 <span class="comment">% direction of reflected ray</span>
+0307                 currentRayDirection = localReflectedRayDirection;
+0308                 localExitRayDirection = localReflectedRayDirection;
+0309                 localExitAngle = localReflectedRayAngle;
+0310                 Kq = currentRayDirection;
+0311                 <span class="keyword">if</span> polarized
+0312                     <span class="comment">% jones matrix for multiple rays with localIncidenceAngle</span>
+0313                     <span class="comment">% Wavelength shall be converted to um</span>
+0314                     primaryWaveLenInUm = optSystem.getPrimaryWavelength*10^6;
+0315                     wavLenInUm = wavlen*10^6;
+0316                     [ampRs,ampRp,powRs,powRp,jonesMatrix]=<span class="keyword">...</span>
+0317                         optSystem.SurfaceArray(surfaceIndex).Coating. <span class="keyword">...</span>
+0318                         <a href="../../../AODParentDir/Class_Definition/@Coating/getReflectionCoefficients.html" class="code" title="function  [ampRs,ampRp,powRs,powRp,JonesRefMatrix] = getReflectionCoefficients(Coating,wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm)">getReflectionCoefficients</a>(wavLenInUm,localIncidenceAngle,<span class="keyword">...</span>
+0319                         indexBefore,indexAfter,primaryWaveLenInUm);
+0320 <span class="comment">%                     % Jones matrix becomes 3D for multiple rays</span>
+0321 <span class="comment">%                     jonesMatrix(1,1,:) = ampRs; jonesMatrix(1,2,:) = 0;</span>
+0322 <span class="comment">%                     jonesMatrix(2,1,:) = 0; jonesMatrix(2,2,:) = ampRp;</span>
+0323                 <span class="keyword">end</span>
+0324             <span class="keyword">elseif</span>  strcmp(optSystem.SurfaceArray(surfaceIndex).DeviationMode,<span class="keyword">...</span>
+0325                     <span class="string">'+1 Refractive'</span>)<span class="comment">% refraction</span>
+0326                 [localTransmittedRayDirection,TIR] = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/homo_trace/computeRefractedRayDirection.html" class="code" title="function [refLocalRayDirection,TIR] = computeRefractedRayDirection(incidentDirection,normalVector,indexBefore,indexAfter)">computeRefractedRayDirection</a> <span class="keyword">...</span>
+0327                     (localIncidentRayDirection,localSurfaceNormal,indexBefore,indexAfter); <span class="comment">% 7th function</span>
+0328                 nTotIR = sum(TIR);
+0329                 <span class="keyword">if</span> nTotIR &gt; 0
+0330                     disp([num2str(nTotIR) , <span class="string">' rays encountered Total Internal Reflections at '</span> ,<span class="keyword">...</span><span class="comment"> </span>
+0331                         <span class="string">'surface '</span>, num2str(surfaceIndex),<span class="string">'.'</span>]);
+0332                 <span class="keyword">else</span>
+0333                     disp([<span class="string">'All of '</span>,num2str(nRay),<span class="string">' rays refracted through surface '</span>,<span class="keyword">...</span>
+0334                         num2str(surfaceIndex),<span class="string">' with out Total Internal Reflections.'</span>]);            
+0335                 <span class="keyword">end</span>                 
+0336                                
+0337                 localTransmittedRayAngle = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/computeAngleBetweenVectors.html" class="code" title="function angle = computeAngleBetweenVectors (vect1,vect2);">computeAngleBetweenVectors</a>(localTransmittedRayDirection,<span class="keyword">...</span>
+0338                     localSurfaceNormal);            
+0339                 currentRayDirection = localTransmittedRayDirection;
+0340                 localExitRayDirection = localTransmittedRayDirection;
+0341                 localExitAngle = localTransmittedRayAngle;
+0342                 Kq = currentRayDirection; 
+0343                 <span class="keyword">if</span> polarized
+0344                     <span class="comment">% new code</span>
+0345                     <span class="comment">% Wavelength shall be converted to um</span>
+0346                     primaryWaveLenInUm = optSystem.getPrimaryWavelength*10^6;
+0347                     wavLenInUm = wavlen*10^6;
+0348                     [ampTs,ampTp,powTs,powTp,jonesMatrix] = <span class="keyword">...</span>
+0349                         optSystem.SurfaceArray(surfaceIndex).Coating. <span class="keyword">...</span>
+0350                         <a href="../../../AODParentDir/Class_Definition/@Coating/getTransmissionCoefficients.html" class="code" title="function [ampTs,ampTp,powTs,powTp,JonesTransMatrix] = getTransmissionCoefficients(coating,wavLenInUm,incAngle,ns,nc,primaryWaveLenInUm)">getTransmissionCoefficients</a>(wavLenInUm,localIncidenceAngle,<span class="keyword">...</span>
+0351                          indexBefore,indexAfter,primaryWaveLenInUm); 
+0352 <span class="comment">%                     % Jones matrix becomes 3D for multiple rays</span>
+0353 <span class="comment">%                     jonesMatrix(1,1,:) = ampTs; jonesMatrix(1,2,:) = 0;</span>
+0354 <span class="comment">%                     jonesMatrix(2,1,:) = 0; jonesMatrix(2,2,:) = ampTp;</span>
+0355                 <span class="keyword">end</span>            
+0356             <span class="keyword">else</span>
+0357                 disp(<span class="string">'Surface must be either reflective or refractive'</span>);
+0358             <span class="keyword">end</span> 
+0359             <span class="comment">% compute the new P matrix</span>
+0360             <span class="keyword">if</span> polarized
+0361 <span class="comment">%                 if strcmpi(optSystem.SurfaceArray(surfaceIndex).Coating.Type,'None')</span>
+0362 <span class="comment">%                     P = [1,0,0;0,1,0;0,0,1];</span>
+0363 <span class="comment">%                     Q = [1,0,0;0,1,0;0,0,1];</span>
+0364 <span class="comment">%                 else</span>
+0365                     P = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/convertJonesMatrixToPolarizationMatrix.html" class="code" title="function [ Pqm1 ] = convertJonesMatrixToPolarizationMatrix( JMq,Kqm1,Kq)">convertJonesMatrixToPolarizationMatrix</a>(jonesMatrix,Kqm1,Kq);
+0366                     coatingJonesMatrix = jonesMatrix;
+0367                     coatingPMatrix = P;
+0368                     <span class="comment">% compute the total P matrix</span>
+0369                     totalPMatrix = <a href="../../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>(P,totalPMatrix);
+0370                     <span class="comment">% compute new Polarization vector</span>
+0371                     <span class="comment">% Convert to 3D vector to use the slice based 3D multiplier</span>
+0372                     <span class="comment">% function</span>
+0373                     polVector3D = permute(currentRayPolarizationVector,[1,3,2]);
+0374                     
+0375                     newPolVector3D = <a href="../../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a><span class="keyword">...</span>
+0376                         (P,polVector3D);
+0377                     <span class="comment">% change back to 2D matrix</span>
+0378                     newLocalPolarizationVector = permute(newPolVector3D,[1,3,2]);
+0379                     currentRayPolarizationVector = newLocalPolarizationVector;
+0380                     
+0381                     <span class="comment">% compute the parallel ray transport matrix Q</span>
+0382                     qJonesMatrix = repmat([1,0;0,1],[1,1,nRay]);   <span class="comment">% unity jones matrix for non polarizing element</span>
+0383                     Q = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/convertJonesMatrixToPolarizationMatrix.html" class="code" title="function [ Pqm1 ] = convertJonesMatrixToPolarizationMatrix( JMq,Kqm1,Kq)">convertJonesMatrixToPolarizationMatrix</a>(qJonesMatrix,Kqm1,Kq);
+0384                     coatingQMatrix = Q;
+0385                     <span class="comment">% compute the total Q matrix</span>
+0386                     totalQMatrix = <a href="../../../AODParentDir/Mathematical_Functions/multiplySliced3DMatrices.html" class="code" title="function [ product3DMatrix ] = multiplySliced3DMatrices( matrix1,matrix2 )">multiplySliced3DMatrices</a>(Q,totalQMatrix);
+0387 <span class="comment">%                 end</span>
+0388             <span class="keyword">end</span>
+0389         <span class="keyword">elseif</span> surfaceIndex==nSurface 
+0390             <span class="comment">% for image surface no refraction</span>
+0391             localExitRayDirection  = repmat([NaN;NaN;NaN],[1,nRay]);
+0392             localExitAngle = NaN([1,nRay]); 
+0393             <span class="keyword">if</span> polarized
+0394                 jonesMatrix = repmat(NaN*eye(2),[1,1,nRay]);
+0395                 P = repmat(NaN*eye(3),[1,1,nRay]);
+0396                 Q = repmat(NaN*eye(3),[1,1,nRay]);
+0397 
+0398                 coatingJonesMatrix = jonesMatrix;            
+0399                 coatingPMatrix = P;
+0400                 coatingQMatrix = Q;
+0401             <span class="keyword">end</span>
+0402         <span class="keyword">end</span>   
+0403         <span class="comment">% Finally Transfer back to Global coordinate system</span>
+0404        localRayPosition = currentRayPosition;
+0405        localRayDirection = currentRayDirection;
+0406        <span class="keyword">if</span> polarized
+0407            localRayPolarizationVector = currentRayPolarizationVector;
+0408            localRayPolarizationVectorBefore = currentRayPolarizationVectorBefore;
+0409            localRayData = cat(3,localRayPosition,localRayDirection,<span class="keyword">...</span>
+0410                localRayPolarizationVectorBefore,localRayPolarizationVector);
+0411        <span class="keyword">else</span>
+0412            localRayData = cat(3,localRayPosition,localRayDirection);          
+0413        <span class="keyword">end</span>
+0414        
+0415        <span class="comment">%% New Code for Global to Local Coordinate transformation</span>
+0416        [globalRayData,globalSurfaceNormal,globalIncidentRayDirection,<span class="keyword">...</span>
+0417            globalExitRayDirection] = <a href="../../../AODParentDir/Scalar_Ray_Tracing_Module/localToGlobalCoordinate.html" class="code" title="function [globalRayData,globalSurfaceNormal,globalIncidentRayDirection,globalExitRayDirection] = localToGlobalCoordinate(localRayData,polarized,localSurfaceNormal,localIncidentRayDirection,localExitRayDirection,surfaceCoordinateTM,referenceCoordinateTM);">localToGlobalCoordinate</a>(localRayData,<span class="keyword">...</span>
+0418            polarized,localSurfaceNormal,localIncidentRayDirection,<span class="keyword">...</span>
+0419            localExitRayDirection,surfaceCoordinateTM,referenceCoordinateTM); 
+0420 
+0421        <span class="comment">%% End of New code</span>
+0422        
+0423        <span class="comment">% now the currentnt ray becomes global ray agin</span>
+0424        currentRayPosition = globalRayData(:,:,1);
+0425        currentRayDirection = globalRayData(:,:,2);
+0426        <span class="keyword">if</span> polarized
+0427             globalRayPolarizationVectorBefore = globalRayData(:,:,3);
+0428             globalRayPolarizationVector = globalRayData(:,:,4);
+0429        <span class="keyword">end</span>
+0430        globalIncidenceAngle = localIncidenceAngle;
+0431        globalExitAngle = localExitAngle;
+0432 
+0433         <span class="comment">% Record all neccessary outputs to trace the ray</span>
+0434         <span class="keyword">if</span> polarized
+0435             multipleRayTracerResult(surfaceIndex,:) = <a href="../../../AODParentDir/Class_Definition/@RayTraceResult/RayTraceResult.html" class="code" title="">RayTraceResult</a><span class="keyword">...</span>
+0436                (currentRayPosition,globalSurfaceNormal,globalIncidentRayDirection,<span class="keyword">...</span>
+0437                globalIncidenceAngle,globalExitRayDirection,globalExitAngle,<span class="keyword">...</span>
+0438                NoIntersectionPoint,outOfAperture,TIR,geometricalPathLength,opticalPathLength,<span class="keyword">...</span>
+0439                globalRayPolarizationVectorBefore,globalRayPolarizationVector,<span class="keyword">...</span>
+0440                coatingJonesMatrix,coatingPMatrix,coatingQMatrix,totalPMatrix,totalQMatrix);
+0441         <span class="keyword">else</span>
+0442             multipleRayTracerResult(surfaceIndex,:) =<span class="keyword">...</span>
+0443                <a href="../../../AODParentDir/Class_Definition/@RayTraceResult/RayTraceResult.html" class="code" title="">RayTraceResult</a>(currentRayPosition,globalSurfaceNormal,<span class="keyword">...</span><span class="comment">        </span>
+0444                globalIncidentRayDirection,globalIncidenceAngle,<span class="keyword">...</span>
+0445                globalExitRayDirection,globalExitAngle,NoIntersectionPoint,<span class="keyword">...</span>
+0446                outOfAperture,TIR,geometricalPathLength,opticalPathLength);            
+0447         <span class="keyword">end</span>    
+0448     <span class="keyword">end</span>
+0449 polarizedRayTracerResult = multipleRayTracerResult;</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

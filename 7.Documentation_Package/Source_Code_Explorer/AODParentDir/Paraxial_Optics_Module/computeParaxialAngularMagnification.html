@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of computeParaxialAngularMagnification</title>
+  <meta name="keywords" content="computeParaxialAngularMagnification">
+  <meta name="description" content="computeParaxialAngularMagnification: computes the paraxial angular">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Paraxial_Optics_Module -->
+<h1>computeParaxialAngularMagnification
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>computeParaxialAngularMagnification: computes the paraxial angular</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ angMag] = computeParaxialAngularMagnification(refIndex,thick,curv,stopIndex) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> computeParaxialAngularMagnification: computes the paraxial angular 
+                                   magnificatrion using Lagrange invariant. 
+ Inputs
+     refIndex,thick,curv : arrays of n,t of medium following and C of 
+                         each surface from object to image direction
+   obj_img: 'FF','FI','IF','II' showing location of object and
+   image Finite and infinite
+ &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="yniTrace.html" class="code" title="function [yf uf] = yniTrace(yi,ui,initialSurf,finalSurf, refIndex,thick,curv)">yniTrace</a>	ynuTrace: Performs ynu trace for paraxial fileds</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Class_Definition/@OpticalSystem/getAngularMagnification.html" class="code" title="function angMag = getAngularMagnification(OS,wavLen)">getAngularMagnification</a>	getParaxialMagnification: returns paraxial magnification of</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ angMag] = computeParaxialAngularMagnification(refIndex,thick,curv,stopIndex) </a>
+0002     <span class="comment">% computeParaxialAngularMagnification: computes the paraxial angular</span>
+0003     <span class="comment">%                                   magnificatrion using Lagrange invariant.</span>
+0004     <span class="comment">% Inputs</span>
+0005     <span class="comment">%     refIndex,thick,curv : arrays of n,t of medium following and C of</span>
+0006     <span class="comment">%                         each surface from object to image direction</span>
+0007     <span class="comment">%   obj_img: 'FF','FI','IF','II' showing location of object and</span>
+0008     <span class="comment">%   image Finite and infinite</span>
+0009     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0010     <span class="comment">%</span>
+0011 
+0012     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0013     <span class="comment">%</span>
+0014 
+0015     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0016     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0017     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0018     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0019     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0020     <span class="comment">%   Institute of Applied Physics</span>
+0021     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0022                              
+0023     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0024     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0025     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0026 
+0027     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0028 
+0029     <span class="comment">% trace a paraxial cheif ray from stop to forward and backward.</span>
+0030     <span class="comment">% Then compute the angular magnification</span>
+0031     <span class="comment">% Angular magnification</span>
+0032     <span class="comment">% The ratio of the paraxial image space chief ray angle to the paraxial object space chief ray angle. The angles</span>
+0033     <span class="comment">% are measured with respect to the paraxial entrance and exit pupil locations.</span>
+0034 
+0035     ystop = 0;
+0036     ustop = 0.01;
+0037     [yimg,uimg] = <a href="yniTrace.html" class="code" title="function [yf uf] = yniTrace(yi,ui,initialSurf,finalSurf, refIndex,thick,curv)">yniTrace</a>(ystop,ustop,stopIndex,<span class="keyword">...</span>
+0038                    length(curv)-1, refIndex,thick,curv);
+0039 
+0040     [yobj,uobj] = <a href="yniTrace.html" class="code" title="function [yf uf] = yniTrace(yi,ui,initialSurf,finalSurf, refIndex,thick,curv)">yniTrace</a>(ystop,ustop,stopIndex,1, refIndex,thick,curv);
+0041     angMag = (uimg*refIndex(length(curv)-1))/(uobj*refIndex(1));
+0042</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

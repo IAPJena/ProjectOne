@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotWavefrontRetardanceMap</title>
+  <meta name="keywords" content="plotWavefrontRetardanceMap">
+  <meta name="description" content="Displays the wavefront Retardance (in degree) map of the system">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>plotWavefrontRetardanceMap
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>Displays the wavefront Retardance (in degree) map of the system</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function plotWavefrontRetardanceMap(optSystem,surfIndex,wavLen,fieldPointXY,sampleGridSize,plotPanelHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Displays the wavefront Retardance (in degree) map of the system 
+ (or subsystem before a particular  surface in the system) over the 
+ pupil area for a given field point and  wavelength.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeProperRetardance.html" class="code" title="function allRetardance = computeProperRetardance( PorJ,QorR )">computeProperRetardance</a>	computeProperRetardance:  computes proper retardance associated with a</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function plotWavefrontRetardanceMap(optSystem,surfIndex,wavLen,</a><span class="keyword">...</span>
+0002     fieldPointXY,sampleGridSize,plotPanelHandle)
+0003 <span class="comment">% Displays the wavefront Retardance (in degree) map of the system</span>
+0004 <span class="comment">% (or subsystem before a particular  surface in the system) over the</span>
+0005 <span class="comment">% pupil area for a given field point and  wavelength.</span>
+0006 
+0007 <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0008 <span class="comment">%   Written By: Worku, Norman Girma</span>
+0009 <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0010 <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0011 <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0012 <span class="comment">%   Institute of Applied Physics</span>
+0013 <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0014 
+0015 <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0016 <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0017 <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0018 <span class="comment">% Feb 18,2014   Worku, Norman G.     Vectorized version</span>
+0019 
+0020 <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0021 
+0022 <span class="comment">% Default Inputs</span>
+0023 <span class="keyword">if</span> nargin &lt; 5
+0024     disp(<span class="string">'Error: The function requires atleast 6 arguments, optSystem,'</span>,<span class="keyword">...</span>
+0025         <span class="string">' surfIndex, wavLen, fieldPointXY, sampleGridSize.'</span>);
+0026     <span class="keyword">return</span>;
+0027 <span class="keyword">elseif</span> nargin == 5
+0028      plotPanelHandle = uipanel(<span class="string">'Parent'</span>,figure(<span class="string">'Name'</span>,<span class="string">'Wavefront Diattenuation Map'</span>),<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+0029          <span class="string">'Position'</span>,[0,0,1,1]);
+0030 <span class="keyword">end</span>
+0031 
+0032 
+0033 numberOfRays = (sampleGridSize)^2;
+0034 samplingType = 1; <span class="comment">% Cartesian sampling</span>
+0035 <span class="comment">% Just simple give default polarization state to enable polarization ray</span>
+0036 <span class="comment">% tracing</span>
+0037 JonesVec = [1;0];
+0038 <span class="comment">% polarizedRayTracerResult =  nSurf X nRay X nField X nWav</span>
+0039 [polarizedRayTracerResult,pupilCoordinates,pupilGridIndices] = optSystem.multipleRayTracer(wavLen,<span class="keyword">...</span>
+0040     fieldPointXY,numberOfRays,samplingType,JonesVec);
+0041 
+0042 
+0043 <span class="comment">% Spatial Distribution of diattenuation of the system in pupil coordinate</span>
+0044 nRay = size(polarizedRayTracerResult,2);
+0045 nField = size(polarizedRayTracerResult,3);
+0046 nWav = size(polarizedRayTracerResult,4);
+0047 
+0048 gridSize = max(max(pupilGridIndices));
+0049 [X,Y] = meshgrid(linspace(min(min(pupilCoordinates)),max(max(pupilCoordinates)),gridSize));
+0050 
+0051 <span class="comment">% Generate a new panel for each field and wavelength combination to display</span>
+0052 <span class="comment">% the wavefront diattenuation map in the subplots.</span>
+0053 <span class="keyword">for</span> wavIndex = 1:nWav
+0054     <span class="keyword">for</span> fieldIndex = 1:nField        
+0055         <span class="comment">% totalPMatrix = 3 x 3 x nRay matrix of total P matrix</span>
+0056         totalPMatrix = reshape(<span class="keyword">...</span>
+0057             [polarizedRayTracerResult(surfIndex,:,fieldIndex,wavIndex).TotalPMatrix],<span class="keyword">...</span>
+0058             [3,3,nRay]);
+0059         totalQMatrix = reshape(<span class="keyword">...</span>
+0060             [polarizedRayTracerResult(surfIndex,:,fieldIndex,wavIndex).TotalQMatrix],<span class="keyword">...</span>
+0061             [3,3,nRay]);        
+0062         <span class="comment">% create pannel for each wavelength-field points</span>
+0063         subplotPanel = uipanel(<span class="string">'Parent'</span>,plotPanelHandle,<span class="keyword">...</span>
+0064             <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0065             <span class="string">'Position'</span>,[(wavIndex-1)/nWav,(nField-fieldIndex)/nField,<span class="keyword">...</span>
+0066                         min([1/nWav,1/nField]),min([1/nWav,1/nField])],<span class="keyword">...</span>
+0067             <span class="string">'Title'</span>,[<span class="string">'WaveLen Index : '</span>, num2str(wavIndex),<span class="keyword">...</span>
+0068                      <span class="string">' &amp; Field Index : '</span>,num2str(fieldIndex)]);
+0069         subplotAxes = axes(<span class="string">'Parent'</span>,subplotPanel,<span class="keyword">...</span>
+0070                         <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0071                         <span class="string">'Position'</span>,[0,0,1,1]); 
+0072                             
+0073         <span class="comment">% Initialize all values to zero</span>
+0074         retardanceP = X.*0;   
+0075         <span class="comment">% replace the zeros with the values using linear indexing of</span>
+0076         <span class="comment">% 2D matrix. The linear index for pupilGridIndices (x,y) =</span>
+0077         <span class="comment">% (x-1)*gridSize+y</span>
+0078         linearIndex = (pupilGridIndices(1,:) - <span class="keyword">...</span>
+0079                       ones(1,nRay))*gridSize + pupilGridIndices(2,:);
+0080         <span class="comment">% diattenuationP = 1 x nRay diattenuation value related to each pupil point</span>
+0081         retardanceP (linearIndex) = <a href="../../../AODParentDir/Polarization_Ray_Tracing_Module/computeProperRetardance.html" class="code" title="function allRetardance = computeProperRetardance( PorJ,QorR )">computeProperRetardance</a>(totalPMatrix,totalQMatrix);                
+0082         surf(subplotAxes,X, Y, retardanceP*180/pi,<span class="string">'EdgeColor'</span>, <span class="string">'None'</span>,<span class="string">'facecolor'</span>, <span class="string">'interp'</span>);
+0083         view(2);
+0084         axis (<span class="string">'equal'</span>); 
+0085         axis (<span class="string">'off'</span>);      
+0086     <span class="keyword">end</span>
+0087 <span class="keyword">end</span>
+0088 set(gcf,<span class="string">'Name'</span>,[<span class="string">'Wavefront Retardance Map at surface : '</span>,num2str(surfIndex)]); 
+0089 <span class="keyword">end</span>     
+0090</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

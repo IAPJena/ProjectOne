@@ -1,0 +1,129 @@
+﻿<html>
+	
+<head>
+	<title>OpticalSystem: Class</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("OpticalSystemClass");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">OpticalSystem: Class</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ClassDefinitionModule.html">Class Definition Module</a> &rsaquo;&rsaquo; <a href="NonGUIRelatedClass.html">Non GUI Related Class</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NonGUIRelatedClass.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="NonGUIRelatedClass.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="SurfaceClass.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps7"><span class="rvts0"><span class="rvts22">OpticalSystem Class</span></span></h1>
+<p class="rvps10"><span class="rvts27">This class is used to define the optical system object which contains all informations related with the optical system defined.</span></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts27">Number of Properties: 30</span></p>
+<p class="rvps10"><span class="rvts27">Number of Methods: 39</span></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts27">Most of the properties defined in the optical system class are used for optical system analysis in the toolbox.</span></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts40">Important Methods</span></p>
+<p class="rvps10"><span class="rvts40">1. Main Ray Tracing Function</span></p>
+<p class="rvps10"><span class="rvts28">Syntax:</span></p>
+<p class="rvps23"><span class="rvts42">Function Call:</span></p>
+<p class="rvps23"><span class="rvts48">polarizedRayTracerResult = optSystem.tracePolarizedRay(objectRay,considerSurfAperture)</span></p>
+<p class="rvps23"><span class="rvts48"><br/></span></p>
+<p class="rvps10"><span class="rvts27">It is the main ray tracing function which is basis for most analysis features of the toolbox. The function is used to trace Ray objects from object surface to image surface and return all the necessary results of the ray trace.</span></p>
+<p class="rvps10"><span class="rvts28">Basic Flow Chart:</span></p>
+<p class="rvps10"><img alt="" style="padding : 1px;" src="lib/raytraceflowchart.jpg"/></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts27">To trace N rays through the system:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps10"><span class="rvts27">First construct the updated OpticalSystem object from the surface and configuration data in the parent window.</span></li>
+<li class="rvps10"><span class="rvts27">Then construct 1xN sized array of Ray objects indicating the initial rays to be traced. For unpolarized rays the Jones vector should be [NaN;NaN].</span></li>
+<li class="rvps10"><span class="rvts27">Give the OpticalSystem object and the array of Ray objects to the "</span><span class="rvts48">tracePolarizedRay</span><span class="rvts27">" function. It will return a 2D matrix of the RayTraceResult object with size [nSurface x N].</span></li>
+</ul>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts28">Note 1:</span><span class="rvts27"> For single ray object the "</span><span class="rvts48">tracePolarizedRay</span><span class="rvts27">" returns a vector (size = nSurface) of RayTraceResult object with each element corresponding to the ray properties at each surface of the optical system starting from Object surface to Image surface. And for N ray objects, the result will be a a 2D matrix of the RayTraceResult object with size [nSurface x N].</span></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts28">Note 2: </span><span class="rvts27">To simplify tracing multiple rays, an other function called "</span><span class="rvts48">multipleRayTracer</span><span class="rvts27">" is defined which does not require the user to construct the initial ray objects explicitly. See the description for "</span><span class="rvts48">multipleRayTracer</span><span class="rvts27">".</span></p>
+<p class="rvps10"><span class="rvts27"><br/></span></p>
+<p class="rvps10"><span class="rvts40">2. Multiple Ray Tracing Function</span></p>
+<p class="rvps10"><span class="rvts28">Syntax:</span></p>
+<p class="rvps23"><span class="rvts42">Function Call:</span></p>
+<p class="rvps23"><span class="rvts48">[multipleRayTracerResult,pupilCoordinates,pupilGridIndices] = </span><span class="rvts49">...</span></p>
+<p class="rvps23"><span class="rvts48"> &nbsp; &nbsp; &nbsp; &nbsp;optSystem.multipleRayTracer(wavLen,</span><span class="rvts49">...</span></p>
+<p class="rvps23"><span class="rvts48"> &nbsp; &nbsp; &nbsp; &nbsp;fieldPointXY,nRay,PupSamplingType,JonesVec,considerSurfAperture)</span></p>
+<p class="rvps23"><span class="rvts47"><br/></span></p>
+<p class="rvps23"><span class="rvts46">Flow Chart:</span></p>
+<p class="rvps23"><img alt="" style="padding : 1px;" src="lib/vectorizedflowchart.jpg"/></p>
+<p class="rvps23"><span class="rvts45"> </span></p>
+<p class="rvps23"><span class="rvts44"><br/></span></p>
+<p class="rvps22"><span class="rvts38">To trace multiple rays, all the inputs for all rays to be traced should be given as input. &nbsp;If N rays are to be traced, the sizes of the inputs required:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: square;">
+<li class="rvps22" style="margin-left: 0px"><span class="rvts38"> [</span><span class="rvts50">1xN] wavLen, </span></li>
+<li class="rvps22" style="margin-left: 0px"><span class="rvts38">[2</span><span class="rvts50">xN] fieldPointXY, </span></li>
+<li class="rvps22" style="margin-left: 0px"><span class="rvts50">[1] nRay, </span></li>
+<li class="rvps22" style="margin-left: 0px"><span class="rvts50">[1] PupSamplingType, &nbsp;</span></li>
+<li class="rvps22" style="margin-left: 0px"><span class="rvts50">[2xN] JonesVec, &nbsp;and</span></li>
+<li class="rvps22" style="margin-left: 0px"><span class="rvts50"> [1] considerSurfAperture.</span></li>
+</ul></ul></ul>
+<p class="rvps22"><span class="rvts50">A vector of ray objects are first constructed and traced through the system. T</span><span class="rvts45">he total number of ray will be nRay*nWav*nField, that is all rays from each field point with each of wavelengths will be traced.&nbsp;</span><span class="rvts50"> The results are restructured to a </span><span class="rvts45">4 dimensional matrix [nSurf x nRay x nField x nWav] </span><span class="rvts50">so that accessing the results for specific field and wavelength is simplified. &nbsp;The final reshaped result makes access of the results for specific field and wavelength very simple. </span></p>
+<p class="rvps22"><span class="rvts50">For instance, 4DRayTraceResult (surfIndex, : , fieldIndex, wavIndex): &nbsp;directly gives the ray trace results for all the rays from field point fieldIndex and with wavelength index wavIndex at surface surfIndex. &nbsp;</span></p>
+<p class="rvps23"><span class="rvts43"><br/></span></p>
+<p class="rvps10"><span class="rvts40">3. Other Function</span></p>
+<p class="rvps10"><span class="rvts50">The name of all functions corresponds to their purpose. And all functions are well documented inside with comments whenever necessary. So it is possible to understand the code.</span></p>
+<p class="rvps23"><span class="rvts41"><br/></span></p>
+<p class="rvps23"><span class="rvts41"><br/></span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com">Free Web Help generator</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

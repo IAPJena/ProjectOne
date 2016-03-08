@@ -1,0 +1,402 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plotWavefrontAtExitPupil</title>
+  <meta name="keywords" content="plotWavefrontAtExitPupil">
+  <meta name="description" content="PLOTWAVEFRONTATEXITPUPIL: computes and plots the OPD surface in the exit pupil of">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @OpticalSystem -->
+<h1>plotWavefrontAtExitPupil
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>PLOTWAVEFRONTATEXITPUPIL: computes and plots the OPD surface in the exit pupil of</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function [ XMulti,YMulti,OPDAtExitPupilMulti,PupilWeightMatrixMulti,RMSMulti,WPVMulti,ZERMulti,AmpTransCoeffMulti,SrehlRatioMuti] =plotWavefrontAtExitPupil( optSystem,wavLen,fieldPointXY,rayGridSize,zerCoeff,polarized,jonesVec,resultComponent,plotPanelHandle,textHandle) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> PLOTWAVEFRONTATEXITPUPIL: computes and plots the OPD surface in the exit pupil of
+ the system.
+   if plotPanelHandle &amp; textHandle are not given then plot is not needed
+   and only calculated datas shall be returned</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="plotPupilApodization.html" class="code" title="function [ X,Y,pupilApodization ] =plotPupilApodization( optSystem,apodType,apodParam,gridSize,axesHandle)">plotPupilApodization</a>	plotPupilApodization Plots the apodization of pupil used.</li><li><a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Zernike_Expansion/zernike_fit_irreg.html" class="code" title="function [cout,phasout,wrms,wpv] = zernike_fit_irreg(xp,yp,nzern,a,phasin)">zernike_fit_irreg</a>	___________________________________________________________________________________</li><li><a href="../../../AODParentDir/Mathematical_Functions/compute3dDot.html" class="code" title="function [ outVal ] = compute3dDot(vect1,vect2)">compute3dDot</a>	compute3dDot: computes the dot product of two 3xN vectors</li><li><a href="../../../AODParentDir/Mathematical_Functions/computeWavefrontRMS.html" class="code" title="function [ rms ] = computeWavefrontRMS( OPDAtExitPupil,pupilWeightMatrix )">computeWavefrontRMS</a>	computeRootMeanSquare: computes the root mean square of a given wavefront.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ XMulti,YMulti,OPDAtExitPupilMulti,PupilWeightMatrixMulti,RMSMulti,WPVMulti,ZERMulti,AmpTransCoeffMulti,SrehlRatioMuti] =</a><span class="keyword">...</span>
+0002     plotWavefrontAtExitPupil( optSystem,wavLen,fieldPointXY,rayGridSize,<span class="keyword">...</span>
+0003     zerCoeff,polarized,jonesVec,resultComponent,plotPanelHandle,textHandle)
+0004 <span class="comment">% PLOTWAVEFRONTATEXITPUPIL: computes and plots the OPD surface in the exit pupil of</span>
+0005 <span class="comment">% the system.</span>
+0006 <span class="comment">%   if plotPanelHandle &amp; textHandle are not given then plot is not needed</span>
+0007 <span class="comment">%   and only calculated datas shall be returned</span>
+0008 
+0009 <span class="comment">% Default inputs</span>
+0010 dispPlot = 1;
+0011 dispText = 1;
+0012 <span class="keyword">if</span> nargin &lt; 4
+0013     disp([<span class="string">'Error: The plotWavefrontAtExitPupil function needs atleast'</span>,<span class="keyword">...</span>
+0014         <span class="string">'optSystem,rayGridSize,wavLen and fieldPointXY as arguments.'</span>]);
+0015     XMulti = [];
+0016     YMulti = [];
+0017     OPDAtExitPupilMulti = [];
+0018     PupilWeightMatrixMulti = [];
+0019     RMSMulti = [];
+0020     WPVMulti = [];
+0021     ZERMulti = [];
+0022     <span class="keyword">return</span>
+0023 <span class="keyword">elseif</span> nargin == 4
+0024     zerCoeff = 16;
+0025     polarized = 0;
+0026     jonesVec = [NaN;NaN];
+0027     resultComponent = <span class="string">''</span>;
+0028     
+0029     dispPlot = 0;
+0030     dispText = 0;
+0031     
+0032 <span class="keyword">elseif</span> nargin == 5 || nargin == 6 || nargin == 7
+0033     polarized = 0;
+0034     jonesVec = [NaN;NaN];
+0035     resultComponent = <span class="string">''</span>;
+0036     
+0037     dispPlot = 0;
+0038     dispText = 0;
+0039 <span class="keyword">elseif</span> nargin == 8
+0040     dispPlot = 0;
+0041     dispText = 0;
+0042 <span class="keyword">elseif</span> nargin == 9
+0043     dispText = 0;
+0044 <span class="keyword">elseif</span> nargin == 10
+0045 <span class="keyword">end</span>
+0046 
+0047 nSurf = optSystem.NumberOfSurfaces;
+0048 PupSamplingType = 1; <span class="comment">% cartesian sampling</span>
+0049 numberOfRays = rayGridSize^2;
+0050 <span class="comment">% Now perform scalar/polarization ray trace depending on  jonesVec</span>
+0051 [polarizedRayTracerResult,entPupilCoordinates,pupilGridIndices] = optSystem.multipleRayTracer(wavLen,<span class="keyword">...</span>
+0052     fieldPointXY,numberOfRays,PupSamplingType,jonesVec);<span class="comment">%</span>
+0053 <span class="comment">% Find cheif ray index</span>
+0054 cheifRayIndex = find(sum(entPupilCoordinates(1:2,:).^2,1)==0);
+0055 <span class="comment">% take first value in case of multiple ocuurances</span>
+0056 cheifRayIndex = cheifRayIndex(1);
+0057 
+0058 nSurf = size(polarizedRayTracerResult,1);
+0059 <span class="comment">% Effective number of traced rays</span>
+0060 nRay = size(polarizedRayTracerResult,2);
+0061 nGrid = max(pupilGridIndices(1,:));
+0062 <span class="comment">%nGrid = rayGridSize;</span>
+0063 nField = size(polarizedRayTracerResult,3);
+0064 nWav = size(polarizedRayTracerResult,4);
+0065 
+0066 <span class="keyword">if</span> dispPlot
+0067     <span class="comment">% Clear all childs of plotPanelHandle</span>
+0068     <span class="comment">%         set(get(plotPanelHandle,'Children'),'Visible','off');</span>
+0069     delete(get(plotPanelHandle,<span class="string">'Children'</span>));
+0070 <span class="keyword">end</span>
+0071 textResult = char(<span class="string">''</span>,<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Wavefront RMS and PV Values &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>,<span class="string">''</span>);
+0072 textZernike = char(<span class="string">'&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Zernike Coefficients  &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;'</span>);
+0073 <span class="comment">% Generate a new panel for each field and wavelength combination to display</span>
+0074 <span class="comment">% the wavefront @ exit pupil in the subplots.</span>
+0075 
+0076 <span class="keyword">for</span> wavIndex = 1:nWav
+0077     <span class="keyword">for</span> fieldIndex = 1:nField
+0078         <span class="keyword">if</span> dispPlot
+0079             subplotPanel = uipanel(<span class="string">'Parent'</span>,plotPanelHandle,<span class="keyword">...</span>
+0080                 <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0081                 <span class="string">'Position'</span>,[(wavIndex-1)/nWav,(nField-fieldIndex)/nField,<span class="keyword">...</span>
+0082                 min([1/nWav,1/nField]),min([1/nWav,1/nField])],<span class="keyword">...</span>
+0083                 <span class="string">'Title'</span>,[<span class="string">'Field Point XY : ['</span>,num2str(fieldPointXY(1,fieldIndex)),<span class="string">','</span>,<span class="keyword">...</span>
+0084                 num2str(fieldPointXY(2,fieldIndex)),<span class="string">']'</span>,<span class="keyword">...</span>
+0085                 <span class="string">' &amp; Wavelength : '</span>,num2str(wavLen(wavIndex))]);
+0086             subplotAxes = axes(<span class="string">'Parent'</span>,subplotPanel,<span class="keyword">...</span>
+0087                 <span class="string">'Units'</span>,<span class="string">'Normalized'</span>,<span class="keyword">...</span>
+0088                 <span class="string">'Position'</span>,[0.05,0.05,0.9,0.9]);
+0089         <span class="keyword">end</span>
+0090         
+0091         wavelengthInMeter = wavLen(wavIndex)*optSystem.getWavelengthUnitFactor;
+0092         <span class="keyword">if</span> polarized
+0093             fieldInitial = [(polarizedRayTracerResult(1,:).PolarizationVectorAfterCoating)];
+0094             fieldFinal = [(polarizedRayTracerResult(nSurf,:).PolarizationVectorBeforeCoating)];
+0095             <span class="comment">% phase</span>
+0096             equivalentObjectToImageOPLsum = <span class="keyword">...</span>
+0097                 (angle(fieldFinal)-angle(fieldInitial))*wavelengthInMeter/(2*pi);
+0098             ExOPLSum = equivalentObjectToImageOPLsum(1,:);
+0099             EyOPLSum = equivalentObjectToImageOPLsum(2,:);
+0100             EzOPLSum = equivalentObjectToImageOPLsum(3,:);
+0101             <span class="comment">% Amplitude transmission coefficients</span>
+0102             ampTransCoeffXYZ = abs(fieldFinal)./abs(fieldInitial);
+0103             <span class="comment">% Handle singularity case when transmission coefficient is =</span>
+0104             <span class="comment">% Inf for Zero initial field.</span>
+0105             ampTransCoeffXYZ(find(abs(fieldInitial) &lt; 10^-10)) = <span class="keyword">...</span>
+0106                 abs(fieldFinal(find(abs(fieldInitial) &lt; 10^-10)));
+0107             ampTransCoeffXYZ(isnan(ampTransCoeffXYZ)) = 1;
+0108             
+0109             ampTransCoeffEx = ampTransCoeffXYZ(1,:);
+0110             ampTransCoeffEy = ampTransCoeffXYZ(2,:);
+0111             ampTransCoeffEz = ampTransCoeffXYZ(3,:);
+0112             <span class="keyword">switch</span> lower(resultComponent)
+0113                 <span class="keyword">case</span> lower(<span class="string">'Ex'</span>)
+0114                     objectToImageOPLSum = ExOPLSum;
+0115                     ampTransCoeff = ampTransCoeffEx;
+0116                 <span class="keyword">case</span> lower(<span class="string">'Ey'</span>)
+0117                     objectToImageOPLSum = EyOPLSum;
+0118                     ampTransCoeff = ampTransCoeffEy;
+0119                 <span class="keyword">case</span> lower(<span class="string">'Ez'</span>)
+0120                     objectToImageOPLSum = EzOPLSum;
+0121                     ampTransCoeff = ampTransCoeffEz;
+0122                 <span class="keyword">case</span> default
+0123                     objectToImageOPLSum = EyOPLSum;
+0124                     ampTransCoeff = ampTransCoeffEy;
+0125             <span class="keyword">end</span>
+0126 
+0127         <span class="keyword">else</span>
+0128             <span class="comment">% compute optical path length from object to image plane</span>
+0129             objectToImageOPLs = reshape([(polarizedRayTracerResult.OpticalPathLength)]',[nSurf,nRay,nField,nWav]);
+0130             objectToImageOPLSum = sum(objectToImageOPLs(:,:,fieldIndex,wavIndex),1);
+0131        <span class="keyword">end</span>
+0132         <span class="comment">%% Trace all rays back to the exit pupil sphere</span>
+0133         initialPosition = [(polarizedRayTracerResult(nSurf,:,fieldIndex,wavIndex).RayIntersectionPoint)];
+0134         initialDirection = -1*[(polarizedRayTracerResult(nSurf,:,fieldIndex,wavIndex).IncidentRayDirection)];
+0135         <span class="comment">% Define exit pupil sphere</span>
+0136         exitPupilCenter = initialPosition(:,cheifRayIndex);
+0137         exitPupilRadius = - optSystem.getExitPupilLocation;
+0138         <span class="comment">% Line(Ray):  initialPosition + t*initialDirection  = P</span>
+0139         <span class="comment">% Sphere: (P-exitPupilCenter)^2 - exitPupilRadius^2 = 0</span>
+0140         <span class="comment">% To get intersection point</span>
+0141         <span class="comment">% at^2+bt+c=0 where</span>
+0142         <span class="comment">% a = 1,</span>
+0143         <span class="comment">% b = 2*initialDirection(initialPosition-exitPupilCenter),</span>
+0144         <span class="comment">% c = |initialPosition-exitPupilCenter|^2-exitPupilRadius^2</span>
+0145         
+0146         a = 1;
+0147         b = 2*<a href="../../../AODParentDir/Mathematical_Functions/compute3dDot.html" class="code" title="function [ outVal ] = compute3dDot(vect1,vect2)">compute3dDot</a>(initialDirection,(initialPosition-repmat(exitPupilCenter,[1,nRay])));
+0148         c = sum((initialPosition-repmat(exitPupilCenter,[1,nRay])).^2,1)-exitPupilRadius^2;
+0149         
+0150         discr = b.^2 - 4*a.*c;
+0151         <span class="keyword">if</span> sum(discr&lt;0,2)
+0152             disp(<span class="string">'Error Some rays fail to intersect the exit pupil.'</span>);
+0153         <span class="keyword">end</span>
+0154         <span class="comment">% Parameters</span>
+0155         root1 = (-b+sqrt(discr))./(2*a);
+0156         root2 = (-b-sqrt(discr))./(2*a);
+0157         <span class="comment">% the intersection point shall be compute using the line eqation.</span>
+0158         intersectionPoint1 = initialPosition + repmat(root1,[3,1]).*initialDirection;
+0159         intersectionPoint2 = initialPosition + repmat(root2,[3,1]).*initialDirection;
+0160         <span class="comment">% The real intersection point depends on the exit pupil location,</span>
+0161         <span class="comment">% if it is to the left of image plane then the intersection point</span>
+0162         <span class="comment">% with smaller z value is taken. Otherwise the other is taken.</span>
+0163         <span class="keyword">if</span> exitPupilRadius &gt; 0 <span class="comment">% exit pupil to the left</span>
+0164             <span class="keyword">if</span> intersectionPoint1(3,1) &lt; intersectionPoint2(3,1)
+0165                 rayExitPupilIntersection = intersectionPoint1;
+0166             <span class="keyword">else</span>
+0167                 rayExitPupilIntersection = intersectionPoint2;
+0168             <span class="keyword">end</span>
+0169         <span class="keyword">else</span>
+0170             <span class="keyword">if</span> intersectionPoint1(3,1) &lt; intersectionPoint2(3,1)
+0171                 rayExitPupilIntersection = intersectionPoint2;
+0172             <span class="keyword">else</span>
+0173                 rayExitPupilIntersection = intersectionPoint1;
+0174             <span class="keyword">end</span>
+0175         <span class="keyword">end</span>
+0176         <span class="comment">%             %% If plane exit pupil is assumed</span>
+0177         <span class="comment">%             % Determine parameterr for Z of exit pupil from the global axis.</span>
+0178         <span class="comment">%             % NB. Exit pupil location is measured from the image plane</span>
+0179         <span class="comment">%             ExitPupilZ = optSystem.getTotalTrack + optSystem.getExitPupilLocation;</span>
+0180         <span class="comment">%             % Line(Ray):  (x0,y0,z0) + t*(dx,dy,dz)  = (X,Y,Z)</span>
+0181         <span class="comment">%             t = (ExitPupilZ - initialPosition(3,:))./initialDirection(3,:);</span>
+0182         <span class="comment">%             intersectionPoint1 = initialPosition + repmat(t,[3,1]).*initialDirection;</span>
+0183         <span class="comment">%             rayExitPupilIntersection = intersectionPoint1;</span>
+0184         
+0185         additionalOpticalPath = sqrt(sum((initialPosition-rayExitPupilIntersection).^2,1));
+0186 <span class="comment">%         if polarized</span>
+0187 <span class="comment">%             totalOPLAtExitPupil = objectToImageOPLSum;</span>
+0188 <span class="comment">%         else</span>
+0189 <span class="comment">%             totalOPLAtExitPupil = objectToImageOPLSum - additionalOpticalPath;</span>
+0190 <span class="comment">%         end</span>
+0191         totalOPLAtExitPupil = objectToImageOPLSum - additionalOpticalPath;
+0192         totalOPLAtExitPupilCheifRay = totalOPLAtExitPupil(cheifRayIndex);
+0193         opd = -totalOPLAtExitPupil+totalOPLAtExitPupilCheifRay;
+0194         
+0195         <span class="comment">% Determine exit pupil coordinates from entrance coordinates and</span>
+0196         <span class="comment">% the ratio of their diameters</span>
+0197         entPupilDiameter = optSystem.getEntrancePupilDiameter;
+0198         exitPupilDiameter = optSystem.getExitPupilDiameter;
+0199         exitPupilCoordinates = entPupilCoordinates * (exitPupilDiameter/entPupilDiameter);
+0200         
+0201         <span class="comment">% Plot the surface at exit pupil</span>
+0202         xMax = max(exitPupilCoordinates(1,:));
+0203         xMin = min(exitPupilCoordinates(1,:));
+0204         xlin = linspace(xMin,xMax,nGrid);
+0205         yMax = max(exitPupilCoordinates(2,:));
+0206         yMin = min(exitPupilCoordinates(2,:));
+0207         ylin = linspace(yMin,yMax,nGrid);
+0208         [X,Y] = meshgrid(xlin,ylin);
+0209         <span class="comment">% Initialize all values to zero</span>
+0210         OPDAtExitPupil(1:nGrid,1:nGrid) = zeros;
+0211         AmplitudeTransmission(1:nGrid,1:nGrid) = zeros;
+0212         
+0213         <span class="comment">% Change the pupilGridIndices (2XN matrix with 2D indices of the grid</span>
+0214         <span class="comment">% corresponding to each ray) to linear index so that the values opd can be</span>
+0215         <span class="comment">% linearly assigned.</span>
+0216         rowInd = pupilGridIndices(1,:);
+0217         colInd = pupilGridIndices(2,:);
+0218         linearIndex = (nGrid*(colInd-1) + rowInd);
+0219         OPDAtExitPupil(linearIndex) = opd;
+0220         <span class="keyword">if</span> polarized
+0221             AmplitudeTransmission(linearIndex) = ampTransCoeff;
+0222         <span class="keyword">else</span>
+0223             AmplitudeTransmission(1:nGrid,1:nGrid) = ones;
+0224         <span class="keyword">end</span>
+0225         
+0226         apodType = optSystem.ApodizationType;
+0227         apodParam = optSystem.ApodizationParameters;
+0228         gridSize = size(OPDAtExitPupil,1);
+0229         [ ~,~,pupilApodization ] =<span class="keyword">...</span>
+0230             <a href="plotPupilApodization.html" class="code" title="function [ X,Y,pupilApodization ] =plotPupilApodization( optSystem,apodType,apodParam,gridSize,axesHandle)">plotPupilApodization</a>( optSystem,apodType,apodParam,gridSize);
+0231         PupilWeightMatrix = pupilApodization;
+0232         normalizedAmpTrans = AmplitudeTransmission/max(max(AmplitudeTransmission));
+0233         
+0234         useApodization = 0;
+0235         <span class="keyword">if</span> useApodization
+0236             OPDAtExitPupil = OPDAtExitPupil.*PupilWeightMatrix;
+0237         <span class="keyword">end</span>
+0238         
+0239         usePolTransmission = 0;
+0240         <span class="keyword">if</span> usePolTransmission &amp;&amp; polarized            
+0241             OPDAtExitPupil = OPDAtExitPupil.*normalizedAmpTrans;
+0242         <span class="keyword">end</span>        
+0243         WPV = max(max(OPDAtExitPupil))-min(min(OPDAtExitPupil));
+0244         RMS = <a href="../../../AODParentDir/Mathematical_Functions/computeWavefrontRMS.html" class="code" title="function [ rms ] = computeWavefrontRMS( OPDAtExitPupil,pupilWeightMatrix )">computeWavefrontRMS</a>(OPDAtExitPupil,PupilWeightMatrix);        
+0245         
+0246         <span class="comment">% Change them  from lens unit to wavelength scale</span>
+0247         RMS = (RMS * optSystem.getLensUnitFactor) ./<span class="keyword">...</span>
+0248             (wavLen * optSystem.getWavelengthUnitFactor);
+0249         WPV = (WPV * optSystem.getLensUnitFactor) ./<span class="keyword">...</span>
+0250             (wavLen * optSystem.getWavelengthUnitFactor);
+0251         SrehlRatio = (exp(1))^(-4*pi*(RMS)^2);
+0252         
+0253         <span class="comment">% Compute Zernike Coefficients</span>
+0254         xp = X(find(pupilApodization));
+0255         yp = Y(find(pupilApodization));
+0256         nzern = zerCoeff;
+0257         a = 1;
+0258         phasin = (OPDAtExitPupil(find(pupilApodization)) * optSystem.getLensUnitFactor) ./<span class="keyword">...</span>
+0259             (wavLen * optSystem.getWavelengthUnitFactor);
+0260         
+0261         <span class="comment">% Add spherical phase to the wavefront error to get the actual</span>
+0262         <span class="comment">% wavefront surface.</span>
+0263             R = sqrt(X.^2+Y.^2);
+0264             rp = R(find(pupilApodization)); 
+0265             <span class="comment">% phasin =  phasin + wrapTo2Pi((2*pi./wavelengthInMeter).*sqrt(exitPupilRadius^2-rp.^2));</span>
+0266             <span class="comment">%phasin =  phasin + wrapTo2Pi((pi./(wavelengthInMeter*exitPupilRadius)).*(rp.^2));</span>
+0267             <span class="comment">% Remove the mean value</span>
+0268             <span class="comment">% phasin = phasin - mean(phasin);</span>
+0269             <span class="comment">% phasin = phasin + (2pi./(wavelengthInMeter*exitPupilRadius)).*(rp.^2);</span>
+0270              
+0271         [cout,phasout,wrms,wpv] = <a href="../../../AODParentDir/Diffraction_Module/Existing_Propagators/Zernike_Expansion/zernike_fit_irreg.html" class="code" title="function [cout,phasout,wrms,wpv] = zernike_fit_irreg(xp,yp,nzern,a,phasin)">zernike_fit_irreg</a>(xp,yp,nzern,a,phasin);
+0272         ZER = cout;
+0273         zernikeComments = {<span class="keyword">...</span>
+0274             <span class="string">'  %  Offset:      1'</span>,<span class="keyword">...</span>
+0275             <span class="string">'  %  Tilt y:      ypa.^2 '</span>,<span class="keyword">...</span>
+0276             <span class="string">'  %  Tilt x:      xpa.^2 '</span>,<span class="keyword">...</span>
+0277             <span class="string">'  %  Defokus:     2.*(xpa.^2 + ypa.^2) - 1'</span>,<span class="keyword">...</span>
+0278             <span class="string">'  %  Astigmatism: ypa.^2 - xpa.^2'</span>,<span class="keyword">...</span>
+0279             <span class="string">'  %  Astigmatism: 2.* xpa.* ypa'</span>,<span class="keyword">...</span>
+0280             <span class="string">'  %  Coma:        ypa .* (3.*(xpa.^2 + ypa.^2) - 2)'</span>,<span class="keyword">...</span>
+0281             <span class="string">'  %  Coma:        xpa .* (3.*(xpa.^2 + ypa.^2) - 2 )'</span>,<span class="keyword">...</span>
+0282             <span class="string">'  %  Spherical:   6.*(xpa.^2 + ypa.^2).^2 - 6.*(xpa.^2 + ypa.^2) + 1 '</span>,<span class="keyword">...</span>
+0283             <span class="string">'  %  Dreiblatt:   ypa .* (ypa.^2 - 3.*xpa.^2)'</span>,<span class="keyword">...</span>
+0284             <span class="string">'  %  Dreiblatt:   xpa .* (3.*ypa.^2 - xpa.^2)'</span>,<span class="keyword">...</span>
+0285             <span class="string">'  %  Astigmatism 5. Ord:  (ypa.^2 - xpa.^2).*(4.*(xpa.^2 + ypa.^2) - 3)'</span>,<span class="keyword">...</span>
+0286             <span class="string">'  %  Astigmatism 5. Ord:  2.*xpa.*ypa.*(4.*(xpa.^2 + ypa.^2) - 3)'</span>,<span class="keyword">...</span>
+0287             <span class="string">'  %  Coma 5. Ord:   ypa.*(10.*(xpa.^2 + ypa.^2).^2 -12.*(xpa.^2 + ypa.^2) + 3)'</span>,<span class="keyword">...</span>
+0288             <span class="string">'  %  Coma 5. Ord:   xpa.*(10.*(xpa.^2 + ypa.^2).^2 -12.*(xpa.^2 + ypa.^2) + 3)'</span>,<span class="keyword">...</span>
+0289             <span class="string">'  %  Spherical 5. Ord:    20.*(xpa.^2 + ypa.^2).^3 - 30.*(xpa.^2 + ypa.^2).^2 + 12.*(xpa.^2 + ypa.^2) - 1'</span>};
+0290         
+0291         textZernike = char(textZernike,<span class="string">''</span>,<span class="keyword">...</span>
+0292             [<span class="string">'Field Point XY : ['</span>,num2str(fieldPointXY(1,fieldIndex)),<span class="string">','</span>,<span class="keyword">...</span>
+0293             num2str(fieldPointXY(2,fieldIndex)),<span class="string">']'</span>],<span class="keyword">...</span>
+0294             [<span class="string">' Wavelength : '</span>,num2str(wavLen(wavIndex))]);
+0295         <span class="keyword">for</span> j = 1:length(ZER)
+0296             <span class="keyword">if</span> ZER(j)&lt;0 ; stro = <span class="string">'%8.5f'</span>; so = <span class="string">' '</span>;  <span class="keyword">else</span>  stro = <span class="string">'%9.5f'</span>;so = <span class="string">'  '</span>;<span class="keyword">end</span>
+0297             <span class="keyword">if</span> j &lt; 10 ; sd = <span class="string">'  = '</span>;  <span class="keyword">else</span>  sd = <span class="string">' = '</span>;<span class="keyword">end</span>
+0298             <span class="keyword">if</span> j &lt;= 16
+0299                 comment = char(zernikeComments{j});
+0300             <span class="keyword">else</span>
+0301                 comment = <span class="string">''</span>;
+0302             <span class="keyword">end</span>
+0303             textZernike = char(textZernike,<span class="keyword">...</span>
+0304                 [<span class="string">'Z '</span>,num2str(j,<span class="string">'%3.0f'</span>),sd,<span class="keyword">...</span>
+0305                 so,num2str(ZER(j),stro),comment]);
+0306         <span class="keyword">end</span>
+0307         
+0308         textResult = char(textResult,<span class="keyword">...</span>
+0309             [[<span class="string">'Field Point XY : ['</span>,num2str(fieldPointXY(1,fieldIndex)),<span class="string">','</span>,<span class="keyword">...</span>
+0310             num2str(fieldPointXY(2,fieldIndex)),<span class="string">']'</span>,<span class="keyword">...</span>
+0311             <span class="string">' Wavelength : '</span>,num2str(wavLen(wavIndex))]],<span class="keyword">...</span>
+0312             [<span class="string">'Wavefront RMS (Waves) : '</span>,num2str(RMS)],<span class="keyword">...</span>
+0313             [<span class="string">'Wavefront WPV (Waves) : '</span>,num2str(WPV)],<span class="string">''</span>);
+0314         
+0315         <span class="comment">% plot if required</span>
+0316         <span class="keyword">if</span> dispPlot
+0317             <span class="comment">% Modify OPD by making the boundary layer of 0 around for better</span>
+0318             <span class="comment">% visibility in the edge</span>
+0319             modifiedOPD = OPDAtExitPupil;
+0320             modifiedOPD(1,:) = 0; modifiedOPD(<span class="keyword">end</span>,:) = 0;
+0321             modifiedOPD(:,1) = 0; modifiedOPD(:,end) = 0;
+0322             <span class="comment">% Scale to wavelength</span>
+0323             OPDAtExitPupil = (modifiedOPD * optSystem.getLensUnitFactor) ./<span class="keyword">...</span>
+0324                 (wavLen * optSystem.getWavelengthUnitFactor);
+0325             
+0326             normX = X./(0.5*exitPupilDiameter);
+0327             normY = Y./(0.5*exitPupilDiameter);
+0328             surf(normX,normY,OPDAtExitPupil,<span class="string">'Parent'</span>,subplotAxes,<span class="string">'facecolor'</span>,<span class="string">'interp'</span>,<span class="keyword">...</span>
+0329                 <span class="string">'edgecolor'</span>,<span class="string">'none'</span>,<span class="keyword">...</span>
+0330                 <span class="string">'facelighting'</span>,<span class="string">'phong'</span>);
+0331             title(subplotAxes,<span class="string">'OPD at Exit Pupil'</span>)
+0332             zlabel(subplotAxes,<span class="string">'OPD (in Waves)'</span>) <span class="comment">% x-axis label</span>
+0333         <span class="keyword">end</span>
+0334         XMulti(:,:,fieldIndex,wavIndex) = X;
+0335         YMulti(:,:,fieldIndex,wavIndex) = Y;
+0336         OPDAtExitPupilMulti(:,:,fieldIndex,wavIndex) = OPDAtExitPupil;
+0337         PupilWeightMatrixMulti(:,:,fieldIndex,wavIndex) = PupilWeightMatrix;
+0338         RMSMulti(:,fieldIndex,wavIndex) = RMS;
+0339         WPVMulti(:,fieldIndex,wavIndex) = WPV;
+0340         ZERMulti(:,fieldIndex,wavIndex) = ZER;
+0341         AmpTransCoeffMulti(:,:,fieldIndex,wavIndex) = normalizedAmpTrans;
+0342         SrehlRatioMuti(fieldIndex,wavIndex) = SrehlRatio;
+0343     <span class="keyword">end</span>
+0344 <span class="keyword">end</span>
+0345 textResult = char(textResult,textZernike);
+0346 <span class="keyword">if</span> dispText
+0347     set(textHandle,<span class="string">'String'</span>,textResult);
+0348 <span class="keyword">else</span>
+0349     disp(textResult);
+0350 <span class="keyword">end</span>
+0351 set(gcf,<span class="string">'Name'</span>,[<span class="string">'Wavefront at Exit Pupil'</span>]);
+0352 <span class="keyword">end</span>
+0353</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

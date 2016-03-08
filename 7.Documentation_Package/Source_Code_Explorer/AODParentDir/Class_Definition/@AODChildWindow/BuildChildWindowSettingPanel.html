@@ -1,0 +1,1883 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of BuildChildWindowSettingPanel</title>
+  <meta name="keywords" content="BuildChildWindowSettingPanel">
+  <meta name="description" content="This function builds the UI elements of the setting panel of child">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- # Class_Definition --><!-- menu.html @AODChildWindow -->
+<h1>BuildChildWindowSettingPanel
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>This function builds the UI elements of the setting panel of child</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="box"><strong>function BuildChildWindowSettingPanel(childWindow,parentWindow,fontSize,nSurface,nField,nWavelength) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> This function builds the UI elements of the setting panel of child
+ windows. First all UI components are defined and then placed in the 
+ setting window based on the type of current child window.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<ul style="list-style-image:url(../../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function popWavelengthIndex_Callback(hObject, ~,childWindow,parentWindow)</a></li><li><a href="#_sub2" class="code">function popSurfaceIndex_Callback(hObject,~,childWindow,parentWindow)</a></li><li><a href="#_sub3" class="code">function chkCheifAndMariginalRay_Callback(hObject,~,childWindow,parentWindow)</a></li><li><a href="#_sub4" class="code">function popApodizationType_Callback(hObject,~,childWindow,parentWindow)</a></li><li><a href="#_sub5" class="code">function chkCurrentApodization_Callback(hObject,~,childWindow,parentWindow)</a></li><li><a href="#_sub6" class="code">function chkFieldComponent_Callback(hObject,~,childWindow,parentWindow)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function BuildChildWindowSettingPanel</a><span class="keyword">...</span>
+0002     (childWindow,parentWindow,fontSize,nSurface,nField,nWavelength)
+0003 <span class="comment">% This function builds the UI elements of the setting panel of child</span>
+0004 <span class="comment">% windows. First all UI components are defined and then placed in the</span>
+0005 <span class="comment">% setting window based on the type of current child window.</span>
+0006 
+0007 parentHandle = parentWindow.AODParentHandles;
+0008 childHandle = childWindow.AODChildHandles;
+0009 <span class="comment">% Group Similar windows</span>
+0010 coatingPropertyVsWavelength = <span class="keyword">...</span>
+0011     {  <span class="string">'coatingDiattenuationVsWavelength'</span>,<span class="keyword">...</span>
+0012     <span class="string">'coatingReflectionVsWavelength'</span>,<span class="keyword">...</span>
+0013     <span class="string">'coatingRetardanceVsWavelength'</span>,<span class="keyword">...</span>
+0014     <span class="string">'coatingTransmissionVsWavelength'</span>};
+0015 
+0016 coatingPropertyVsAngle = <span class="keyword">...</span>
+0017     {   <span class="string">'coatingDiattenuationVsAngle'</span>,<span class="keyword">...</span>
+0018     <span class="string">'coatingReflectionVsAngle'</span>,<span class="keyword">...</span>
+0019     <span class="string">'coatingRetardanceVsAngle'</span>,<span class="keyword">...</span>
+0020     <span class="string">'coatingTransmissionVsAngle'</span>};
+0021 
+0022 gridRaytraceAnalysis = <span class="keyword">...</span>
+0023     {<span class="string">'amplitudeTransmissionMap'</span>,<span class="keyword">...</span>
+0024     <span class="string">'phaseMap'</span>,<span class="keyword">...</span>
+0025     <span class="string">'wavefrontDiattenuationMap'</span>,<span class="keyword">...</span>
+0026     <span class="string">'wavefrontRetardanceMap'</span>,<span class="keyword">...</span>
+0027     <span class="string">'wavefrontAtExitPupil'</span>,<span class="keyword">...</span>
+0028     <span class="string">'polarizationEllipseMap'</span>,<span class="keyword">...</span>
+0029     <span class="string">'FFTPSF'</span>};
+0030 
+0031 rayTracingAnalysis = <span class="keyword">...</span>
+0032 {<span class="string">'scalarRayTrace'</span>,<span class="keyword">...</span>
+0033 <span class="string">'polarizationRayTrace'</span>};
+0034 
+0035 <span class="comment">% Uncatagorized</span>
+0036 others = <span class="keyword">...</span>
+0037     { <span class="string">'coatingRefractiveIndexProfile'</span>,<span class="keyword">...</span>
+0038     <span class="string">'footprintDiagram'</span>,<span class="keyword">...</span>
+0039     <span class="string">'system2DLayoutDiagram'</span>,<span class="keyword">...</span>
+0040     <span class="string">'system3DLayoutDiagram'</span>,<span class="keyword">...</span>
+0041     <span class="string">'paraxialAnalysis'</span>,<span class="keyword">...</span>
+0042     <span class="string">'pupilApodization'</span>,<span class="keyword">...</span>
+0043     <span class="string">'transverseRayAberration'</span>};
+0044 <span class="comment">%--------------------------------------------------------------------------</span>
+0045 <span class="comment">% Define all UI components and save the workspace in to temp .mat file</span>
+0046 <span class="comment">% childWindow.DefineAllChildWindowsSettingPanelComponents(parentWindow);</span>
+0047 <span class="comment">% % load all UI components and delete the temp .mat file</span>
+0048 <span class="comment">% load('tempSettingComponents');</span>
+0049 <span class="comment">% % ('tempSettingComponents.mat');</span>
+0050 <span class="comment">%</span>
+0051 
+0052 lblSurfaceIndex = uicontrol( <span class="keyword">...</span>
+0053     <span class="string">'Tag'</span>, <span class="string">'lblSurfaceIndex'</span>, <span class="keyword">...</span>
+0054     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0055     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0056     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0057     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0058     <span class="string">'String'</span>, <span class="string">'Surface Index'</span>);
+0059 
+0060 popSurfaceIndex = uicontrol( <span class="keyword">...</span>
+0061     <span class="string">'Tag'</span>, <span class="string">'popApertureType'</span>, <span class="keyword">...</span>
+0062     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0063     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0064     <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0065     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0066     <span class="string">'String'</span>, [num2cell(1:nSurface)],<span class="keyword">...</span>
+0067     <span class="string">'Value'</span>,nSurface);
+0068 
+0069 lblCoatingName = uicontrol( <span class="keyword">...</span>
+0070     <span class="string">'Tag'</span>, <span class="string">'lblCoatingName'</span>, <span class="keyword">...</span>
+0071     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0072     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0073     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0074     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0075     <span class="string">'String'</span>, <span class="string">'Coating Name'</span>);
+0076 
+0077 txtCoatingName = uicontrol( <span class="keyword">...</span>
+0078     <span class="string">'Tag'</span>, <span class="string">'txtCoatingName'</span>, <span class="keyword">...</span>
+0079     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0080     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0081     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0082     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0083     <span class="string">'String'</span>, <span class="string">'None'</span>, <span class="keyword">...</span>
+0084     <span class="string">'Enable'</span>,<span class="string">'Off'</span>,<span class="keyword">...</span>
+0085     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0086 <span class="comment">% ------------------------------------------------------------</span>
+0087 lblWavelengthIndex = uicontrol( <span class="keyword">...</span>
+0088     <span class="string">'Tag'</span>, <span class="string">'lblWavelengthIndex'</span>, <span class="keyword">...</span>
+0089     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0090     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0091     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0092     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0093     <span class="string">'String'</span>, <span class="string">'Wavelength Index'</span>);
+0094 
+0095 popWavelengthIndex = uicontrol( <span class="keyword">...</span>
+0096     <span class="string">'Tag'</span>, <span class="string">'popWavelengthIndex'</span>, <span class="keyword">...</span>
+0097     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0098     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0099     <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0100     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0101     <span class="string">'String'</span>, [num2cell(1:nWavelength)],<span class="keyword">...</span>
+0102     <span class="string">'Value'</span>,1);
+0103 
+0104 lblWavelength = uicontrol( <span class="keyword">...</span>
+0105     <span class="string">'Tag'</span>, <span class="string">'lblWavelength'</span>, <span class="keyword">...</span>
+0106     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0107     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0108     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0109     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0110     <span class="string">'String'</span>, <span class="string">'Wavelength (um)'</span>);
+0111 
+0112 txtWavelength = uicontrol( <span class="keyword">...</span>
+0113     <span class="string">'Tag'</span>, <span class="string">'txtWavelength'</span>, <span class="keyword">...</span>
+0114     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0115     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0116     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0117     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0118     <span class="string">'String'</span>, <span class="string">'0.55'</span>, <span class="keyword">...</span>
+0119     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0120 
+0121 
+0122 lblMinAngle = uicontrol( <span class="keyword">...</span>
+0123     <span class="string">'Tag'</span>, <span class="string">'lblMinAngle'</span>, <span class="keyword">...</span>
+0124     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0125     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0126     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0127     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0128     <span class="string">'String'</span>, <span class="string">'Min Angle (deg)'</span>);
+0129 
+0130 txtMinAngle = uicontrol( <span class="keyword">...</span>
+0131     <span class="string">'Tag'</span>, <span class="string">'txtMinAngle'</span>, <span class="keyword">...</span>
+0132     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0133     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0134     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0135     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0136     <span class="string">'String'</span>, <span class="string">'0'</span>, <span class="keyword">...</span>
+0137     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0138 lblMaxAngle = uicontrol( <span class="keyword">...</span>
+0139     <span class="string">'Tag'</span>, <span class="string">'lblMaxAngle'</span>, <span class="keyword">...</span>
+0140     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0141     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0142     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0143     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0144     <span class="string">'String'</span>, <span class="string">'Max Angle (deg)'</span>);
+0145 
+0146 txtMaxAngle = uicontrol( <span class="keyword">...</span>
+0147     <span class="string">'Tag'</span>, <span class="string">'txtMaxAngle'</span>, <span class="keyword">...</span>
+0148     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0149     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0150     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0151     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0152     <span class="string">'String'</span>, <span class="string">'90'</span>, <span class="keyword">...</span>
+0153     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0154 lblAngleStep = uicontrol( <span class="keyword">...</span>
+0155     <span class="string">'Tag'</span>, <span class="string">'lblAngleStep'</span>, <span class="keyword">...</span>
+0156     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0157     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0158     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0159     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0160     <span class="string">'String'</span>, <span class="string">'Angle Step (deg)'</span>);
+0161 
+0162 txtAngleStep = uicontrol( <span class="keyword">...</span>
+0163     <span class="string">'Tag'</span>, <span class="string">'txtAngleStep'</span>, <span class="keyword">...</span>
+0164     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0165     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0166     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0167     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0168     <span class="string">'String'</span>, <span class="string">'0.1'</span>, <span class="keyword">...</span>
+0169     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0170 <span class="comment">% ------------------------------------------------------------</span>
+0171 lblFieldIndex = uicontrol( <span class="keyword">...</span>
+0172     <span class="string">'Tag'</span>, <span class="string">'lblFieldIndex'</span>, <span class="keyword">...</span>
+0173     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0174     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0175     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0176     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0177     <span class="string">'String'</span>, <span class="string">'Field Index'</span>);
+0178 
+0179 popFieldIndex = uicontrol( <span class="keyword">...</span>
+0180     <span class="string">'Tag'</span>, <span class="string">'popFieldIndex'</span>, <span class="keyword">...</span>
+0181     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0182     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0183     <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0184     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0185     <span class="string">'String'</span>, [num2cell(1:nField)],<span class="keyword">...</span>
+0186     <span class="string">'Value'</span>,1);
+0187 
+0188 lblIncidenceAngle = uicontrol( <span class="keyword">...</span>
+0189     <span class="string">'Tag'</span>, <span class="string">'lblIncidenceAngle'</span>, <span class="keyword">...</span>
+0190     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0191     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0192     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0193     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0194     <span class="string">'String'</span>, <span class="string">'Incidence Angle (deg)'</span>);
+0195 
+0196 txtIncidenceAngle = uicontrol( <span class="keyword">...</span>
+0197     <span class="string">'Tag'</span>, <span class="string">'txtIncidenceAngle'</span>, <span class="keyword">...</span>
+0198     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0199     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0200     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0201     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0202     <span class="string">'String'</span>, <span class="string">'0'</span>, <span class="keyword">...</span>
+0203     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0204 
+0205 
+0206 lblMinWavelength = uicontrol( <span class="keyword">...</span>
+0207     <span class="string">'Tag'</span>, <span class="string">'lblMinWavelength'</span>, <span class="keyword">...</span>
+0208     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0209     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0210     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0211     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0212     <span class="string">'String'</span>, <span class="string">'Min Wavelen(um)'</span>);
+0213 
+0214 txtMinWavelength = uicontrol( <span class="keyword">...</span>
+0215     <span class="string">'Tag'</span>, <span class="string">'txtMinWavelength'</span>, <span class="keyword">...</span>
+0216     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0217     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0218     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0219     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0220     <span class="string">'String'</span>, <span class="string">'0.40'</span>, <span class="keyword">...</span>
+0221     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0222 lblMaxWavelength = uicontrol( <span class="keyword">...</span>
+0223     <span class="string">'Tag'</span>, <span class="string">'lblMaxWavelength'</span>, <span class="keyword">...</span>
+0224     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0225     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0226     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0227     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0228     <span class="string">'String'</span>, <span class="string">'Max Wavelen(um)'</span>);
+0229 
+0230 txtMaxWavelength = uicontrol( <span class="keyword">...</span>
+0231     <span class="string">'Tag'</span>, <span class="string">'txtMaxWavelength'</span>, <span class="keyword">...</span>
+0232     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0233     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0234     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0235     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0236     <span class="string">'String'</span>, <span class="string">'0.60'</span>, <span class="keyword">...</span>
+0237     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0238 lblWavelengthStep = uicontrol( <span class="keyword">...</span>
+0239     <span class="string">'Tag'</span>, <span class="string">'lblWavelengthStep'</span>, <span class="keyword">...</span>
+0240     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0241     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0242     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0243     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0244     <span class="string">'String'</span>, <span class="string">'Wavelength Step (um)'</span>);
+0245 
+0246 txtWavelengthStep = uicontrol( <span class="keyword">...</span>
+0247     <span class="string">'Tag'</span>, <span class="string">'txtWavelengthStep'</span>, <span class="keyword">...</span>
+0248     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0249     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0250     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0251     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0252     <span class="string">'String'</span>, <span class="string">'0.01'</span>, <span class="keyword">...</span>
+0253     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0254 <span class="comment">%--------------------------------------------------------------</span>
+0255 lblPupilGridSize = uicontrol( <span class="keyword">...</span>
+0256     <span class="string">'Tag'</span>, <span class="string">'lblPupilGridSize'</span>, <span class="keyword">...</span>
+0257     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0258     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0259     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0260     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0261     <span class="string">'String'</span>, <span class="string">'Pupil GridSize'</span>);
+0262 
+0263 popPupilGridSize = uicontrol( <span class="keyword">...</span>
+0264     <span class="string">'Tag'</span>, <span class="string">'popFieldIndex'</span>, <span class="keyword">...</span>
+0265     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0266     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0267     <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0268     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0269     <span class="string">'String'</span>, {<span class="string">'4x4'</span>,<span class="string">'8x8'</span>,<span class="string">'16x16'</span>,<span class="string">'32x32'</span>,<span class="string">'64x64'</span>,<span class="string">'128x128'</span>,<span class="keyword">...</span>
+0270     <span class="string">'256x256'</span>,<span class="string">'512x512'</span>,<span class="string">'1024x1024'</span>,<span class="string">'2048x2048'</span>},<span class="keyword">...</span>
+0271     <span class="string">'Value'</span>,4);
+0272 <span class="comment">%--------------------------------------------------------------</span>
+0273 lblZernikeCoefficientNumber = uicontrol( <span class="keyword">...</span>
+0274     <span class="string">'Tag'</span>, <span class="string">'lblZernikeCoefficientNumber'</span>, <span class="keyword">...</span>
+0275     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0276     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0277     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0278     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0279     <span class="string">'String'</span>, <span class="string">'Zernike Coeff.'</span>);
+0280 popZernikeCoefficientNumber = uicontrol( <span class="keyword">...</span>
+0281     <span class="string">'Tag'</span>, <span class="string">'popZernikeCoefficientNumber'</span>, <span class="keyword">...</span>
+0282     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0283     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0284     <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0285     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0286     <span class="string">'String'</span>, {<span class="string">'9'</span>, <span class="string">'16'</span>, <span class="string">'25'</span>, <span class="string">'36'</span>, <span class="string">'49'</span>, <span class="string">'64'</span>},<span class="keyword">...</span>
+0287     <span class="string">'Value'</span>,1);
+0288 
+0289 <span class="comment">%--------------------------------------------------------------</span>
+0290 panelJonesVector = uipanel(<span class="keyword">...</span>
+0291     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0292     <span class="string">'Title'</span>,<span class="string">'Jones Vector'</span>,<span class="keyword">...</span>
+0293     <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0294 lblJs = uicontrol( <span class="keyword">...</span>
+0295     <span class="string">'Parent'</span>, panelJonesVector, <span class="keyword">...</span>
+0296     <span class="string">'Tag'</span>, <span class="string">'lblJs'</span>, <span class="keyword">...</span>
+0297     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0298     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0299     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0300     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0301     <span class="string">'Position'</span>,[0.1,0.4,0.3,0.2],<span class="keyword">...</span>
+0302     <span class="string">'String'</span>, <span class="string">'Js'</span>,<span class="keyword">...</span>
+0303     <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0304 lblJp = uicontrol( <span class="keyword">...</span>
+0305     <span class="string">'Parent'</span>, panelJonesVector, <span class="keyword">...</span>
+0306     <span class="string">'Tag'</span>, <span class="string">'lblJp'</span>, <span class="keyword">...</span>
+0307     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0308     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0309     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0310     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0311     <span class="string">'Position'</span>,[0.1,0.1,0.3,0.2],<span class="keyword">...</span>
+0312     <span class="string">'String'</span>, <span class="string">'Jp'</span>,<span class="keyword">...</span>
+0313     <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0314 lblMagnitued = uicontrol( <span class="keyword">...</span>
+0315     <span class="string">'Parent'</span>, panelJonesVector, <span class="keyword">...</span>
+0316     <span class="string">'Tag'</span>, <span class="string">'lblMagnitued'</span>, <span class="keyword">...</span>
+0317     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0318     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0319     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0320     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0321     <span class="string">'Position'</span>,[0.25,0.7,0.3,0.2],<span class="keyword">...</span>
+0322     <span class="string">'String'</span>, <span class="string">'Magnitude'</span>,<span class="keyword">...</span>
+0323     <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0324 lblPhase = uicontrol( <span class="keyword">...</span>
+0325     <span class="string">'Parent'</span>, panelJonesVector, <span class="keyword">...</span>
+0326     <span class="string">'Tag'</span>, <span class="string">'lblPhase'</span>, <span class="keyword">...</span>
+0327     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0328     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0329     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0330     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0331     <span class="string">'Position'</span>,[0.57,0.7,0.3,0.2],<span class="keyword">...</span>
+0332     <span class="string">'String'</span>, <span class="string">'Phase(deg)'</span>,<span class="keyword">...</span>
+0333     <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0334 txtMagJs = uicontrol( <span class="keyword">...</span>
+0335     <span class="string">'Parent'</span>, panelJonesVector, <span class="keyword">...</span>
+0336     <span class="string">'Tag'</span>, <span class="string">'txtMagJs'</span>, <span class="keyword">...</span>
+0337     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0338     <span class="string">'BackgroundColor'</span>,[1,1,1],<span class="keyword">...</span>
+0339     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0340     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0341     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0342     <span class="string">'Position'</span>,[0.22,0.4,0.3,0.2],<span class="keyword">...</span>
+0343     <span class="string">'String'</span>, <span class="string">'1'</span>,<span class="keyword">...</span>
+0344     <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0345 txtPhaseJs = uicontrol( <span class="keyword">...</span>
+0346     <span class="string">'Parent'</span>, panelJonesVector, <span class="keyword">...</span>
+0347     <span class="string">'Tag'</span>, <span class="string">'txtPhaseJs'</span>, <span class="keyword">...</span>
+0348     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0349     <span class="string">'BackgroundColor'</span>,[1,1,1],<span class="keyword">...</span>
+0350     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0351     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0352     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0353     <span class="string">'Position'</span>,[0.55,0.4,0.3,0.20],<span class="keyword">...</span>
+0354     <span class="string">'String'</span>, <span class="string">'0'</span>,<span class="keyword">...</span>
+0355     <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0356 txtMagJp = uicontrol( <span class="keyword">...</span>
+0357     <span class="string">'Parent'</span>, panelJonesVector, <span class="keyword">...</span>
+0358     <span class="string">'Tag'</span>, <span class="string">'txtMagJp'</span>, <span class="keyword">...</span>
+0359     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0360     <span class="string">'BackgroundColor'</span>,[1,1,1],<span class="keyword">...</span>
+0361     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0362     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0363     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0364     <span class="string">'Position'</span>,[0.22,0.10,0.3,0.20],<span class="keyword">...</span>
+0365     <span class="string">'String'</span>, <span class="string">'0'</span>,<span class="keyword">...</span>
+0366     <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0367 txtPhaseJp = uicontrol( <span class="keyword">...</span>
+0368     <span class="string">'Parent'</span>, panelJonesVector, <span class="keyword">...</span>
+0369     <span class="string">'Tag'</span>, <span class="string">'txtPhaseJp'</span>, <span class="keyword">...</span>
+0370     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0371     <span class="string">'BackgroundColor'</span>,[1,1,1],<span class="keyword">...</span>
+0372     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0373     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0374     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0375     <span class="string">'Position'</span>,[0.55,0.10,0.3,0.20],<span class="keyword">...</span>
+0376     <span class="string">'String'</span>, <span class="string">'0'</span>,<span class="keyword">...</span>
+0377     <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0378 <span class="comment">%--------------------------------------------------------------</span>
+0379 lblNumberOfRay = uicontrol( <span class="keyword">...</span>
+0380     <span class="string">'Tag'</span>, <span class="string">'lblNumberOfRay'</span>, <span class="keyword">...</span>
+0381     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0382     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0383     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0384     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0385     <span class="string">'String'</span>, <span class="string">'Number Of Ray'</span>);
+0386 txtNumberOfRay = uicontrol( <span class="keyword">...</span>
+0387     <span class="string">'Tag'</span>, <span class="string">'txtNumberOfRay'</span>, <span class="keyword">...</span>
+0388     <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0389     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0390     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0391     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0392     <span class="string">'String'</span>, <span class="string">'3'</span>, <span class="keyword">...</span>
+0393     <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0394 lblPupilSamplingType = uicontrol( <span class="keyword">...</span>
+0395     <span class="string">'Tag'</span>, <span class="string">'lblPupilSamplingType'</span>, <span class="keyword">...</span>
+0396     <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0397     <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0398     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0399     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0400     <span class="string">'String'</span>, <span class="string">'Sampling Type'</span>);
+0401 popPupilSamplingType = uicontrol( <span class="keyword">...</span>
+0402     <span class="string">'Tag'</span>, <span class="string">'popPupilSamplingType'</span>, <span class="keyword">...</span>
+0403     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0404     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0405     <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0406     <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0407     <span class="string">'String'</span>, {<span class="string">'Cartesian'</span>,<span class="string">'Polar Grid'</span>,<span class="string">'Hexagonal'</span>,<span class="keyword">...</span>
+0408     <span class="string">'Isoenergetic Circular'</span>,<span class="string">'Tangential Plane'</span>,<span class="string">'Sagital Plane'</span>,<span class="string">'Random'</span>},<span class="keyword">...</span>
+0409     <span class="string">'Value'</span>,1);
+0410 <span class="comment">%--------------------------------------------------------------</span>
+0411 chkCheifAndMariginalRay = uicontrol( <span class="keyword">...</span>
+0412     <span class="string">'Tag'</span>, <span class="string">'chkCheifAndMariginalRay'</span>, <span class="keyword">...</span>
+0413     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0414     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0415     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0416     <span class="string">'String'</span>, <span class="string">'Cheif And Mariginal Ray Only'</span>,<span class="keyword">...</span>
+0417     <span class="string">'Value'</span>,0);
+0418 <span class="comment">%-----------------------------------------------------------------------</span>
+0419 chkShowTotalNumberOfSurfaces = uicontrol( <span class="keyword">...</span>
+0420     <span class="string">'Tag'</span>, <span class="string">'chkShowTotalNumberOfSurfaces'</span>, <span class="keyword">...</span>
+0421     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0422     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0423     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0424     <span class="string">'String'</span>, <span class="string">'Total Number Of Surfaces'</span>,<span class="keyword">...</span>
+0425     <span class="string">'Value'</span>,0);
+0426 chkShowStopSurfaceIndex = uicontrol( <span class="keyword">...</span>
+0427     <span class="string">'Tag'</span>, <span class="string">'chkShowStopSurfaceIndex'</span>, <span class="keyword">...</span>
+0428     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0429     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0430     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0431     <span class="string">'String'</span>, <span class="string">'Stop Surface Index'</span>,<span class="keyword">...</span>
+0432     <span class="string">'Value'</span>,0);
+0433 chkShowSystemTotalTrack = uicontrol( <span class="keyword">...</span>
+0434     <span class="string">'Tag'</span>, <span class="string">'chkShowSystemTotalTrack'</span>, <span class="keyword">...</span>
+0435     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0436     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0437     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0438     <span class="string">'String'</span>, <span class="string">'System Total Track'</span>,<span class="keyword">...</span>
+0439     <span class="string">'Value'</span>,0);
+0440 chkShowEffectiveFocalLength = uicontrol( <span class="keyword">...</span>
+0441     <span class="string">'Tag'</span>, <span class="string">'chkShowEffectiveFocalLength'</span>, <span class="keyword">...</span>
+0442     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0443     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0444     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0445     <span class="string">'String'</span>, <span class="string">'Effective Focal Length'</span>,<span class="keyword">...</span>
+0446     <span class="string">'Value'</span>,0);
+0447 chkShowBackFocalLength = uicontrol( <span class="keyword">...</span>
+0448     <span class="string">'Tag'</span>, <span class="string">'chkShowBackFocalLength'</span>, <span class="keyword">...</span>
+0449     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0450     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0451     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0452     <span class="string">'String'</span>, <span class="string">'Back Focal Length'</span>,<span class="keyword">...</span>
+0453     <span class="string">'Value'</span>,0);
+0454 chkShowAngularMagnification = uicontrol( <span class="keyword">...</span>
+0455     <span class="string">'Tag'</span>, <span class="string">'chkShowAngularMagnification'</span>, <span class="keyword">...</span>
+0456     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0457     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0458     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0459     <span class="string">'String'</span>, <span class="string">'Angular Magnification'</span>,<span class="keyword">...</span>
+0460     <span class="string">'Value'</span>,0);
+0461 chkShowEntrancePupilDiameter = uicontrol( <span class="keyword">...</span>
+0462     <span class="string">'Tag'</span>, <span class="string">'chkShowEntrancePupilDiameter'</span>, <span class="keyword">...</span>
+0463     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0464     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0465     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0466     <span class="string">'String'</span>, <span class="string">'Entrance Pupil Diameter'</span>,<span class="keyword">...</span>
+0467     <span class="string">'Value'</span>,0);
+0468 chkShowEntrancePupilLocation = uicontrol( <span class="keyword">...</span>
+0469     <span class="string">'Tag'</span>, <span class="string">'chkShowEntrancePupilLocation'</span>, <span class="keyword">...</span>
+0470     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0471     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0472     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0473     <span class="string">'String'</span>, <span class="string">'Entrance Pupil Location'</span>,<span class="keyword">...</span>
+0474     <span class="string">'Value'</span>,0);
+0475 chkShowExitPupilDiameter = uicontrol( <span class="keyword">...</span>
+0476     <span class="string">'Tag'</span>, <span class="string">'chkShowExitPupilDiameter'</span>, <span class="keyword">...</span>
+0477     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0478     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0479     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0480     <span class="string">'String'</span>, <span class="string">'Exit Pupil Diameter'</span>,<span class="keyword">...</span>
+0481     <span class="string">'Value'</span>,0);
+0482 chkShowExitPupilLocation = uicontrol( <span class="keyword">...</span>
+0483     <span class="string">'Tag'</span>, <span class="string">'chkShowExitPupilLocation'</span>, <span class="keyword">...</span>
+0484     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0485     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0486     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0487     <span class="string">'String'</span>, <span class="string">'Exit Pupil Location'</span>,<span class="keyword">...</span>
+0488     <span class="string">'Value'</span>,0);
+0489 chkShowObjectSpaceNA = uicontrol( <span class="keyword">...</span>
+0490     <span class="string">'Tag'</span>, <span class="string">'chkShowObjectSpaceNA'</span>, <span class="keyword">...</span>
+0491     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0492     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0493     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0494     <span class="string">'String'</span>, <span class="string">'Object Space NA'</span>,<span class="keyword">...</span>
+0495     <span class="string">'Value'</span>,0);
+0496 chkShowImageSpaceNA = uicontrol( <span class="keyword">...</span>
+0497     <span class="string">'Tag'</span>, <span class="string">'chkShowImageSpaceNA'</span>, <span class="keyword">...</span>
+0498     <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0499     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0500     <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0501     <span class="string">'String'</span>, <span class="string">'Image Space NA'</span>,<span class="keyword">...</span>
+0502     <span class="string">'Value'</span>,0);
+0503 <span class="comment">%-----------------------------------------------------------------------</span>
+0504 <span class="comment">%-------------------------------------------------------------------------</span>
+0505     lblApodizationType = uicontrol( <span class="keyword">...</span>
+0506         <span class="string">'Tag'</span>, <span class="string">'lblApodApodizationType'</span>, <span class="keyword">...</span>
+0507         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0508         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0509         <span class="string">'String'</span>, <span class="string">'Apodization Type'</span>,<span class="keyword">...</span>
+0510         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>,<span class="keyword">...</span>
+0511         <span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0512     popApodizationType = uicontrol( <span class="keyword">...</span>
+0513         <span class="string">'Tag'</span>, <span class="string">'popApodizationType'</span>, <span class="keyword">...</span>
+0514         <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0515         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span><span class="comment">,...</span>
+0516         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0517         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0518         <span class="string">'String'</span>, {<span class="string">'None'</span>,<span class="string">'Super Gaussian'</span>}); 
+0519     
+0520     panelSuperGaussParameters = uipanel(<span class="keyword">...</span>
+0521         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0522         <span class="string">'BorderType'</span>,<span class="string">'line'</span>,<span class="string">'BorderWidth'</span>,0.1,<span class="keyword">...</span>
+0523         <span class="string">'Visible'</span>,<span class="string">'Off'</span>);
+0524     
+0525      lblApodMaximumIntensity = uicontrol( <span class="keyword">...</span>
+0526         <span class="string">'Tag'</span>, <span class="string">'lblApodMaximumIntensity'</span>, <span class="keyword">...</span>
+0527         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0528         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0529         <span class="string">'String'</span>, <span class="string">'Maximum Intensity'</span>, <span class="keyword">...</span>
+0530         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0531         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);   
+0532      txtApodMaximumIntensity = uicontrol( <span class="keyword">...</span>
+0533         <span class="string">'Tag'</span>, <span class="string">'txtApodMaximumIntensity'</span>, <span class="keyword">...</span>
+0534         <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0535         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0536         <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0537         <span class="string">'String'</span>, <span class="string">'1'</span>, <span class="keyword">...</span>
+0538         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0539         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0540         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);  
+0541     
+0542      lblApodOrder = uicontrol( <span class="keyword">...</span>
+0543         <span class="string">'Tag'</span>, <span class="string">'lblApodOrder'</span>, <span class="keyword">...</span>
+0544         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0545         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0546         <span class="string">'String'</span>, <span class="string">'Order'</span>, <span class="keyword">...</span>
+0547         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0548         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);   
+0549      txtApodOrder = uicontrol( <span class="keyword">...</span>
+0550         <span class="string">'Tag'</span>, <span class="string">'txtApodOrder'</span>, <span class="keyword">...</span>
+0551         <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0552         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0553         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0554         <span class="string">'String'</span>, <span class="string">'1'</span>, <span class="keyword">...</span>
+0555         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0556         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);      
+0557       lblApodBeamRadius = uicontrol( <span class="keyword">...</span>
+0558         <span class="string">'Tag'</span>, <span class="string">'lblApodBeamRadius'</span>, <span class="keyword">...</span>
+0559         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0560         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0561         <span class="string">'String'</span>, <span class="string">'Beam Radius'</span>, <span class="keyword">...</span>
+0562         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0563         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);   
+0564      txtApodBeamRadius = uicontrol( <span class="keyword">...</span>
+0565         <span class="string">'Tag'</span>, <span class="string">'txtApodBeamRadius'</span>, <span class="keyword">...</span>
+0566         <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0567         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0568         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0569         <span class="string">'String'</span>, <span class="string">'1'</span>, <span class="keyword">...</span>
+0570         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0571         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);        
+0572      chkCurrentApodization = uicontrol( <span class="keyword">...</span>
+0573         <span class="string">'Tag'</span>, <span class="string">'chkCurrentApodization'</span>, <span class="keyword">...</span>
+0574         <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0575         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0576         <span class="string">'Value'</span>, 0, <span class="keyword">...</span>
+0577         <span class="string">'String'</span>,<span class="string">'Current Apodization'</span>,<span class="keyword">...</span>
+0578         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0579         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);      
+0580 <span class="comment">%-----------------------------------------------------------------------</span>
+0581       lblPSFPlotRadius  = uicontrol(<span class="keyword">...</span>
+0582         <span class="string">'Tag'</span>, <span class="string">'lblPSFPlotRadius'</span>, <span class="keyword">...</span>
+0583         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0584         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0585         <span class="string">'String'</span>, <span class="string">'PSF Plot Radius'</span>, <span class="keyword">...</span>
+0586         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0587         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0588       txtPSFPlotRadius  = uicontrol(<span class="keyword">...</span>
+0589         <span class="string">'Tag'</span>, <span class="string">'txtPSFPlotRadius'</span>, <span class="keyword">...</span>
+0590         <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0591         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0592         <span class="string">'String'</span>, <span class="string">'0.1'</span>, <span class="keyword">...</span>
+0593         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0594         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0595         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0596 <span class="comment">%-----------------------------------------------------------------------</span>
+0597      chkShowInTabular = uicontrol( <span class="keyword">...</span>
+0598         <span class="string">'Tag'</span>, <span class="string">'chkShowInTabular'</span>, <span class="keyword">...</span>
+0599         <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0600         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0601         <span class="string">'Value'</span>, 0, <span class="keyword">...</span>
+0602         <span class="string">'String'</span>,<span class="string">'Show in Tabular'</span>,<span class="keyword">...</span>
+0603         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0604         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);  
+0605 <span class="comment">%-----------------------------------------------------------------------</span>
+0606 
+0607      chkFieldComponent = uicontrol( <span class="keyword">...</span>
+0608         <span class="string">'Tag'</span>, <span class="string">'chkFieldComponent'</span>, <span class="keyword">...</span>
+0609         <span class="string">'Style'</span>, <span class="string">'checkbox'</span>, <span class="keyword">...</span>
+0610         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0611         <span class="string">'Value'</span>, 0, <span class="keyword">...</span>
+0612         <span class="string">'String'</span>,<span class="string">'Polarized'</span>,<span class="keyword">...</span>
+0613         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0614         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);  
+0615 
+0616     popFieldComponent = uicontrol( <span class="keyword">...</span>
+0617         <span class="string">'Tag'</span>, <span class="string">'popFieldComponent'</span>, <span class="keyword">...</span>
+0618         <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0619         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span><span class="comment">,...</span>
+0620         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0621         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0622         <span class="string">'String'</span>, {<span class="string">'Ex'</span>,<span class="string">'Ey'</span>,<span class="string">'Ez'</span>,<span class="string">'Ex+Ey+Ez'</span>}); 
+0623 <span class="comment">%-----------------------------------------------------------------------</span>
+0624       lblHx  = uicontrol(<span class="keyword">...</span>
+0625         <span class="string">'Tag'</span>, <span class="string">'lblHx'</span>, <span class="keyword">...</span>
+0626         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0627         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0628         <span class="string">'String'</span>, <span class="string">'Hx (Normalized)'</span>, <span class="keyword">...</span>
+0629         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0630         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0631       txtHx  = uicontrol(<span class="keyword">...</span>
+0632         <span class="string">'Tag'</span>, <span class="string">'txtHx'</span>, <span class="keyword">...</span>
+0633         <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0634         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0635         <span class="string">'String'</span>, <span class="string">'0'</span>, <span class="keyword">...</span>
+0636         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0637         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0638         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0639       lblHy  = uicontrol(<span class="keyword">...</span>
+0640         <span class="string">'Tag'</span>, <span class="string">'lblHy'</span>, <span class="keyword">...</span>
+0641         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0642         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0643         <span class="string">'String'</span>, <span class="string">'Hy (Normalized)'</span>, <span class="keyword">...</span>
+0644         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0645         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0646       txtHy  = uicontrol(<span class="keyword">...</span>
+0647         <span class="string">'Tag'</span>, <span class="string">'txtHy'</span>, <span class="keyword">...</span>
+0648         <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0649         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0650         <span class="string">'String'</span>, <span class="string">'0'</span>, <span class="keyword">...</span>
+0651         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0652         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0653         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0654       lblPx  = uicontrol(<span class="keyword">...</span>
+0655         <span class="string">'Tag'</span>, <span class="string">'lblPx'</span>, <span class="keyword">...</span>
+0656         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0657         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0658         <span class="string">'String'</span>, <span class="string">'Px (Normalized)'</span>, <span class="keyword">...</span>
+0659         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0660         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0661       txtPx  = uicontrol(<span class="keyword">...</span>
+0662         <span class="string">'Tag'</span>, <span class="string">'txtPx'</span>, <span class="keyword">...</span>
+0663         <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0664         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0665         <span class="string">'String'</span>, <span class="string">'0'</span>, <span class="keyword">...</span>
+0666         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0667         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0668         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0669       lblPy  = uicontrol(<span class="keyword">...</span>
+0670         <span class="string">'Tag'</span>, <span class="string">'lblPy'</span>, <span class="keyword">...</span>
+0671         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0672         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0673         <span class="string">'String'</span>, <span class="string">'Py (Normalized)'</span>, <span class="keyword">...</span>
+0674         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0675         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0676       txtPy  = uicontrol(<span class="keyword">...</span>
+0677         <span class="string">'Tag'</span>, <span class="string">'txtPy'</span>, <span class="keyword">...</span>
+0678         <span class="string">'Style'</span>, <span class="string">'edit'</span>, <span class="keyword">...</span>
+0679         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0680         <span class="string">'String'</span>, <span class="string">'1'</span>, <span class="keyword">...</span>
+0681         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0682         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0683         <span class="string">'HorizontalAlignment'</span>, <span class="string">'left'</span>);
+0684 
+0685     <span class="comment">% ------------------------------------------------------------</span>
+0686     lblTangetialAberration = uicontrol( <span class="keyword">...</span>
+0687         <span class="string">'Tag'</span>, <span class="string">'lblTangetialAberration'</span>, <span class="keyword">...</span>
+0688         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0689         <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0690         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0691         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0692         <span class="string">'String'</span>, <span class="string">'Tangetial'</span>);
+0693 
+0694     popTangentialAberration = uicontrol( <span class="keyword">...</span>
+0695         <span class="string">'Tag'</span>, <span class="string">'popTangentialAberration'</span>, <span class="keyword">...</span>
+0696         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0697         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0698         <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0699         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0700         <span class="string">'String'</span>, {<span class="string">'X Aberration'</span>,<span class="string">'Y Aberration'</span>},<span class="keyword">...</span>
+0701         <span class="string">'Value'</span>,2);
+0702     <span class="comment">% ------------------------------------------------------------</span>
+0703     lblSagittalAberration = uicontrol( <span class="keyword">...</span>
+0704         <span class="string">'Tag'</span>, <span class="string">'lblSagittalAberration'</span>, <span class="keyword">...</span>
+0705         <span class="string">'Style'</span>, <span class="string">'text'</span>, <span class="keyword">...</span>
+0706         <span class="string">'HorizontalAlignment'</span>,<span class="string">'Left'</span>,<span class="keyword">...</span>
+0707         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0708         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0709         <span class="string">'String'</span>, <span class="string">'Sagittal'</span>);
+0710 
+0711     popSagittalAberration = uicontrol( <span class="keyword">...</span>
+0712         <span class="string">'Tag'</span>, <span class="string">'popSagittalAberration'</span>, <span class="keyword">...</span>
+0713         <span class="string">'FontSize'</span>,fontSize,<span class="string">'FontName'</span>, <span class="string">'FixedWidth'</span>,<span class="keyword">...</span>
+0714         <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+0715         <span class="string">'Style'</span>, <span class="string">'popupmenu'</span>, <span class="keyword">...</span>
+0716         <span class="string">'BackgroundColor'</span>, [1 1 1], <span class="keyword">...</span>
+0717         <span class="string">'String'</span>, {<span class="string">'X Aberration'</span>,<span class="string">'Y Aberration'</span>},<span class="keyword">...</span>
+0718         <span class="string">'Value'</span>,1);    
+0719  <span class="comment">%% Add any new uicontrol definitions here</span>
+0720  <span class="comment">%%</span>
+0721  
+0722  
+0723  
+0724     
+0725 <span class="comment">%      chkPolarized = uicontrol( ...</span>
+0726 <span class="comment">%         'Tag', 'chkPolarized', ...</span>
+0727 <span class="comment">%         'Style', 'checkbox', ...</span>
+0728 <span class="comment">%         'FontSize',fontSize,'FontName', 'FixedWidth',...</span>
+0729 <span class="comment">%         'Value', 0, ...</span>
+0730 <span class="comment">%         'String','Polarized',...</span>
+0731 <span class="comment">%         'Visible','off',...</span>
+0732 <span class="comment">%         'HorizontalAlignment', 'left');</span>
+0733 <span class="comment">%-----------------------------------------------------------------------</span>
+0734 <span class="comment">% Callbacks of uicontrols</span>
+0735 set(popSurfaceIndex,<span class="keyword">...</span>
+0736     <span class="string">'Callback'</span>,{@<a href="#_sub2" class="code" title="subfunction popSurfaceIndex_Callback(hObject,~,childWindow,parentWindow)">popSurfaceIndex_Callback</a>,childWindow,parentWindow});
+0737 set(popWavelengthIndex,<span class="keyword">...</span>
+0738     <span class="string">'Callback'</span>,{@<a href="#_sub1" class="code" title="subfunction popWavelengthIndex_Callback(hObject, ~,childWindow,parentWindow)">popWavelengthIndex_Callback</a>,childWindow,parentWindow});
+0739 set(chkCheifAndMariginalRay,<span class="keyword">...</span>
+0740     <span class="string">'Callback'</span>,{@<a href="#_sub3" class="code" title="subfunction chkCheifAndMariginalRay_Callback(hObject,~,childWindow,parentWindow)">chkCheifAndMariginalRay_Callback</a>,childWindow,parentWindow});
+0741 set(popApodizationType, <span class="keyword">...</span>
+0742     <span class="string">'Callback'</span>,{@<a href="#_sub4" class="code" title="subfunction popApodizationType_Callback(hObject,~,childWindow,parentWindow)">popApodizationType_Callback</a>,childWindow,parentWindow});
+0743 set(chkCurrentApodization,<span class="keyword">...</span>
+0744     <span class="string">'Callback'</span>,{@<a href="#_sub5" class="code" title="subfunction chkCurrentApodization_Callback(hObject,~,childWindow,parentWindow)">chkCurrentApodization_Callback</a>,childWindow,parentWindow});
+0745 set(chkFieldComponent,<span class="keyword">...</span>
+0746      <span class="string">'Callback'</span>,{@<a href="#_sub6" class="code" title="subfunction chkFieldComponent_Callback(hObject,~,childWindow,parentWindow)">chkFieldComponent_Callback</a>,childWindow,parentWindow});
+0747  
+0748  <span class="comment">%% Add any new uicontrol callbacks here</span>
+0749  <span class="comment">%%</span>
+0750 
+0751 <a name="_sub1" href="#_subfunctions" class="code">function popWavelengthIndex_Callback(hObject, ~,childWindow,parentWindow)</a>
+0752     parentHandle = parentWindow.AODParentHandles;
+0753     childHandle = childWindow.AODChildHandles;
+0754     [ currentOpticalSystem,saved] = <span class="keyword">...</span>
+0755         parentWindow.getCurrentOpticalSystem;
+0756 
+0757     wavLengthIndexList = (get(hObject,<span class="string">'String'</span>));
+0758     wavLengthIndexString = (wavLengthIndexList{get(hObject,<span class="string">'Value'</span>)});
+0759     <span class="keyword">if</span> strcmpi(wavLengthIndexString,<span class="string">'New Wavelength'</span>)
+0760         <span class="comment">% enable wavelength text box</span>
+0761         set(childHandle.txtWavelength,<span class="string">'String'</span>,<span class="keyword">...</span>
+0762             num2str(0.55*10^-6/(currentOpticalSystem.getWavelengthUnitFactor)),<span class="keyword">...</span>
+0763             <span class="string">'Enable'</span>,<span class="string">'On'</span>);
+0764     <span class="keyword">elseif</span> strcmpi(wavLengthIndexString,<span class="string">'All'</span>)
+0765     <span class="keyword">else</span>
+0766         maxWavIndexDefined = currentOpticalSystem.NumberOfWavelengths;
+0767         wavLengthIndex = str2double(wavLengthIndexString);
+0768         <span class="keyword">if</span> wavLengthIndex &gt; maxWavIndexDefined
+0769             set(hObject,<span class="string">'Value'</span>,maxWavIndexDefined+1);
+0770             wavLengthIndex = maxWavIndexDefined;
+0771         <span class="keyword">end</span>
+0772         <span class="comment">% write the wavelength on the wavelength text box and disable it</span>
+0773         wavelength = currentOpticalSystem.WavelengthMatrix(wavLengthIndex,1);
+0774         <span class="comment">% Convert from wavelengthunit to um</span>
+0775         wavelength = (wavelength*currentOpticalSystem.getWavelengthUnitFactor)/(10^-6);
+0776         set(childHandle.txtWavelength,<span class="string">'String'</span>,num2str(wavelength),<span class="string">'Enable'</span>,<span class="string">'Off'</span>);
+0777     <span class="keyword">end</span>
+0778 <span class="keyword">end</span>
+0779 
+0780 <a name="_sub2" href="#_subfunctions" class="code">function popSurfaceIndex_Callback(hObject,~,childWindow,parentWindow)</a>
+0781     parentHandle = parentWindow.AODParentHandles;
+0782     childHandle = childWindow.AODChildHandles;
+0783     [ currentOpticalSystem,saved] = <span class="keyword">...</span>
+0784         parentWindow.getCurrentOpticalSystem;
+0785 
+0786     surfIndexList = cellstr (get(hObject,<span class="string">'String'</span>));
+0787     surfIndexString = (surfIndexList{get(hObject,<span class="string">'Value'</span>)});
+0788     <span class="keyword">if</span> strcmpi(surfIndexString,<span class="string">'New Coating'</span>) <span class="comment">% enter new coating</span>
+0789         <span class="comment">% enable coating name text box</span>
+0790         set(childHandle.txtCoatingName,<span class="string">'String'</span>,<span class="string">'None'</span>,<span class="string">'Enable'</span>,<span class="string">'On'</span>);
+0791     <span class="keyword">else</span>
+0792         surfIndex = str2double(surfIndexString);
+0793         <span class="comment">% write the coating name on the text box and disable it</span>
+0794         coating = currentOpticalSystem.SurfaceArray(surfIndex).Coating;
+0795         set(childHandle.txtCoatingName,<span class="string">'String'</span>,coating.Name,<span class="string">'Enable'</span>,<span class="string">'Off'</span>);
+0796     <span class="keyword">end</span>
+0797 <span class="keyword">end</span>
+0798 
+0799 <a name="_sub3" href="#_subfunctions" class="code">function chkCheifAndMariginalRay_Callback(hObject,~,childWindow,parentWindow)</a>
+0800     parentHandle = parentWindow.AODParentHandles;
+0801     childHandle = childWindow.AODChildHandles;
+0802     <span class="keyword">if</span> get(childHandle.chkCheifAndMariginalRay,<span class="string">'Value'</span>)
+0803         set(childHandle.txtNumberOfRay,<span class="string">'String'</span>,<span class="string">'3'</span>,<span class="string">'Enable'</span>,<span class="string">'Off'</span>);
+0804     <span class="keyword">else</span>
+0805         set(childHandle.txtNumberOfRay,<span class="string">'String'</span>,<span class="string">'3'</span>,<span class="string">'Enable'</span>,<span class="string">'On'</span>);
+0806     <span class="keyword">end</span>
+0807 <span class="keyword">end</span>
+0808 
+0809 <a name="_sub4" href="#_subfunctions" class="code">function popApodizationType_Callback(hObject,~,childWindow,parentWindow)</a>
+0810     parentHandle = parentWindow.AODParentHandles;
+0811     childHandle = childWindow.AODChildHandles;
+0812     apodizationTypeList = cellstr (get(hObject,<span class="string">'String'</span>));
+0813     apodizationTypeString = (apodizationTypeList{get(hObject,<span class="string">'Value'</span>)});
+0814     <span class="keyword">switch</span> lower(apodizationTypeString)
+0815         <span class="keyword">case</span> lower(<span class="string">'None'</span>)
+0816             set(childHandle.panelSuperGaussParameters,<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0817             set(get(childHandle.panelSuperGaussParameters,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'off'</span>);            
+0818         <span class="keyword">case</span> lower(<span class="string">'Super Gaussian'</span>)            
+0819             set(childHandle.panelSuperGaussParameters,<span class="string">'Visible'</span>,<span class="string">'on'</span>);
+0820             set(get(childHandle.panelSuperGaussParameters,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'on'</span>);
+0821     <span class="keyword">end</span>
+0822 <span class="keyword">end</span>
+0823 
+0824 <a name="_sub5" href="#_subfunctions" class="code">function chkCurrentApodization_Callback(hObject,~,childWindow,parentWindow)</a>
+0825     parentHandle = parentWindow.AODParentHandles;
+0826     childHandle = childWindow.AODChildHandles;
+0827     <span class="keyword">if</span> get(childHandle.chkCurrentApodization,<span class="string">'Value'</span>)
+0828         [ savedOpticalSystem,saved] = <span class="keyword">...</span>
+0829             parentWindow.getCurrentOpticalSystem;
+0830         <span class="keyword">if</span> isempty(savedOpticalSystem.ApodizationType)
+0831             savedOpticalSystem.ApodizationType = <span class="string">'None'</span>;
+0832             apodTypeIndex = 1;
+0833         <span class="keyword">else</span>
+0834             apodTypeIndex = find(ismember(savedOpticalSystem.ApodizationType,<span class="keyword">...</span>
+0835                 get(childHandle.popApodizationType,<span class="string">'String'</span>)));
+0836         <span class="keyword">end</span>
+0837         <span class="keyword">if</span> ~isempty(apodTypeIndex)
+0838             set(childHandle.popApodizationType,<span class="string">'Value'</span>,apodTypeIndex);
+0839         <span class="keyword">else</span>
+0840             disp([<span class="string">'Error: Apodization type '</span>,<span class="keyword">...</span>
+0841                 savedOpticalSystem.ApodizationType,<span class="string">' is not defined.'</span>]);
+0842             <span class="keyword">return</span>;
+0843         <span class="keyword">end</span>
+0844         <span class="keyword">switch</span> lower(savedOpticalSystem.ApodizationType)
+0845             <span class="keyword">case</span> lower(<span class="string">'None'</span>)
+0846                 set(childHandle.panelSuperGaussParameters,<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0847                 set(get(childHandle.panelSuperGaussParameters,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'off'</span>);
+0848                 set(childHandle.popApodizationType,<span class="string">'Enable'</span>,<span class="string">'off'</span>,<span class="string">'Value'</span>,1);
+0849             <span class="keyword">case</span> lower(<span class="string">'Super Gaussian'</span>)
+0850                 set(childHandle.panelSuperGaussParameters,<span class="string">'Visible'</span>,<span class="string">'on'</span>);
+0851                 set(get(childHandle.panelSuperGaussParameters,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'on'</span>);
+0852                 set(childHandle.popApodizationType,<span class="string">'Enable'</span>,<span class="string">'off'</span>,<span class="string">'Value'</span>,2);
+0853                 
+0854                 apodParam = savedOpticalSystem.ApodizationParameters;
+0855                 set(childHandle.txtApodMaximumIntensity,<span class="string">'String'</span>,<span class="keyword">...</span>
+0856                     num2str(apodParam.MaximumIntensity),<span class="keyword">...</span>
+0857                     <span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0858                 set(childHandle.txtApodOrder,<span class="string">'String'</span>,num2str(apodParam.Order),<span class="keyword">...</span>
+0859                     <span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0860                 set(childHandle.txtApodBeamRadius,<span class="string">'String'</span>,num2str(apodParam.BeamRadius),<span class="keyword">...</span>
+0861                     <span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0862         <span class="keyword">end</span>
+0863     <span class="keyword">else</span>
+0864         set(childHandle.popApodizationType,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0865         set(childHandle.txtApodMaximumIntensity,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0866         set(childHandle.txtApodOrder,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0867         set(childHandle.txtApodBeamRadius, <span class="string">'Enable'</span>,<span class="string">'on'</span>);        
+0868     <span class="keyword">end</span>
+0869 <span class="keyword">end</span>
+0870 <a name="_sub6" href="#_subfunctions" class="code">function chkFieldComponent_Callback(hObject,~,childWindow,parentWindow)</a>
+0871     parentHandle = parentWindow.AODParentHandles;
+0872     childHandle = childWindow.AODChildHandles;
+0873     <span class="keyword">if</span> get(childHandle.chkFieldComponent,<span class="string">'Value'</span>) 
+0874         set(allchild(childHandle.panelJonesVector),<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0875         set(childHandle.popFieldComponent,<span class="string">'Enable'</span>,<span class="string">'on'</span>);
+0876     <span class="keyword">else</span>
+0877         set(allchild(childHandle.panelJonesVector),<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0878         set(childHandle.popFieldComponent,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+0879     <span class="keyword">end</span>
+0880     
+0881 <span class="keyword">end</span>
+0882 
+0883 
+0884  <span class="comment">%% Add any new uicontrol callback definitions here</span>
+0885  <span class="comment">%%</span>
+0886 
+0887 
+0888 <span class="comment">%%------------------------------------------------------------------------</span>
+0889 <span class="comment">% Initialize the setting pannel by placing the UI components in the settign</span>
+0890 <span class="comment">% window using switch case statements</span>
+0891 myName = childHandle.Name;
+0892 <span class="keyword">switch</span> lower(myName)
+0893     <span class="keyword">case</span> lower( coatingPropertyVsAngle)
+0894         <span class="comment">%-------------------------------------------------------</span>
+0895         set(lblCoatingName,<span class="keyword">...</span>
+0896             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0897             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0898             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0899             <span class="string">'Position'</span>, [0.53 0.85 0.15 0.09]);
+0900         childHandle.lblCoatingName = lblCoatingName;
+0901         set(txtCoatingName,<span class="keyword">...</span>
+0902             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0903             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0904             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0905             <span class="string">'Position'</span>, [0.73 0.88 0.25 0.07]);
+0906         childHandle.txtCoatingName = txtCoatingName;
+0907         
+0908         set(lblSurfaceIndex,<span class="keyword">...</span>
+0909             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0910             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0911             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0912             <span class="string">'Position'</span>, [0.02 0.85 0.15 0.09]);
+0913         childHandle.lblSurfaceIndex = lblSurfaceIndex;
+0914         set(popSurfaceIndex,<span class="keyword">...</span>
+0915             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0916             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0917             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0918             <span class="string">'String'</span>,char(char(get(popSurfaceIndex,<span class="string">'String'</span>)),<span class="string">'New Coating'</span>),<span class="keyword">...</span>
+0919             <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+0920             <span class="string">'Position'</span>, [0.22 0.88 0.25 0.07]);
+0921         childHandle.popSurfaceIndex = popSurfaceIndex;
+0922 
+0923         <span class="comment">%-------------------------------------------------------</span>
+0924         set(lblWavelength,<span class="keyword">...</span>
+0925             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0926             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0927             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0928             <span class="string">'Position'</span>, [0.53 0.75 0.15 0.09]);
+0929         childHandle.lblWavelength = lblWavelength;
+0930         set(txtWavelength,<span class="keyword">...</span>
+0931             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0932             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0933             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0934             <span class="string">'Position'</span>, [0.73 0.78 0.25 0.07]);
+0935         childHandle.txtWavelength = txtWavelength;
+0936         
+0937         set(lblWavelengthIndex,<span class="keyword">...</span>
+0938             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0939             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0940             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0941             <span class="string">'Position'</span>, [0.02 0.75 0.20 0.09]);
+0942         childHandle.lblWavelengthIndex = lblWavelengthIndex;
+0943         set(popWavelengthIndex,<span class="keyword">...</span>
+0944             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0945             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0946             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0947             <span class="string">'String'</span>,[<span class="string">'New Wavelength'</span>;get(popWavelengthIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+0948             <span class="string">'Position'</span>, [0.22 0.78 0.25 0.07]);       
+0949         childHandle.popWavelengthIndex = popWavelengthIndex;
+0950         
+0951         <span class="comment">%-------------------------------------------------------</span>
+0952         set(lblMinAngle,<span class="keyword">...</span>
+0953             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0954             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0955             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0956             <span class="string">'Position'</span>, [0.02 0.65 0.15 0.09]);
+0957         childHandle.lblMinAngle = lblMinAngle;
+0958         set(txtMinAngle,<span class="keyword">...</span>
+0959             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0960             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0961             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0962             <span class="string">'Position'</span>, [0.22 0.68 0.25 0.07]);
+0963         childHandle.txtMinAngle = txtMinAngle;
+0964         
+0965         set(lblMaxAngle,<span class="keyword">...</span>
+0966             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0967             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0968             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0969             <span class="string">'Position'</span>, [0.53 0.65 0.15 0.09]);
+0970         childHandle.lblMaxAngle = lblMaxAngle;
+0971         set(txtMaxAngle,<span class="keyword">...</span>
+0972             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0973             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0974             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0975             <span class="string">'Position'</span>, [0.73 0.68 0.25 0.07]);
+0976         childHandle.txtMaxAngle = txtMaxAngle;
+0977         <span class="comment">%-------------------------------------------------------</span>
+0978         set(lblAngleStep,<span class="keyword">...</span>
+0979             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0980             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0981             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0982             <span class="string">'Position'</span>, [0.02 0.55 0.15 0.09]);
+0983         childHandle.lblAngleStep = lblAngleStep;
+0984         set(txtAngleStep,<span class="keyword">...</span>
+0985             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+0986             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+0987             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+0988             <span class="string">'Position'</span>, [0.22 0.58 0.25 0.07]);
+0989         childHandle.txtAngleStep = txtAngleStep;
+0990         <span class="comment">%% Set unique features of each windows in coating property vs angle</span>
+0991         <span class="keyword">switch</span> lower(myName)
+0992             <span class="keyword">case</span> lower(<span class="string">'coatingDiattenuationVsAngle'</span>)
+0993             <span class="keyword">case</span> lower(<span class="string">'coatingReflectionVsAngle'</span>)
+0994             <span class="keyword">case</span> lower(<span class="string">'coatingRetardanceVsAngle'</span>)
+0995             <span class="keyword">case</span> lower(<span class="string">'coatingTransmissionVsAngle'</span>)
+0996                 
+0997             <span class="comment">%% Add case statements for new windows in the</span>
+0998             <span class="comment">% &quot;coatingPropertyVsAngle&quot; category here</span>
+0999             <span class="comment">%%</span>
+1000         <span class="keyword">end</span>
+1001         
+1002     <span class="keyword">case</span> lower( coatingPropertyVsWavelength)
+1003         <span class="comment">%-------------------------------------------------------</span>
+1004         
+1005         set(lblCoatingName,<span class="keyword">...</span>
+1006             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1007             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1008             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1009             <span class="string">'Position'</span>, [0.53 0.85 0.15 0.09]);
+1010         childHandle.lblCoatingName = lblCoatingName;
+1011         set(txtCoatingName,<span class="keyword">...</span>
+1012             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1013             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1014             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1015             <span class="string">'Position'</span>, [0.73 0.88 0.25 0.07]);
+1016         childHandle.txtCoatingName = txtCoatingName;
+1017         
+1018         set(lblSurfaceIndex,<span class="keyword">...</span>
+1019             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1020             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1021             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1022             <span class="string">'Position'</span>, [0.02 0.85 0.15 0.09]);
+1023         childHandle.lblSurfaceIndex = lblSurfaceIndex;
+1024         set(popSurfaceIndex,<span class="keyword">...</span>
+1025             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1026             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1027             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1028             <span class="string">'String'</span>,char(char(get(popSurfaceIndex,<span class="string">'String'</span>)),<span class="string">'New Coating'</span>),<span class="keyword">...</span>
+1029             <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1030             <span class="string">'Position'</span>, [0.22 0.88 0.25 0.07]);
+1031         childHandle.popSurfaceIndex = popSurfaceIndex;  
+1032 
+1033         <span class="comment">%-------------------------------------------------------</span>
+1034         set(lblMinWavelength,<span class="keyword">...</span>
+1035             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1036             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1037             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1038             <span class="string">'Position'</span>, [0.02 0.75 0.15 0.09]);
+1039         childHandle.lblMinWavelength = lblMinWavelength;
+1040         set(txtMinWavelength,<span class="keyword">...</span>
+1041             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1042             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1043             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1044             <span class="string">'Position'</span>, [0.22 0.78 0.25 0.07]);
+1045         childHandle.txtMinWavelength = txtMinWavelength;
+1046         
+1047         set(lblMaxWavelength,<span class="keyword">...</span>
+1048             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1049             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1050             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1051             <span class="string">'Position'</span>, [0.53 0.75 0.15 0.09]);
+1052         childHandle.lblMaxWavelength = lblMaxWavelength;
+1053         set(txtMaxWavelength,<span class="keyword">...</span>
+1054             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1055             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1056             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1057             <span class="string">'Position'</span>, [0.73 0.78 0.25 0.07]);
+1058         childHandle.txtMaxWavelength = txtMaxWavelength;
+1059         <span class="comment">%-------------------------------------------------------</span>
+1060         set(lblWavelengthStep,<span class="keyword">...</span>
+1061             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1062             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1063             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1064             <span class="string">'Position'</span>, [0.02 0.65 0.15 0.09]);
+1065         childHandle.lblWavelengthStep = lblWavelengthStep;
+1066         set(txtWavelengthStep,<span class="keyword">...</span>
+1067             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1068             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1069             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1070             <span class="string">'Position'</span>, [0.22 0.68 0.25 0.07]);
+1071         childHandle.txtWavelengthStep = txtWavelengthStep;
+1072         <span class="comment">%------------------------------------------------------------------</span>
+1073         set(lblIncidenceAngle,<span class="keyword">...</span>
+1074             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1075             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1076             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1077             <span class="string">'Position'</span>, [0.53 0.65 0.15 0.09]);
+1078         childHandle.lblIncidenceAngle = lblIncidenceAngle;
+1079         set(txtIncidenceAngle,<span class="keyword">...</span>
+1080             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1081             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1082             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1083             <span class="string">'Position'</span>, [0.73 0.68 0.25 0.07]);
+1084         childHandle.txtIncidenceAngle = txtIncidenceAngle;        
+1085         
+1086         <span class="comment">%% Set unique features of each windows in coating property vs wavelen</span>
+1087         <span class="keyword">switch</span> lower(myName)
+1088             <span class="keyword">case</span> lower(<span class="string">'coatingDiattenuationVsWavelength'</span>)
+1089             <span class="keyword">case</span> lower(<span class="string">'coatingReflectionVsWavelength'</span>)
+1090             <span class="keyword">case</span> lower(<span class="string">'coatingRetardanceVsWavelength'</span>)
+1091             <span class="keyword">case</span> lower(<span class="string">'coatingTransmissionVsWavelength'</span>)
+1092 
+1093             <span class="comment">%% Add case statements for new windows in the</span>
+1094             <span class="comment">% &quot;coatingPropertyVsWavelength&quot; category here</span>
+1095             <span class="comment">%%</span>
+1096         <span class="keyword">end</span>
+1097     <span class="keyword">case</span> lower(gridRaytraceAnalysis)
+1098         set(lblSurfaceIndex,<span class="keyword">...</span>
+1099             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1100             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1101             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1102             <span class="string">'Position'</span>, [0.02 0.85 0.15 0.09]);
+1103         childHandle.lblSurfaceIndex = lblSurfaceIndex;
+1104         set(popSurfaceIndex,<span class="keyword">...</span>
+1105             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1106             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1107             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1108             <span class="string">'Position'</span>, [0.22 0.88 0.25 0.07]);
+1109         childHandle.popSurfaceIndex = popSurfaceIndex;
+1110         childHandle.txtCoatingName = txtCoatingName;
+1111         
+1112         set(lblWavelengthIndex,<span class="keyword">...</span>
+1113             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1114             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1115             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1116             <span class="string">'Position'</span>, [0.53 0.85 0.20 0.09]);
+1117         childHandle.lblWavelengthIndex = lblWavelengthIndex;
+1118         set(popWavelengthIndex,<span class="keyword">...</span>
+1119             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1120             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1121             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1122             <span class="string">'Position'</span>, [0.73 0.88 0.25 0.07]);
+1123         childHandle.popWavelengthIndex = popWavelengthIndex;
+1124         
+1125         childHandle.txtWavelength = txtWavelength;
+1126         <span class="comment">%------------------------------------------------------</span>
+1127         set(lblFieldIndex,<span class="keyword">...</span>
+1128             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1129             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1130             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1131             <span class="string">'Position'</span>, [0.02 0.75 0.20 0.09]);
+1132         childHandle.lblFieldIndex = lblFieldIndex;
+1133         set(popFieldIndex,<span class="keyword">...</span>
+1134             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1135             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1136             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1137             <span class="string">'Position'</span>, [0.22 0.78 0.25 0.07]);
+1138         childHandle.popFieldIndex = popFieldIndex;
+1139         
+1140         set(lblPupilGridSize,<span class="keyword">...</span>
+1141             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1142             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1143             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1144             <span class="string">'Position'</span>, [0.53 0.75 0.20 0.09]);
+1145         childHandle.lblPupilGridSize = lblPupilGridSize;
+1146         set(popPupilGridSize,<span class="keyword">...</span>
+1147             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1148             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1149             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1150             <span class="string">'Position'</span>, [0.73 0.78 0.25 0.07]);
+1151         childHandle.popPupilGridSize = popPupilGridSize;
+1152         <span class="comment">%--------------------------------------------------------------</span>
+1153         
+1154         
+1155         <span class="comment">%------------------------------------------------------</span>
+1156         set(panelJonesVector,<span class="keyword">...</span>
+1157             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1158             <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+1159             <span class="string">'BorderType'</span>,<span class="string">'etchedin'</span>,<span class="keyword">...</span>
+1160             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1161             <span class="string">'Position'</span>, [0.25 0.3 0.5 0.35]);
+1162         set(get(panelJonesVector,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'on'</span>);
+1163         childHandle.panelJonesVector = panelJonesVector;
+1164         childHandle.lblJs = lblJs;
+1165         childHandle.lblJp = lblJp;
+1166         childHandle.lblPhase = lblPhase;
+1167         childHandle.lblMagnitued = lblMagnitued;
+1168         
+1169         childHandle.txtMagJs = txtMagJs;
+1170         childHandle.txtMagJp = txtMagJp;
+1171         childHandle.txtPhaseJs = txtPhaseJs;
+1172         childHandle.txtPhaseJp = txtPhaseJp;
+1173         <span class="comment">%% Set specific unique elements for each members</span>
+1174         <span class="keyword">switch</span> lower(myName)
+1175             <span class="keyword">case</span> lower(<span class="string">'amplitudeTransmissionMap'</span>)              
+1176             <span class="keyword">case</span> lower(<span class="string">'phaseMap'</span>)                
+1177             <span class="keyword">case</span> lower(<span class="string">'wavefrontDiattenuationMap'</span>)              
+1178             <span class="keyword">case</span> lower(<span class="string">'wavefrontRetardanceMap'</span>)               
+1179             <span class="keyword">case</span> lower(<span class="string">'polarizationEllipseMap'</span>)
+1180             <span class="keyword">case</span> lower(<span class="string">'wavefrontAtExitPupil'</span>)
+1181 <span class="comment">%                 % Hide Jones Vector panel</span>
+1182 <span class="comment">%                 set(childHandle.panelJonesVector,'Visible','on');</span>
+1183 <span class="comment">%                 set(get(childHandle.panelJonesVector,'Children'),'Visible','on');</span>
+1184                 <span class="comment">% Disable surface index pop</span>
+1185                 set(childHandle.popSurfaceIndex,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1186                 <span class="comment">% Add and Show zernike coefiicient number popup</span>
+1187                 set(lblZernikeCoefficientNumber,<span class="keyword">...</span>
+1188                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1189                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1190                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1191                     <span class="string">'Position'</span>, [0.02 0.65 0.20 0.09]);
+1192                 childHandle.lblZernikeCoefficientNumber = lblZernikeCoefficientNumber;
+1193                 set(popZernikeCoefficientNumber,<span class="keyword">...</span>
+1194                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1195                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1196                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1197                     <span class="string">'Position'</span>, [0.22 0.68 0.25 0.07]);
+1198                 childHandle.popZernikeCoefficientNumber = popZernikeCoefficientNumber; 
+1199                 
+1200                set(chkFieldComponent,<span class="keyword">...</span>
+1201                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1202                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1203                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1204                     <span class="string">'Position'</span>, [0.53 0.67 0.20 0.11]);
+1205                 childHandle.chkFieldComponent = chkFieldComponent;
+1206                 set(popFieldComponent,<span class="keyword">...</span>
+1207                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1208                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1209                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1210                     <span class="string">'Enable'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+1211                     <span class="string">'Position'</span>, [0.73 0.68 0.25 0.07]);
+1212                 childHandle.popFieldComponent = popFieldComponent;
+1213         
+1214                 <span class="comment">% Disable Jones Vector panel</span>
+1215                 set(get(childHandle.panelJonesVector,<span class="string">'Children'</span>),<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1216                 
+1217                 <span class="comment">% Disable surface index pop</span>
+1218                 set(childHandle.popSurfaceIndex,<span class="string">'Enable'</span>,<span class="string">'off'</span>);                
+1219             <span class="keyword">case</span> lower(<span class="string">'FFTPSF'</span>)
+1220                 <span class="comment">% Add the PSF plot radius</span>
+1221                 set(lblPSFPlotRadius,<span class="keyword">...</span>
+1222                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1223                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1224                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1225                     <span class="string">'Position'</span>, [0.02 0.65 0.15 0.09]);
+1226                 childHandle.lblPSFPlotRadius = lblPSFPlotRadius;
+1227                 set(txtPSFPlotRadius,<span class="keyword">...</span>
+1228                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1229                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1230                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1231                     <span class="string">'Position'</span>, [0.22 0.68 0.25 0.07]);
+1232                 childHandle.txtPSFPlotRadius = txtPSFPlotRadius;
+1233                 
+1234                 set(chkFieldComponent,<span class="keyword">...</span>
+1235                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1236                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1237                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1238                     <span class="string">'Position'</span>, [0.53 0.67 0.20 0.11]);
+1239                 childHandle.chkFieldComponent = chkFieldComponent;
+1240                 set(popFieldComponent,<span class="keyword">...</span>
+1241                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1242                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1243                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1244                     <span class="string">'Enable'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+1245                     <span class="string">'Position'</span>, [0.73 0.68 0.25 0.07]);
+1246                 childHandle.popFieldComponent = popFieldComponent;
+1247         
+1248                 <span class="comment">% Disable Jones Vector panel</span>
+1249                 set(get(childHandle.panelJonesVector,<span class="string">'Children'</span>),<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1250                 
+1251                 <span class="comment">% Disable surface index pop</span>
+1252                 set(childHandle.popSurfaceIndex,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1253                 
+1254             <span class="comment">%% Add case statements for new windows in the</span>
+1255             <span class="comment">% &quot;gridrayTraceAnalysis&quot; category here</span>
+1256             <span class="comment">%%</span>
+1257                 
+1258         <span class="keyword">end</span>
+1259     <span class="keyword">case</span> lower(rayTracingAnalysis)
+1260         set(lblHx,<span class="keyword">...</span>
+1261             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1262             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1263             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1264             <span class="string">'Position'</span>, [0.02 0.85 0.20 0.09]);
+1265         childHandle.lblHx = lblHx;
+1266         set(txtHx,<span class="keyword">...</span>
+1267             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1268             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1269             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1270             <span class="string">'Position'</span>, [0.27 0.88 0.20 0.06]);
+1271         childHandle.txtHx = txtHx;
+1272         
+1273         set(lblHy,<span class="keyword">...</span>
+1274             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1275             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1276             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1277             <span class="string">'Position'</span>, [0.53 0.85 0.20 0.09]);
+1278         childHandle.lblHy = lblHy;
+1279         set(txtHy,<span class="keyword">...</span>
+1280             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1281             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1282             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1283             <span class="string">'Position'</span>, [0.78 0.88 0.20 0.06]);
+1284         childHandle.txtHy = txtHy;
+1285         
+1286         <span class="comment">%------------------------------------------------------</span>
+1287         set(lblPx,<span class="keyword">...</span>
+1288             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1289             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1290             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1291             <span class="string">'Position'</span>, [0.02 0.75 0.20 0.09]);
+1292         childHandle.lblPx = lblPx;
+1293         set(txtPx,<span class="keyword">...</span>
+1294             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1295             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1296             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1297             <span class="string">'Position'</span>, [0.27 0.78 0.20 0.06]);
+1298         childHandle.txtPx = txtPx;
+1299         
+1300         set(lblPy,<span class="keyword">...</span>
+1301             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1302             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1303             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1304             <span class="string">'Position'</span>, [0.53 0.75 0.20 0.09]);
+1305         childHandle.lblPy = lblPy;
+1306         set(txtPy,<span class="keyword">...</span>
+1307             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1308             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1309             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1310             <span class="string">'Position'</span>, [0.78 0.78 0.20 0.06]);
+1311         childHandle.txtPy = txtPy;
+1312         
+1313         <span class="comment">%-------------------------------------------------------</span>
+1314         set(lblWavelengthIndex,<span class="keyword">...</span>
+1315             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1316             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1317             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1318             <span class="string">'Position'</span>, [0.02 0.65 0.20 0.09]);
+1319         childHandle.lblWavelengthIndex = lblWavelengthIndex;
+1320         set(popWavelengthIndex,<span class="keyword">...</span>
+1321             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1322             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1323             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1324             <span class="string">'String'</span>,[<span class="string">'New Wavelength'</span>;get(popWavelengthIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+1325             <span class="string">'Position'</span>, [0.27 0.67 0.20 0.07]);
+1326         childHandle.popWavelengthIndex = popWavelengthIndex;
+1327         set(lblWavelength,<span class="keyword">...</span>
+1328             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1329             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1330             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1331             <span class="string">'Position'</span>, [0.53 0.64 0.20 0.09]);
+1332         childHandle.lblWavelength = lblWavelength;
+1333         set(txtWavelength,<span class="keyword">...</span>
+1334             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1335             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1336             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1337             <span class="string">'Position'</span>, [0.78 0.68 0.20 0.06]);
+1338         childHandle.txtWavelength = txtWavelength;
+1339         <span class="comment">%-----------------------------------------------------------------</span>
+1340         set(chkShowInTabular,<span class="keyword">...</span>
+1341             <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1342             <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1343             <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1344             <span class="string">'Value'</span>,0,<span class="keyword">...</span>
+1345             <span class="string">'Position'</span>, [0.02 0.55 0.40 0.09]);
+1346         childHandle.chkShowInTabular = chkShowInTabular;
+1347 
+1348         <span class="keyword">switch</span> lower(myName)
+1349             <span class="keyword">case</span> lower(<span class="string">'scalarRayTrace'</span>)
+1350                 
+1351             <span class="keyword">case</span> lower(<span class="string">'polarizationRayTrace'</span>)
+1352                 set(childHandle.chkShowInTabular,<span class="string">'Enable'</span>,<span class="string">'off'</span>);
+1353                 <span class="comment">%------------------------------------------------------</span>
+1354                 set(panelJonesVector,<span class="keyword">...</span>
+1355                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1356                     <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="keyword">...</span>
+1357                     <span class="string">'BorderType'</span>,<span class="string">'etchedin'</span>,<span class="keyword">...</span>
+1358                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1359                     <span class="string">'Position'</span>, [0.25 0.2 0.5 0.35]);
+1360                 set(get(panelJonesVector,<span class="string">'Children'</span>),<span class="string">'Visible'</span>,<span class="string">'on'</span>);
+1361                 childHandle.panelJonesVector = panelJonesVector;
+1362                 childHandle.lblJs = lblJs;
+1363                 childHandle.lblJp = lblJp;
+1364                 childHandle.lblPhase = lblPhase;
+1365                 childHandle.lblMagnitued = lblMagnitued;
+1366                 
+1367                 childHandle.txtMagJs = txtMagJs;
+1368                 childHandle.txtMagJp = txtMagJp;
+1369                 childHandle.txtPhaseJs = txtPhaseJs;
+1370                 childHandle.txtPhaseJp = txtPhaseJp;
+1371  
+1372             <span class="comment">%% Add case statements for new windows in the</span>
+1373             <span class="comment">% &quot;rayTracingAnalysis&quot; category here</span>
+1374             <span class="comment">%%</span>
+1375                 
+1376         <span class="keyword">end</span>
+1377     <span class="keyword">case</span> lower(others)
+1378         <span class="keyword">switch</span> lower(myName)               
+1379             <span class="keyword">case</span> lower(<span class="string">'paraxialAnalysis'</span>)
+1380                 set(chkShowTotalNumberOfSurfaces,<span class="keyword">...</span>
+1381                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1382                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1383                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1384                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1385                     <span class="string">'Position'</span>, [0.1 0.9 0.40 0.09]);
+1386                 childHandle.chkShowTotalNumberOfSurfaces = chkShowTotalNumberOfSurfaces;
+1387                 set(chkShowStopSurfaceIndex,<span class="keyword">...</span>
+1388                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1389                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1390                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1391                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1392                     <span class="string">'Position'</span>, [0.1 0.8 0.40 0.09]);
+1393                 childHandle.chkShowStopSurfaceIndex = chkShowStopSurfaceIndex;
+1394                 set(chkShowSystemTotalTrack,<span class="keyword">...</span>
+1395                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1396                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1397                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1398                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1399                     <span class="string">'Position'</span>, [0.1 0.7 0.40 0.09]);
+1400                 childHandle.chkShowSystemTotalTrack = chkShowSystemTotalTrack;
+1401                 set(chkShowEffectiveFocalLength,<span class="keyword">...</span>
+1402                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1403                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1404                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1405                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1406                     <span class="string">'Position'</span>, [0.1 0.6 0.40 0.09]);
+1407                 childHandle.chkShowEffectiveFocalLength = chkShowEffectiveFocalLength;
+1408                 set(chkShowBackFocalLength,<span class="keyword">...</span>
+1409                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1410                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1411                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1412                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1413                     <span class="string">'Position'</span>, [0.1 0.5 0.40 0.09]);
+1414                 childHandle.chkShowBackFocalLength = chkShowBackFocalLength;
+1415                 set(chkShowAngularMagnification,<span class="keyword">...</span>
+1416                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1417                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1418                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1419                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1420                     <span class="string">'Position'</span>, [0.1 0.4 0.40 0.09]);
+1421                 childHandle.chkShowAngularMagnification = chkShowAngularMagnification;
+1422                 set(chkShowEntrancePupilDiameter,<span class="keyword">...</span>
+1423                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1424                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1425                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1426                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1427                     <span class="string">'Position'</span>, [0.1 0.3 0.40 0.09]);
+1428                 childHandle.chkShowEntrancePupilDiameter = chkShowEntrancePupilDiameter;
+1429                 set(chkShowEntrancePupilLocation,<span class="keyword">...</span>
+1430                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1431                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1432                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1433                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1434                     <span class="string">'Position'</span>, [0.1 0.2 0.40 0.09]);
+1435                 childHandle.chkShowEntrancePupilLocation = chkShowEntrancePupilLocation;
+1436                 set(chkShowExitPupilDiameter,<span class="keyword">...</span>
+1437                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1438                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1439                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1440                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1441                     <span class="string">'Position'</span>, [0.5 0.9 0.40 0.09]);
+1442                 childHandle.chkShowExitPupilDiameter = chkShowExitPupilDiameter;
+1443                 set(chkShowExitPupilLocation,<span class="keyword">...</span>
+1444                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1445                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1446                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1447                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1448                     <span class="string">'Position'</span>, [0.5 0.8 0.40 0.09]);
+1449                 childHandle.chkShowExitPupilLocation = chkShowExitPupilLocation;
+1450                 set(chkShowObjectSpaceNA,<span class="keyword">...</span>
+1451                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1452                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1453                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1454                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1455                     <span class="string">'Position'</span>, [0.5 0.7 0.40 0.09]);
+1456                 childHandle.chkShowObjectSpaceNA = chkShowObjectSpaceNA;
+1457                 set(chkShowImageSpaceNA,<span class="keyword">...</span>
+1458                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1459                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1460                     <span class="string">'Value'</span>,1,<span class="keyword">...</span>
+1461                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1462                     <span class="string">'Position'</span>, [0.5 0.6 0.40 0.09]);
+1463                 childHandle.chkShowImageSpaceNA = chkShowImageSpaceNA;
+1464             <span class="keyword">case</span> lower(<span class="string">'coatingRefractiveIndexProfile'</span>)
+1465                 
+1466                 set(lblCoatingName,<span class="keyword">...</span>
+1467                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1468                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1469                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1470                     <span class="string">'Position'</span>, [0.1 0.63 0.25 0.09]);
+1471                 childHandle.lblCoatingName = lblCoatingName;
+1472                 set(txtCoatingName,<span class="keyword">...</span>
+1473                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1474                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1475                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1476                     <span class="string">'Position'</span>, [0.35 0.65 0.5 0.07]);
+1477                 childHandle.txtCoatingName = txtCoatingName;                
+1478                 
+1479                 set(lblSurfaceIndex,<span class="keyword">...</span>
+1480                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1481                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1482                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1483                     <span class="string">'Position'</span>, [0.1 0.77 0.25 0.09]);
+1484                 childHandle.lblSurfaceIndex = lblSurfaceIndex;
+1485                 set(popSurfaceIndex,<span class="keyword">...</span>
+1486                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1487                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1488                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1489                     <span class="string">'String'</span>,char(char(get(popSurfaceIndex,<span class="string">'String'</span>)),<span class="string">'New Coating'</span>),<span class="keyword">...</span>
+1490                     <span class="string">'Position'</span>, [0.35 0.8 0.5 0.07]);
+1491                 childHandle.popSurfaceIndex = popSurfaceIndex;
+1492                 
+1493                 <span class="comment">%==================================================</span>
+1494             <span class="keyword">case</span> lower( <span class="string">'footprintDiagram'</span>)
+1495                 set(lblSurfaceIndex,<span class="keyword">...</span>
+1496                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1497                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1498                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1499                     <span class="string">'Position'</span>, [0.02 0.85 0.15 0.09]);
+1500                 childHandle.lblSurfaceIndex = lblSurfaceIndex;
+1501                 set(popSurfaceIndex,<span class="keyword">...</span>
+1502                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1503                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1504                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1505                     <span class="string">'Position'</span>, [0.22 0.88 0.25 0.07]);
+1506                 childHandle.popSurfaceIndex = popSurfaceIndex;
+1507                 childHandle.txtCoatingName = txtCoatingName;
+1508                 
+1509                 set(lblWavelengthIndex,<span class="keyword">...</span>
+1510                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1511                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1512                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1513                     <span class="string">'Position'</span>, [0.53 0.85 0.20 0.09]);
+1514                 childHandle.lblWavelengthIndex = lblWavelengthIndex;
+1515                 set(popWavelengthIndex,<span class="keyword">...</span>
+1516                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1517                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1518                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1519                     <span class="string">'String'</span>,[<span class="string">'All'</span>;get(popWavelengthIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+1520                     <span class="string">'Position'</span>, [0.73 0.88 0.25 0.07]);
+1521                 childHandle.popWavelengthIndex = popWavelengthIndex;
+1522                 
+1523                 childHandle.txtWavelength = txtWavelength;
+1524                 <span class="comment">%------------------------------------------------------</span>
+1525                 set(lblFieldIndex,<span class="keyword">...</span>
+1526                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1527                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1528                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1529                     <span class="string">'Position'</span>, [0.02 0.75 0.20 0.09]);
+1530                 childHandle.lblFieldIndex = lblFieldIndex;
+1531                 set(popFieldIndex,<span class="keyword">...</span>
+1532                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1533                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1534                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1535                     <span class="string">'String'</span>,[<span class="string">'All'</span>;get(popFieldIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+1536                     <span class="string">'Position'</span>, [0.22 0.78 0.25 0.07]);
+1537                 childHandle.popFieldIndex = popFieldIndex;
+1538                 
+1539                 set(lblNumberOfRay,<span class="keyword">...</span>
+1540                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1541                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1542                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1543                     <span class="string">'Position'</span>, [0.53 0.75 0.20 0.09]);
+1544                 childHandle.lblNumberOfRay = lblNumberOfRay;
+1545                 set(txtNumberOfRay,<span class="keyword">...</span>
+1546                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1547                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1548                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1549                     <span class="string">'Position'</span>, [0.73 0.78 0.25 0.07]);
+1550                 childHandle.txtNumberOfRay = txtNumberOfRay;
+1551                 <span class="comment">% ----------------------------------------------------</span>
+1552                 set(lblPupilSamplingType,<span class="keyword">...</span>
+1553                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1554                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1555                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1556                     <span class="string">'Position'</span>, [0.02 0.65 0.20 0.09]);
+1557                 childHandle.lblPupilSamplingType = lblPupilSamplingType;
+1558                 set(popPupilSamplingType,<span class="keyword">...</span>
+1559                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1560                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1561                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1562                     <span class="string">'Position'</span>, [0.22 0.68 0.25 0.07]);
+1563                 childHandle.popPupilSamplingType = popPupilSamplingType;
+1564             <span class="keyword">case</span> lower( <span class="string">'system2DLayoutDiagram'</span>)
+1565                 set(lblFieldIndex,<span class="keyword">...</span>
+1566                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1567                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1568                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1569                     <span class="string">'Position'</span>, [0.02 0.85 0.15 0.09]);
+1570                 childHandle.lblFieldIndex = lblFieldIndex;
+1571                 
+1572                 set(popFieldIndex,<span class="keyword">...</span>
+1573                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1574                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1575                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1576                     <span class="string">'String'</span>,[<span class="string">'All'</span>;get(popFieldIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+1577                     <span class="string">'Position'</span>, [0.22 0.88 0.25 0.07]);
+1578                 childHandle.popFieldIndex = popFieldIndex;
+1579                 
+1580                 set(lblWavelengthIndex,<span class="keyword">...</span>
+1581                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1582                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1583                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1584                     <span class="string">'Position'</span>, [0.53 0.85 0.20 0.09]);
+1585                 childHandle.lblWavelengthIndex = lblWavelengthIndex;
+1586                 set(popWavelengthIndex,<span class="keyword">...</span>
+1587                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1588                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1589                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1590                     <span class="string">'String'</span>,[<span class="string">'All'</span>;get(popWavelengthIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+1591                     <span class="string">'Position'</span>, [0.73 0.88 0.25 0.07]);
+1592                 childHandle.popWavelengthIndex = popWavelengthIndex;
+1593                 
+1594                 childHandle.txtWavelength = txtWavelength;
+1595                 <span class="comment">%------------------------------------------------------</span>
+1596                 set(lblNumberOfRay,<span class="keyword">...</span>
+1597                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1598                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1599                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1600                     <span class="string">'Position'</span>, [0.02 0.75 0.20 0.09]);
+1601                 childHandle.lblNumberOfRay = lblNumberOfRay;
+1602                 set(txtNumberOfRay,<span class="keyword">...</span>
+1603                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1604                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1605                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1606                     <span class="string">'Position'</span>, [0.22 0.78 0.25 0.07]);
+1607                 childHandle.txtNumberOfRay = txtNumberOfRay;
+1608                 
+1609                 set(chkCheifAndMariginalRay,<span class="keyword">...</span>
+1610                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1611                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1612                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1613                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1614                     <span class="string">'Position'</span>, [0.53 0.77 0.40 0.09]);
+1615                 childHandle.chkCheifAndMariginalRay = chkCheifAndMariginalRay;
+1616             <span class="keyword">case</span> lower( <span class="string">'system3DLayoutDiagram'</span>)
+1617                 
+1618                 set(lblFieldIndex,<span class="keyword">...</span>
+1619                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1620                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1621                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1622                     <span class="string">'Position'</span>, [0.02 0.85 0.15 0.09]);
+1623                 childHandle.lblFieldIndex = lblFieldIndex;
+1624                 set(popFieldIndex,<span class="keyword">...</span>
+1625                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1626                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1627                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1628                     <span class="string">'String'</span>,[<span class="string">'All'</span>;get(popFieldIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+1629                     <span class="string">'Position'</span>, [0.22 0.88 0.25 0.07]);
+1630                 childHandle.popFieldIndex = popFieldIndex;
+1631                 
+1632                 set(lblWavelengthIndex,<span class="keyword">...</span>
+1633                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1634                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1635                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1636                     <span class="string">'Position'</span>, [0.53 0.85 0.20 0.09]);
+1637                 childHandle.lblWavelengthIndex = lblWavelengthIndex;
+1638                 set(popWavelengthIndex,<span class="keyword">...</span>
+1639                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1640                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1641                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1642                     <span class="string">'String'</span>,[<span class="string">'All'</span>;get(popWavelengthIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+1643                     <span class="string">'Position'</span>, [0.73 0.88 0.25 0.07]);
+1644                 childHandle.popWavelengthIndex = popWavelengthIndex;
+1645                 
+1646                 childHandle.txtWavelength = txtWavelength;
+1647                 <span class="comment">%------------------------------------------------------</span>
+1648                 set(lblNumberOfRay,<span class="keyword">...</span>
+1649                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1650                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1651                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1652                     <span class="string">'Position'</span>, [0.02 0.75 0.20 0.09]);
+1653                 childHandle.lblNumberOfRay = lblNumberOfRay;
+1654                 set(txtNumberOfRay,<span class="keyword">...</span>
+1655                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1656                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1657                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1658                     <span class="string">'Position'</span>, [0.22 0.78 0.25 0.07]);
+1659                 childHandle.txtNumberOfRay = txtNumberOfRay;
+1660                 
+1661                 set(lblPupilSamplingType,<span class="keyword">...</span>
+1662                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1663                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1664                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1665                     <span class="string">'Position'</span>, [0.53 0.75 0.20 0.09]);
+1666                 childHandle.lblPupilSamplingType = lblPupilSamplingType;
+1667                 set(popPupilSamplingType,<span class="keyword">...</span>
+1668                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1669                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1670                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1671                     <span class="string">'Position'</span>, [0.73 0.78 0.25 0.07]);
+1672                 childHandle.popPupilSamplingType = popPupilSamplingType;
+1673             <span class="keyword">case</span> lower(<span class="string">'pupilApodization'</span>)
+1674                 set(lblApodizationType,<span class="keyword">...</span>
+1675                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1676                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1677                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1678                     <span class="string">'Position'</span>, [0.2 0.85 0.3 0.07]);
+1679                 childHandle.lblApodizationType = lblApodizationType;
+1680                 set(popApodizationType,<span class="keyword">...</span>
+1681                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1682                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1683                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1684                     <span class="string">'Position'</span>, [0.5 0.85 0.3 0.07]);
+1685                 childHandle.popApodizationType = popApodizationType;
+1686                 
+1687                 set(lblPupilGridSize,<span class="keyword">...</span>
+1688                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1689                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1690                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1691                     <span class="string">'Position'</span>, [0.2 0.78 0.3 0.07]);
+1692                 childHandle.lblPupilGridSize = lblPupilGridSize;
+1693                 set(popPupilGridSize,<span class="keyword">...</span>
+1694                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1695                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1696                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1697                     <span class="string">'Position'</span>, [0.5 0.78 0.3 0.07]);
+1698                 childHandle.popPupilGridSize = popPupilGridSize;
+1699                
+1700                 set(chkCurrentApodization,<span class="keyword">...</span>
+1701                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1702                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1703                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1704                     <span class="string">'Position'</span>, [0.2 0.7 0.35 0.07]);
+1705                 childHandle.chkCurrentApodization = chkCurrentApodization;
+1706                 set(panelSuperGaussParameters,<span class="keyword">...</span>
+1707                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1708                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1709                     <span class="string">'Visible'</span>,<span class="string">'off'</span>,<span class="keyword">...</span>
+1710                     <span class="string">'Position'</span>, [0.1 0.25 0.8 0.45]);
+1711                 childHandle.panelSuperGaussParameters = panelSuperGaussParameters;
+1712                 set(lblApodMaximumIntensity,<span class="keyword">...</span>
+1713                     <span class="string">'Parent'</span>, childHandle.panelSuperGaussParameters, <span class="keyword">...</span>
+1714                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1715                     <span class="string">'Position'</span>, [0.1 0.8 0.4 0.1]);
+1716                 childHandle.lblApodMaximumIntensity = lblApodMaximumIntensity;
+1717                 set(txtApodMaximumIntensity,<span class="keyword">...</span>
+1718                     <span class="string">'Parent'</span>, childHandle.panelSuperGaussParameters, <span class="keyword">...</span>
+1719                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1720                     <span class="string">'Position'</span>, [0.5 0.8 0.4 0.1]);
+1721                 childHandle.txtApodMaximumIntensity = txtApodMaximumIntensity;
+1722                 set(lblApodOrder,<span class="keyword">...</span>
+1723                     <span class="string">'Parent'</span>, childHandle.panelSuperGaussParameters, <span class="keyword">...</span>
+1724                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1725                     <span class="string">'Position'</span>, [0.1 0.6 0.4 0.1]);
+1726                 childHandle.lblApodOrder = lblApodOrder;
+1727                 set(txtApodOrder,<span class="keyword">...</span>
+1728                     <span class="string">'Parent'</span>, childHandle.panelSuperGaussParameters, <span class="keyword">...</span>
+1729                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1730                     <span class="string">'Position'</span>, [0.5 0.6 0.4 0.1]);
+1731                 childHandle.txtApodOrder = txtApodOrder;
+1732                 set(lblApodBeamRadius,<span class="keyword">...</span>
+1733                     <span class="string">'Parent'</span>, childHandle.panelSuperGaussParameters, <span class="keyword">...</span>
+1734                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1735                     <span class="string">'Position'</span>, [0.1 0.4 0.4 0.1]);
+1736                 childHandle.lblApodBeamRadius = lblApodBeamRadius;
+1737                 set(txtApodBeamRadius,<span class="keyword">...</span>
+1738                     <span class="string">'Parent'</span>, childHandle.panelSuperGaussParameters, <span class="keyword">...</span>
+1739                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1740                     <span class="string">'Position'</span>, [0.5 0.4 0.4 0.1]);
+1741                 childHandle.txtApodBeamRadius = txtApodBeamRadius;
+1742                 
+1743             <span class="keyword">case</span> lower(<span class="string">'transverseRayAberration'</span>)
+1744                 set(lblSurfaceIndex,<span class="keyword">...</span>
+1745                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1746                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1747                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1748                     <span class="string">'Position'</span>, [0.02 0.85 0.15 0.09]);
+1749                 childHandle.lblSurfaceIndex = lblSurfaceIndex;
+1750                 set(popSurfaceIndex,<span class="keyword">...</span>
+1751                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1752                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1753                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1754                     <span class="string">'Position'</span>, [0.22 0.88 0.25 0.07]);
+1755                 childHandle.popSurfaceIndex = popSurfaceIndex;
+1756                 childHandle.txtCoatingName = txtCoatingName;
+1757                 
+1758                 set(lblWavelengthIndex,<span class="keyword">...</span>
+1759                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1760                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1761                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1762                     <span class="string">'Position'</span>, [0.53 0.85 0.20 0.09]);
+1763                 childHandle.lblWavelengthIndex = lblWavelengthIndex;
+1764                 set(popWavelengthIndex,<span class="keyword">...</span>
+1765                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1766                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1767                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1768                     <span class="string">'String'</span>,[<span class="string">'All'</span>;get(popWavelengthIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+1769                     <span class="string">'Position'</span>, [0.73 0.88 0.25 0.07]);
+1770                 childHandle.popWavelengthIndex = popWavelengthIndex;
+1771                 
+1772                 childHandle.txtWavelength = txtWavelength;
+1773                 <span class="comment">%------------------------------------------------------</span>
+1774                 set(lblFieldIndex,<span class="keyword">...</span>
+1775                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1776                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1777                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1778                     <span class="string">'Position'</span>, [0.02 0.75 0.20 0.09]);
+1779                 childHandle.lblFieldIndex = lblFieldIndex;
+1780                 set(popFieldIndex,<span class="keyword">...</span>
+1781                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1782                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1783                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1784                     <span class="string">'String'</span>,[<span class="string">'All'</span>;get(popFieldIndex,<span class="string">'String'</span>)],<span class="keyword">...</span>
+1785                     <span class="string">'Position'</span>, [0.22 0.78 0.25 0.07]);
+1786                 childHandle.popFieldIndex = popFieldIndex;
+1787                 
+1788                 set(lblNumberOfRay,<span class="keyword">...</span>
+1789                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1790                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1791                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1792                     <span class="string">'Position'</span>, [0.53 0.75 0.20 0.09]);
+1793                 childHandle.lblNumberOfRay = lblNumberOfRay;
+1794                 set(txtNumberOfRay,<span class="keyword">...</span>
+1795                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1796                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1797                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1798                     <span class="string">'Position'</span>, [0.73 0.78 0.25 0.07]);
+1799                 childHandle.txtNumberOfRay = txtNumberOfRay;
+1800                 <span class="comment">% ----------------------------------------------------</span>
+1801                 set(lblSagittalAberration,<span class="keyword">...</span>
+1802                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1803                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1804                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1805                     <span class="string">'Position'</span>, [0.02 0.65 0.20 0.09]);
+1806                 childHandle.lblSagittalAberration = lblSagittalAberration;
+1807                 set(popSagittalAberration,<span class="keyword">...</span>
+1808                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1809                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1810                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1811                     <span class="string">'Position'</span>, [0.22 0.68 0.25 0.07]);
+1812                 childHandle.popSagittalAberration = popSagittalAberration;
+1813                 <span class="comment">% ----------------------------------------------------</span>
+1814                 set(lblTangetialAberration,<span class="keyword">...</span>
+1815                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1816                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1817                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1818                     <span class="string">'Position'</span>, [0.53 0.65 0.20 0.09]);
+1819                 childHandle.lblTangetialAberration = lblTangetialAberration;
+1820                 set(popTangentialAberration,<span class="keyword">...</span>
+1821                     <span class="string">'Parent'</span>, childHandle.panelMainTab(1), <span class="keyword">...</span>
+1822                     <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="keyword">...</span>
+1823                     <span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="keyword">...</span>
+1824                     <span class="string">'Position'</span>, [0.73 0.68 0.25 0.07]);
+1825                 childHandle.popTangentialAberration = popTangentialAberration;                
+1826             <span class="comment">%% Add case statements for new windows in the</span>
+1827             <span class="comment">% &quot;others&quot; category here</span>
+1828             <span class="comment">%%</span>
+1829         <span class="keyword">end</span>
+1830 <span class="keyword">end</span>
+1831 parentWindow.AODParentHandles = parentHandle;
+1832 childWindow.AODChildHandles = childHandle;
+1833 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

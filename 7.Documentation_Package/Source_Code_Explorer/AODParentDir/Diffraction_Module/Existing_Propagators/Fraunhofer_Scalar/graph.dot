@@ -1,0 +1,7 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  prop_fraun_fft_test -> prop_fraun_fft;
+
+  prop_fraun_fft [URL="prop_fraun_fft.html"];
+  prop_fraun_fft_test [URL="prop_fraun_fft_test.html"];
+}

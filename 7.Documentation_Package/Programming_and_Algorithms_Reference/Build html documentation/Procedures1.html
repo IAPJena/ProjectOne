@@ -1,0 +1,199 @@
+﻿<html>
+	
+<head>
+	<title>Procedures</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.3.1.364">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "Programming and Algorithms Reference MATLAB Based Optical Analysis Toolbox V 3.0.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("Procedures1");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Procedures</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="ExamplesofExtendingtheToolbox.html">Examples of Extending the Toolbox</a> &rsaquo;&rsaquo; <a href="Method2Asseparatetoolusingtheexi.html">Method 2: As separate tool using the existing toolbox</a> &rsaquo;&rsaquo; <a href="LongitudinalRayAberrationDiagram.html">Longitudinal Ray Aberration Diagram</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="LongitudinalRayAberrationDiagram.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="LongitudinalRayAberrationDiagram.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="Results1.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts59">Procedures: Longitudinal Ray Aberration Diagram</span></span></h1>
+<p class="rvps10"><span class="rvts84">Step 1: Define the Input and Outputs</span></p>
+<p class="rvps10"><span class="rvts37">Output: </span></p>
+<p class="rvps10"><span class="rvts38">Graphs showing the longitudinal aberration.</span></p>
+<p class="rvps10"><span class="rvts37">Input:</span></p>
+<p class="rvps10"><span class="rvts38">The analysis window requires the following setting parameters:</span></p>
+<div class="rvps2"><table border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps3"><span class="rvts28">Settings</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps3"><span class="rvts28">Description</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps3"><span class="rvts28">Remarks</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts27">Wavelength Index</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts27">Index of the wavelength value &nbsp;for the analysis.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps13"><span class="rvts29">All wavelengths can be used at the same time.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; width: 143px;"><p class="rvps2"><span class="rvts27">Number of Rays</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 236px;"><p class="rvps2"><span class="rvts27">The number of rays to be traced per each field point and each wavelength.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; width: 148px;"><p class="rvps13"><span class="rvts29">Number less than 3 is not recommended.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps10"><span class="rvts38"><br/></span></p>
+<p class="rvps10"><span class="rvts84">Step 2: Design a &nbsp;graphical user interface to take inputs from the user and show the result</span></p>
+<p class="rvps10"><span class="rvts38">For this case the input can be taken with matlab dialog window. And the resulting plot can be shown in a matlab figure window.</span></p>
+<p class="rvps10"><span class="rvts38"><br/></span></p>
+<p class="rvps10"><span class="rvts84">Step 3: &nbsp;Write the main function</span></p>
+<p class="rvps10"><span class="rvts38">A new function called "plotLongitudinalAberration.m" was written as follows and placed in the folder "Toolbox_Extensions" &nbsp;together with its test script:</span></p>
+<p class="rvps2"><span class="rvts87">function</span><span class="rvts41"> [ success ] = plotLongitudinalAberration(opticalSystem)</span></p>
+<p class="rvps2"><span class="rvts85">%PLOTLONGITUDINALABERRATION Plots the longitudinal aberration of the</span></p>
+<p class="rvps2"><span class="rvts85">%optical system.</span></p>
+<p class="rvps2"><span class="rvts85"> </span></p>
+<p class="rvps2"><span class="rvts85">% User inputs the wavelength indices and number of ray</span></p>
+<p class="rvps2"><span class="rvts41">wavIndices_nRay = inputdlg({</span><span class="rvts88">'Wavelength Index (0 for All)'</span><span class="rvts41">,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Number of Rays'</span><span class="rvts41">,},</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts88">'Wavelength Index and Number of Rays'</span><span class="rvts41">,1,{</span><span class="rvts88">'0'</span><span class="rvts41">,</span><span class="rvts88">'100'</span><span class="rvts41">});</span></p>
+<p class="rvps2"><span class="rvts87">if</span><span class="rvts41"> ~(isempty(wavIndices_nRay)||</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;isempty(wavIndices_nRay{1})||</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;isempty(wavIndices_nRay{2}))</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;wavLenIndex = str2double(wavIndices_nRay{1});</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;nRay = str2double(wavIndices_nRay{2});</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;nWavelength = opticalSystem.NumberOfWavelengths;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts87">if</span><span class="rvts41"> isnan(nRay)||isnan(wavLenIndex) || </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;nRay &lt; 1 || wavLenIndex &lt; 0 || wavLenIndex &gt; nWavelength</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;disp(</span><span class="rvts88">'Error: All Input should be numeric and valid'</span><span class="rvts41">);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;success = 0;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts87">return</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts87">else</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;disp(</span><span class="rvts88">'Error: Invalid Input.'</span><span class="rvts41">);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;success = 0;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts87">return</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts87"> </span></p>
+<p class="rvps2"><span class="rvts87"> </span></p>
+<p class="rvps2"><span class="rvts41">fieldPointXY = [0;0];</span></p>
+<p class="rvps2"><span class="rvts41">wavelengthMatrix = opticalSystem.WavelengthMatrix;</span></p>
+<p class="rvps2"><span class="rvts87">if</span><span class="rvts41"> wavLenIndex == 0</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;wavLen = (wavelengthMatrix(:,1))';</span></p>
+<p class="rvps2"><span class="rvts87">else</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;wavLen = wavelengthMatrix(wavLenIndex,1);</span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41">JonesVec = [NaN;NaN];</span></p>
+<p class="rvps2"><span class="rvts41">nWav = size(wavLen,2);</span></p>
+<p class="rvps2"><span class="rvts41">nField = size(fieldPointXY,2);</span></p>
+<p class="rvps2"><span class="rvts85">% trace the tangntial rays</span></p>
+<p class="rvps2"><span class="rvts85">% polarizedRayTracerResult = &nbsp;nSurf X nRay X nField X nWav</span></p>
+<p class="rvps2"><span class="rvts85">% pupil sampling = 5: Tangential Plane </span></p>
+<p class="rvps2"><span class="rvts41">PupSamplingTypeTangential = 5;</span></p>
+<p class="rvps2"><span class="rvts41">[tangentialRayTracerResult] = opticalSystem.multipleRayTracer(wavLen,</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;fieldPointXY,nRay,PupSamplingTypeTangential,JonesVec);</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts85">% Assign different symbals and colors for lines of d/t wavelengths</span></p>
+<p class="rvps2"><span class="rvts41">availablelineColor = repmat([</span><span class="rvts88">'b'</span><span class="rvts41">,</span><span class="rvts88">'k'</span><span class="rvts41">,</span><span class="rvts88">'r'</span><span class="rvts41">,</span><span class="rvts88">'g'</span><span class="rvts41">,</span><span class="rvts88">'c'</span><span class="rvts41">,</span><span class="rvts88">'m'</span><span class="rvts41">,</span><span class="rvts88">'y'</span><span class="rvts41">],1,20); </span><span class="rvts85">% 7*20 = 140</span></p>
+<p class="rvps2"><span class="rvts41">lineColorList = availablelineColor(1:nWav*nField);</span></p>
+<p class="rvps2"><span class="rvts41"> </span></p>
+<p class="rvps2"><span class="rvts41">surfIndex = opticalSystem.NumberOfSurfaces;</span></p>
+<p class="rvps2"><span class="rvts41">fieldIndex = 1;</span></p>
+<p class="rvps2"><span class="rvts41">figure;</span></p>
+<p class="rvps2"><span class="rvts87">for</span><span class="rvts41"> wavIndex = 1:nWav</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;tangentialFanIntersectionPoints = </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;[tangentialRayTracerResult(surfIndex,:,fieldIndex,wavIndex).RayIntersectionPoint];</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;tangentialFanFinalDirections = </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;[tangentialRayTracerResult(surfIndex,:,fieldIndex,wavIndex).IncidentRayDirection];</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;opticalAxisIntersectionZ = (tangentialFanIntersectionPoints(2,:))./</span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;(-tan(acos(tangentialFanFinalDirections(3,:))));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts85">% NaN will result for rays alogn the axis so take the value of the</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts85">% immediate upper field point in this case</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;opticalAxisIntersectionZ(find(isnan(opticalAxisIntersectionZ))) = </span><span class="rvts87">...</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;opticalAxisIntersectionZ(find(isnan(opticalAxisIntersectionZ))-1);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;xAxisPoints = opticalAxisIntersectionZ;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;yAxisPoints = linspace(1,-1,size(opticalAxisIntersectionZ,2));</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; </span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;</span><span class="rvts85">% Only take the upper part of the enterance pupil</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;xAxisPointsUpper = xAxisPoints(yAxisPoints &gt;= 0);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;yAxisPointsUpper = yAxisPoints(yAxisPoints &gt;= 0);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;legendText{wavIndex} = [</span><span class="rvts88">' Wav: '</span><span class="rvts41">,num2str(wavLen(wavIndex))];</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;currentLineColor = lineColorList(wavIndex);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;plot(xAxisPointsUpper,yAxisPointsUpper,currentLineColor);</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;grid </span><span class="rvts88">on</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41"> &nbsp; &nbsp;hold </span><span class="rvts88">on</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts41">axis </span><span class="rvts88">equal</span><span class="rvts41">;</span></p>
+<p class="rvps2"><span class="rvts41">xlabel(</span><span class="rvts88">'Z'</span><span class="rvts41">,</span><span class="rvts88">'FontSize'</span><span class="rvts41">,12);</span></p>
+<p class="rvps2"><span class="rvts41">ylabel(</span><span class="rvts88">'PY (Normalized)'</span><span class="rvts41">,</span><span class="rvts88">'FontSize'</span><span class="rvts41">,12);</span></p>
+<p class="rvps2"><span class="rvts41">legend(legendText)</span></p>
+<p class="rvps2"><span class="rvts41">success = 1;</span></p>
+<p class="rvps2"><span class="rvts87">end</span></p>
+<p class="rvps2"><span class="rvts87"> </span></p>
+<p class="rvps2"><span class="rvts43"><br/></span></p>
+<p></p>
+<p class="rvps6"><span class="rvts20">Created with the Personal Edition of HelpNDoc: </span><a class="rvts21" href="http://www.helpndoc.com/feature-tour/iphone-website-generation">Create iPhone web-based documentation</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2014&gt; by &lt;Norman G. Worku (normangirma2012@gmail.com), Optical System Design Research Group, FSU, Jena&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

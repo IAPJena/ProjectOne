@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of changeCoordinate</title>
+  <meta name="keywords" content="changeCoordinate">
+  <meta name="description" content="changeCoordinate: Returns the point (ps,pp,pk) in spk in the new">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- # AODParentDir --><!-- menu.html Mathematical_Functions -->
+<h1>changeCoordinate
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>changeCoordinate: Returns the point (ps,pp,pk) in spk in the new</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ px, py, pz] = changeCoordinate( ps,pp,pk,dirS,dirP,dirK ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> changeCoordinate: Returns the point (ps,pp,pk) in spk in the new
+ orthonormal coordinate xyz. The function is vectorized so if the
+ inputs are vectors then the output will also be vector of the same size.
+ Inputs
+   ps,pp,pk: point in the old coordinate spk
+   dirS,dirP,dirK = [Sx,Sy,Sz]',... vectors describing axes of orthonormal 
+                   coordinate spk in terms of xyz coordinate    
+  NB. For vector inputs the dirS,dirP and dirK = 3XN matrices where N is number of
+  inputs and the ps,pp and pk = 1XN vector
+ Outputs
+   px py pz: the point in new coordinate system.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../AODParentDir/Polarization_Ray_Tracing_Module/convertJVToPolVector.html" class="code" title="function polarizationVector = convertJVToPolVector(JV,dirK)">convertJVToPolVector</a>	convertJonesVectToPolVect Converts a given jones vector to polarization</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ px, py, pz] = changeCoordinate( ps,pp,pk,dirS,dirP,dirK )</a>
+0002     <span class="comment">% changeCoordinate: Returns the point (ps,pp,pk) in spk in the new</span>
+0003     <span class="comment">% orthonormal coordinate xyz. The function is vectorized so if the</span>
+0004     <span class="comment">% inputs are vectors then the output will also be vector of the same size.</span>
+0005     <span class="comment">% Inputs</span>
+0006     <span class="comment">%   ps,pp,pk: point in the old coordinate spk</span>
+0007     <span class="comment">%   dirS,dirP,dirK = [Sx,Sy,Sz]',... vectors describing axes of orthonormal</span>
+0008     <span class="comment">%                   coordinate spk in terms of xyz coordinate</span>
+0009     <span class="comment">%  NB. For vector inputs the dirS,dirP and dirK = 3XN matrices where N is number of</span>
+0010     <span class="comment">%  inputs and the ps,pp and pk = 1XN vector</span>
+0011     <span class="comment">% Outputs</span>
+0012     <span class="comment">%   px py pz: the point in new coordinate system.</span>
+0013 
+0014     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Algorithm Section&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0015     <span class="comment">%</span>
+0016 
+0017     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Example Usage&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0018     <span class="comment">%</span>
+0019 
+0020     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Author Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0021     <span class="comment">%   Written By: Worku, Norman Girma</span>
+0022     <span class="comment">%   Advisor: Prof. Herbert Gross</span>
+0023     <span class="comment">%   Part of the RAYTRACE_TOOLBOX V3.0 (OOP Version)</span>
+0024     <span class="comment">%    Optical System Design and Simulation Research Group</span>
+0025     <span class="comment">%   Institute of Applied Physics</span>
+0026     <span class="comment">%   Friedrich-Schiller-University of Jena</span>
+0027                              
+0028     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Change History Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0029     <span class="comment">% Date----------Modified By ---------Modification Detail--------Remark</span>
+0030     <span class="comment">% Oct 14,2013   Worku, Norman G.     Original Version       Version 3.0</span>
+0031     <span class="comment">% Jan 18,2014   Worku, Norman G.     Vectorized inputs and outputs</span>
+0032 
+0033     <span class="comment">% &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Main Code Section &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+0034     
+0035     <span class="comment">% normalize the new coordinate system vectors</span>
+0036     <span class="comment">% check for orthogonality</span>
+0037     nRay = size(dirS,2);
+0038     dirS = dirS./(repmat(sqrt(sum(dirS.^2,1)),[3,1]));
+0039     dirP = dirP./(repmat(sqrt(sum(dirP.^2,1)),[3,1]));
+0040     dirK = dirK./(repmat(sqrt(sum(dirK.^2,1)),[3,1]));
+0041 
+0042     px = dirS(1,:).* (ps) + dirP(1,:).* (pp) + dirK(1,:).* (pk);
+0043     py = dirS(2,:).* (ps) + dirP(2,:).* (pp) + dirK(2,:).* (pk);
+0044     pz = dirS(3,:).* (ps) + dirP(3,:).* (pp) + dirK(3,:).* (pk);
+0045 <span class="keyword">end</span>
+0046</pre></div>
+<hr><address>Generated on Thu 22-May-2014 16:03:22 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

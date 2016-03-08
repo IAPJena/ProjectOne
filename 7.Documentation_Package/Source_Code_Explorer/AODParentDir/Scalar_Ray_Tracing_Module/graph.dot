@@ -1,0 +1,11 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+
+  computeAngleBetweenVectors [URL="computeAngleBetweenVectors.html"];
+  globalToLocalCoordinate [URL="globalToLocalCoordinate.html"];
+  globalToLocalDirection [URL="globalToLocalDirection.html"];
+  globalToLocalPosition [URL="globalToLocalPosition.html"];
+  localToGlobalCoordinate [URL="localToGlobalCoordinate.html"];
+  localToGlobalDirection [URL="localToGlobalDirection.html"];
+  localToGlobalPosition [URL="localToGlobalPosition.html"];
+}
