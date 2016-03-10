@@ -65,7 +65,7 @@ function InitializeOpticalElementEditorPanel( parentWindow )
     
     updatedSystem = aodHandles.OpticalSystem(currentConfig);
     updatedSystem.SurfaceArray = updateSurfaceCoordinateTransformationMatrices(aodHandles.OpticalSystem(currentConfig).SurfaceArray);
-
+    
     nSurface = getNumberOfSurfaces(updatedSystem);
     stopComponentIndex = getStopElementIndex(updatedSystem.OpticalElementArray);
     
@@ -542,7 +542,7 @@ end
 
 % Local functions
 function btnInsertElement_Callback(~,~,parentWindow)
-
+    
     aodHandles = parentWindow.ParentHandles;
     currentConfig = aodHandles.CurrentConfiguration;
     aodHandles.OpticalSystem(currentConfig).IsUpdatedSurfaceArray = 0;
@@ -557,7 +557,7 @@ function btnInsertElement_Callback(~,~,parentWindow)
     end
 end
 function btnRemoveElement_Callback(~,~,parentWindow)
-
+    
     aodHandles = parentWindow.ParentHandles;
     currentConfig = aodHandles.CurrentConfiguration;
     aodHandles.OpticalSystem(currentConfig).IsUpdatedSurfaceArray = 0;
@@ -707,7 +707,7 @@ function tblOpticalElementList_CellEditCallback(hObject, eventdata,parentWindow)
             columnFormat1 =  {'char',{'SURF','COMP'},GetSupportedSurfaceTypes(), 'char'};
             set(aodHandles.tblOpticalElementList,'ColumnFormat', columnFormat1);
         else
-
+            
             % reset the surface type in the surface detail window
             selectedElementTypeString = eventdata.NewData;
             %newSurface = Surface(selectedSurfaceType);
@@ -779,7 +779,7 @@ function tblOpticalElementList_CellEditCallback(hObject, eventdata,parentWindow)
             tblData1{nElement,2} = 'IMAGE';
             set(aodHandles.tblOpticalElementList, 'Data', tblData1);
         else
-
+            
             selectedElement = selectedElement;
             if isSurface(selectedElement)
                 % reset the surface type in the surface detail window
@@ -909,7 +909,7 @@ function tblSurfaceBasicParameters_CellSelectionCallback(~, eventdata,parentWind
         elseif strcmpi('numericVector',myType)
             tempNumericVector = selectedSurface.UniqueParameters.(myName);
             tempNumericVectorVariableFlag = 0*tempNumericVector;
-            % Open the numericVector data editor window.            
+            % Open the numericVector data editor window.
             waitfor(numericVectorDataInputGUI(tempNumericVector,tempNumericVectorVariableFlag,myName));
             
             tempNumericVectorNew = getappdata(0,'tempNumericVector');
@@ -998,6 +998,21 @@ function tblSurfaceApertureParameters_CellSelectionCallback(~, eventdata,parentW
             else
                 selectedSurface.Aperture.UniqueParameters.(myName) = newParam;
             end
+        elseif strcmpi('file',myType)
+            % type is choice of file name (txt or picture)
+            aodHandles.OpticalSystem(currentConfig).IsUpdatedSurfaceArray = 0;
+            storedApertureFileName = paramValues{1};
+            % Import numeric data array
+            [folderPath,fileName,ext] = fileparts(storedApertureFileName);
+            if exist(storedApertureFileName)
+                twoDimensionalMatrixGUI(fileName,storedApertureFileName);
+                uiwait(gcf);
+            else
+                twoDimensionalMatrixGUI('Stored Aperture');
+                uiwait(gcf);
+            end
+            storedApertureSourceFileName = getappdata(0,'StoredMatrixSourceFileName');
+            selectedSurface.Aperture.UniqueParameters.(myName) = storedApertureSourceFileName;
         elseif strcmpi('numeric',myType) || strcmpi('char',myType)
             
         else
