@@ -1,4 +1,10 @@
 function [figureHandle] = numericVectorDataInputGUI(tempNumericVector,tempNumericVectorVariableFlag,nameOfTheVector)
+    % Lets the user to enter numeric vector data and saves it as appdata by
+    % the name tempNumericVector and tempNumericVectorVariableFlag which
+    % can be accessed after the dialog box is closed. This is useful for
+    % inputing the polynomial coefficients of extended and freeform
+    % surfaces.
+    
     
     if nargin < 1
         tempNumericVector = [1:100];
@@ -6,10 +12,11 @@ function [figureHandle] = numericVectorDataInputGUI(tempNumericVector,tempNumeri
     if nargin < 2
         tempNumericVectorVariableFlag = 0*tempNumericVector;
     end
-    if nargin < 2
-        nameOfTheVector = 'Untitled Numeric Vector';
+    if nargin < 3
+        nameOfTheVector = 'Untitled Vector';
     end    
     
+    figureTitle = [nameOfTheVector,' [',num2str(length(tempNumericVector)),']'];
     % Save initial values
     setappdata(0,'tempNumericVector',tempNumericVector);
     setappdata(0,'tempNumericVectorVariableFlag',tempNumericVectorVariableFlag);
@@ -26,7 +33,7 @@ function [figureHandle] = numericVectorDataInputGUI(tempNumericVector,tempNumeri
         'Tag', 'numericVectorDataInputGUI', ...
         'Units', 'normalized', ...
         'Position',[0.4,0.3,0.2,0.4],...
-        'Name', nameOfTheVector, ...
+        'Name', figureTitle, ...
         'MenuBar', 'none', ...
         'NumberTitle', 'off', ...
         'Color', get(0,'DefaultUicontrolBackgroundColor'), ...
@@ -61,7 +68,7 @@ function [figureHandle] = numericVectorDataInputGUI(tempNumericVector,tempNumeri
         'String','Add',...
         'Units', 'normalized', ...
         'Position',[0.2,0.92,0.2,0.05],......
-        'Callback',{@btnAdd_Callback,tblNumericVectorData,txtNumberOfRows});
+        'Callback',{@btnAdd_Callback,tblNumericVectorData,txtNumberOfRows,nameOfTheVector,figureHandle});
     
     btnRemove = uicontrol( ...
         'Parent',figureHandle,...
@@ -72,7 +79,7 @@ function [figureHandle] = numericVectorDataInputGUI(tempNumericVector,tempNumeri
         'String','Remove',...
         'Units', 'normalized', ...
         'Position',[0.6,0.92,0.2,0.05],...
-        'Callback',{@btnRemove_Callback,tblNumericVectorData,txtNumberOfRows});
+        'Callback',{@btnRemove_Callback,tblNumericVectorData,txtNumberOfRows,nameOfTheVector,figureHandle});
      
     
     
@@ -126,7 +133,7 @@ function tblNumericVectorData_CellSelectionCallback(hObject, eventdata)
 end
 function tblNumericVectorData_CellEditCallback(hObject, eventdata)
 end
-function btnAdd_Callback(~, ~, tblNumericVectorData,txtNumberOfRows)
+function btnAdd_Callback(~, ~, tblNumericVectorData,txtNumberOfRows,nameOfTheVector,figureHandle)
     tableData = get(tblNumericVectorData,'Data');
     additionalRows = str2num(get(txtNumberOfRows,'String'));
     if ~isempty(additionalRows)
@@ -136,8 +143,11 @@ function btnAdd_Callback(~, ~, tblNumericVectorData,txtNumberOfRows)
         tableDataNew = tableData;
     end
     set(tblNumericVectorData,'Data',tableDataNew);
+    
+    figureTitle = [nameOfTheVector,' [',num2str(size(tableDataNew,1)),']'];
+    set(figureHandle,'Name',figureTitle);
 end
-function btnRemove_Callback(~, ~, tblNumericVectorData,txtNumberOfRows)
+function btnRemove_Callback(~, ~, tblNumericVectorData,txtNumberOfRows,nameOfTheVector,figureHandle)
     tableData = get(tblNumericVectorData,'Data');
     deleteRows = str2num(get(txtNumberOfRows,'String'));
     if ~isempty(deleteRows)
@@ -151,6 +161,9 @@ function btnRemove_Callback(~, ~, tblNumericVectorData,txtNumberOfRows)
         tableDataNew = tableData;
     end
     set(tblNumericVectorData,'Data',tableDataNew);
+    
+    figureTitle = [nameOfTheVector,' [',num2str(size(tableDataNew,1)),']'];
+    set(figureHandle,'Name',figureTitle);
 end
 function btnImport_Callback(~, ~, tblNumericVectorData)
 end
