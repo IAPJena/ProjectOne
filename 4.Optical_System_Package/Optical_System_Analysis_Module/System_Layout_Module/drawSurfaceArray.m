@@ -363,9 +363,9 @@ function [ xyzPoints,centerPoints] = drawSurfaceArray...
             hold(axesHandle,'on');
         end
         view(axesHandle,[0,-1,1]);
-        axis equal
+        axis(axesHandle, 'equal');
         % draw optical axis
-        hold on;
+        hold(axesHandle, 'on');
         xlabel(axesHandle,'Z-axis','fontweight','bold','Color','k');
         ylabel(axesHandle,'Y-axis','fontweight','bold','Color','k');
         view(axesHandle,[0, 90]);
@@ -373,7 +373,7 @@ function [ xyzPoints,centerPoints] = drawSurfaceArray...
         set(axesHandle, 'XColor', 'k', 'YColor', 'k', 'ZColor', 'k');
         grid(axesHandle,'on');
         box(axesHandle,'On')
-        axis equal
+        axis(axesHandle, 'equal');
     else
         for ss =  1:length(xyzPoints)
             xyzPointsCurrent = xyzPoints{ss};
@@ -403,19 +403,19 @@ function [ xyzPoints,centerPoints] = drawSurfaceArray...
             hold(axesHandle,'on');
         end
         % draw optical axis
-        hold on;
+        hold(axesHandle, 'on');
         set(axesHandle, 'YDir','reverse');
         xlabel(axesHandle,'X-axis','fontweight','bold','Color','k');
         ylabel(axesHandle,'Z-axis','fontweight','bold','Color','k');
         zlabel(axesHandle,'Y-axis','fontweight','bold','Color','k');
-        view([-110, 30]);
+        view(axesHandle,[-110, 30]);
         title(axesHandle,'System 3D Shaded Model','Color','k');
         set(axesHandle, 'XColor', 'k', 'YColor', 'k', 'ZColor', 'k');
         grid(axesHandle,'on');
         box(axesHandle,'On')
     end
-    axis equal
-    hold off;
+    axis(axesHandle, 'equal');
+    hold(axesHandle, 'off');
     %     camlight
     lighting gouraud
 end

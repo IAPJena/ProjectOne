@@ -63,7 +63,7 @@ function draw = plotSystemLayout( optSystem,rayPathMatrix,...
     NonDummySurfaceArray =  getNonDummySurfaceArray (optSystem);
     drawSurfaceArray(NonDummySurfaceArray,plotIn2D,nPoints1,nPoints2,...
         axesHandle,drawEdge);
-    hold on;
+    hold(axesHandle, 'on');
 
     % Draw rays over the system layout
     if nargin>1 && length(rayPathMatrix)~=1  % NaN is double and its length is 1
@@ -94,35 +94,35 @@ function draw = plotSystemLayout( optSystem,rayPathMatrix,...
     
     if plotIn2D
         % draw optical axis
-        hold on;
+        hold(axesHandle, 'on');
         xlabel(axesHandle,'Z-axis','fontweight','bold','Color','k');
         ylabel(axesHandle,'Y-axis','fontweight','bold','Color','k');
         title(axesHandle,'System 2D Layout in YZ plane','Color','k');
         set(axesHandle, 'XColor', 'k', 'YColor', 'k', 'ZColor', 'k');
         grid(axesHandle,'on');
-        view([0, 90]);
-        box(axesHandle,'On')
-        axis equal
-        hold off;
+        view(axesHandle,[0, 90]);
+        box(axesHandle,'On');
+        axis(axesHandle, 'equal');
+        hold(axesHandle, 'off');
     else
         % draw optical axis
-        hold on;
+        hold(axesHandle, 'on');
         set(axesHandle, 'YDir','reverse');
         xlabel(axesHandle,'X-axis','fontweight','bold','Color','k');
         ylabel(axesHandle,'Z-axis','fontweight','bold','Color','k');
         zlabel(axesHandle,'Y-axis','fontweight','bold','Color','k');
-        view([-110, 30]);
+        view(axesHandle,[-110, 30]);
         title(axesHandle,'System 3D Shaded Model','Color','k');
         set(axesHandle, 'XColor', 'k', 'YColor', 'k', 'ZColor', 'k');
         grid(axesHandle,'on');
         box(axesHandle,'On')
-        hold off;
+        hold(axesHandle, 'off');
 %         camlight
         lighting gouraud
     end
     
-    axis equal
+    axis(axesHandle, 'equal');
     draw = 1;
-    hold off;
+    hold(axesHandle, 'off');
 
 end
