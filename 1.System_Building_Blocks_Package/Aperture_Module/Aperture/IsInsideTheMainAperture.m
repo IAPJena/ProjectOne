@@ -32,7 +32,7 @@ function [ isInsideTheMainAperture ] = IsInsideTheMainAperture( surfAperture, xy
         xyMesh_Decenter = cat(3,xyMesh(:,:,1) - apertDecX , xyMesh(:,:,2) - apertDecY);
         
         initial_r = computeNormOfMatrix( xyMesh_Decenter, 3 );
-        initial_angleInRad = atan(xyMesh_Decenter(:,:,2)./xyMesh_Decenter(:,:,1));
+        initial_angleInRad = atan2(xyMesh_Decenter(:,:,2),xyMesh_Decenter(:,:,1));
         % For case of xyVector_Decenter(:,:,1) == 0, add small number in the
         % denominator to avoid NaN
         nanCaseIndices = abs(xyMesh_Decenter(:,:,1)) < eps;
@@ -61,7 +61,7 @@ function [ isInsideTheMainAperture ] = IsInsideTheMainAperture( surfAperture, xy
         xyVector_Decenter = [xyVector(:,1) - apertDecX , xyVector(:,2) - apertDecY];
         
         initial_r = computeNormOfMatrix( xyVector_Decenter, 2 );
-        initial_angleInRad = atan(xyVector_Decenter(:,2)./(xyVector_Decenter(:,1) + eps));
+        initial_angleInRad = atan2(xyVector_Decenter(:,2),(xyVector_Decenter(:,1) + eps));
         % For case of xyVector_Decenter(:,1) == 0, add small number in the
         % denominator to avoid NaN
         nanCaseIndices = abs(xyVector_Decenter(:,1)) < eps;
