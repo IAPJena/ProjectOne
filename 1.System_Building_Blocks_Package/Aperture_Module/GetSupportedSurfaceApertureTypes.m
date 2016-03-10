@@ -20,8 +20,8 @@ function [ fullNames,displayNames ] = GetSupportedSurfaceApertureTypes(index)
     if nargin < 1
         index = 0;
     end
-    fullNames = {'FloatingCircularAperture','CircularAperture','EllipticalAperture','RectangularAperture','CircularObstruction'};
-    displayNames = {'Floating Circular Aperture','Circular Aperture','Elliptical Aperture','Rectangular Aperture','Circular Obstruction'};
+    fullNames = {'FloatingCircularAperture','CircularAperture','EllipticalAperture','RectangularAperture','CircularObstruction','ApertureFromFile'};
+    displayNames = {'Floating Circular Aperture','Circular Aperture','Elliptical Aperture','Rectangular Aperture','Circular Obstruction','Aperture From File'};
     if index
         fullNames = fullNames{index};
         displayNames = displayNames{index};
