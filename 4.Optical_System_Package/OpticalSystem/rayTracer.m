@@ -50,6 +50,7 @@ function rayTracerResultReshaped = rayTracer(optSystem, objectRayBundle,rayTrace
     nRayPupil = objectRayBundle.FixedParameters.TotalNumberOfPupilPoints;
     nField = objectRayBundle.FixedParameters.TotalNumberOfFieldPoints;
     nWav = objectRayBundle.FixedParameters.TotalNumberOfWavelengths;
+    pupilCoordinates = objectRayBundle.FixedParameters.PupilCoordinates;
     
     considerPolarization = rayTraceOptionStruct.ConsiderPolarization;
     recordIntermediateResults = rayTraceOptionStruct.RecordIntermediateResults;
@@ -151,6 +152,7 @@ function rayTracerResultReshaped = rayTracer(optSystem, objectRayBundle,rayTrace
     FixedParameters.TotalNumberOfWavelengths = nWav;
     FixedParameters.LensUnitFactor = lensUnitFactor;
     FixedParameters.WavelengthUnitFactor = wavelengthUnitFactor;
+    FixedParameters.PupilCoordinates = pupilCoordinates;
     
     if considerPolarization
         if recordIntermediateResults

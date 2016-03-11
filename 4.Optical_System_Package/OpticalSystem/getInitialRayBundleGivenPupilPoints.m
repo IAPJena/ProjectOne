@@ -128,7 +128,7 @@ function [ initialRayBundle ] = getInitialRayBundleGivenPupilPoints( ...
     posInM = pos*getLensUnitFactor(optSystem);
     
     % construct array of Ray objects
-    scalarRayBundle = ScalarRayBundle(posInM,dir,wavLenInM,nRayTotal,nField,nWav);
+    scalarRayBundle = ScalarRayBundle(posInM,dir,wavLenInM,nRayTotal,nField,nWav,pupilSamplingPoints);
     
     initialRayBundle = scalarRayBundle;
 end

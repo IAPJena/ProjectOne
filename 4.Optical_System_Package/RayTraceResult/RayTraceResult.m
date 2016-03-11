@@ -90,10 +90,10 @@ function traceResult = RayTraceResult(fixedParametersStruct,...
         traceResult.ClassName = 'RayTraceResult';
     end
     
-    % Used in the object surface to store the pupil coordinate of each ray
-    % It doesnt change with surfaces so there is no need to store it
-    % for all surfaces
-    traceResult.RayPupilCoordinates = [0;0];
+%     % Used in the object surface to store the pupil coordinate of each ray
+%     % It doesnt change with surfaces so there is no need to store it
+%     % for all surfaces
+%     traceResult.RayPupilCoordinates = [0;0];
 end
 
 

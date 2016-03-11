@@ -1,4 +1,4 @@
-function [ newScalarRayBundle ] = ScalarRayBundle( position,direction,wavelength,nPupilPoints,nFieldPoints,nWavelengths )
+function [ newScalarRayBundle ] = ScalarRayBundle( position,direction,wavelength,nPupilPoints,nFieldPoints,nWavelengths,pupilCoordinates )
     %ScalarRayBundle Used to define ray bundles which can be traced through
     %optical systems.
     % Inputs:
@@ -23,6 +23,7 @@ function [ newScalarRayBundle ] = ScalarRayBundle( position,direction,wavelength
         newScalarRayBundle.FixedParameters.TotalNumberOfPupilPoints = 1;
         newScalarRayBundle.FixedParameters.TotalNumberOfFieldPoints = 1;
         newScalarRayBundle.FixedParameters.TotalNumberOfWavelengths = 1;
+        newScalarRayBundle.FixedParameters.PupilCoordinates = [0;0];
         newScalarRayBundle.ClassName = 'ScalarRayBundle';
     else
         if nargin == 1
@@ -48,13 +49,16 @@ function [ newScalarRayBundle ] = ScalarRayBundle( position,direction,wavelength
             nPupilPoints = nMax;
             nFieldPoints = 1;
             nWavelengths = 1;
+            pupilCoordinates = zeros(2,nPupilPoints);
         end
         if nargin == 4
             nFieldPoints = 1;
             nWavelengths = 1;
+            pupilCoordinates = zeros(2,nPupilPoints);
         end
         if nargin == 5
             nWavelengths = 1;
+            pupilCoordinates = zeros(2,nPupilPoints);
         end
         % limit nMax to the nRays
         nMax = nPupilPoints*nFieldPoints*nWavelengths;
@@ -86,6 +90,8 @@ function [ newScalarRayBundle ] = ScalarRayBundle( position,direction,wavelength
         newScalarRayBundle.FixedParameters.TotalNumberOfPupilPoints = nPupilPoints;
         newScalarRayBundle.FixedParameters.TotalNumberOfFieldPoints = nFieldPoints;
         newScalarRayBundle.FixedParameters.TotalNumberOfWavelengths = nWavelengths;
+        
+        newScalarRayBundle.FixedParameters.PupilCoordinates = pupilCoordinates;
         
         newScalarRayBundle.ClassName = 'ScalarRayBundle';
     end
