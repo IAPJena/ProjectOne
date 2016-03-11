@@ -47,6 +47,7 @@ function btnOkCallback(childWindow,parentWindow)
     others = ...
         { 'coatingRefractiveIndexProfile',...
         'footprintDiagram',...
+        'spotDiagramPlus',...
         'system2DLayoutDiagram',...
         'system3DLayoutDiagram',...
         'paraxialAnalysis',...
@@ -766,7 +767,42 @@ function btnOkCallback(childWindow,parentWindow)
                     plotFootprintDiagram(optSystem,surfIndex,wavIndex,...
                         fldIndex,numberOfRays1,numberOfRays2,PupSamplingType,...
                         handles.axesHandle);
+                 case lower('spotDiagramPlus')
+                    optSystem = optSystem(currentConfiguration);
                     
+                    surfIndexList = (get(handles.popSurfaceIndex,'String'));
+                    surfIndexString = surfIndexList(get(handles.popSurfaceIndex,'Value'));
+                    surfIndex = str2double(surfIndexString);
+                    if isnan(surfIndex)
+                        disp('The surface index should be valid index number');
+                        return;
+                    end
+                    numberOfRays1 = str2double(get(handles.txtNumberOfRay1,'String'));
+                    numberOfRays2 = str2double(get(handles.txtNumberOfRay2,'String'));
+                    wavLengthIndexList = (get(handles.popWavelengthIndex,'String'));
+                    wavLengthIndexString = (wavLengthIndexList(get(handles.popWavelengthIndex,'Value'),:));
+                    if strcmpi(wavLengthIndexString,'New Wavelength')
+                    elseif strcmpi(wavLengthIndexString,'All')
+                        wavIndex = 1:1:getNumberOfWavelengths(optSystem);
+                    else
+                        wavIndex = str2double(wavLengthIndexString);
+                    end
+                    
+                    fldIndexList = (get(handles.popFieldIndex,'String'));
+                    fldIndexString = (fldIndexList(get(handles.popFieldIndex,'Value'),:));
+                    if strcmpi(fldIndexString,'All')
+                        fldIndex = 1:1:getNumberOfFieldPoints(optSystem);
+                    else
+                        fldIndex = str2double(fldIndexString);
+                    end
+
+                    pupSamplingTypeList = (get(handles.popPupilSamplingType,'String'));
+                    PupSamplingType = (pupSamplingTypeList{get(handles.popPupilSamplingType,'Value'),:});
+                    
+                    plotSpotDiagramPlus(optSystem,surfIndex,wavIndex,...
+                        fldIndex,numberOfRays1,numberOfRays2,PupSamplingType,...
+                        handles.GraphTab,handles.textHandle);
+                                       
                 case lower('system2DLayoutDiagram')
                     % Programmed to handle multiple configurations
                     plotIn2D = 1;
