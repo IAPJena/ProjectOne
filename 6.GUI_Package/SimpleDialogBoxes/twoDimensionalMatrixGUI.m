@@ -17,6 +17,14 @@ function [figureHandle] = twoDimensionalMatrixGUI(nameOfTheMatrix,currentMatrixS
     if exist(currentMatrixSourceFileName,'file')
         [folderPath,fileName,ext] = fileparts(currentMatrixSourceFileName);
         switch lower(ext)
+            case {'.txt'}
+                try
+                    currentMatrix = dlmread(currentMatrixSourceFileName);
+                catch
+                    disp('Error: Invalid file. The text file should be comma sparated numeric matrix. ');
+                    currentMatrix = zeros(16,16);
+                end
+                currentMatrixColorMap = [];
             case {'.mat'}
                 load(currentMatrixSourceFileName);
                 if exist('StoredMatrix')
@@ -24,19 +32,43 @@ function [figureHandle] = twoDimensionalMatrixGUI(nameOfTheMatrix,currentMatrixS
                 else
                     currentMatrix = zeros(32,32);
                 end
+                currentMatrixColorMap = [];
             case {'.jpg';'.bmp';'.png'}
-                currentMatrix = double(flipud(rgb2gray(imread(currentMatrixSourceFileName))));
+                [tempMatrix,cmap] = imread(currentMatrixSourceFileName);
+                if cmap
+                    currentMatrix = double(flipud(rgb2gray(tempMatrix)));
+                else
+                    if ndims(tempMatrix) == 3
+                        currentMatrix = sqrt(sum((double(flipud(tempMatrix))).^2,3));
+                    else
+                        currentMatrix = double(flipud(tempMatrix));
+                    end
+                    
+                end
+                
+                %                 currentMatrix = double(flipud(rgb2gray(tempMatrix)));
+                %                 if cmap % Has color map or is RGB image
+                %
+                % %                     currentMatrix = double(flipud(rgb2gray(tempMatrix)));
+                %                 else
+                %                     cmap = [];
+                % %                     currentMatrix = double(flipud(tempMatrix));
+                %                 end
+                currentMatrixColorMap = cmap;
             otherwise
-                currentMatrix = zeros(32,32);
+                currentMatrix = zeros(16,16);
+                currentMatrixColorMap = [];
         end
     else
-        currentMatrix = zeros(32,32);
+        currentMatrix = zeros(16,16);
+        currentMatrixColorMap = [];
     end
     
     figureTitle = [nameOfTheMatrix,' [',num2str(size(currentMatrix,2)),...
         ':',num2str(size(currentMatrix,1)),']'];
     % Save initial values
     setappdata(0,'StoredMatrix',currentMatrix);
+    setappdata(0,'StoredMatrixColorMap',currentMatrixColorMap);
     setappdata(0,'StoredMatrixSourceFileName',currentMatrixSourceFileName);
     
     initialDiagram = currentMatrix;
@@ -50,6 +82,7 @@ function [figureHandle] = twoDimensionalMatrixGUI(nameOfTheMatrix,currentMatrixS
     figureHandle.Object.FontSize = fontSize;
     figureHandle.Object.NameOfTheMatrix = nameOfTheMatrix;
     figureHandle.Object.CurrentMatrix = currentMatrix;
+    figureHandle.Object.CurrentMatrixColorMap = currentMatrixColorMap;
     figureHandle.Object.CurrentMatrixSourceFileName = currentMatrixSourceFileName;
     
     figureHandle.Object.MainFigureHandle = figure( ...
@@ -165,9 +198,8 @@ function [figureHandle] = twoDimensionalMatrixGUI(nameOfTheMatrix,currentMatrixS
         'Tag', 'btnResample', ...
         'String','Resample',...
         'Units', 'normalized', ...
-        'Position',[0.75,0.80,0.21,0.05],...
+        'Position',[0.75,0.80,0.21,0.06],...
         'Callback',{@btnResample_Callback,figureHandle});
-    
     
     
     figureHandle.Object.btnImport = uicontrol( ...
@@ -177,8 +209,19 @@ function [figureHandle] = twoDimensionalMatrixGUI(nameOfTheMatrix,currentMatrixS
         'Tag', 'btnImport', ...
         'String','Import',...
         'Units', 'normalized', ...
-        'Position',[0.1,0.02,0.2,0.05],...
+        'Position',[0.20,0.02,0.15,0.05],...
         'Callback',{@btnImport_Callback,figureHandle});
+    
+    figureHandle.Object.btnSave = uicontrol( ...
+        'Parent',figureHandle.Object.MainFigureHandle,...
+        'FontSize',fontSize,'FontName', 'FixedWidth',...
+        'Style','pushbutton',...
+        'Tag', 'btnSave', ...
+        'String','Save',...
+        'Units', 'normalized', ...
+        'Position',[0.40,0.02,0.15,0.05],...
+        'Callback',{@btnSave_Callback,figureHandle});
+    
     
     figureHandle.Object.btnOk = uicontrol( ...
         'Parent',figureHandle.Object.MainFigureHandle,...
@@ -187,7 +230,7 @@ function [figureHandle] = twoDimensionalMatrixGUI(nameOfTheMatrix,currentMatrixS
         'Tag', 'btnOk', ...
         'String','OK',...
         'Units', 'normalized', ...
-        'Position',[0.4,0.02,0.2,0.05],...
+        'Position',[0.60,0.02,0.15,0.05],...
         'Callback',{@btnOk_Callback,figureHandle});
     
     
@@ -199,7 +242,7 @@ function [figureHandle] = twoDimensionalMatrixGUI(nameOfTheMatrix,currentMatrixS
         'Tag', 'btnCancel', ...
         'String','Cancel',...
         'Units', 'normalized', ...
-        'Position',[0.7,0.02,0.2,0.05],...
+        'Position',[0.8,0.02,0.15,0.05],...
         'Callback',{@btnCancel_Callback,figureHandle});
     
     if ~allowDataManipulation
@@ -239,6 +282,41 @@ function btnResample_Callback(~, ~,figureHandle)
     updateTheGUI(figureHandle);
 end
 
+
+function btnSave_Callback(~, ~,figureHandle)
+    % Ask for user confirmation
+    % Construct a questdlg with three options
+    choice = questdlg('Are you sure to save changes?', ...
+        'Save', ...
+        'Yes','No','Yes');
+    % Handle response
+    switch choice
+        case 'Yes'
+            % Click graph tab programatically
+            set(figureHandle.Object.mainTabGroup,'SelectedTab',...
+                figureHandle.Object.diagramTab);
+            currentMatrix = figureHandle.Object.CurrentMatrix;
+            currentMatrixColorMap = figureHandle.Object.CurrentMatrixColorMap;
+            currentMatrixSourceFileName = figureHandle.Object.CurrentMatrixSourceFileName;
+            [~,~,ext] = fileparts(currentMatrixSourceFileName);
+            switch lower(ext)
+                case {'.jpg','.bmp','.png'}
+                    % Write to the image file
+                    if currentMatrixColorMap
+                        imwrite(flipud(currentMatrix),currentMatrixColorMap,currentMatrixSourceFileName);
+                    else
+                        imwrite(flipud(currentMatrix),currentMatrixSourceFileName);
+                    end
+                case {'.txt'}
+                    % Write to the text file
+                    dlmwrite(currentMatrixSourceFileName,currentMatrix);
+                otherwise
+            end
+        otherwise
+    end
+    updateTheGUI(figureHandle);
+end
+
 function btnImport_Callback(~, ~,figureHandle)
     
     % Click graph tab programatically
@@ -246,14 +324,33 @@ function btnImport_Callback(~, ~,figureHandle)
         figureHandle.Object.diagramTab);
     
     % Open either text file or picture file
-    [FileNameWithExt,PathName] = uigetfile({'*.jpg;*.bmp;*.png'},'Select file');
+    [FileNameWithExt,PathName] = uigetfile({'*.jpg;*.bmp;*.png;*.txt'},'Select file');
     % FileName=0 when no file is selected
     if (FileNameWithExt==0)
         return;
     end
+    [~,~,ext] = fileparts(FileNameWithExt);
     fullFileName = [PathName,FileNameWithExt];
-    storedDiagram = double(flipud(rgb2gray(imread(fullFileName))));
-    figureHandle.Object.CurrentMatrix = storedDiagram;
+    
+    switch lower(ext)
+        case {'.jpg','.bmp','.png'}
+            [tempMatrix,cmap] = imread(fullFileName);
+            if cmap
+                numericMatrix = double(flipud(rgb2gray(tempMatrix)));
+            else
+                if ndims(tempMatrix) == 3
+                    numericMatrix = sqrt(sum((double(flipud(tempMatrix))).^2,3));
+                else
+                    numericMatrix = double(flipud(tempMatrix));
+                end
+                
+            end
+        case {'.txt'}
+            numericMatrix = dlmread(fullFileName);
+        otherwise
+    end
+    
+    figureHandle.Object.CurrentMatrix = numericMatrix;
     figureHandle.Object.CurrentMatrixSourceFileName = fullFileName;
     updateTheGUI(figureHandle);
 end
@@ -270,21 +367,23 @@ function btnCancel_Callback(~, ~,figureHandle)
 end
 
 function updateTheGUI(figureHandle)
-    storedDiagram = figureHandle.Object.CurrentMatrix;
+    storedMatrix = figureHandle.Object.CurrentMatrix;
+    storedMatrixSourceFileName = figureHandle.Object.CurrentMatrixSourceFileName;
+    [~,fileName,ext] = fileparts(storedMatrixSourceFileName);
     nameOfTheMatrix = figureHandle.Object.NameOfTheMatrix;
     
-    set(figureHandle.Object.tblNumericMatrixData,'Data',storedDiagram);
-    pcolor(figureHandle.Object.axesDiagram,linspace(-floor(size(storedDiagram,2)/2),floor(size(storedDiagram,2)/2),size(storedDiagram,2)),...
-        linspace(-floor(size(storedDiagram,1)/2),floor(size(storedDiagram,1)/2),size(storedDiagram,1)),storedDiagram);
+    set(figureHandle.Object.tblNumericMatrixData,'Data',storedMatrix);
+    pcolor(figureHandle.Object.axesDiagram,linspace(-floor(size(storedMatrix,2)/2),floor(size(storedMatrix,2)/2),size(storedMatrix,2)),...
+        linspace(-floor(size(storedMatrix,1)/2),floor(size(storedMatrix,1)/2),size(storedMatrix,1)),storedMatrix);
     shading(figureHandle.Object.axesDiagram,'interp');
     colormap(figureHandle.Object.axesDiagram,'gray');
     colorbar(figureHandle.Object.axesDiagram);
     
-    figureTitle = [nameOfTheMatrix,' [',num2str(size(storedDiagram,2)),':',num2str(size(storedDiagram,1)),']'];
+    figureTitle = [nameOfTheMatrix,' [',num2str(size(storedMatrix,2)),':',num2str(size(storedMatrix,1)),'] (',fileName,ext,')'];
     set(figureHandle.Object.MainFigureHandle,'Name',figureTitle);
-    set(figureHandle.Object.txtNumberOfSamplingPointInX_old,'String',size(storedDiagram,2));
-    set(figureHandle.Object.txtNumberOfSamplingPointInY_old,'String',size(storedDiagram,1));
+    set(figureHandle.Object.txtNumberOfSamplingPointInX_old,'String',size(storedMatrix,2));
+    set(figureHandle.Object.txtNumberOfSamplingPointInY_old,'String',size(storedMatrix,1));
     
-    set(figureHandle.Object.txtNumberOfSamplingPointInX_new,'String',size(storedDiagram,2));
-    set(figureHandle.Object.txtNumberOfSamplingPointInY_new,'String',size(storedDiagram,1));
+    set(figureHandle.Object.txtNumberOfSamplingPointInX_new,'String',size(storedMatrix,2));
+    set(figureHandle.Object.txtNumberOfSamplingPointInY_new,'String',size(storedMatrix,1));
 end
