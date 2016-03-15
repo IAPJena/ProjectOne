@@ -120,11 +120,11 @@ function [ initialRayBundle ] = getInitialRayBundleGivenPupilPoints( ...
     % Initialize initial ray bundle using constructor.
     pos = initialRayBundlePositions;
     dir = initialRayBundleDirections;
-    wav = arrayfun(@(x) repmat(x,[1,nRayTotal*nField]),wavLen*getWavelengthUnitFactor(optSystem),'UniformOutput',false);
+    wav = arrayfun(@(x) repmat(x,[1,nRayTotal*nField]),wavLen,'UniformOutput',false);
     wav = [wav{:}];
     
     % Convert the position and wavelength from lens unit/wave unit to meter for ray object
-    wavLenInM = wavLen*getWavelengthUnitFactor(optSystem);
+    wavLenInM = wav*getWavelengthUnitFactor(optSystem);
     posInM = pos*getLensUnitFactor(optSystem);
     
     % construct array of Ray objects
