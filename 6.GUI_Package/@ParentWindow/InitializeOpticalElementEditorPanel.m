@@ -904,6 +904,21 @@ function tblSurfaceBasicParameters_CellSelectionCallback(~, eventdata,parentWind
             else
                 selectedSurface.UniqueParameters.(myName) = newParam;
             end
+        elseif strcmpi('file',myType)
+            % type is choice of file name (txt or picture)
+            aodHandles.OpticalSystem(currentConfig).IsUpdatedSurfaceArray = 0;
+            storedApertureFileName = paramValues{1};
+            % Import numeric data array
+            [folderPath,fileName,ext] = fileparts(storedApertureFileName);
+            if exist(storedApertureFileName)
+                twoDimensionalMatrixGUI(fileName,storedApertureFileName);
+                uiwait(gcf);
+            else
+                twoDimensionalMatrixGUI('Stored Aperture');
+                uiwait(gcf);
+            end
+            storedSurfaceSourceFileName = getappdata(0,'StoredMatrixSourceFileName');
+            selectedSurface.UniqueParameters.(myName) = storedSurfaceSourceFileName;
         elseif strcmpi('numeric',myType) || strcmpi('char',myType)||...
                 strcmpi('Glass',myType) || strcmpi('Coating',myType)
         elseif strcmpi('numericVector',myType)

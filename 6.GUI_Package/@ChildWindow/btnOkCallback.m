@@ -799,8 +799,12 @@ function btnOkCallback(childWindow,parentWindow)
                     pupSamplingTypeList = (get(handles.popPupilSamplingType,'String'));
                     PupSamplingType = (pupSamplingTypeList{get(handles.popPupilSamplingType,'Value'),:});
                     
+                    azimuthalDependence = get(handles.popShowPupilAzimuthalDependence,'Value');
+                    radialDependence = get(handles.popShowPupilRadialDependence,'Value');
+                    
                     plotSpotDiagramPlus(optSystem,surfIndex,wavIndex,...
                         fldIndex,numberOfRays1,numberOfRays2,PupSamplingType,...
+                        radialDependence,azimuthalDependence,...
                         handles.GraphTab,handles.textHandle);
                                        
                 case lower('system2DLayoutDiagram')

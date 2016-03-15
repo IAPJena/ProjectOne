@@ -52,6 +52,8 @@ function rayTracerResultReshaped = rayTracer(optSystem, objectRayBundle,rayTrace
     nWav = objectRayBundle.FixedParameters.TotalNumberOfWavelengths;
     pupilCoordinates = objectRayBundle.FixedParameters.PupilCoordinates;
     
+    pupilNormalizationFactor = getEntrancePupilDiameter(optSystem)/2;
+    
     considerPolarization = rayTraceOptionStruct.ConsiderPolarization;
     recordIntermediateResults = rayTraceOptionStruct.RecordIntermediateResults;
     considerSurfaceAperture = rayTraceOptionStruct.ConsiderSurfaceAperture;
@@ -153,7 +155,7 @@ function rayTracerResultReshaped = rayTracer(optSystem, objectRayBundle,rayTrace
     FixedParameters.LensUnitFactor = lensUnitFactor;
     FixedParameters.WavelengthUnitFactor = wavelengthUnitFactor;
     FixedParameters.PupilCoordinates = pupilCoordinates;
-    
+    FixedParameters.PupilNormalizationFactor = pupilNormalizationFactor;
     if considerPolarization
         if recordIntermediateResults
             multipleRayTracerResultAll(startNonDummyIndex,:) = RayTraceResult(FixedParameters,...
@@ -279,6 +281,17 @@ function rayTracerResultReshaped = rayTracer(optSystem, objectRayBundle,rayTrace
             NonDummySurfaceArray(surfaceIndex),rayInitialPosition,rayDirection,...
             indexBefore,indexAfter,WavelengthInM,primaryWavlenInM,mirroredCoordinate);
         
+        % Make the TIR values NaN and remove the 0 imaginary value from
+        % others
+        if sum(TIR)
+            if length(TIR) == 1
+                localRayIntersectionPoint(:) = NaN;
+                localRayIntersectionPoint(:) = real(localRayIntersectionPoint(:));
+            else
+            localRayIntersectionPoint(:,boolean(TIR)) = NaN;
+            localRayIntersectionPoint(:,~boolean(TIR)) = real(localRayIntersectionPoint(:,~boolean(TIR)));
+            end
+        end
         AdditionalPathLength = additionalPath;
         TotalPathLength = TotalPathLength + GeometricalPathLength;
         if computeOpticalPathLength
@@ -314,6 +327,7 @@ function rayTracerResultReshaped = rayTracer(optSystem, objectRayBundle,rayTrace
             surfAperture = NonDummySurfaceArray(surfaceIndex).Aperture;
             pointX = localRayIntersectionPoint(1,:);
             pointY = localRayIntersectionPoint(2,:);
+            
             xyVector = [pointX',pointY'];
             [ isInsideTheMainAperture ] = IsInsideTheMainAperture( surfAperture, xyVector );
             

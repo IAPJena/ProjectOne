@@ -29,13 +29,17 @@ function [ C ] = computeSurfaceColor( Z,peakColor,valleyColor,nLevels )
     % figure; surf(Z1,C1); hold on;  surf(Z2,C2);  
     
     P = Z;
-    colorGrad = computeLinearColorGradient(peakColor,valleyColor,nLevels);
+%     colorGrad = computeLinearColorGradient(peakColor,valleyColor,nLevels);
+    colorGrad = computeColorMap('summer',nLevels);
+    
     stepSize = (max(max(P) - min(min(P))))/nLevels;
     if stepSize == 0
         stepSize = 1;
     end
     colorLevelIndex = floor((P - min(min(P)))/stepSize);
+    
     colorLevelIndex(colorLevelIndex == 0) = 1;
+    colorLevelIndex(isnan(colorLevelIndex)) = 1;
     
     R = reshape(colorGrad(colorLevelIndex(:),1),size(colorLevelIndex));
     G = reshape(colorGrad(colorLevelIndex(:),2),size(colorLevelIndex));
